@@ -12,8 +12,8 @@ class AddLocationTypes < ActiveRecord::Migration
       end
      end
      [:climbs, :vacations].each do |type|
-       add_column type, :latitude, :decimal
-       add_column type, :longitude, :decimal
+       add_column type, :latitude, :double
+       add_column type, :longitude, :double
        add_column type, :city, :string
        add_column type, :country, :string
      end
