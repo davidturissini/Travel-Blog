@@ -6,8 +6,24 @@
   <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
-<body>
-
+<body class="<%= params[:controller] %> <%= params[:controler] %>-<%= params[:action] %>">
+  <div id="map_canvas"></div>
+  <nav id="locations-nav">
+    <div>
+      <%= link_to "Drives", "/" %>
+    </div>     
+    <div>
+      <%= link_to "Climbs", climbs_path %>
+      <ul class="climbs">
+        <% @nav[:climbs].each do |climb| %>
+          <li data-slug="<%= climb.slug %>" class="location climb"><%= link_to climb.title, climb_path(climb.slug) %></li>
+        <% end %>
+      </ul>
+    </div>
+    <div>
+      <%= link_to "Vacations", "/" %>
+    </div>
+  </nav>
 <%= yield %>
 
 </body>
