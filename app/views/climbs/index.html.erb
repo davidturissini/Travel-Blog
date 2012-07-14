@@ -1,4 +1,3 @@
-asd
 <% @climbs.each do |climb| %>
-  <%= puts climb.inspect %>
+  <%= link_to climb.title, climb_path(climb.slug) %>
 <% end %>
