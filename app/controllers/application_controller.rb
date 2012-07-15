@@ -1,11 +1,9 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  before_filter :navigation_content
-
-  def navigation_content
-   @nav = {
-    :climbs => Climb.all
-   }
+  helper_method :current_user
+  
+  def current_user
+    @user ||= User.find(1)
   end
 
   def render_404

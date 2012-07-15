@@ -1,4 +1,8 @@
 Adventureblog::Application.routes.draw do
   root :to => 'welcome#index'
-  resources :climbs, :vacations, :drives
+  resources :users do 
+   resources :location_types do 
+    resources :locations
+   end
+  end
 end

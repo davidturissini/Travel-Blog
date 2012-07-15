@@ -13,30 +13,15 @@
 <body class="<%= params[:controller] %> <%= params[:controler] %>-<%= params[:action] %>">
   <div id="map_canvas"></div>
   <nav id="locations-nav">
-    <section>
-      <header>
-       <%= link_to "Drives", drives_path %>
-      </header> 
-    </section>     
+   <% current_user.location_types.each do |loc_type| %>
     <section>
      <header>
-      <%= link_to "Climbs", climbs_path %>
+       <%= loc_type.title %>
      </header>
-     <ul class="climbs">
-      <% @nav[:climbs].each do |climb| %>
-       <li>
-        <%= link_to climb.title, climb_path(climb.slug), {:class => "location climb", "data-json" => climb.to_json}  %>
-       </li>
-      <% end %>
-     </ul>
     </section>
-    <section>
-      <header>
-       <%= link_to "Vacations", vacations_path %>
-      </header>
-    </section>
+   <% end %> 
   </nav>
-<%= yield %>
+  <%= yield %>
   <script>
    $(function () {
     window.map = new Map({
