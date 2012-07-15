@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715065456) do
+ActiveRecord::Schema.define(:version => 20120715073513) do
 
   create_table "journal_entries", :force => true do |t|
     t.string   "title"
@@ -19,6 +19,12 @@ ActiveRecord::Schema.define(:version => 20120715065456) do
     t.date     "day"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "location_types", :force => true do |t|
+    t.string  "title"
+    t.integer "location_id"
+    t.string  "slug"
   end
 
   create_table "locations", :force => true do |t|
@@ -36,6 +42,7 @@ ActiveRecord::Schema.define(:version => 20120715065456) do
     t.string   "state"
     t.string   "kml_url"
     t.integer  "user_id"
+    t.integer  "location_type_id"
   end
 
 end
