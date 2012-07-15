@@ -16,7 +16,10 @@
    <% current_user.location_types.each do |loc_type| %>
     <section>
      <header>
-       <%= loc_type.title %>
+      <%= link_to loc_type.title, user_location_type_path(current_user.id, loc_type.slug) %>
+      <% loc_type.locations.each do |loc| %>
+       <%= link_to loc.title, user_location_type_location_path(current_user.id, loc_type.slug, loc.slug) %>  
+      <% end %>
      </header>
     </section>
    <% end %> 
