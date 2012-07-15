@@ -10,9 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120714073112) do
+ActiveRecord::Schema.define(:version => 20120715065456) do
 
-  create_table "climbs", :force => true do |t|
+  create_table "journal_entries", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.integer  "location_id"
+    t.date     "day"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "locations", :force => true do |t|
     t.string   "title"
     t.text     "summary"
     t.string   "flickr_set"
@@ -24,32 +33,9 @@ ActiveRecord::Schema.define(:version => 20120714073112) do
     t.float    "longitude"
     t.string   "city"
     t.string   "country"
+    t.string   "state"
     t.string   "kml_url"
-  end
-
-  create_table "drives", :force => true do |t|
-    t.string   "title"
-    t.text     "summary"
-    t.string   "flickr_set"
-    t.string   "slug"
-    t.boolean  "has_visited"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "kml_url"
-  end
-
-  create_table "vacations", :force => true do |t|
-    t.string   "title"
-    t.text     "summary"
-    t.string   "flickr_set"
-    t.string   "slug"
-    t.boolean  "has_visited"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.float    "latitude"
-    t.float    "longitude"
-    t.string   "city"
-    t.string   "country"
+    t.integer  "user_id"
   end
 
 end

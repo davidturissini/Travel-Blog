@@ -1,30 +1,23 @@
 class AddLocationTypes < ActiveRecord::Migration
-  @@adventure_types = [:vacations, :climbs, :drives]
   def up
-   @@adventure_types.each do |adventure_type|
-     create_table adventure_type do |t|
-       t.string :title
-       t.text :summary
-       t.string :flickr_set
-       t.string :slug
-       t.boolean :has_visited
-       t.timestamps
-      end
-     end
-     [:climbs, :vacations].each do |type|
-       add_column type, :latitude, :double
-       add_column type, :longitude, :double
-       add_column type, :city, :string
-       add_column type, :country, :string
-     end
-    
-     add_column :climbs, :kml_url, :string
-     add_column :drives, :kml_url, :string
+    create_table :locations do |t|
+     t.string :title
+     t.text :summary
+     t.string :flickr_set
+     t.string :slug
+     t.boolean :has_visited
+     t.timestamps
+     t.column :latitude, :double
+     t.column :longitude, :double
+     t.column :city, :string
+     t.column :country, :string
+     t.column :state, :string
+     t.column :kml_url, :string
+     t.column :user_id, :integer
+    end
   end
 
   def down
-   @@adventure_types.each do |type|
-     drop_table type
-   end
+    drop_table :locations
   end
 end
