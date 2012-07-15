@@ -176,7 +176,7 @@ body.climbs #locations-nav .climbs { display:block; }
  padding:5px 10px;
  }
 
-#locations-nav header, #locations-nav ul {
+#locations-nav {
  background:rgba(255,255,255,.85);
  }
 
