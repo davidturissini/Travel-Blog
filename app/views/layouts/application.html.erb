@@ -2,29 +2,87 @@
 <html>
 <head>
   <title>Adventureblog</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+  <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+  <script src="/assets/underscore.js"></script>
   <%= stylesheet_link_tag    "application" %>
-  <%= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
+  <script>
+  </script>
 </head>
 <body class="<%= params[:controller] %> <%= params[:controler] %>-<%= params[:action] %>">
   <div id="map_canvas"></div>
   <nav id="locations-nav">
-    <div>
-      <%= link_to "Drives", "/" %>
-    </div>     
-    <div>
+    <section>
+      <header>
+       <%= link_to "Drives", "/" %>
+      </header> 
+    </section>     
+    <section>
+     <header>
       <%= link_to "Climbs", climbs_path %>
-      <ul class="climbs">
-        <% @nav[:climbs].each do |climb| %>
-          <li data-slug="<%= climb.slug %>" class="location climb"><%= link_to climb.title, climb_path(climb.slug) %></li>
-        <% end %>
-      </ul>
-    </div>
-    <div>
-      <%= link_to "Vacations", "/" %>
-    </div>
+     </header>
+     <ul class="climbs">
+      <% @nav[:climbs].each do |climb| %>
+       <li>
+        <%= link_to climb.title, climb_path(climb.slug), {:class => "location climb", "data-json" => climb.to_json}  %>
+       </li>
+      <% end %>
+     </ul>
+    </section>
+    <section>
+      <header>
+       <%= link_to "Vacations", "/" %>
+      </header>
+    </section>
   </nav>
 <%= yield %>
+  <script>
+   $(function () {
+    window.map = new Map({
+     el:document.getElementById('map_canvas'), 
+     options: {
+      zoom: 4,
+      center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
+      mapTypeId: google.maps.MapTypeId.HYBRID
+    }}).render()
 
+
+    window.menu = new LocationMenu({
+     el:document.getElementById("locations-nav"),
+     map:window.map
+    })
+    window.menu.render()
+    
+    window.locationView = new LocationShowView({
+     el:document.getElementById("blog-content")
+    })
+
+     
+    jQuery.fn.extend({
+       slider: function () {
+         this.each(function (idx, elem) {
+           var width = elem.offsetWidth,
+           children = Array.prototype.slice.call(elem.children),
+           container = document.createElement("div"),
+           innerWidth = 0
+           elem.innerHTML = ""
+           elem.appendChild(container);
+           [].forEach.call(children, function (child) {
+             container.appendChild(child)
+             innerWidth += child.offsetWidth
+           }) 
+           if( innerWidth > elem.offsetWidth ) {
+             elem.style.overflowX = "scroll"
+           }
+           container.style.width = innerWidth + "px"
+         }) 
+       }
+     })
+
+
+   })
+  </script>
+  <%= javascript_include_tag "underscore", "backbone", "models", "routes", "collections", "views" %>
 </body>
 </html>
