@@ -25,52 +25,5 @@
    <% end %> 
   </nav>
   <%= yield %>
-  <script>
-   $(function () {
-    window.map = new Map({
-     el:document.getElementById('map_canvas'), 
-     options: {
-      zoom: 4,
-      center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
-      mapTypeId: google.maps.MapTypeId.HYBRID
-    }}).render()
-
-
-    window.menu = new LocationMenu({
-     el:document.getElementById("locations-nav"),
-     map:window.map
-    })
-    window.menu.render()
-    
-    window.locationView = new LocationShowView({
-     el:document.getElementById("blog-content")
-    })
-
-     
-    jQuery.fn.extend({
-       slider: function () {
-         this.each(function (idx, elem) {
-           var width = elem.offsetWidth,
-           children = Array.prototype.slice.call(elem.children),
-           container = document.createElement("div"),
-           innerWidth = 0
-           elem.innerHTML = ""
-           elem.appendChild(container);
-           [].forEach.call(children, function (child) {
-             container.appendChild(child)
-             innerWidth += child.offsetWidth
-           }) 
-           if( innerWidth > elem.offsetWidth ) {
-             elem.style.overflowX = "scroll"
-           }
-           container.style.width = innerWidth + "px"
-         }) 
-       }
-     })
-
-
-   })
-  </script>
-  <%= javascript_include_tag "underscore", "backbone", "models", "routes", "collections", "views" %>
 </body>
 </html>
