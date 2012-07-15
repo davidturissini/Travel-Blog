@@ -20,8 +20,8 @@ ActiveRecord::Schema.define(:version => 20120714073112) do
     t.boolean  "has_visited"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "latitude",    :precision => 10, :scale => 0
-    t.decimal  "longitude",   :precision => 10, :scale => 0
+    t.float    "latitude"
+    t.float    "longitude"
     t.string   "city"
     t.string   "country"
     t.string   "kml_url"
@@ -46,8 +46,8 @@ ActiveRecord::Schema.define(:version => 20120714073112) do
     t.boolean  "has_visited"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.decimal  "latitude",    :precision => 10, :scale => 0
-    t.decimal  "longitude",   :precision => 10, :scale => 0
+    t.float    "latitude"
+    t.float    "longitude"
     t.string   "city"
     t.string   "country"
   end
