@@ -1,0 +1,4 @@
+vacation:
+  title: vacation
+  slug: vacation-slug
+  user: <%= User.find(1) %>

@@ -1,0 +1,11 @@
+vacation_one:
+  title: "Silver Star Mountain"
+  location_type: LocationType.where({ :title => "Climb" }).first
+  flickr_set: "72157630169317316"
+  latitude: 48.547945
+  longitude: -120.585127
+  has_visited: true
+  city: "Mazama"
+  country: "Washington"
+  slug: "silver-star-mountain"
+  kml_url: "https://maps.google.com/maps/ms?authuser=0&vps=2&ie=UTF8&msa=0&output=kml&msid=216638687529279736200.0004c25e3a23e0a597b51"
