@@ -1,4 +1,5 @@
 vacation:
   title: vacation
   slug: vacation-slug
-  user: <%= User.find(1) %>
+  user_id: 1 
+  id: 1

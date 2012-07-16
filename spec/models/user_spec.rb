@@ -9,4 +9,9 @@ describe User do
   location_type = location_types(:vacation)
   @user.location_types.should include(location_type) 
  end
+
+ it "should find its locations of type" do
+  location = locations(:sample_vacation)
+  @user.locations.should include(location)
+ end
 end
