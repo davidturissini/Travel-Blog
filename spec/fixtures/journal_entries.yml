@@ -1,0 +1,6 @@
+sample_vacation_entry:
+ title: Sample
+ body: This is a journal  entry
+ location_id: 1
+ day: 2012-01-01
+ id: 1
