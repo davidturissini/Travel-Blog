@@ -5,4 +5,5 @@ Adventureblog::Application.routes.draw do
     resources :locations, {:path => ""}
    end
   end
+  match '/auth/:provider/callback' => "users#login"
 end
