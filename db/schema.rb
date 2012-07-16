@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120715075822) do
+ActiveRecord::Schema.define(:version => 20120716035710) do
 
   create_table "journal_entries", :force => true do |t|
     t.string   "title"
@@ -44,6 +44,13 @@ ActiveRecord::Schema.define(:version => 20120715075822) do
     t.string   "kml_url"
     t.integer  "user_id"
     t.integer  "location_type_id"
+  end
+
+  create_table "realm_accounts", :force => true do |t|
+    t.string  "provider_id"
+    t.integer "user_id"
+    t.string  "provider"
+    t.string  "access_token"
   end
 
   create_table "users", :force => true do |t|
