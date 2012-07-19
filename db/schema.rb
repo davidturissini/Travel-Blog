@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120716043816) do
+ActiveRecord::Schema.define(:version => 20120719035558) do
 
   create_table "journal_entries", :force => true do |t|
     t.string   "title"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20120716043816) do
     t.datetime "updated_at"
     t.string   "salt"
     t.string   "token"
+    t.string   "slug"
   end
 
 end
