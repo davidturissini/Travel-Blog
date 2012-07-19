@@ -1,3 +1,50 @@
-<div>
- User: <%= @user.name %>
-</div>
+ <section>
+  <%= render "location_types_workflow" %>
+ </section>
+ <section id="map" style="width:630px;height:400px;">
+ 
+ </section>
+ <%= form_tag user_location_type_locations_path(:user_id => @user.slug, :location_type_id => "asd"), :action => "create", :id => "location-form" do %>
+  <input type="text" name="title" /> 
+  <input type="text" name="city" />
+  <input type="text" name="country" />
+  <label>Visited?</label>
+  <input type="checkbox" name="has_visited" />
+  <input type="hidden" name="lat" value="" />
+  <input type="hidden" name="lng" value="" />
+  <input type="submit" value="Save" /> 
+ <% end %>
+
+<% content_for :scripts_footer do %>
+ <script>
+  var map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
+    mapTypeId: google.maps.MapTypeId.HYBRID
+   });
+   google.maps.event.addListener(map, "click", function (mapEvent) {
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
+     var address = (function () {
+      var hash
+      for(var i in e) {
+       if( e[i].types[0] == "locality" ) {
+        hash = e[i]
+       }
+     }
+     if( hash ) { 
+      return hash.formatted_address 
+     }
+     })(),
+     country = (function () {
+      for(var i in e) {
+       if( e[i].types[0] == "country" ) { return e[i].formatted_address }
+      }
+     })(), city
+     if( address ) {
+      city = address.split(",")[0]
+     }
+    })
+   })
+ </script>
+<% end %>

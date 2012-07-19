@@ -7,5 +7,13 @@ class User < ActiveRecord::Base
     self.save!
     self
   end
+ 
+  def self.new_traveller options
+   user = User.create(options)
+   user.slug = user.id
+   user.save!
+   LocationType.create_defaults({:user => user})
+   user
+  end
 
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719035558) do
+ActiveRecord::Schema.define(:version => 20120719063445) do
 
   create_table "journal_entries", :force => true do |t|
     t.string   "title"
@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(:version => 20120719035558) do
     t.string   "salt"
     t.string   "token"
     t.string   "slug"
+    t.boolean  "been_welcomed"
   end
 
 end

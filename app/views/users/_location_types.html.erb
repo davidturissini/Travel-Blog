@@ -1,0 +1,10 @@
+<% location_types.each do |location_type| %>
+ <section class="location-type">
+  <heading><%= location_type.title %></heading>
+  <ul>
+   <% location_type.locations.each do |loc| %>
+    <li><%= link_to loc.title, location_path(loc.slug) %></li>
+   <% end %>
+  </ul>
+ </section>
+<% end %>

@@ -14,7 +14,13 @@
  <body>
   <div id="fb-root"></div>
   <div id="container">
+   <section id="ribbon">
+     <% if current_user %>
+      Hello, <%= current_user.name %>
+     <% end %>
+   </section>
    <%= yield %>
   </div>
+  <%= yield :scripts_footer %>
  </body>
 </html>

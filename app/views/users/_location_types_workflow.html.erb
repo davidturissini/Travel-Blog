@@ -1,0 +1,15 @@
+<section>
+ <header>Welcome to AfterGlobe! Begin by telling us what kind of travel you do. This could be vacations, cruises, road trips or anything else! This will be how your travels are organized.  We've already started you out with a few examples that you could use or not. You'll always be able to come back to this list and add new types of travel.</header>
+ <section>
+  <ul>
+   <% @user.location_types.each do |type| %>
+    <li>
+     <article class="location-type">
+      <%= type.title %> 
+      <span class="close">x</span>
+     </article> 
+    </li>
+   <% end %> 
+  </ul>
+ </section>
+</section>
