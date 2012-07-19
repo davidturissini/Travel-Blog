@@ -3,8 +3,10 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-   cookie = JSON.parse( cookies[:user] )
-   user = User.where({:id => cookie["id"], :token => cookie["token"]}).first
+   if cookies[:user]
+    cookie = JSON.parse( cookies[:user] )
+    user = User.where({:id => cookie["id"], :token => cookie["token"]}).first
+   end
    user || nil
   end
 
