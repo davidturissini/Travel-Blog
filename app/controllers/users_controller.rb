@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+ def show
+   @user = User.find(params[:id]) 
+ end
+
  def login
   if params[:provider] == "facebook"
    login_facebook
@@ -22,8 +26,10 @@ class UsersController < ApplicationController
    realm.user.login!
    set_user_cookie(realm.user)
   else
+   name = request.env['omniauth.auth'].info.name
    user = User.create({
-    :name => request.env['omniauth.auth'].info.name
+    :name => name,
+    :slug => String.slugify(name)
     })
    RealmAccount.create({
     :provider => "facebook",
