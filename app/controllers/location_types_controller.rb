@@ -5,10 +5,22 @@ class LocationTypesController < TravellerController
   @location_types = LocationType.where({:user_id => params[:user_id]})
  end
 
+ def show
+  @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
+ end
+ 
+ def create
+  @location_type = LocationType.create(params[:location_type])
+  respond_to do |format|
+   format.json { render :json => @location_type }
+  end
+ end
+
  def update
   @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
   @location_type.update_attributes!(params[:location_type])
   respond_to do |format|
+   format.html { render :action => :show }
    format.json { render :json => @location_type }
   end
  end
