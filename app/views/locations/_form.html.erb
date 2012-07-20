@@ -1,0 +1,12 @@
+ <%= form_tag user_location_type_locations_path(:user_id => user.slug, :location_type_id => location_type.id), 
+ :method => "post", 
+ :id => "location-form" do %>
+  <input type="text" name="title" /> 
+  <input type="text" name="city" />
+  <input type="text" name="country" />
+  <label>Visited?</label>
+  <input type="checkbox" name="has_visited" />
+  <input type="hidden" name="lat" value="" />
+  <input type="hidden" name="lng" value="" />
+  <input type="submit" value="Save" /> 
+ <% end %>

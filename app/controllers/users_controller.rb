@@ -1,8 +1,15 @@
 class UsersController < ApplicationController
  def show
    @user = User.find_by_slug(params[:id]) 
-   respond_to do |format|
-     format.html
+   render_show
+ end
+
+ def me
+   if current_user
+    @user = current_user
+    render_show
+   else
+    redirect_to("/")
    end
  end
   
@@ -18,6 +25,12 @@ class UsersController < ApplicationController
  end
  
  protected
+ def render_show
+  respond_to do |format|
+   format.html { render "users/show" }
+  end
+ end
+
  def set_user_cookie user
    cookies[:user] = {
     :id => user.id,
