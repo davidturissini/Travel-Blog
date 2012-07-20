@@ -18,6 +18,10 @@ class LocationTypesController < TravellerController
 
  def update
   @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
+  if( @location_type.user != current_user )
+   render :json => {:status=>"denied"}, :status => 401
+   return
+  end
   @location_type.update_attributes!(params[:location_type])
   respond_to do |format|
    format.html { render :action => :show }
