@@ -1,4 +1,23 @@
+var MissingUserException = function ( message ) {
+ this.message = message
+ }
+
 var LocationType = Backbone.Model.extend({
+ initialize: function () {
+  if( this.has("user") ) {
+   var user_id = this.get("user").id
+   this.set({user_id:user_id, user:null}, {silent:true})
+  }
+  this.validate(this.attributes)
+ },
+ validate: function ( options ) {
+  if( !options.user_id ) {
+   throw new MissingUserException("User need to be specified") 
+  } 
+ } 
+ })
+
+var User = Backbone.Model.extend({
  
  })
 

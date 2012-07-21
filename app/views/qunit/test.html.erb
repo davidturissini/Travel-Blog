@@ -15,10 +15,26 @@
    ok( LocationType )
   }) 
 
-  test("should successfully fetch item from server", function () {
-   
+  test("should create new instance", function () {
+   var l = new LocationType({user:new User({id:1})})
+   ok( l instanceof LocationType )
+  })
+
+  test("should throw exception if traveler isn't specified", function () {
+   throws(
+    function () {
+     var l = new LocationType() 
+    },
+    MissingUserException,
+    "User needs to be specified"
+    )
+  })
+
+  module("User")
+ 
+  test("should exist", function () {
+   ok( User )
   }) 
-  
-  
+
  </script>
 <% end %>
