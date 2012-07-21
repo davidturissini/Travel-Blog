@@ -1,3 +1,17 @@
+var LocationType = Backbone.Model.extend({
+ 
+ })
+
+
+
+
+
+
+
+
+
+
+
 var Location = Backbone.Model.extend({
        idAttribute:"ID",
        initialize: function (json) {

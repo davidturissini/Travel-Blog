@@ -1,8 +1,9 @@
  <section>
   <%= render "location_types_workflow" %>
  </section>
- <section id="map" style="width:630px;height:400px;">
- 
+ <section>
+  <header><%= @user.name %>'s map</header>
+  <div id="map" style="width:630px;height:400px;"></div> 
  </section>
 
 <% content_for :scripts_footer do %>

@@ -4,6 +4,7 @@
   <title>Adventureblog</title>
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css">
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssgrids/grids-min.css">
+  <%= yield :stylesheets_header %>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <%= stylesheet_link_tag    "application" %>
@@ -21,6 +22,7 @@
    </section>
    <%= yield %>
   </div>
+  <%= javascript_include_tag "underscore", "backbone", "models" %>
   <%= yield :scripts_footer %>
  </body>
 </html>

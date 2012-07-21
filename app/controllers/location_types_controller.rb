@@ -7,6 +7,10 @@ class LocationTypesController < TravellerController
 
  def show
   @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
+  respond_to do |format|
+   format.html
+   format.json { render :json => @location_type }
+  end
  end
  
  def create

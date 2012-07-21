@@ -24,6 +24,16 @@ describe LocationTypesController do
    get :show, :user_id => @user.id, :id => @location_type.id
    response.should be_success
   end
+
+  it "should complete successfully with json format" do
+   get :show, :user_id => @user.id, :id => @location_type.id, :format => "json"
+   response.should be_success
+  end
+
+  it "should render a json representation of the location_type" do
+   get :show, :user_id => @user.id, :id => @location_type.id, :format => "json"
+   response.body.should == @location_type.to_json
+  end
  end
 
  context "/create" do
