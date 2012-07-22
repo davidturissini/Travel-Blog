@@ -1,0 +1,5 @@
+<%= form_tag user_location_types_path(:user_id => user.id) do %>
+ <input type="text" name="location_type[title]" placeholder="title" />
+ <input type="text" name="location_type[slug]" placeholder="slug" />
+ <input type="submit" value="Save" />
+<% end %>

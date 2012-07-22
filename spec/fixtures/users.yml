@@ -1,3 +1,6 @@
 user_one:
   name: Some traveller
   id: 1
+user_two:
+  name: Another traveler
+  id: 2

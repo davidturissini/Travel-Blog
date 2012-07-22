@@ -3,10 +3,15 @@ var MissingUserException = function ( message ) {
  }
 
 var LocationType = Backbone.Model.extend({
+ url: function () {
+  return this.user.url() + "/" + this.get("slug")
+ },
  initialize: function () {
   if( this.has("user") ) {
-   var user_id = this.get("user").id
+   var user = this.get("user"),
+   user_id = user.id
    this.set({user_id:user_id, user:null}, {silent:true})
+   this.user = user
   }
   this.validate(this.attributes)
  },
@@ -18,7 +23,9 @@ var LocationType = Backbone.Model.extend({
  })
 
 var User = Backbone.Model.extend({
- 
+ url: function () {
+  return "/" + this.get("slug")
+ } 
  })
 
 
@@ -100,19 +107,3 @@ var Location = Backbone.Model.extend({
      })
 
      var JournalEntry = Backbone.Model.extend({})
-
-var Climb = Location.extend({})
-var Drive = Location.extend({})
-      Blog = {
-        PostTypes: {
-         "vacations": {
-          className: Location
-         },
-         "drives": {
-          className: Drive
-         },
-         "climbs": {
-          className: Climb
-         }
-        }
-      }

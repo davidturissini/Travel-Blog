@@ -1,6 +1,4 @@
 class LocationTypesController < TravellerController
- before_filter :current_location_type
- 
  def index
   @location_types = LocationType.where({:user_id => params[:user_id]})
  end
@@ -14,9 +12,11 @@ class LocationTypesController < TravellerController
  end
  
  def create
-  @location_type = LocationType.create(params[:location_type])
-  respond_to do |format|
-   format.json { render :json => @location_type }
+  if validate_user? 
+   @location_type = LocationType.create(params[:location_type].merge({:user => current_user}))
+   respond_to do |format|
+    format.json { render :json => @location_type }
+   end
   end
  end
 
@@ -32,8 +32,12 @@ class LocationTypesController < TravellerController
    format.json { render :json => @location_type }
   end
  end
-
- def current_location_type
-  @location_type ||= current_traveller.location_types.find_by_slug(params[:location_type_id])
+ 
+ def validate_user?
+  if( current_user.nil? || params[:user_id].to_i != current_user.id )
+   unauthorized
+   return false
+  end
+  true
  end
 end

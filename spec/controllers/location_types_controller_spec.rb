@@ -43,6 +43,14 @@ describe LocationTypesController do
    post :create, :user_id => @user.id, :location_type => {:title => title}
    LocationType.find_by_title(title).should_not be_nil
   end
+
+  it "shouldn't create a new location type if the current_user's id doesn't match the user id in the url" do
+   request.cookies[:user] = {:id => users(:user_two).id}.to_json
+   title = "Location type that shouldn't be created"
+   loc_type_hash = {:title => title}
+   post :create, :user_id => @user.id, :location_type => loc_type_hash
+   LocationType.find_by_title(title).should be_nil 
+  end
  end
 
  context "/update" do

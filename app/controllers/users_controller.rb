@@ -9,7 +9,7 @@ class UsersController < ApplicationController
     @user = current_user
     render_show
    else
-    redirect_to("/")
+    unauthorized
    end
  end
   

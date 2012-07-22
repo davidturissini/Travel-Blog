@@ -14,4 +14,8 @@ class ApplicationController < ActionController::Base
    render :file => "public/404.html", :status => 404, :layout => false
   end
 
+  def unauthorized
+   redirect_to("/")
+  end
+
 end

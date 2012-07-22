@@ -19,8 +19,15 @@
    var l = new LocationType({user:new User({id:1})})
    ok( l instanceof LocationType )
   })
+ 
+  test("should have proper resource url", function () {
+   var user = new User({id:1,slug:"user"}),
+   slug = "location-type-slug",
+   l = new LocationType({user:user,slug:slug})
+   equal( l.url(), "/" + user.get("slug") + "/" + l.get("slug") )
+  })
 
-  test("should throw exception if traveler isn't specified", function () {
+  test("should throw exception if user isn't specified", function () {
    throws(
     function () {
      var l = new LocationType() 
@@ -35,6 +42,16 @@
   test("should exist", function () {
    ok( User )
   }) 
+
+  test("should create a new user", function () {
+   var u = new User()
+   ok( u instanceof User )
+  })
+
+  test("should return proper user url", function () {
+   var user = new User({id:1,slug:"user"})
+   equal( user.url(), "/" + user.get("slug") ) 
+  })
 
  </script>
 <% end %>
