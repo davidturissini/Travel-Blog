@@ -11,6 +11,10 @@ describe LocationTypesController do
  def stub_user_cookie
    request.cookies[:user] = {:id => @user.id}.to_json
  end
+  
+ def stub_referrer
+  @request.env['HTTP_REFERER'] = "/"
+ end
 
  context "/index" do
   it "should render index" do
@@ -39,6 +43,7 @@ describe LocationTypesController do
  context "/create" do
   it "should create a new location type" do
    stub_user_cookie
+   stub_referrer
    title = "brand new very very unique location type title"
    post :create, :user_id => @user.id, :location_type => {:title => title}
    LocationType.find_by_title(title).should_not be_nil
@@ -56,6 +61,7 @@ describe LocationTypesController do
  context "/destroy" do
   it "should destroy a location type" do
    stub_user_cookie
+   stub_referrer
    l_id = @location_type.id
    post :destroy, :user_id => @user.id, :id => l_id
    lambda { LocationType.find(l_id) }.should raise_error( ActiveRecord::RecordNotFound )
