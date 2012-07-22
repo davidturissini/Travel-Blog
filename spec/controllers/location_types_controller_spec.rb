@@ -53,6 +53,15 @@ describe LocationTypesController do
   end
  end
 
+ context "/destroy" do
+  it "should destroy a location type" do
+   stub_user_cookie
+   l_id = @location_type.id
+   post :destroy, :user_id => @user.id, :id => l_id
+   lambda { LocationType.find(l_id) }.should raise_error( ActiveRecord::RecordNotFound )
+  end
+ end
+
  context "/update" do
   it "should complete successfully" do
    stub_user_cookie

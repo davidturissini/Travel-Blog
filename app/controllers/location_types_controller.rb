@@ -20,16 +20,25 @@ class LocationTypesController < TravellerController
   end
  end
 
- def update
-  @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
-  if( @location_type.user != current_user )
-   render :json => {:status=>"denied"}, :status => 401
-   return
+ def destroy
+  if validate_user?
+   @location_type = LocationType.where({:user_id => current_user.id, :id => params[:id]}).first
+   @location_type.destroy
+   respond_to do |format|
+    format.html { redirect_to :controller => :users, :action => :show }
+    format.json { render :json => @location_type } 
+   end
   end
-  @location_type.update_attributes!(params[:location_type])
-  respond_to do |format|
-   format.html { render :action => :show }
-   format.json { render :json => @location_type }
+ end
+
+ def update
+  if( validate_user? )
+   @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
+   @location_type.update_attributes!(params[:location_type])
+   respond_to do |format|
+    format.html { render :action => :show }
+    format.json { render :json => @location_type }
+   end
   end
  end
  

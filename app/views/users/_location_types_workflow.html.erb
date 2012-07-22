@@ -6,7 +6,7 @@
     <li>
      <article class="location-type">
       <%= type.title %> 
-      <span class="close">x</span>
+      <%= button_to "x", user_location_type_path(:user_id => type.user.id, :id => type.id), :method => "delete", :class => "remove" %>
      </article> 
     </li>
    <% end %> 
