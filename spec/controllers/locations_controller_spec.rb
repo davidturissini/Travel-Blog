@@ -13,11 +13,21 @@ describe LocationsController do
    get :index, :user_id => @user.slug, :location_type_id => @location_type.slug
    response.should be_success
   end
+
+  it "should complete successfully with format=json" do
+   get :index, :user_id => @user.slug, :location_type_id => @location_type.slug, :format => :json
+   response.should be_success
+  end
  end
  
  describe "/show" do
   it "should complete successfully" do
    get :show, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+   response.should be_success
+  end
+
+  it "should complete successfully with format=json" do
+   get :show, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug, :format => :json
    response.should be_success
   end
  end

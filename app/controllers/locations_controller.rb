@@ -2,10 +2,18 @@ class LocationsController < LocationTypesController
 
  def index
   @locations = current_location_type.locations 
+  respond_to do |format|
+   format.html
+   format.json { render :json => @locations }
+  end
  end
 
  def show
   @location = current_location_type.locations.find_by_slug(params[:id]) 
+  respond_to do |format|
+   format.html
+   format.json { render :json => @locations }
+  end
  end
  
  protected
