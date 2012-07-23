@@ -1,5 +1,36 @@
-<article>
+<article id="location" data-json="<%= @location.to_json %>">
+ <section id="map"></section>
  <header>
-  <%= @location.title %>
+  <h2 id="location-title"><%= @location.title %></h2>
  </header>
+ <section id="journal_entries">
+  <% @location.journal_entries.each do |entry| %>
+   <header>
+    <h3 class="entry-title"><%= entry.title %></h3>
+   </header>
+   <p class="entry-body"><%= entry.body %></p>
+  <% end %>
+ </section>
 </article>
+
+
+<% content_for :scripts_footer do %>
+  <script>
+  window.addEventListener("DOMContentLoaded", function () {
+   var location = new Location( JSON.parse( document.getElementById("location").getAttribute("data-json") ) ),
+    locLatLng = new google.maps.LatLng(location.get("latitude"), location.get("longitude")),
+    map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: locLatLng,
+    mapTypeId: google.maps.MapTypeId.HYBRID
+   }),
+   markerHash = {
+    position: new google.maps.LatLng(location.get("latitude"), location.get("longitude")),
+    map: map,
+    title: location.get("title")
+   },
+   marker = new google.maps.Marker(markerHash)
+ 
+ })
+ </script>
+<% end %>

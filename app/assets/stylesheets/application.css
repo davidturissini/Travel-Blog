@@ -2,8 +2,15 @@ body { background:teal;}
 
 #container { margin:0px auto; width:920px; padding:20px; background:#fff; }
 
-#site-title { font-size:22px; }
+#site-title { font-size:26px; }
 
 #map { height:400px; }
 #map nav { display:none }
+
+/* LOCATION DETAIL PAGE */
+
+.locations-show #location { float:left; width: 660px; }
+.locations-show #location-title { font-size:22px; }
+.locations-show #location #map { float:right; width: 300px; height: 300px; }
+.locations-show #location #journal_entries .entry-title { margin-bottom:20px; font-size:18px; }
 
