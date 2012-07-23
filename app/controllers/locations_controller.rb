@@ -4,6 +4,7 @@ class LocationsController < ApplicationController
  def create
   if validate_user?
    @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
+   params[:location][:slug] = String.slugify( params[:location][:slug] )
    @location = Location.create!(params[:location].merge({:location_type => @location_type}))
    respond_to do |format| 
     format.html { redirect_to request.referrer }
@@ -30,7 +31,7 @@ class LocationsController < ApplicationController
  
  protected
  def current_location_type
-  @user ||= User.find_by_slug(params[:user_id])
+  @user = current_user || User.find_by_slug(params[:user_id])
   @location_type ||= @user.location_types.find_by_slug(params[:location_type_id]) 
  end
 end

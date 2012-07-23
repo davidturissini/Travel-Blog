@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
     self
   end
  
+  def logout
+   self.token = nil
+   self.save!
+  end
+ 
   def self.new_traveller options
    user = User.create(options)
    user.slug = user.id
