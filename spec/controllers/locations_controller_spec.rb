@@ -7,6 +7,34 @@ describe LocationsController do
   @user = @location_type.user
   @location = locations(:sample_vacation)
  end
+
+ def stub_user_cookie
+   request.cookies[:user] = @user.to_json
+ end
+  
+ def stub_referrer
+  @request.env['HTTP_REFERER'] = "/"
+ end
+ 
+ describe "/create" do
+  it "should create a new location" do
+   stub_referrer
+   stub_user_cookie
+   title = "new location title that should be created"
+   loc_hash = { :title => title }
+   post :create, :user_id => @user.slug, :location_type_id => @location_type.slug, :location => loc_hash
+   Location.find_by_title(title).should_not be_nil
+  end
+
+  it "should not create a new location if the user id doesn't match the cookie user id" do
+   stub_referrer
+   request.cookies[:user] = {:id => users(:user_two).id}.to_json
+   title = "new location title that should be created"
+   loc_hash = { :title => title }
+   post :create, :user_id => @user.slug, :location_type_id => @location_type.slug, :location => loc_hash
+   Location.find_by_title(title).should be_nil
+  end
+ end
  
  describe "/index" do
   it "should complete successfully" do

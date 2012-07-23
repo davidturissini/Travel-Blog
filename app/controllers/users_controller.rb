@@ -1,16 +1,16 @@
 class UsersController < ApplicationController
  def show
-   @user = User.find_by_slug(params[:id]) 
-   render_show
+  @user = User.find_by_slug(params[:id]) 
+  render_show
  end
 
  def me
-   if current_user
-    @user = current_user
-    render_show
-   else
-    unauthorized
-   end
+  if current_user
+   @user = current_user
+   render_show
+  else
+   unauthorized
+  end
  end
   
  def update

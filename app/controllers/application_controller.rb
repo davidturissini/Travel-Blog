@@ -18,4 +18,13 @@ class ApplicationController < ActionController::Base
    redirect_to("/")
   end
 
+ def validate_user?
+  user = User.find_by_slug(params[:user_id])
+  if( current_user.nil? || user.token != current_user.token )
+   unauthorized
+   return false
+  end
+  true
+ end
+
 end

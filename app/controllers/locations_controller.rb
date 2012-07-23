@@ -1,8 +1,15 @@
-class LocationsController < LocationTypesController 
+class LocationsController < ApplicationController
  helper_method :current_location_type
 
  def create
-
+  if validate_user?
+   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
+   @location = Location.create!(params[:location].merge({:location_type => @location_type}))
+   respond_to do |format| 
+    format.html { redirect_to request.referrer }
+    format.json { render :json => @location }
+   end  
+  end
  end
 
  def index

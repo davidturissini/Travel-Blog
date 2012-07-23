@@ -4,7 +4,7 @@ describe UsersController do
  fixtures :users
  context "show" do
   it "should render show" do
-   get :show, :id => 1
+   get :show, :id => users(:user_one).slug
    response.should be_success 
   end
  end

@@ -9,7 +9,7 @@ describe LocationTypesController do
  end
  
  def stub_user_cookie
-   request.cookies[:user] = {:id => @user.id}.to_json
+   request.cookies[:user] = @user.to_json
  end
   
  def stub_referrer
@@ -45,7 +45,7 @@ describe LocationTypesController do
    stub_user_cookie
    stub_referrer
    title = "brand new very very unique location type title"
-   post :create, :user_id => @user.id, :location_type => {:title => title}
+   post :create, :user_id => @user.slug, :location_type => {:title => title}
    LocationType.find_by_title(title).should_not be_nil
   end
 
@@ -53,7 +53,7 @@ describe LocationTypesController do
    request.cookies[:user] = {:id => users(:user_two).id}.to_json
    title = "Location type that shouldn't be created"
    loc_type_hash = {:title => title}
-   post :create, :user_id => @user.id, :location_type => loc_type_hash
+   post :create, :user_id => @user.slug, :location_type => loc_type_hash
    LocationType.find_by_title(title).should be_nil 
   end
  end
@@ -63,7 +63,7 @@ describe LocationTypesController do
    stub_user_cookie
    stub_referrer
    l_id = @location_type.id
-   post :destroy, :user_id => @user.id, :id => l_id
+   post :destroy, :user_id => @user.slug, :id => l_id
    lambda { LocationType.find(l_id) }.should raise_error( ActiveRecord::RecordNotFound )
   end
  end
@@ -73,7 +73,7 @@ describe LocationTypesController do
    stub_user_cookie
    new_title = "New Title"
    loc_type_id = @location_type.id
-   put :update, :user_id => @user.id, :id => @location_type.id, :location_type => { :title => new_title }
+   post :update, :user_id => @user.slug, :id => @location_type.slug, :location_type => { :title => new_title }
    response.should be_success
   end
 
@@ -81,7 +81,7 @@ describe LocationTypesController do
    stub_user_cookie
    new_title = "New Title"
    loc_type_id = @location_type.id
-   put :update, :user_id => @user.id, :id => @location_type.id, :location_type => { :title => new_title }
+   post :update, :user_id => @user.slug, :id => @location_type.slug, :location_type => { :title => new_title }
    LocationType.find(loc_type_id).title.should == new_title 
   end
  end

@@ -17,4 +17,8 @@ describe Location do
   journal_entry = journal_entries(:sample_vacation_entry)
   @location.journal_entries.should include(journal_entry) 
  end
+ 
+ it "should not create a location without a location type" do
+  lambda { Location.create!({:title => "asd"}) }.should raise_error(ActiveRecord::RecordInvalid)
+ end
 end

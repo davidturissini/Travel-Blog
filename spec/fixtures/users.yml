@@ -2,7 +2,9 @@ user_one:
   name: Some traveller
   id: 1
   slug: some-traveller
+  token: i2u4
 user_two:
   name: Another traveler
   id: 2
   slug: another-traveler
+  token: hk2ef

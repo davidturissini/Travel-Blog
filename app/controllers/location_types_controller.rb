@@ -36,7 +36,7 @@ class LocationTypesController < TravellerController
 
  def update
   if( validate_user? )
-   @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
+   @location_type = current_user.location_types.find_by_slug(params[:id])
    @location_type.update_attributes!(params[:location_type])
    respond_to do |format|
     format.html { render :action => :show }
@@ -45,11 +45,4 @@ class LocationTypesController < TravellerController
   end
  end
  
- def validate_user?
-  if( current_user.nil? || params[:user_id].to_i != current_user.id )
-   unauthorized
-   return false
-  end
-  true
- end
 end
