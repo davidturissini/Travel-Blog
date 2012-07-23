@@ -3,6 +3,7 @@ body { background:teal;}
 #container { margin:0px auto; width:920px; padding:20px; background:#fff; }
 
 #site-title { font-size:22px; }
-#map { height:400px; }
 
+#map { height:400px; }
+#map nav { display:none }
 

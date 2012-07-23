@@ -1,12 +1,22 @@
- <%= form_tag user_location_type_locations_path(:user_id => user.slug, :location_type_id => location_type.id), 
- :method => "post", 
+<% 
+if !location
+ url_method = user_location_type_locations_path(:user_id => user.slug, :location_type_id => location_type.slug)
+ method = :post
+else
+ url_method = user_location_type_location_path(:user_id => user.slug, :location_type_id => location_type.slug, :id => location.slug)
+ method = :put
+end 
+%>
+
+ <%= form_tag url_method, 
+ :method => method, 
  :id => "location-form" do %>
-  <input type="text" name="title" /> 
-  <input type="text" name="city" />
-  <input type="text" name="country" />
-  <label>Visited?</label>
-  <input type="checkbox" name="has_visited" />
-  <input type="hidden" name="lat" value="" />
-  <input type="hidden" name="lng" value="" />
+  <%= tag :input, :type => "hidden", :value => location ? location.latitude : "", :name => "location[latitude]" %>
+  <%= tag :input, :type => "hidden", :value => location ? location.longitude : "", :name => "location[longitude]" %>
+  <%= tag :input, :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
+  <%= tag :input, :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
+  <%= tag :input, :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
+  <%= tag :input, :type => "checkbox", :checked => location && location.has_visited === true ? "checked" : "", :name => "location[has_visited]", :id => "location-visited" %>
+  <label for="location-visited">Visited?</label>
   <input type="submit" value="Save" /> 
  <% end %>

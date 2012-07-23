@@ -16,6 +16,24 @@ describe LocationsController do
   @request.env['HTTP_REFERER'] = "/"
  end
  
+ describe "/edit" do
+  it "should complete successfully" do
+   stub_user_cookie
+   get :edit, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+   response.should be_success
+  end 
+ end
+
+ describe "/update" do
+  it "should update a location successfully" do
+   stub_referrer
+   stub_user_cookie
+   new_title = "this is a very very very new title"
+   put :update, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug, :location => { :title => new_title }
+   Location.find(@location.id).title.should == new_title 
+  end
+ end
+ 
  describe "/create" do
   it "should create a new location" do
    stub_referrer
