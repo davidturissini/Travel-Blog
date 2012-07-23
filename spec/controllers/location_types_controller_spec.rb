@@ -18,24 +18,24 @@ describe LocationTypesController do
 
  context "/index" do
   it "should render index" do
-   get :index, :user_id => @user.id, :id => @location_type.id
+   get :index, :user_id => @user.slug, :id => @location_type.slug
    response.should be_success 
   end
  end
 
  context "/show" do
   it "should complete successfully" do
-   get :show, :user_id => @user.id, :id => @location_type.id
+   get :show, :user_id => @user.slug, :id => @location_type.slug
    response.should be_success
   end
 
   it "should complete successfully with json format" do
-   get :show, :user_id => @user.id, :id => @location_type.id, :format => "json"
+   get :show, :user_id => @user.slug, :id => @location_type.slug, :format => "json"
    response.should be_success
   end
 
   it "should render a json representation of the location_type" do
-   get :show, :user_id => @user.id, :id => @location_type.id, :format => "json"
+   get :show, :user_id => @user.slug, :id => @location_type.slug, :format => "json"
    response.body.should == @location_type.to_json
   end
  end

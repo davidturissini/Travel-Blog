@@ -4,7 +4,9 @@ class LocationTypesController < TravellerController
  end
 
  def show
-  @location_type = LocationType.where({:user_id => params[:user_id], :id => params[:id]}).first
+  @user = User.find_by_slug(params[:user_id])
+  @location_type = @user.location_types.find_by_slug(params[:id])
+  @locations = @location_type.locations
   respond_to do |format|
    format.html
    format.json { render :json => @location_type }

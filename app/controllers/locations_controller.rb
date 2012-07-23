@@ -1,4 +1,9 @@
 class LocationsController < LocationTypesController 
+ helper_method :current_location_type
+
+ def create
+
+ end
 
  def index
   @locations = current_location_type.locations 
