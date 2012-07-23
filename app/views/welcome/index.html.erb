@@ -2,7 +2,7 @@
  <nav>
   <ul>
    <% current_user.locations.each do |location| %>
-    <li><%= location_link(location) %></li> 
+    <li><%= location_link(location, {"data-json" => location.to_json}) %></li> 
    <% end %>
   </ul>
  </nav>
@@ -10,10 +10,30 @@
 
 <% content_for :scripts_footer do %>
  <script>
-  var map = new google.maps.Map(document.getElementById("map"), {
+  window.addEventListener("DOMContentLoaded", function () {
+   var mapLocations = Array.prototype.slice.call(document.getElementById("map").getElementsByClassName("location"), 0),
+    map = new google.maps.Map(document.getElementById("map"), {
     zoom: 4,
     center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
     mapTypeId: google.maps.MapTypeId.HYBRID
    });
+
+   mapLocations.forEach(function (elem) {
+    var location = new Location(JSON.parse(elem.getAttribute("data-json"))),
+    markerHash = {
+      position: new google.maps.LatLng(location.get("latitude"), location.get("longitude")),
+      map: map,
+      title: location.get("title")
+     },
+     marker = new google.maps.Marker(markerHash)     
+     google.maps.event.addListener(marker, "click", function () {
+       window.location.href = elem.getAttribute("href")
+     })
+   })
+  
+  })
+
+  
+ 
  </script>
 <% end %>
