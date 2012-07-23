@@ -15,6 +15,7 @@ class LocationTypesController < TravellerController
  
  def create
   if validate_user? 
+   params[:location_type][:slug] = String.slugify(params[:location_type][:slug])
    @location_type = LocationType.create(params[:location_type].merge({:user => current_user}))
    respond_to do |format|
     format.html { redirect_to request.referrer }

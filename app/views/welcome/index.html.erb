@@ -1,12 +1,19 @@
-<div class="yui3-g"> 
- <div class="yui3-u-1-2">
-  <section id="welcome">
-   <header>For the love of Adventure</header>
-   <p>Welcome to where you can read about all about travels and adventures</p>
-  </section>
- </div>
- <div class="yui3-u-1-2">
-  <nav id="locations-nav">
-  </nav>
- </div>
-</div>
+<section id="map">
+ <nav>
+  <ul>
+   <% current_user.locations.each do |location| %>
+    <li><%= location_link(location) %></li> 
+   <% end %>
+  </ul>
+ </nav>
+</section>
+
+<% content_for :scripts_footer do %>
+ <script>
+  var map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 4,
+    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
+    mapTypeId: google.maps.MapTypeId.HYBRID
+   });
+ </script>
+<% end %>

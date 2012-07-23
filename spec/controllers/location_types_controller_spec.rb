@@ -49,6 +49,15 @@ describe LocationTypesController do
    LocationType.find_by_title(title).should_not be_nil
   end
 
+  it "should create a new location type with an appropriate slug" do
+   stub_user_cookie
+   stub_referrer
+   title = "brand new very very unique location type title"
+   slug = '@O$I#FJ@$IGJWEROIGJQ#GJPQ#$)GJQ_#)$JG_#)$GJ#$G'
+   post :create, :user_id => @user.slug, :location_type => {:title => title,:slug => slug}
+   LocationType.find_by_title(title).slug.should == String.slugify(slug)
+  end
+
   it "shouldn't create a new location type if the current_user's id doesn't match the user id in the url" do
    request.cookies[:user] = {:id => users(:user_two).id}.to_json
    title = "Location type that shouldn't be created"

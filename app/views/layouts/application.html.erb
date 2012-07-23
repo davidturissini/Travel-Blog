@@ -15,11 +15,9 @@
  <body>
   <div id="fb-root"></div>
   <div id="container">
-   <section id="ribbon">
-     <% if current_user %>
-      Hello, <%= current_user.name %>
-     <% end %>
-   </section>
+   <header>
+    <h1 id="site-title">Dave and Melissa's Travel Blog</h1>
+   </header>
    <%= yield %>
   </div>
   <%= javascript_include_tag "underscore", "backbone", "models" %>
