@@ -51,7 +51,7 @@ class LocationsController < ApplicationController
  
  protected
  def current_location_type
-  @user = current_user || User.find_by_slug(params[:user_id])
+  @user = User.find_by_slug(params[:user_id])
   @location_type ||= @user.location_types.find_by_slug(params[:location_type_id]) 
  end
 end

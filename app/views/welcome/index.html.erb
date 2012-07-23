@@ -1,7 +1,7 @@
 <section id="map">
  <nav>
   <ul>
-   <% current_user.locations.each do |location| %>
+   <% @locations.each do |location| %>
     <li><%= location_link(location, {"data-json" => location.to_json}) %></li> 
    <% end %>
   </ul>
