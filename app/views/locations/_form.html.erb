@@ -16,6 +16,8 @@ end
   <%= tag :input, :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
   <%= tag :input, :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
   <%= tag :input, :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
+  <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
+  <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
   <label for="location-visited">Visited?</label>
   <input type="submit" value="Save" /> 

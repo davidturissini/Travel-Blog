@@ -4,9 +4,12 @@ Adventureblog::Application.routes.draw do
   match '/qunit' => "qunit#test"
   match '/me' => "users#me"
   match '/me/logout' => "users#logout"
+  
   resources :users, {:path => ""} do 
    resources :location_types, {:path => ""}  do 
-    resources :locations, {:path => ""}
+    resources :locations, {:path => ""} do
+     resources :journal_entries, :except => [:index, :show]
+    end
    end
   end
 end
