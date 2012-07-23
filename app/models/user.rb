@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
     self
   end
  
-  def logout
+  def logout!
    self.token = nil
    self.save!
   end

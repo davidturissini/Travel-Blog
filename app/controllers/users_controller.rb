@@ -17,6 +17,13 @@ class UsersController < ApplicationController
  
  end
 
+ def logout
+  current_user.logout!
+  respond_to do |format|
+   format.html { redirect_to("/") }
+  end
+ end
+
  def login
   if params[:provider] == "facebook"
    login_facebook
