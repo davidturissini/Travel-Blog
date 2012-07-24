@@ -9,42 +9,62 @@ require File.expand_path('../config/application', __FILE__)
 Adventureblog::Application.load_tasks
 
 namespace :travel do
- task :stub do
-   user = User.create({
-     :name => "David"
-   })
-
-   ["Climb", "Drive", "Vacation"].each do |loc|
-     LocationType.create({
-       :slug => loc.downcase.pluralize,
-       :title => loc,
-       :user => user
-     })
+ task :wp_import do
+  user = User.first
+  location_type = user.location_types.find_by_slug("vacations")
+  vacations = []
+  vacations_file = File.open("#{Rails.root}/tmp/vacations.xml")
+  vacations_xml = Nokogiri::XML(vacations_file)
+  wp_ns = "http://wordpress.org/export/1.2/"
+  item_nodes = vacations_xml.xpath("//item").each do |item|
+   id = item.xpath("wp:post_id", "wp" => wp_ns).first.text.to_i
+   vacation = {
+    :title => item.xpath("title").text,
+    :slug => item.xpath("wp:post_name", "wp" => wp_ns).text,
+    :location_type => location_type
+   }
+   item.xpath("wp:postmeta", "wp" => wp_ns).each do |meta_tag|
+    meta_key = meta_tag.xpath("wp:meta_key", "wp" => wp_ns).text
+    meta_value = meta_tag.xpath("wp:meta_value", "wp" => wp_ns).text
+    if meta_key == "lng"
+     vacation[:longitude] = meta_value
+    elsif meta_key == "lat"
+     vacation[:latitude] = meta_value 
+    elsif meta_key != "_edit_last"
+     vacation[meta_key] = meta_value 
+    end
    end
-   Location.create({
-     :title => "Silver Star Mountain",
-     :location_type => LocationType.where({ :title => "Climb" }).first,
-     :flickr_set => "72157630169317316",
-     :latitude => 48.547945,
-     :longitude => -120.585127,
-     :has_visited => true,
-     :city => "Mazama",
-     :country => "Washington",
-     :slug => "silver-star-mountain",
-     :kml_url => "https://maps.google.com/maps/ms?authuser=0&vps=2&ie=UTF8&msa=0&output=kml&msid=216638687529279736200.0004c25e3a23e0a597b51"
-   })
-   Location.create({
-     :title => "US 101",
-     :location_type => LocationType.where({ :title => "Drive" }).first,
-     :slug => "us-101",
-     :kml_url => "https://maps.google.com/maps/ms?authuser=0&vps=2&hl=en&ie=UTF8&msa=0&output=kml&msid=216638687529279736200.0004c2b68bcbae2fdf523"
-   })
+   
+   location = Location.new(vacation)
+   location.id = id.to_i
+   location.save!
+  end
  
-   Location.create({
-     :title => "Ben Coda, Ad Brown and our neighbors to the North",
-     :slug => "test-ui",
-     :location_type => LocationType.where({ :title => "Vacation" }).first,
-     :flickr_set => "72157630027148785"
-   })
+  journal_entries_file = File.open("#{Rails.root}/tmp/journal-entries.xml")
+  entries_xml = Nokogiri::XML(journal_entries_file)
+  item_nodes = entries_xml.xpath("//item").each do |entry_node|
+    content_ns = "http://purl.org/rss/1.0/modules/content/"
+    entry = {
+     :title => entry_node.xpath("title").text,
+     :body => entry_node.xpath("content:encoded", "content" => content_ns).first.content
+    }
+    entry_node.xpath("wp:postmeta", "wp" => wp_ns).each do |meta_tag|
+     meta_key = meta_tag.xpath("wp:meta_key", "wp" => wp_ns).text
+     meta_value = meta_tag.xpath("wp:meta_value", "wp" => wp_ns).text
+     if meta_key == "location_id"
+      if(meta_value.to_i == 28 ) 
+       puts meta_tag.inspect + " IIII"
+      end
+      entry[:location] = Location.find(meta_value.to_i)
+     elsif meta_key != "_day" && meta_key != "_location_id" && meta_key != "_edit_last"
+      entry[meta_key] = meta_value
+     end
+    end
+    if entry[:location]
+     JournalEntry.create(entry)
+    else
+     puts "No Location found for entry #{entry[:title]}"
+    end
+  end
  end
 end

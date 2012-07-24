@@ -8,7 +8,7 @@
    <header>
     <h3 class="entry-title"><%= entry.title %></h3>
    </header>
-   <p class="entry-body"><%= entry.body %></p>
+   <p class="entry-body"><%= entry.body.html_safe %></p>
   <% end %>
  </section>
 </article>
