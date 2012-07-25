@@ -43,6 +43,7 @@ class LocationsController < ApplicationController
 
  def show
   @location = current_location_type.locations.find_by_slug(params[:id]) 
+  raise ActiveRecord::RecordNotFound if !@location 
   respond_to do |format|
    format.html
    format.json { render :json => @locations }

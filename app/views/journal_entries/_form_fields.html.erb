@@ -1,4 +1,6 @@
-<%= tag :input, :value => journal_entry ? journal_entry.title : "", :name => "journal_entry[title]" %>
-<textarea name="journal_entry[body]"><%= journal_entry ? journal_entry.body : "" %></textarea>
-<%= tag :input, :value => journal_entry ? journal_entry.day : "", :name => "journal_entry[day]" %>
-<input type="submit" value="Save" />
+<div id="journal-entry-fields">
+ <%= tag :input, :placeholder => "Title", :value => journal_entry ? journal_entry.title : "", :name => "journal_entry[title]", :class => "journal-entry-title" %>
+ <textarea class="journal-entry-body" name="journal_entry[body]"><%= journal_entry ? journal_entry.body : "" %></textarea>
+ <%= tag :input, :placeholder => "Day", :value => journal_entry ? journal_entry.day : "", :name => "journal_entry[day]", :class => "journal-entry-day" %>
+ <input type="submit" value="Save" />
+</div>

@@ -8,55 +8,7 @@ else
 end 
 %>
 
- <%= form_tag url_method, 
- :method => method, 
- :id => "location-form" do %>
-  <%= tag :input, :type => "hidden", :value => location ? location.latitude : "", :name => "location[latitude]", :class => "location-lat"  %>
-  <%= tag :input, :type => "hidden", :value => location ? location.longitude : "", :name => "location[longitude]", :class => "location-long" %>
-  <%= tag :input, :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
-  <%= tag :input, :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
-  <%= tag :input, :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
-  <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
-  <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
-  <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
-  <label for="location-visited">Visited?</label>
-  <input type="submit" value="Save" /> 
-  <section id="location-map" style="height:500px"></section>
- <% end %>
-
-<% content_for :scripts_footer do %>
- <script>
-  var formElem = document.getElementById("location-form"),
-    map = new google.maps.Map(document.getElementById("location-map"), {
-    zoom: 4,
-    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
-    mapTypeId: google.maps.MapTypeId.HYBRID
-   });
-   google.maps.event.addListener(map, "click", function (mapEvent) {
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
-     var address = (function () {
-      var hash
-      for(var i in e) {
-       if( e[i].types[0] == "locality" ) {
-        hash = e[i]
-       }
-     }
-     if( hash ) { 
-      return hash.formatted_address 
-     }
-     })(),
-     country = (function () {
-      for(var i in e) {
-       if( e[i].types[0] == "country" ) { return e[i].formatted_address }
-      }
-     })(), city
-     if( address ) {
-      city = address.split(",")[0]
-     }
-    })
-   formElem.getElementsByClassName("location-long")[0].setAttribute("value", mapEvent.latLng.lng())     
-   formElem.getElementsByClassName("location-lat")[0].setAttribute("value", mapEvent.latLng.lat())     
-   })
- </script>
+<%= form_tag url_method, :method => method, :id => "location-form" do %>
+ <%= render "form_fields", :location => location %>
 <% end %>
+

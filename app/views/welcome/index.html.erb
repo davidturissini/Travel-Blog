@@ -2,7 +2,7 @@
  <nav>
   <ul>
    <% @locations.each do |location| %>
-    <li><%= location_link(location, {"data-json" => location.to_json}) %></li> 
+    <li><%= location_link(location, { "data-location_type" => location.location_type.to_json, "data-json" => location.to_json}) %></li> 
    <% end %>
   </ul>
  </nav>
@@ -18,20 +18,25 @@
     mapTypeId: google.maps.MapTypeId.HYBRID
    });
 
+   var infoWindow = new LocationInfoWindow({
+    map:map
+   })
    mapLocations.forEach(function (elem) {
     var location = new Location(JSON.parse(elem.getAttribute("data-json"))),
-    markerHash = {
-      position: new google.maps.LatLng(location.get("latitude"), location.get("longitude")),
-      map: map,
-      title: location.get("title")
-     },
-     marker = new google.maps.Marker(markerHash)     
-     google.maps.event.addListener(marker, "click", function () {
-       window.location.href = elem.getAttribute("href")
-     })
+    locationType = new LocationType(JSON.parse(elem.getAttribute("data-location_type")))
+    new LocationMarker({
+     map:map,
+     locationType:locationType,
+     model: location,
+     click: function () {
+      infoWindow.setLocation(location).render().open()
+      map.panTo(new google.maps.LatLng(location.get("latitude"), location.get("longitude")))
+     }
+    }).render()
    })
   
   })
+
 
   
  

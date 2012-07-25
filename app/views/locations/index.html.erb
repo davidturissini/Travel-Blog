@@ -1,12 +1,12 @@
-<ul>
- <% @locations.each do |loc| %>
-  <li><%= link_to loc.title, location_path(loc) %></li>
- <% end %>
-</ul>
-<% if current_user && current_user.slug == params[:user_id] %>
- <%= form_tag user_location_type_locations_path(:user_id => current_user.slug, :location_type_id => @location_type.slug) do %>
-  <input type="text" name="location[title]" placeholder="title" />
-  <input type="text" name="location[slug]" placeholder="slug" />
-  <input type="submit" value="Submit" />
- <% end %>
-<% end %>
+<section id="location-type">
+ <header id="location-type-title">
+  <h1>
+   <%= @location_type.title %>
+  </h1>
+ </header>
+ <ul> 
+  <% @locations.each do |loc| %>
+   <li><%= link_to loc.title, location_path(loc) %></li>
+  <% end %>
+ </ul>
+</section>

@@ -1,5 +1,5 @@
 <article id="location" data-json="<%= @location.to_json %>">
- <section id="map"></section>
+ <figure id="map"></figure>
  <header>
   <h2 id="location-title"><%= @location.title %></h2>
  </header>
@@ -9,28 +9,37 @@
     <h3 class="entry-title"><%= entry.title %></h3>
    </header>
    <p class="entry-body"><%= entry.body.html_safe %></p>
+   <% if current_user.owns?(entry) %>
+    <%= link_to "Edit Entry", edit_user_location_type_location_journal_entry_path({
+     :user_id => current_user.slug,
+     :location_type_id => @location.location_type.slug,
+     :location_id => @location.slug,
+     :id => entry.id
+     }), :class => "edit-journal-entry-link"
+    %>
+   <% end %>
+  <% end %>
+  <% if current_user.owns?(@location) %>
+   <%= link_to "Add new journal entry for #{@location.title}", new_user_location_type_location_journal_entry_path({
+    :user_id => current_user.slug,
+    :location_type_id => @location.location_type.slug,
+    :location_id => @location.slug
+   }), :class => "new-journal-entry-link"
+   %>
   <% end %>
  </section>
 </article>
 
 
 <% content_for :scripts_footer do %>
-  <script>
+ <script>
   window.addEventListener("DOMContentLoaded", function () {
-   var location = new Location( JSON.parse( document.getElementById("location").getAttribute("data-json") ) ),
-    locLatLng = new google.maps.LatLng(location.get("latitude"), location.get("longitude")),
-    map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: locLatLng,
+   var location = new Location( JSON.parse( document.getElementById("location").getAttribute("data-json") ) )
+   map = new google.maps.Map(document.getElementById("map"), {
+    zoom: 11,
+    center: new google.maps.LatLng(location.get("latitude"),location.get("longitude")),
     mapTypeId: google.maps.MapTypeId.HYBRID
-   }),
-   markerHash = {
-    position: new google.maps.LatLng(location.get("latitude"), location.get("longitude")),
-    map: map,
-    title: location.get("title")
-   },
-   marker = new google.maps.Marker(markerHash)
- 
- })
+   });
+  })
  </script>
 <% end %>

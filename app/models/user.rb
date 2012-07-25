@@ -1,6 +1,16 @@
 class User < ActiveRecord::Base
   has_many :location_types
   has_many :locations, :through => :location_types
+
+  def self.anonymous
+   User.new({
+    :name => "anonymous"
+   })
+  end
+  
+  def owns? content
+   content.user == self
+  end
    
   def login!
     self.token = rand(36**8).to_s(36) 

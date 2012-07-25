@@ -15,12 +15,13 @@
  <body class="<%= params[:controller] %>-<%= params[:action] %>">
   <div id="fb-root"></div>
   <div id="container">
-   <header>
+   <header id="site-header">
     <h1 id="site-title"><%= link_to "Dave and Melissa's Travel Blog", root_path %></h1>
    </header>
    <%= yield %>
+   <footer></footer>
   </div>
-  <%= javascript_include_tag "underscore", "backbone", "models" %>
+  <%= javascript_include_tag "underscore", "backbone", "models", "views" %>
   <%= yield :scripts_footer %>
  </body>
 </html>

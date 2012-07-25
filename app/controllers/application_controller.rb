@@ -3,11 +3,11 @@ class ApplicationController < ActionController::Base
   helper_method :current_user
 
   def current_user
-   if cookies[:user]
+   if cookies[:user] && cookies[:user] != ""
     cookie = JSON.parse( cookies[:user] )
     user = User.where({:id => cookie["id"], :token => cookie["token"]}).first
    end
-   user || nil
+   user || User.anonymous
   end
 
   def render_404

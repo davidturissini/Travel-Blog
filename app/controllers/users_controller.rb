@@ -19,6 +19,7 @@ class UsersController < ApplicationController
 
  def logout
   current_user.logout!
+  cookies[:user] = {}
   respond_to do |format|
    format.html { redirect_to("/") }
   end

@@ -1,8 +1,12 @@
-body { background:teal;}
+body { background:teal; font-size:14px; font-family:Helvetica;  }
+
+a { text-decoration:none; }
+a:hover { text-decoration: underline; }
 
 #container { margin:0px auto; width:920px; padding:20px; background:#fff; }
 
-#site-title { font-size:26px; }
+#site-header { margin:0 0 20px; padding-bottom:20px; border-bottom: 1px solid #ccc; }
+#site-header #site-title { font-size:32px; }
 
 #map { height:400px; }
 #map nav { display:none }
@@ -11,6 +15,18 @@ body { background:teal;}
 
 .locations-show #location { float:left; width: 660px; }
 .locations-show #location-title { font-size:22px; }
-.locations-show #location #map { float:right; width: 300px; height: 300px; }
-.locations-show #location #journal_entries .entry-title { margin-bottom:20px; font-size:18px; }
+.locations-show #location #map { float:right; margin:0 0 20px 20px; width: 300px; height: 300px; }
 
+.locations-show #location #journal_entries .entry-title { margin:20px 0; font-size:18px; }
+.locations-show #location #journal_entries .entry-body { line-height:16px; }
+.locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; float:right; }
+.locations-show #location #journal_entries .new-journal-entry-link { clear: both; float:right; display:inline-block; margin-top:10px; }
+
+/* JOURNAL ENTRY FORM */
+
+#journal-entry-fields .journal-entry-title { display:block; width:100%; font-size:22px; }
+#journal-entry-fields .journal-entry-body { display:block; margin:20px 0; width:100%; min-height:300px; }
+#journal-entry-fields .journal-entry-day { display:block; margin-bottom:20px; width:100%; font-size:22px; }
+
+/* CONTAINER FOOTER */
+#container > footer { clear: both; }

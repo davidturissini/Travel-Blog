@@ -1,0 +1,83 @@
+ <%= tag :input, :type => "hidden", :value => location ? location.latitude : "", :name => "location[latitude]", :class => "location-lat"  %>
+ <%= tag :input, :type => "hidden", :value => location ? location.longitude : "", :name => "location[longitude]", :class => "location-long" %>
+ <%= tag :input, :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
+ <%= tag :input, :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
+ <%= tag :input, :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
+ <%= tag :input, :placeholder => "Primary Photo Url", :value => location ? location.photo_url : "", :name => "location[photo_url]" %>
+ <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
+ <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
+ <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
+ <label for="location-visited">Visited?</label>
+ <input type="submit" value="Save" /> 
+ <section id="photos"></section>
+ <section id="location-map" style="height:500px"></section>
+
+
+<% content_for :scripts_footer do %>
+ <script>
+
+  $.ajax({
+           url:"http://api.flickr.com/services/rest",
+           dataType:"jsonp",
+           data: {
+             api_key:"951c0814caade8b4fc2b381778269126",
+             method: "flickr.photosets.getPhotos",
+             format:"json",
+             photoset_id: "<%= location.flickr_set %>"
+           },
+           jsonpCallback:"jsonFlickrApi",
+           success:function (e) {
+             var photos = []
+             if( e.photoset ) {
+             $.each(e.photoset.photo, function (idx, e) {
+                 e.url = function () {
+                 return "http://farm" + e.farm + ".static.flickr.com/" + e.server + "/" + e.id + "_" + e.secret + ".jpg"
+                 } 
+                 e.thumbnail = function (size) { 
+                 var ary = e.url().split("."),
+                     index = ary.length - 2
+                   ary[index] = ary[index] + "_" + size
+                   return ary.join(".");
+                 }
+                 var img = document.createElement("img")
+                 img.setAttribute("src", e.url())
+                 document.getElementById("photos").appendChild(img)
+               })
+             }
+           }
+         })
+
+  var formElem = document.getElementById("location-form"),
+    map = new google.maps.Map(document.getElementById("location-map"), {
+    zoom: 4,
+    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
+    mapTypeId: google.maps.MapTypeId.HYBRID
+   });
+   google.maps.event.addListener(map, "click", function (mapEvent) {
+    geocoder = new google.maps.Geocoder();
+    geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
+     var address = (function () {
+      var hash
+      for(var i in e) {
+       if( e[i].types[0] == "locality" ) {
+        hash = e[i]
+       }
+     }
+     if( hash ) { 
+      return hash.formatted_address 
+     }
+     })(),
+     country = (function () {
+      for(var i in e) {
+       if( e[i].types[0] == "country" ) { return e[i].formatted_address }
+      }
+     })(), city
+     if( address ) {
+      city = address.split(",")[0]
+     }
+    })
+   formElem.getElementsByClassName("location-long")[0].setAttribute("value", mapEvent.latLng.lng())     
+   formElem.getElementsByClassName("location-lat")[0].setAttribute("value", mapEvent.latLng.lat())     
+   })
+ </script>
+<% end %>

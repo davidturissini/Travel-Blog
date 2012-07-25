@@ -1,0 +1,7 @@
+<%= form_tag user_location_type_path(:user_id => current_user.slug, :id => @location_type.slug), :method => "put" do %>
+ <%= image_tag @location_type.icon_url %>
+ <%= tag :input, :name => "location_type[icon_url]", :value => @location_type.icon_url %>
+ <%= image_tag @location_type.icon_not_visited_url %>
+ <%= tag :input, :name => "location_type[icon_not_visited_url]", :value => @location_type.icon_not_visited_url %>
+ <input type="submit" value="Save" />
+<% end %>
