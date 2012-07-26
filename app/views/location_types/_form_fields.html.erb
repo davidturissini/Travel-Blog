@@ -1,0 +1,7 @@
+ <%= tag :input, :value => location_type.title, :type => "text", :name => "location_type[title]", :placeholder => "title" %>
+ <input type="text" name="location_type[slug]" placeholder="slug" />
+ <%= image_tag @location_type.icon_url %>
+ <%= tag :input, :name => "location_type[icon_url]", :value => @location_type.icon_url %>
+ <%= image_tag @location_type.icon_not_visited_url %>
+ <%= tag :input, :name => "location_type[icon_not_visited_url]", :value => @location_type.icon_not_visited_url %>
+ <input type="submit" value="Save" />

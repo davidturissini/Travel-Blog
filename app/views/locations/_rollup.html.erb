@@ -6,9 +6,11 @@
  <% if location.photo_url %>
   <%= image_tag location.photo_url, :width => 90, :class => "location-photo" %>
  <% end %>
- <p class="location-teaser">
-  <%= truncate(location.teaser.html_safe, :length => 300) %>
-  <%= link_to "Continue Reading", location_path(location), :class => "more" %>
- </p>
+ <% if location.teaser %>
+  <p class="location-teaser">
+   <%= truncate(location.teaser.html_safe, :length => 300) %>
+   <%= link_to "Continue Reading", location_path(location), :class => "more" %>
+  </p>
+ <% end %>
  <br class="clear" />
 </article>

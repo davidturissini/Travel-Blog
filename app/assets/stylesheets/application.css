@@ -35,11 +35,15 @@ br.clear { height:0; line-height:0 }
 .locations-show #location #journal_entries .new-journal-entry-link { clear: both; float:right; display:inline-block; margin-top:10px; }
 
 /* LOCATION FORM */
-#location-form #location-meta { margin-right:200px; }
+#location-form input[type=text] { border:0px; } 
+#location-form #location-mashup { margin:10px 0; }
+#location-form #location-title { display:block; margin-bottom:10px; width:775px; font-size:22px; }
+#location-form #location-meta { margin:0 200px 0 140px; }
 #location-form #location-photo img { float:left; padding-right:20px; width: 120px; }
 #location-form #flickr-photos { float:right; width: 150px; }
 #location-form #flickr-photos img { width: 120px; cursor:pointer; }
 #location-form #flickr-photos ul { max-height:600px; overflow-y:scroll; text-align:center; }
+#location-form input[type=submit] { display:inline-block; margin:10px 0; }
 
 /* JOURNAL ENTRY FORM */
 

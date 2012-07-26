@@ -1,21 +1,25 @@
 <div data-location_type="<%= location.location_type.to_json %>" data-user="<%= location.user.to_json  %>" data-json="<%= location.to_json %>" class="location">
+ <section id="location-photo">
+  <img src="<%= location.photo_url %>" />
+  <%= tag :input, :value => location ? location.photo_url : "", :name => "location[photo_url]", :type => "hidden" %>
+ </section>
  <section id="location-meta">
-  <section id="location-photo">
-   <img src="<%= location.photo_url %>" />
-   <%= tag :input, :value => location ? location.photo_url : "", :name => "location[photo_url]", :type => "hidden" %>
-  </section>
-  <%= tag :input, :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
+  <%= tag :input, :id => "location-title", :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
   <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
   <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
-  <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
-  <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
   <label for="location-visited">Visited?</label>
+  <section id="location-mashup">
+   <label>Flickr Set:</label>
+   <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
+   <label>KML Url:</label>
+   <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
+  </section>
   <section id="location-geo">
+   <label>Latitude:</label>
    <span id="location-lat-txt"><%= location.latitude %></span>
-   <%= tag :input, :type => "hidden", :value => location ? location.latitude : "", :name => "location[latitude]", :id => "location-lat"  %>
+   <label>Longitude:</label>
    <span id="location-long-txt"><%= location.longitude %></span>
-   <%= tag :input, :type => "hidden", :value => location ? location.longitude : "", :name => "location[longitude]", :id => "location-long" %>
   </section>
   <input type="submit" value="Save" /> 
  </section>
@@ -39,6 +43,30 @@
   user = new User(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-user")))
   loc.setLocationType(locType)
   loc.setUser(user)
+
+  loc.on("change", function (e, options) {
+   if( options.changes.photo_url ) {
+     var photoSection = document.getElementById("location-photo")
+     photoSection.getElementsByTagName("img")[0].setAttribute("src", this.get("photo_url")) 
+   }
+
+   if( options.changes.city ) { 
+    document.getElementById("location-city").setAttribute("value", this.get("city"))
+   }
+
+   if( options.changes.country ) { 
+    document.getElementById("location-country").setAttribute("value", this.get("country"))
+   }
+   
+   if( options.changes.latitude ) {
+    document.getElementById("location-lat-txt").innerHTML = this.get("latitude")
+   }
+ 
+   if( options.changes.longitude ) {
+    document.getElementById("location-long-txt").innerHTML = this.get("longitude")
+   }
+  })
+ 
   loc.photos({
    success:function (e) {
     var photos = []
@@ -60,9 +88,7 @@
       li.appendChild(img) 
       photoUl.appendChild(li)
       li.addEventListener("click", function () {
-       var photoSection = document.getElementById("location-photo")
        loc.set({photo_url: e.url()})
-       photoSection.getElementsByTagName("img")[0].setAttribute("src", e.url()) 
       })
      })
     }
@@ -73,7 +99,12 @@
     zoom: 4,
     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
     mapTypeId: google.maps.MapTypeId.HYBRID
-   });
+   })
+   new LocationMarker({
+    model:loc,
+    map:map,
+    locationType:locType
+   }).render()
    google.maps.event.addListener(map, "click", function (mapEvent) {
     geocoder = new google.maps.Geocoder();
     geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
@@ -96,15 +127,17 @@
      if( address ) {
       city = address.split(",")[0]
      }
+     loc.set({
+      city: city,
+      country: country,
+      latitude: mapEvent.latLng.lat(),
+      longitude: mapEvent.latLng.lng()
+     })
     })
-   loc.set({
-    city: city,
-    country: country,
-    latitude: mapEvent.latLng.lat(),
-    longitude: mapEvent.latLng.lng()
    })
-   formElem.getElementById("location-long-txt").innerHTML = mapEvent.latLng.lng()
-   formElem.getElementById("location-lat-txt").innerHTML = mapEvent.latLng.lng()
+   document.getElementById("location-title").addEventListener("change", function (e) {
+    loc.set({title:e.currentTarget.value})
+    window.loc = loc
    })
   })
  </script>

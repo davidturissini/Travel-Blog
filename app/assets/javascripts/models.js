@@ -30,7 +30,9 @@ var User = Backbone.Model.extend({
 
 var Location = Backbone.Model.extend({
  url: function () {
-  return "/" + this.user.get("slug") + "/" + this.locationType.get("slug") + "/" + this.get("slug")
+  var str = "/" + this.user.get("slug") + "/" + this.locationType.get("slug")
+  if( this.id ) { str += "/" + this.id }
+  return str
  },
  setUser: function (user) {
   this.user = user

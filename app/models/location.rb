@@ -27,7 +27,7 @@ class Location < ActiveRecord::Base
 
  def teaser
   t = summary
-  t = Sanitize.clean(journal_entries.order("day ASC").first.body) if t == ""
+  t = Sanitize.clean(journal_entries.where("body IS NOT NULL").order("day ASC").first.body) if t == "" || t.nil?
   t
  end
 end

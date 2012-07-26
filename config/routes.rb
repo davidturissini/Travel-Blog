@@ -6,6 +6,7 @@ Adventureblog::Application.routes.draw do
   match '/me/logout' => "users#logout"
 
   match '/:user_id/:id/edit' => "location_types#edit"
+  match '/:user_id/new' => "location_types#new"
   
   resources :users, {:path => ""} do 
    resources :location_types, {:path => ""}  do 

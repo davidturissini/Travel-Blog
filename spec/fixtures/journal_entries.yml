@@ -4,3 +4,15 @@ sample_vacation_entry:
  location_id: 1
  day: 2012-01-01
  id: 1
+journal_entry_for_nil_summary_location:
+ title: No body
+ body: "TNWENEWLRGN"
+ location_id: 3 
+ day: 2012-01-01
+ id: 3
+journal_entry_for_blank_summary_location:
+ title: No body
+ body: "ASDASDADADSAD"
+ location_id: 4
+ day: 2012-01-01
+ id: 4 

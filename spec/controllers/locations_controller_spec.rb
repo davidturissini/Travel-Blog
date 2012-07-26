@@ -61,6 +61,15 @@ describe LocationsController do
    post :create, :user_id => @user.slug, :location_type_id => @location_type.slug, :location => loc_hash
    Location.find_by_title(title).slug.should == String.slugify( loc_hash[:slug] )
   end
+ 
+  it "should create a new location with a slug even if a slug param is not present" do
+   stub_referrer
+   stub_user_cookie
+   title = "new location title that should be created"
+   loc_hash = { :title => title }
+   post :create, :user_id => @user.slug, :location_type_id => @location_type.slug, :location => loc_hash
+   Location.find_by_title(title).slug.should == String.slugify( title )
+  end
  end
  
  describe "/index" do

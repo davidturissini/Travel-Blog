@@ -3,6 +3,14 @@ class LocationTypesController < TravellerController
   @location_types = LocationType.where({:user_id => params[:user_id]})
  end
 
+ def new
+  if validate_user?
+   @location_type = LocationType.new({
+    :user => current_user
+   })
+  end
+ end
+
  def edit
   if validate_user?
    @location_type = current_user.location_types.find_by_slug(params[:id])
