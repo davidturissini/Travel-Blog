@@ -1,0 +1,14 @@
+<article class="location rollup">
+ <header>
+  <h1 class="location-title"><%= link_to location.title, location_path(location) %></h1>
+  <%= location.city %>, <%= location.country %> <%= render "locations/date_range", :location => location %>
+ </header>
+ <% if location.photo_url %>
+  <%= image_tag location.photo_url, :width => 90, :class => "location-photo" %>
+ <% end %>
+ <p class="location-teaser">
+  <%= truncate(location.teaser.html_safe, :length => 300) %>
+  <%= link_to "Continue Reading", location_path(location), :class => "more" %>
+ </p>
+ <br class="clear" />
+</article>

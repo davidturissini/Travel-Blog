@@ -1,5 +1,6 @@
 class WelcomeController < ApplicationController 
  def index
-  @locations = Location.joins(:location_type, :user).all
+  @hero_locations = Location.joins(:location_type, :user).all
+  @recent_locations = Location.with_recent_entries
  end
 end

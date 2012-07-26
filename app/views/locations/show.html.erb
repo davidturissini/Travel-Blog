@@ -2,6 +2,9 @@
  <figure id="map"></figure>
  <header>
   <h2 id="location-title"><%= @location.title %></h2>
+  <% if current_user.owns?(@location) %>
+   <%= link_to "Edit #{@location.title}", edit_location_path(@location) %>
+  <% end %>
  </header>
  <section id="journal_entries">
   <% @location.journal_entries.each do |entry| %>

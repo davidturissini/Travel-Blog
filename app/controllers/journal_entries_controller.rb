@@ -1,12 +1,32 @@
 class JournalEntriesController < ApplicationController
+ def edit
+  if validate_user?
+   @journal_entry = get_location.journal_entries.find(params[:id]) 
+  end
+ end
+ 
+ def update
+  if validate_user?
+   @journal_entry = JournalEntry.find(params[:id])  
+   @journal_entry.update_attributes!(params[:journal_entry])
+   respond_to do |format|
+    format.html { redirect_to :controller => :locations, :action => :show, :id => @journal_entry.location.slug }
+   end
+  end
+ end
+
  def new 
-  location = get_location
-  @journal_entry = JournalEntry.new({:location => location})
+  if validate_user?
+   location = get_location
+   @journal_entry = JournalEntry.new({:location => location})
+  end
  end 
 
  def create
-  location = get_location 
-  @journal = JournalEntry.create({:location => location}.merge(params[:journal_entry]))
+  if validate_user?
+   location = get_location 
+   @journal = JournalEntry.create({:location => location}.merge(params[:journal_entry]))
+  end
  end
  
  protected

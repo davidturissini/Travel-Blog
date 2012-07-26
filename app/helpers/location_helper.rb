@@ -1,4 +1,8 @@
 module LocationHelper
+ def edit_location_path loc
+  edit_user_location_type_location_path(loc.user.slug, loc.location_type.slug, loc.slug)
+ end
+
  def location_path loc
   user_location_type_location_path(loc.user.slug, loc.location_type.slug, loc.slug)
  end

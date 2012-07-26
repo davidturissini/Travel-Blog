@@ -16,12 +16,15 @@ namespace :travel do
   vacations_file = File.open("#{Rails.root}/tmp/vacations.xml")
   vacations_xml = Nokogiri::XML(vacations_file)
   wp_ns = "http://wordpress.org/export/1.2/"
+  content_ns = "http://purl.org/rss/1.0/modules/content/"
   item_nodes = vacations_xml.xpath("//item").each do |item|
    id = item.xpath("wp:post_id", "wp" => wp_ns).first.text.to_i
    vacation = {
     :title => item.xpath("title").text,
     :slug => item.xpath("wp:post_name", "wp" => wp_ns).text,
-    :location_type => location_type
+    :location_type => location_type,
+    :created_at => item.xpath("wp:post_date", "wp" => wp_ns).text,
+    :summary => item.xpath("content:encoded", "content" => content_ns).first.content
    }
    item.xpath("wp:postmeta", "wp" => wp_ns).each do |meta_tag|
     meta_key = meta_tag.xpath("wp:meta_key", "wp" => wp_ns).text
@@ -46,7 +49,8 @@ namespace :travel do
     content_ns = "http://purl.org/rss/1.0/modules/content/"
     entry = {
      :title => entry_node.xpath("title").text,
-     :body => entry_node.xpath("content:encoded", "content" => content_ns).first.content
+     :body => entry_node.xpath("content:encoded", "content" => content_ns).first.content,
+     :created_at => entry_node.xpath("wp:post_date", "wp" => wp_ns).text,
     }
     entry_node.xpath("wp:postmeta", "wp" => wp_ns).each do |meta_tag|
      meta_key = meta_tag.xpath("wp:meta_key", "wp" => wp_ns).text

@@ -1,11 +1,21 @@
 <section id="map">
  <nav>
   <ul>
-   <% @locations.each do |location| %>
+   <% @hero_locations.each do |location| %>
     <li><%= location_link(location, { "data-location_type" => location.location_type.to_json, "data-json" => location.to_json}) %></li> 
    <% end %>
   </ul>
  </nav>
+</section>
+
+<section id="locations-recent">
+ <ul>
+  <% @recent_locations.each do |location| %>
+   <li>
+    <%= render "locations/rollup", :location => location %>
+   </li>
+  <% end %>
+ </ul>
 </section>
 
 <% content_for :scripts_footer do %>
@@ -29,8 +39,8 @@
      locationType:locationType,
      model: location,
      click: function () {
-      infoWindow.setLocation(location).render().open()
       map.panTo(new google.maps.LatLng(location.get("latitude"), location.get("longitude")))
+      infoWindow.setLocation(location).render().open()
      }
     }).render()
    })

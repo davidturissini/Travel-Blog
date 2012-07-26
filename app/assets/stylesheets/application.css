@@ -1,7 +1,10 @@
 body { background:teal; font-size:14px; font-family:Helvetica;  }
 
-a { text-decoration:none; }
+a, a:visited, a:active { text-decoration:none; color: #006; }
 a:hover { text-decoration: underline; }
+
+.clear { display:block; clear:both; }
+br.clear { height:0; line-height:0 }
 
 #container { margin:0px auto; width:920px; padding:20px; background:#fff; }
 
@@ -10,6 +13,15 @@ a:hover { text-decoration: underline; }
 
 #map { height:400px; }
 #map nav { display:none }
+
+/* ROLLUPS */
+
+.rollup.location { padding:10px 0; border-bottom:1px solid #ccc; }
+.rollup.location header { margin:0 0 10px; font-size:12px; }
+.rollup.location .location-title { padding-bottom:5px; font-size:22px; }
+.rollup.location .location-photo { float:left; padding-bottom:10px; }
+.rollup.location .location-photo + .location-teaser { margin-left:100px; }
+.rollup.location .more { display:block; padding-top:5px; font-size:12px; }
 
 /* LOCATION DETAIL PAGE */
 
@@ -21,6 +33,12 @@ a:hover { text-decoration: underline; }
 .locations-show #location #journal_entries .entry-body { line-height:16px; }
 .locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; float:right; }
 .locations-show #location #journal_entries .new-journal-entry-link { clear: both; float:right; display:inline-block; margin-top:10px; }
+
+/* LOCATION FORM */
+#location-form #location-meta { margin-right:200px; }
+#location-form #photos { float:right; width: 150px; }
+#location-form #photos img { width: 120px; }
+#location-form #photos ul { max-height:600px; overflow-y:scroll; text-align:center; }
 
 /* JOURNAL ENTRY FORM */
 
