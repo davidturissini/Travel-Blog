@@ -36,9 +36,10 @@ br.clear { height:0; line-height:0 }
 
 /* LOCATION FORM */
 #location-form #location-meta { margin-right:200px; }
-#location-form #photos { float:right; width: 150px; }
-#location-form #photos img { width: 120px; }
-#location-form #photos ul { max-height:600px; overflow-y:scroll; text-align:center; }
+#location-form #location-photo img { float:left; padding-right:20px; width: 120px; }
+#location-form #flickr-photos { float:right; width: 150px; }
+#location-form #flickr-photos img { width: 120px; cursor:pointer; }
+#location-form #flickr-photos ul { max-height:600px; overflow-y:scroll; text-align:center; }
 
 /* JOURNAL ENTRY FORM */
 

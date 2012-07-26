@@ -1,19 +1,25 @@
-<div id="location-form">
+<div data-location_type="<%= location.location_type.to_json %>" data-user="<%= location.user.to_json  %>" data-json="<%= location.to_json %>" class="location">
  <section id="location-meta">
-  <%= tag :input, :type => "hidden", :value => location ? location.latitude : "", :name => "location[latitude]", :class => "location-lat"  %>
-  <%= tag :input, :type => "hidden", :value => location ? location.longitude : "", :name => "location[longitude]", :class => "location-long" %>
+  <section id="location-photo">
+   <img src="<%= location.photo_url %>" />
+   <%= tag :input, :value => location ? location.photo_url : "", :name => "location[photo_url]", :type => "hidden" %>
+  </section>
   <%= tag :input, :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
-  <%= tag :input, :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
-  <%= tag :input, :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
+  <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
+  <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
   <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
   <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
   <label for="location-visited">Visited?</label>
+  <section id="location-geo">
+   <span id="location-lat-txt"><%= location.latitude %></span>
+   <%= tag :input, :type => "hidden", :value => location ? location.latitude : "", :name => "location[latitude]", :id => "location-lat"  %>
+   <span id="location-long-txt"><%= location.longitude %></span>
+   <%= tag :input, :type => "hidden", :value => location ? location.longitude : "", :name => "location[longitude]", :id => "location-long" %>
+  </section>
   <input type="submit" value="Save" /> 
  </section>
- <section id="photos">
-  <img src="<%= location.photo_url %>" />
-  <%= tag :input, :placeholder => "Primary Photo Url", :value => location ? location.photo_url : "", :name => "location[photo_url]", :type => "hidden" %>
+ <section id="flickr-photos">
   <ul>
  
   </ul>
@@ -23,16 +29,17 @@
 
 <% content_for :scripts_footer do %>
  <script>
-  $.ajax({
-   url:"http://api.flickr.com/services/rest",
-   dataType:"jsonp",
-   data: {
-    api_key:"951c0814caade8b4fc2b381778269126",
-    method: "flickr.photosets.getPhotos",
-    format:"json",
-    photoset_id: "<%= location.flickr_set %>"
-   },
-   jsonpCallback:"jsonFlickrApi",
+  window.addEventListener("DOMContentLoaded", function () {
+  document.getElementById("location-form").onsubmit = function (e) {
+   e.preventDefault()
+   loc.save()
+  }
+  var loc = new Location(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-json"))),
+  locType = new LocationType(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-location_type"))),
+  user = new User(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-user")))
+  loc.setLocationType(locType)
+  loc.setUser(user)
+  loc.photos({
    success:function (e) {
     var photos = []
     if( e.photoset ) {
@@ -48,23 +55,23 @@
       }
       var img = document.createElement("img"),
       li = document.createElement("li"),
-      photoUl = document.getElementById("photos").getElementsByTagName("ul")[0]
+      photoUl = document.getElementById("flickr-photos").getElementsByTagName("ul")[0]
       img.setAttribute("src", e.url())
       li.appendChild(img) 
       photoUl.appendChild(li)
       li.addEventListener("click", function () {
-       photoUl.parentNode.getElementsByTagName("input")[0].setAttribute("value", e.url()) 
-       photoUl.parentNode.getElementsByTagName("img")[0].setAttribute("src", e.url()) 
+       var photoSection = document.getElementById("location-photo")
+       loc.set({photo_url: e.url()})
+       photoSection.getElementsByTagName("img")[0].setAttribute("src", e.url()) 
       })
      })
     }
    }
   })
-
   var formElem = document.getElementById("location-form"),
     map = new google.maps.Map(document.getElementById("location-map"), {
     zoom: 4,
-    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
+    center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
     mapTypeId: google.maps.MapTypeId.HYBRID
    });
    google.maps.event.addListener(map, "click", function (mapEvent) {
@@ -90,8 +97,15 @@
       city = address.split(",")[0]
      }
     })
-   formElem.getElementsByClassName("location-long")[0].setAttribute("value", mapEvent.latLng.lng())     
-   formElem.getElementsByClassName("location-lat")[0].setAttribute("value", mapEvent.latLng.lat())     
+   loc.set({
+    city: city,
+    country: country,
+    latitude: mapEvent.latLng.lat(),
+    longitude: mapEvent.latLng.lng()
    })
+   formElem.getElementById("location-long-txt").innerHTML = mapEvent.latLng.lng()
+   formElem.getElementById("location-lat-txt").innerHTML = mapEvent.latLng.lng()
+   })
+  })
  </script>
 <% end %>
