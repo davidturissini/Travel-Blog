@@ -15,10 +15,14 @@ class Location < ActiveRecord::Base
  def dates
   journal_entries.collect { |entry| entry.day }
  end
+  
+ def date_range?
+  date_range.length > 0
+ end
  
  def date_range
-  return nil if !journal_entries?
-  [journal_entries.first, journal_entries.last].collect { |entry| entry.day }.uniq
+  return [] if !journal_entries?
+  [journal_entries.first, journal_entries.last].collect { |entry| entry.day }.uniq.compact
  end
  
  def journal_entries?

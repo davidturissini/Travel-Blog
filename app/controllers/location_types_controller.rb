@@ -1,6 +1,11 @@
 class LocationTypesController < TravellerController
  def index
-  @location_types = LocationType.where({:user_id => params[:user_id]})
+  user = User.find_by_slug(params[:user_id])
+  @location_types = user.location_types
+  respond_to do |format|
+   format.html
+   format.json { render :json => @location_types }
+  end
  end
 
  def new

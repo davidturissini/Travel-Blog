@@ -1,4 +1,8 @@
 <span class="location-dates">
- <%= location.date_range[0].strftime("%b %d, %Y") if location.date_range[0] %><%= " - #{location.date_range[1].strftime("%b %d, %Y")}" if location.date_range.length > 1 %>
+ <% if location.date_range? %>
+  <%= location.date_range.first.strftime("%b %d, %Y") %>
+  <% if location.date_range.last != location.date_range.first %>
+  - <%= location.date_range.last.strftime("%b %d, %Y") %>
+  <% end %>
+ <% end %>
 </span>
-

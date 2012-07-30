@@ -3,9 +3,8 @@ class LocationsController < ApplicationController
 
  def new
   if validate_user?
-   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
    @location = Location.new({
-    :location_type => @location_type
+    :location_type => current_location_type
    })
   end
  end
@@ -20,8 +19,7 @@ class LocationsController < ApplicationController
 
  def update
   if validate_user?
-   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
-   @location = @location_type.locations.find_by_slug(params[:id])
+   @location = current_location_type.locations.find_by_slug(params[:id])
    @location.update_attributes!(params[:location])  
    respond_to do |format|
     format.html { redirect_to request.referrer }
@@ -32,11 +30,10 @@ class LocationsController < ApplicationController
 
  def create
   if validate_user?
-   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
    p_slug = params[:location][:slug]
    p_slug = params[:location][:title] if p_slug.nil?
    params[:location][:slug] = String.slugify( p_slug )
-   @location = Location.create!(params[:location].merge({:location_type => @location_type}))
+   @location = Location.create!(params[:location].merge({:location_type => current_location_type}))
    respond_to do |format| 
     format.html { redirect_to request.referrer }
     format.json { render :json => @location }

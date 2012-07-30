@@ -6,6 +6,14 @@ var LocationType = Backbone.Model.extend({
  url: function () {
   return this.user.url() + "/" + this.get("slug")
  },
+ jsonPrefix: false,
+ toJSON: function () {
+   if( this.jsonPrefix ) {
+    return {location_type:this.attributes}
+   } else {
+    return this.attributes 
+   }
+ },
  initialize: function () {
   if( this.has("user") ) {
    var user = this.get("user"),
@@ -31,8 +39,16 @@ var User = Backbone.Model.extend({
 var Location = Backbone.Model.extend({
  url: function () {
   var str = "/" + this.user.get("slug") + "/" + this.locationType.get("slug")
-  if( this.id ) { str += "/" + this.id }
+  if( this.id ) { str += "/" + this.get("slug") }
   return str
+ },
+ jsonPrefix: false,
+ toJSON: function () {
+   if( this.jsonPrefix ) {
+    return {location:this.attributes}
+   } else {
+    return this.attributes 
+   }
  },
  setUser: function (user) {
   this.user = user

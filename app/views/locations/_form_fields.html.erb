@@ -36,6 +36,7 @@
   window.addEventListener("DOMContentLoaded", function () {
   document.getElementById("location-form").onsubmit = function (e) {
    e.preventDefault()
+   loc.jsonPrefix = true
    loc.save()
   }
   var loc = new Location(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-json"))),

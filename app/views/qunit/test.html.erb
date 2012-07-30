@@ -15,6 +15,17 @@
    ok( LocationType )
   }) 
 
+  test("should not have a javascript prefix by default", function () {
+   var loc = new LocationType({user_id:1})
+   equal("location_type" in loc.toJSON(), false)
+  })
+
+  test("should be able to turn on javascript prefix", function () {
+   var loc = new LocationType({user_id:1})
+   loc.jsonPrefix = true
+   equal("location_type" in loc.toJSON(), true)
+  })
+
   test("should create new instance", function () {
    var l = new LocationType({user:new User({id:1})})
    ok( l instanceof LocationType )
@@ -58,6 +69,39 @@
   test("should exist", function () {
    ok( Location )
   })
+
+  test("should not have a javascript prefix by default", function () {
+   var loc = new Location()
+   notEqual("location" in loc.toJSON(), true)
+  })
+
+  test("should be able to turn on javascript prefix", function () {
+   var loc = new Location()
+   loc.jsonPrefix = true
+   notEqual("location" in loc.toJSON(), false)
+  })
+
+  module("LocationCollection")
+ 
+  test("should exist", function () {
+   ok( LocationCollection )
+  })
+  
+  test("should have correct url", function () {
+   var user = new User({slug:"user",id:2}),
+   col = new LocationCollection({user: user})
+   equal( col.url(), "/" + user.get("slug") + "/location_types?format=" + col.format )
+  })
+
+  asyncTest("Location Collection fetch", 1, function () {
+   var user = new User({slug:1,id:1}),
+   col = new LocationCollection({user: user})
+    col.fetch({success: function (e) {
+    ok( e instanceof LocationCollection )
+    start()
+   }})
+  })
+ 
 
  </script>
 <% end %>
