@@ -1,7 +1,50 @@
- <%= tag :input, :value => location_type.title, :type => "text", :name => "location_type[title]", :placeholder => "title" %>
- <input type="text" name="location_type[slug]" placeholder="slug" />
- <%= image_tag @location_type.icon_url %>
- <%= tag :input, :name => "location_type[icon_url]", :value => @location_type.icon_url %>
- <%= image_tag @location_type.icon_not_visited_url %>
- <%= tag :input, :name => "location_type[icon_not_visited_url]", :value => @location_type.icon_not_visited_url %>
+<div id="location_type" data-json="<%= location_type.to_json %>" data-user="<%= location_type.user.to_json %>">
+ <%= tag :input, :id => "location-type-title", :value => location_type.title, :type => "text", :placeholder => "title" %>
+ <input type="text" id="location-type-slug" placeholder="slug" />
+ <%= image_tag @location_type.icon_url || "", :id => "location-type-icon_url-img" %>
+ <%= tag :input, :id => "location-type-icon_url", :value => @location_type.icon_url %>
+ <%= image_tag @location_type.icon_not_visited_url, :id => "location-type-icon_not_visited_url-img" %>
+ <%= tag :input, :id => "location-type-icon_not_visited_url", :value => @location_type.icon_not_visited_url %>
  <input type="submit" value="Save" />
+</div>
+
+<% content_for :scripts_footer do %>
+ <script>
+  window.addEventListener("DOMContentLoaded", function () {
+   var locTypeJSON = JSON.parse( document.getElementById("location_type").getAttribute("data-json")  ),
+   user = new User( JSON.parse(document.getElementById("location_type").getAttribute("data-user")) )
+   locationType = new LocationType({user:user}),
+   LocationTypeForm = Backbone.View.extend({
+    initialize: function () {
+     var form = this,
+     fields = ["title", "icon_url", "icon_not_visited_url", "slug"]
+     fields.forEach(function (field) {
+      document.getElementById("location-type-" + field).addEventListener("change", function (e) {
+       form.model.set(field, e.currentTarget.value)
+      })
+     })
+
+     form.model.on("change", function (e, options) {
+      if( options.changes.icon_url ) {
+       document.getElementById("location-type-icon_url-img").setAttribute("src", form.model.get("icon_url"))
+      }
+      if( options.changes.icon_not_visited_url ) {
+       document.getElementById("location-type-icon_not_visited_url-img").setAttribute("src", form.model.get("icon_not_visited_url"))
+      }
+     })
+ 
+     this.el.addEventListener("submit", function (e) {
+      e.preventDefault()
+      form.model.jsonPrefix = true
+      form.model.save()
+     })     
+    } 
+   }),
+   form = new LocationTypeForm({
+    el:document.getElementById("location-type-form"),
+    model:locationType
+   })
+   
+  })
+ </script>
+<% end %>

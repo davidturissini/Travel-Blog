@@ -3,7 +3,7 @@ var LocationTypeCollection = Backbone.Collection.extend({
   if( options.user ) { this.user = options.user } 
  },
  format:"json",
- model:Location,
+ model:LocationType,
  url: function () {
   return "/" + this.user.get("slug") + "/location_types?format=" + this.format
  }

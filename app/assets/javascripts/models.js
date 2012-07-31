@@ -4,7 +4,11 @@ var MissingUserException = function ( message ) {
 
 var LocationType = Backbone.Model.extend({
  url: function () {
-  return this.user.url() + "/" + this.get("slug")
+  if( !this.isNew() ) {
+   return this.user.url() + "/" + this.get("slug")
+  } else {
+   return this.user.url() + "/location_types"
+  }
  },
  jsonPrefix: false,
  toJSON: function () {
@@ -24,7 +28,8 @@ var LocationType = Backbone.Model.extend({
  setUser: function (user, options) {
   options = options || {}
   var user_id = user.id
-  this.set({user_id:user_id, user:null}, options)
+  this.set({user_id:user_id}, options)
+  delete this.attributes.user
   this.user = user
  },
  validate: function ( options ) {

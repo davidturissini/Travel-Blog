@@ -45,7 +45,8 @@ class LocationTypesController < TravellerController
 
  def destroy
   if validate_user?
-   @location_type = LocationType.where({:user_id => current_user.id, :id => params[:id]}).first
+   user = User.find_by_slug(params[:user_id])
+   @location_type = user.location_types.find_by_slug(params[:id])
    @location_type.destroy
    respond_to do |format|
     format.html { redirect_to request.referrer }
