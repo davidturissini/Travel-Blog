@@ -16,12 +16,16 @@ var LocationType = Backbone.Model.extend({
  },
  initialize: function () {
   if( this.has("user") ) {
-   var user = this.get("user"),
-   user_id = user.id
-   this.set({user_id:user_id, user:null}, {silent:true})
-   this.user = user
+   var user = this.get("user")
+   this.setUser(user, {silent:true})
   }
   this.validate(this.attributes)
+ },
+ setUser: function (user, options) {
+  options = options || {}
+  var user_id = user.id
+  this.set({user_id:user_id, user:null}, options)
+  this.user = user
  },
  validate: function ( options ) {
   if( !options.user_id ) {
@@ -55,6 +59,7 @@ var Location = Backbone.Model.extend({
  },
  setLocationType: function (locType) {
   this.locationType = locType
+  this.setUser(locType.user)
  },
  photos: function ( callbacks ) {
   callbacks = callbacks || {}

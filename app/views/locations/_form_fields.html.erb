@@ -11,15 +11,15 @@
   <label for="location-visited">Visited?</label>
   <section id="location-mashup">
    <label>Flickr Set:</label>
-   <%= tag :input, :type => "text", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
+   <%= tag :input, :type => "text", :id => "location-flickr_set", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
    <label>KML Url:</label>
-   <%= tag :input, :type => "text", :placeholder => "KML", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
+   <%= tag :input, :type => "text", :placeholder => "KML", :id => "location-kml_url", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
   </section>
   <section id="location-geo">
    <label>Latitude:</label>
-   <span id="location-lat-txt"><%= location.latitude %></span>
+   <input type="text" id="location-latitude" value="<%= location.latitude %>" />
    <label>Longitude:</label>
-   <span id="location-long-txt"><%= location.longitude %></span>
+   <input type="text" id="location-longitude" value="<%= location.longitude %>" />
   </section>
   <input type="submit" value="Save" /> 
  </section>
@@ -45,100 +45,139 @@
   loc.setLocationType(locType)
   loc.setUser(user)
 
-  loc.on("change", function (e, options) {
-   if( options.changes.photo_url ) {
-     var photoSection = document.getElementById("location-photo")
-     photoSection.getElementsByTagName("img")[0].setAttribute("src", this.get("photo_url")) 
-   }
 
-   if( options.changes.city ) { 
-    document.getElementById("location-city").setAttribute("value", this.get("city"))
-   }
+  var LocationForm = Backbone.View.extend({
+   initialize: function () {
+    var form = this,
+    loc = this.model
+    form.map = new google.maps.Map(document.getElementById("location-map"), {
+     zoom: 4,
+     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
+     mapTypeId: google.maps.MapTypeId.HYBRID
+    })
+    form._bindMapClicks()
+    this.mapMarker = new LocationMarker({
+      model:loc,
+      map:form.map,
+      locationType:loc.locationType
+     })
+    form.drawMapMarker()
+    loc.on("change", function (e, options) {
+     if( options.changes.photo_url ) {
+       var photoSection = document.getElementById("location-photo")
+       photoSection.getElementsByTagName("img")[0].setAttribute("src", this.get("photo_url")) 
+     }
 
-   if( options.changes.country ) { 
-    document.getElementById("location-country").setAttribute("value", this.get("country"))
-   }
+     if( options.changes.city ) { 
+      document.getElementById("location-city").setAttribute("value", this.get("city"))
+     }
+
+     if( options.changes.country ) { 
+      document.getElementById("location-country").setAttribute("value", this.get("country"))
+     }
    
-   if( options.changes.latitude ) {
-    document.getElementById("location-lat-txt").innerHTML = this.get("latitude")
-   }
+     if( options.changes.latitude ) {
+      document.getElementById("location-latitude").setAttribute("value", this.get("latitude"))
+      form._focusMap()
+     }
  
-   if( options.changes.longitude ) {
-    document.getElementById("location-long-txt").innerHTML = this.get("longitude")
-   }
-  })
+     if( options.changes.longitude ) {
+      document.getElementById("location-longitude").setAttribute("value", this.get("longitude"))
+      form._focusMap()
+     }
+
+     if( options.changes.flickr_set ) { 
+      form.showPhotos()
+     }
+    })
  
-  loc.photos({
-   success:function (e) {
-    var photos = []
-    if( e.photoset ) {
-     $.each(e.photoset.photo, function (idx, e) {
-      e.url = function () {
-       return "http://farm" + e.farm + ".static.flickr.com/" + e.server + "/" + e.id + "_" + e.secret + ".jpg"
-      } 
-      e.thumbnail = function (size) { 
-       var ary = e.url().split("."),
-       index = ary.length - 2
-       ary[index] = ary[index] + "_" + size
-       return ary.join(".");
+   },
+   _focusMap: function () {
+    this.map.panTo(new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")))
+   },
+   _bindMapClicks: function () {
+    var form = this
+    google.maps.event.addListener(form.map, "click", function (mapEvent) {
+     geocoder = new google.maps.Geocoder();
+     geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
+      var address = (function () {
+       var hash
+       for(var i in e) {
+        if( e[i].types[0] == "locality" ) {
+         hash = e[i]
+        }
       }
-      var img = document.createElement("img"),
-      li = document.createElement("li"),
-      photoUl = document.getElementById("flickr-photos").getElementsByTagName("ul")[0]
-      img.setAttribute("src", e.url())
-      li.appendChild(img) 
-      photoUl.appendChild(li)
-      li.addEventListener("click", function () {
-       loc.set({photo_url: e.url()})
+      if( hash ) { 
+       return hash.formatted_address 
+      }
+      })(),
+      country = (function () {
+       for(var i in e) {
+        if( e[i].types[0] == "country" ) { return e[i].formatted_address }
+       }
+      })(), city
+      if( address ) {
+       city = address.split(",")[0]
+      }
+      loc.set({
+       city: city,
+       country: country,
+       latitude: mapEvent.latLng.lat(),
+       longitude: mapEvent.latLng.lng()
       })
      })
-    }
+    })
+   },
+   drawMapMarker: function () {
+    this.mapMarker.render()
+   },
+   showPhotos: function () {
+    var loc = this.model,
+    photoUl = document.getElementById("flickr-photos").getElementsByTagName("ul")[0]
+    photoUl.innerHTML = "" 
+    loc.photos({
+     success:function (e) {
+      var photos = []
+      if( e.photoset && e.photoset.photo && e.photoset.photo.length > 0 ) {
+       $.each(e.photoset.photo, function (idx, e) {
+        e.url = function () {
+         return "http://farm" + e.farm + ".static.flickr.com/" + e.server + "/" + e.id + "_" + e.secret + ".jpg"
+        } 
+        e.thumbnail = function (size) { 
+         var ary = e.url().split("."),
+         index = ary.length - 2
+         ary[index] = ary[index] + "_" + size
+         return ary.join(".");
+        }
+        var img = document.createElement("img"),
+        li = document.createElement("li")
+        img.setAttribute("src", e.url())
+        li.appendChild(img) 
+        photoUl.appendChild(li)
+        li.addEventListener("click", function () {
+         loc.set({photo_url: e.url()})
+        })
+       })
+      }
+     }
+    })
+ 
    }
   })
-  var formElem = document.getElementById("location-form"),
-    map = new google.maps.Map(document.getElementById("location-map"), {
-    zoom: 4,
-    center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
-    mapTypeId: google.maps.MapTypeId.HYBRID
-   })
-   new LocationMarker({
-    model:loc,
-    map:map,
-    locationType:locType
-   }).render()
-   google.maps.event.addListener(map, "click", function (mapEvent) {
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
-     var address = (function () {
-      var hash
-      for(var i in e) {
-       if( e[i].types[0] == "locality" ) {
-        hash = e[i]
-       }
-     }
-     if( hash ) { 
-      return hash.formatted_address 
-     }
-     })(),
-     country = (function () {
-      for(var i in e) {
-       if( e[i].types[0] == "country" ) { return e[i].formatted_address }
-      }
-     })(), city
-     if( address ) {
-      city = address.split(",")[0]
-     }
-     loc.set({
-      city: city,
-      country: country,
-      latitude: mapEvent.latLng.lat(),
-      longitude: mapEvent.latLng.lng()
-     })
+
+  var form = new LocationForm({
+   el: document.getElementById("location-form"),
+   model: loc
+  })
+ 
+  form.showPhotos()
+ 
+
+   var fields = ["latitude", "longitude", "title", "city", "country", "flickr_set", "kml_url"]
+   fields.forEach(function (field) {
+    document.getElementById("location-" + field).addEventListener("change", function (e) {
+     loc.set(field, e.currentTarget.value)
     })
-   })
-   document.getElementById("location-title").addEventListener("change", function (e) {
-    loc.set({title:e.currentTarget.value})
-    window.loc = loc
    })
   })
  </script>

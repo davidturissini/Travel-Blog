@@ -1,41 +1,26 @@
- <section>
-  <%= render "location_types_workflow" %>
- </section>
- <section>
+ <section id="user" data-json="<%= @user.to_json %>">
   <header><%= @user.name %>'s map</header>
-  <div id="map" style="width:630px;height:400px;"></div> 
+  <section>
+   <ul id="user-locations_types">
+    <% @user.location_types.each do |type| %>
+     <li>
+      <article class="location-type">
+       <%= link_to type.title, user_location_type_path(:user_id => type.user.id, :id => type.slug) %> 
+      </article> 
+     </li>
+    <% end %> 
+   </ul>
+  </section>
  </section>
 
 <% content_for :scripts_footer do %>
  <script>
-  var map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
-    mapTypeId: google.maps.MapTypeId.HYBRID
-   });
-   google.maps.event.addListener(map, "click", function (mapEvent) {
-    geocoder = new google.maps.Geocoder();
-    geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
-     var address = (function () {
-      var hash
-      for(var i in e) {
-       if( e[i].types[0] == "locality" ) {
-        hash = e[i]
-       }
-     }
-     if( hash ) { 
-      return hash.formatted_address 
-     }
-     })(),
-     country = (function () {
-      for(var i in e) {
-       if( e[i].types[0] == "country" ) { return e[i].formatted_address }
-      }
-     })(), city
-     if( address ) {
-      city = address.split(",")[0]
-     }
-    })
-   })
+  window.addEventListener("DOMContentLoaded", function () {
+   var userJson = JSON.parse( document.getElementById("user").getAttribute("data-json") ),
+   user = new User(userJson),
+   userLocations = new LocationTypeColl
+ 
+   
+  })
  </script>
 <% end %>

@@ -1,4 +1,4 @@
-var LocationCollection = Backbone.Collection.extend({
+var LocationTypeCollection = Backbone.Collection.extend({
  initialize: function (options) {
   if( options.user ) { this.user = options.user } 
  },

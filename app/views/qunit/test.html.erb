@@ -81,25 +81,25 @@
    notEqual("location" in loc.toJSON(), false)
   })
 
-  module("LocationCollection")
+  module("LocationTypeCollection")
  
   test("should exist", function () {
-   ok( LocationCollection )
+   ok( LocationTypeCollection )
   })
   
   test("should have correct url", function () {
    var user = new User({slug:"user",id:2}),
-   col = new LocationCollection({user: user})
+   col = new LocationTypeCollection({user: user})
    equal( col.url(), "/" + user.get("slug") + "/location_types?format=" + col.format )
   })
 
-  asyncTest("Location Collection fetch", 1, function () {
+  asyncTest("Location Type Collection fetch", 1, function () {
    var user = new User({slug:1,id:1}),
-   col = new LocationCollection({user: user})
+   col = new LocationTypeCollection({user: user})
     col.fetch({success: function (e) {
-    ok( e instanceof LocationCollection )
+    ok( e instanceof LocationTypeCollection )
     start()
-   }})
+   }, error: function () { start() }})
   })
  
 

@@ -13,8 +13,13 @@ describe String do
   end
 
   it "should string all non-alphanumerics" do
-   str = 'string!@#$%^&*()_+=-[];\'./,<>?:\"{}\\|123'
+   str = 'string!@#$%^&*()_+=[];\'./,<>?:\"{}\\|123'
    String.slugify(str).should == "string123"
+  end
+
+  it "should preserve dashes" do
+   str = "dash-dash"
+   String.slugify(str).should == "dash-dash"
   end
  end
 end

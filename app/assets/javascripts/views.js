@@ -1,17 +1,27 @@
 var LocationMarker = Backbone.View.extend({
+ initialize: function () {
+   var loc = this.model,
+   locMarker = this
+   this.icon_url = this.model.get("has_visited") ? this.options.locationType.get("icon_url") : this.options.locationType.get("icon_not_visited_url")
+   this.googleMarker = new google.maps.Marker()
+   google.maps.event.addListener(this.googleMarker, "click", function () {
+    if( locMarker.options.click ) { locMarker.options.click() }
+   })
+   loc.on("change", function (e, options) {
+    if( options.changes.longitude || options.changes.latitude ) { 
+     locMarker.render() 
+    }
+   })
+ },
  render: function () {
-  var locMarker = this,
-  iconUrl = this.model.get("has_visited") ? this.options.locationType.get("icon_url") : this.options.locationType.get("icon_not_visited_url")
+  var locMarker = this
   markerHash = {
    position: new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")),
    map: this.options.map,
    title: this.model.get("title"),
-   icon: iconUrl
-   },
-   marker = new google.maps.Marker(markerHash)     
-   google.maps.event.addListener(marker, "click", function () {
-    if( locMarker.options.click ) { locMarker.options.click() }
-   })
+   icon: locMarker.iconUrl
+   }
+   this.googleMarker.setOptions(markerHash)
   }
  })
 
