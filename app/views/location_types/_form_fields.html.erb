@@ -13,7 +13,7 @@
   window.addEventListener("DOMContentLoaded", function () {
    var locTypeJSON = JSON.parse( document.getElementById("location_type").getAttribute("data-json")  ),
    user = new User( JSON.parse(document.getElementById("location_type").getAttribute("data-user")) )
-   locationType = new LocationType({user:user}),
+   locationType = new LocationType($.extend(locTypeJSON, {user:user})),
    LocationTypeForm = Backbone.View.extend({
     initialize: function () {
      var form = this,
