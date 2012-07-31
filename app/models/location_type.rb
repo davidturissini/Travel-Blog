@@ -1,5 +1,5 @@
 class LocationType < ActiveRecord::Base
-  has_many :locations
+  has_many :locations, :dependent => :destroy
   belongs_to :user
  
   def self.create_defaults options

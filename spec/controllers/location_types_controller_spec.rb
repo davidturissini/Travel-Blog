@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe LocationTypesController do
- fixtures :users, :location_types
+ fixtures :users, :location_types, :locations
 
  before(:each) do
   @user = users(:user_one)
@@ -71,9 +71,20 @@ describe LocationTypesController do
   it "should destroy a location type" do
    stub_user_cookie
    stub_referrer
-   l_id = @location_type.id
+   l_id = @location_type.slug
    post :destroy, :user_id => @user.slug, :id => l_id
    lambda { LocationType.find(l_id) }.should raise_error( ActiveRecord::RecordNotFound )
+  end
+
+  it "should destroy all locations associated with a location_type" do
+   stub_user_cookie
+   stub_referrer
+   l_id = @location_type.slug
+   location_ids = @location_type.locations.collect {|l| l.id }
+   post :destroy, :user_id => @user.slug, :id => l_id
+   location_ids.each do |lid|
+    lambda { Location.find(lid) }.should raise_error( ActiveRecord::RecordNotFound )
+   end 
   end
  end
 
