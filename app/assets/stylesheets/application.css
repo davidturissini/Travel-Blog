@@ -25,14 +25,27 @@ br.clear { height:0; line-height:0 }
 
 /* LOCATION DETAIL PAGE */
 
-.locations-show #location { float:left; width: 660px; }
-.locations-show #location-title { font-size:22px; }
-.locations-show #location #map { float:right; margin:0 0 20px 20px; width: 300px; height: 300px; }
+.locations-show #location { position:relative; float:left; width: 500px; }
+.locations-show #location-title { margin-bottom:20px; font-size:24px; }
+.locations-show #location #hero-gallery {  margin:0 0 20px 0; text-align:center; background:#f1f1f1; }
+.locations-show #location #hero-gallery li { float:left; margin-left:10px; overflow:hidden; width:75px; height:75px; list-style-type:none; }
+.locations-show #location #hero-gallery li img { cursor: pointer; }
+.locations-show #location #hero-gallery li:first-child { margin-left:0px; } 
+.locations-show #location #hero-gallery #hero-large { height: 332px; text-align:center; }
+.locations-show #location #hero-gallery #location-photos { overflow-x:scroll; padding-bottom:10px; }
 
+.locations-show #geo-data { float:right; padding-left:19px; width:380px; border-left: 1px solid #ccc; }
+.locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
+.locations-show #geo-data #map { margin:20px 0; }
+
+.locations-show #location #journal_entries .entry { position:relative; }
 .locations-show #location #journal_entries .entry-title { margin:20px 0; font-size:18px; }
 .locations-show #location #journal_entries .entry-body { line-height:16px; }
 .locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; float:right; }
 .locations-show #location #journal_entries .new-journal-entry-link { clear: both; float:right; display:inline-block; margin-top:10px; }
+
+.locations-show #location .toolbox { position:absolute; display:none; right:0px; top:0px; }
+.locations-show #location:hover .toolbox { display:block; }
 
 /* LOCATION FORM */
 #location-form input[type=text] { border:0px; } 

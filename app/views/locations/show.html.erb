@@ -1,43 +1,40 @@
 <article id="location" data-json="<%= @location.to_json %>">
  <header>
   <h2 id="location-title"><%= @location.title %></h2>
-  <% if current_user.owns?(@location) %>
-   <%= link_to "Edit #{@location.title}", edit_location_path(@location) %>
-  <% end %>
  </header>
- <figure id="mast-image">
-  <%= image_tag @location.photo_url  %>
+ <figure id="hero-gallery">
+  <%= image_tag @location.photo_url, :id => "hero-large" %>
+  <div id="location-photos">
+   <ul id="location-thumbs">
+ 
+   </ul>
+  </div>
  </figure>
- <figure id="map"></figure>
- <section id="geo">
-  <%= @location.city %>, <%= @location.country %>
- </section>
  <section id="journal_entries">
   <% @location.journal_entries.each do |entry| %>
-   <header>
-    <h3 class="entry-title"><%= entry.title %></h3>
-   </header>
-   <p class="entry-body"><%= entry.body.html_safe %></p>
-   <% if current_user.owns?(entry) %>
-    <%= link_to "Edit Entry", edit_user_location_type_location_journal_entry_path({
-     :user_id => current_user.slug,
-     :location_type_id => @location.location_type.slug,
-     :location_id => @location.slug,
-     :id => entry.id
-     }), :class => "edit-journal-entry-link"
-    %>
-   <% end %>
+   <%= render "journal_entry", :entry => entry %>
   <% end %>
   <% if current_user.owns?(@location) %>
    <%= link_to "Add new journal entry for #{@location.title}", new_user_location_type_location_journal_entry_path({
     :user_id => current_user.slug,
     :location_type_id => @location.location_type.slug,
     :location_id => @location.slug
-   }), :class => "new-journal-entry-link"
+    }), :class => "new-journal-entry-link"
    %>
   <% end %>
  </section>
+ <% if current_user.owns?(@location) %>
+  <section class="toolbox">
+   <%= link_to "Edit", edit_location_path(@location) %>
+  </section>
+ <% end %>
 </article>
+<aside id="geo-data">
+ <section id="location-political-geo">
+  <%= @location.city %>, <%= @location.country %>
+ </section>
+ <figure id="map"></figure>
+</aside>
 
 
 <% content_for :scripts_footer do %>
@@ -49,6 +46,26 @@
     center: new google.maps.LatLng(location.get("latitude"),location.get("longitude")),
     mapTypeId: google.maps.MapTypeId.HYBRID
    });
+  
+   location.photos({
+    success:function (e) {
+     var ul = document.getElementById("location-thumbs"),
+     largeImage = document.getElementById("hero-large")
+     e.photoset.photo.forEach(function (photo) {
+      var image = new FlickrImage(photo),
+      li = document.createElement("li"),
+      img = document.createElement("img"),
+      ulWidth = ul.offsetWidth
+      img.setAttribute("src", image.url("s"))
+      li.appendChild(img)
+      ul.appendChild(li)
+      ul.style.width = ulWidth + li.offsetLeft + "px"
+      img.addEventListener("click", function () { 
+       largeImage.setAttribute("src", image.url()) 
+      })
+     })
+    }
+   }) 
   })
  </script>
 <% end %>

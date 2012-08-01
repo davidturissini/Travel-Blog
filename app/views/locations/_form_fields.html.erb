@@ -5,10 +5,13 @@
  </section>
  <section id="location-meta">
   <%= tag :input, :id => "location-title", :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
-  <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
-  <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
-  <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
-  <label for="location-visited">Visited?</label>
+  <%= link_to "Go to #{location.title}", location_path(location), :class => "link-to" %>
+  <section id="location-geo">
+   <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
+   <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
+   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
+   <label for="location-visited">Visited?</label>
+  </section>
   <section id="location-mashup">
    <label>Flickr Set:</label>
    <%= tag :input, :type => "text", :id => "location-flickr_set", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>

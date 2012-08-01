@@ -1,0 +1,17 @@
+<article class="entry">
+ <header>
+  <h3 class="entry-title"><%= entry.title %></h3>
+ </header>
+ <p class="entry-body"><%= entry.body.html_safe %></p>
+ <% if current_user.owns?(entry) %>
+  <section class="toolbox">
+   <%= link_to "Edit Entry", edit_user_location_type_location_journal_entry_path({
+    :user_id => current_user.slug,
+    :location_type_id => @location.location_type.slug,
+    :location_id => @location.slug,
+    :id => entry.id
+    }), :class => "edit-journal-entry-link"
+   %>
+  </section>
+ <% end %>
+</article>
