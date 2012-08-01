@@ -4,8 +4,13 @@ class User < ActiveRecord::Base
 
   def self.anonymous
    User.new({
-    :name => "anonymous"
+    :name => "anonymous",
+    :token => "anonymous"
    })
+  end
+
+  def anonymous?
+   token == "anonymous"
   end
   
   def owns? content

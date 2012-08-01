@@ -9,4 +9,7 @@
    <li><%= link_to loc.title, location_path(loc) %></li>
   <% end %>
  </ul>
+ <% if current_user.owns?(@location_type) %>
+  <%= link_to "Add new location", new_location_path(@location_type) %>
+ <% end %>
 </section>

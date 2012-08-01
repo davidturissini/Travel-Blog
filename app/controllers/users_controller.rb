@@ -5,11 +5,9 @@ class UsersController < ApplicationController
  end
 
  def me
-  if current_user
+  if validate_user?
    @user = current_user
    render_show
-  else
-   unauthorized
   end
  end
   

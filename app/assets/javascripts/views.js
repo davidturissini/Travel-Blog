@@ -31,7 +31,8 @@ var LocationInfoWindow = Backbone.View.extend({
  },
  render: function () {
   var infoWindowHTML = document.createElement("div"),
-  locationTitle = document.createElement("header")
+  locationTitle = document.createElement("a")
+  locationTitle.setAttribute("href", this.model.url())
   locationTitle.appendChild(document.createTextNode( this.model.get("title") ) )
   if( this.model.get("photo_url") ) {
    var locationImg = document.createElement("img")

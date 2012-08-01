@@ -20,7 +20,7 @@ class ApplicationController < ActionController::Base
 
  def validate_user?
   user = User.find_by_slug(params[:user_id])
-  if( current_user.nil? || user.token != current_user.token )
+  if( current_user.anonymous? || user.token != current_user.token )
    unauthorized
    return false
   end
