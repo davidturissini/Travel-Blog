@@ -1,4 +1,4 @@
-body { background:teal; font-size:14px; font-family:Helvetica;  }
+body { color: #666; font-size:14px; font-family:Helvetica;  }
 
 a, a:visited, a:active { text-decoration:none; color: #006; }
 a:hover { text-decoration: underline; }
@@ -6,13 +6,26 @@ a:hover { text-decoration: underline; }
 .clear { display:block; clear:both; }
 br.clear { height:0; line-height:0 }
 
-#container { margin:0px auto; width:920px; padding:20px; background:#fff; }
+#container { margin:0px auto; width:920px; padding:20px; }
 
-#site-header { margin:0 0 20px; padding-bottom:20px; border-bottom: 1px solid #ccc; }
-#site-header #site-title { font-size:32px; }
+#site-header { padding:10px; background:rgba(0, 0, 0, 1); }
+#site-header #site-title { font-size:22px; }
+#site-header #site-title a { color:#fff; }
 
 #map { height:400px; }
 #map nav { display:none }
+
+#locations-nav li { display:block; float:left; }
+#locations-nav li:first-child { border-left:0px; }
+#locations-nav .location { position:relative; display:block; padding:10px; width:70px; height:70px; color: #666; background: rgba(255, 255, 255, .7); border-left:1px solid #000; text-align:center; }
+#locations-nav .location h2 { margin:-5px -10px 0px -10px; text-align:center; font-size:10px; }
+#locations-nav .location:hover { text-decoration:none; }
+#locations-nav img { position:absolute; left: 8px; bottom: 0px; margin:10px 0; height:50px; -webkit-filter: grayscale(100%); }
+#locations-nav li:hover { background: rgba(255, 255, 255, 1); }
+#locations-nav .location:hover img { -webkit-filter: grayscale(0%); }
+#locations-nav .paddle { height: 90px; }
+
+#content { margin:0px auto; padding:50px; width:860px; }
 
 /* ROLLUPS */
 
@@ -25,16 +38,16 @@ br.clear { height:0; line-height:0 }
 
 /* LOCATION DETAIL PAGE */
 
-.locations-show #location { position:relative; float:left; width: 500px; }
+.locations-show #location { position:relative; }
 .locations-show #location-title { margin-bottom:20px; font-size:24px; }
-.locations-show #location #hero-gallery {  margin:0 0 20px 0; text-align:center; background:#f1f1f1; }
-.locations-show #location #hero-gallery li { float:left; margin-left:10px; overflow:hidden; width:75px; height:75px; list-style-type:none; }
+.locations-show #location #hero-gallery { position:relative; z-index:1; float:right; margin:0 0 0 20px; padding:0 0 20px 0; width:500px; text-align:center; background:#f1f1f1; }
+.locations-show #location #hero-gallery li { float:left; padding-left:5px; width:75px; height:77px; list-style-type:none; }
 .locations-show #location #hero-gallery li img { cursor: pointer; }
-.locations-show #location #hero-gallery li:first-child { margin-left:0px; } 
+.locations-show #location #hero-gallery li:first-child { padding-left:0px; } 
 .locations-show #location #hero-gallery #hero-large { height: 332px; text-align:center; }
-.locations-show #location #hero-gallery #location-photos { overflow-x:scroll; padding-bottom:10px; }
+.locations-show #location #hero-gallery #location-photos { padding-bottom:10px; }
+.locations-show #location #hero-gallery .paddle { margin-top:13px; height:50px; }
 
-.locations-show #geo-data { float:right; padding-left:19px; width:380px; border-left: 1px solid #ccc; }
 .locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
 .locations-show #geo-data #map { margin:20px 0; }
 
@@ -66,3 +79,11 @@ br.clear { height:0; line-height:0 }
 
 /* CONTAINER FOOTER */
 #container > footer { clear: both; }
+
+/* SCROLLER */
+.scroller { position:relative; }
+.scroller .paddle { background:rgba(30, 30, 30, 1); }
+.scroller .paddle.left { position:absolute; left:0px; cursor: w-resize; }
+.scroller .paddle.right { position:absolute; right:0px; cursor: e-resize; }
+.scroller .container { position:relative; -webkit-transition:left ease-in-out 500ms; }
+.scroller .overflow-container { overflow-x:hidden; overflow-y:visible; margin:0px auto; }

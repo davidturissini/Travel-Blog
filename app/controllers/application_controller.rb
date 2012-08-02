@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  helper_method :current_user
+  helper_method :current_user, :locations_nav
 
   def current_user
    if cookies[:user] && cookies[:user] != ""
@@ -16,6 +16,10 @@ class ApplicationController < ActionController::Base
 
   def unauthorized
    redirect_to("/")
+  end
+
+  def locations_nav
+   Location.joins(:location_type, :user)
   end
 
  def validate_user?

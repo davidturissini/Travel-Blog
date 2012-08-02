@@ -1,17 +1,5 @@
-<section id="map">
- <nav>
-  <ul>
-   <% @hero_locations.each do |location| %>
-    <li><%= location_link(location, { 
-      "data-location_type" => location.location_type.to_json, 
-      "data-json" => location.to_json,
-      "data-user" => location.user.to_json }) %></li> 
-   <% end %>
-  </ul>
- </nav>
-</section>
-
-<section id="locations-recent">
+<!--
+<section id="hero">
  <ul>
   <% @recent_locations.each do |location| %>
    <li>
@@ -20,42 +8,11 @@
   <% end %>
  </ul>
 </section>
+-->
 
 <% content_for :scripts_footer do %>
  <script>
   window.addEventListener("DOMContentLoaded", function () {
-   var mapLocations = Array.prototype.slice.call(document.getElementById("map").getElementsByClassName("location"), 0),
-    map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 4,
-    center: new google.maps.LatLng(41.08193934195916,-93.67801624999997),
-    mapTypeId: google.maps.MapTypeId.HYBRID
-   });
-
-   var infoWindow = new LocationInfoWindow({
-    map:map
-   })
-   mapLocations.forEach(function (elem) {
-    var location = new Location(JSON.parse(elem.getAttribute("data-json"))),
-    locationType = new LocationType(JSON.parse(elem.getAttribute("data-location_type"))),
-    user = new User(JSON.parse(elem.getAttribute("data-user")));
-    locationType.setUser(user)
-    location.setLocationType(locationType)
-    
-    new LocationMarker({
-     map:map,
-     locationType:locationType,
-     model: location,
-     click: function () {
-      map.panTo(new google.maps.LatLng(location.get("latitude"), location.get("longitude")))
-      infoWindow.setLocation(location).render().open()
-     }
-    }).render()
-   })
-  
   })
-
-
-  
- 
  </script>
 <% end %>

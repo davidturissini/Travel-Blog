@@ -29,25 +29,13 @@
   </section>
  <% end %>
 </article>
-<aside id="geo-data">
- <section id="location-political-geo">
-  <%= @location.city %>, <%= @location.country %>
- </section>
- <figure id="map"></figure>
-</aside>
 
 
 <% content_for :scripts_footer do %>
  <script>
-  window.addEventListener("DOMContentLoaded", function () {
-   var location = new Location( JSON.parse( document.getElementById("location").getAttribute("data-json") ) )
-   map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 11,
-    center: new google.maps.LatLng(location.get("latitude"),location.get("longitude")),
-    mapTypeId: google.maps.MapTypeId.HYBRID
-   });
-  
-   location.photos({
+   window.addEventListener("DOMContentLoaded", function () {
+   var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") ))
+   loc.photos({
     success:function (e) {
      var ul = document.getElementById("location-thumbs"),
      largeImage = document.getElementById("hero-large")
@@ -64,8 +52,13 @@
        largeImage.setAttribute("src", image.url()) 
       })
      })
+     new Scroller({
+      el:document.getElementById("location-photos"),
+      container:document.getElementById("location-thumbs"),
+      items:document.getElementById("location-thumbs").getElementsByTagName("li")
+     }).render()
     }
    }) 
-  })
+   })
  </script>
 <% end %>
