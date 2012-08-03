@@ -1,11 +1,15 @@
 class Location < ActiveRecord::Base
  belongs_to :location_type
  has_one :user, :through => :location_type
- has_many :journal_entries, :order => "day DESC"
+ has_many :journal_entries, :order => "day ASC"
  validates :location_type_id, :presence => true
  
  def self.recent limit = 10
   self.joins(:location_type, :user).order("created_at DESC").limit(limit)
+ end
+
+ def self.most_recent_published
+   self.joins(:journal_entries, :location_type, :user).where("locations.has_visited = true").order("journal_entries.day DESC").group("journal_entries.location_id")
  end
 
  def self.with_recent_entries limit = 10
