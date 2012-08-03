@@ -1,6 +1,7 @@
-<article id="location" data-json="<%= @location.to_json %>">
+<article id="location" data-location_type="<%= @location.location_type.to_json %>" data-json="<%= @location.to_json %>">
  <header>
   <h2 id="location-title"><%= @location.title %></h2>
+  <%= @location.city %>, <%= @location.country %>
  </header>
  <figure id="hero-gallery">
   <%= image_tag @location.photo_url, :id => "hero-large" %>
@@ -10,6 +11,7 @@
    </ul>
   </div>
  </figure>
+  <div id="map"></div>
  <section id="journal_entries">
   <% @location.journal_entries.each do |entry| %>
    <%= render "journal_entry", :entry => entry %>
@@ -28,13 +30,26 @@
    <%= link_to "Edit", edit_location_path(@location) %>
   </section>
  <% end %>
+ <br class="clear" />
 </article>
 
 
 <% content_for :scripts_footer do %>
  <script>
    window.addEventListener("DOMContentLoaded", function () {
-   var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") ))
+   var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") )),
+   locationType = new Location(JSON.parse( document.getElementById("location").getAttribute("data-location_type") )),
+   map = new google.maps.Map(document.getElementById("map"), {
+     disableDefaultUI: true,
+     zoom: 4,
+     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
+     mapTypeId: google.maps.MapTypeId.HYBRID
+    })
+   new LocationMarker({
+    model:loc,
+    map:map,
+    locationType:locationType
+   }).render()
    loc.photos({
     success:function (e) {
      var ul = document.getElementById("location-thumbs"),

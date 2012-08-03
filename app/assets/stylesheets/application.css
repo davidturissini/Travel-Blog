@@ -1,4 +1,4 @@
-body { color: #666; font-size:14px; font-family:Helvetica;  }
+body { color: #333; font-size:14px; font-family:Helvetica; background:url(/assets/backgrounds/acadia.jpg) top center no-repeat fixed;  }
 
 a, a:visited, a:active { text-decoration:none; color: #006; }
 a:hover { text-decoration: underline; }
@@ -6,26 +6,46 @@ a:hover { text-decoration: underline; }
 .clear { display:block; clear:both; }
 br.clear { height:0; line-height:0 }
 
-#container { margin:0px auto; width:920px; padding:20px; }
+#container { margin:0px auto; width:960px; }
 
-#site-header { padding:10px; background:rgba(0, 0, 0, 1); }
-#site-header #site-title { font-size:22px; }
+#site-header { margin:0px auto; padding:10px 20px 0; }
+#site-header #site-title { margin-left: 50px; font-size:32px; }
 #site-header #site-title a { color:#fff; }
 
 #map { height:400px; }
 #map nav { display:none }
 
+#locations-nav { margin-top:10px; }
+#locations-nav ul { overflow-y:hidden; width:0px; }
 #locations-nav li { display:block; float:left; }
 #locations-nav li:first-child { border-left:0px; }
 #locations-nav .location { position:relative; display:block; padding:10px; width:70px; height:70px; color: #666; background: rgba(255, 255, 255, .7); border-left:1px solid #000; text-align:center; }
-#locations-nav .location h2 { margin:-5px -10px 0px -10px; text-align:center; font-size:10px; }
+#locations-nav .location h2 { margin:-5px -10px 0px -10px; height:16px; text-align:center; font-size:10px; }
 #locations-nav .location:hover { text-decoration:none; }
-#locations-nav img { position:absolute; left: 8px; bottom: 0px; margin:10px 0; height:50px; -webkit-filter: grayscale(100%); }
-#locations-nav li:hover { background: rgba(255, 255, 255, 1); }
-#locations-nav .location:hover img { -webkit-filter: grayscale(0%); }
-#locations-nav .paddle { height: 90px; }
+#locations-nav img { margin:10px auto; max-width:70px; height:50px; -webkit-filter: grayscale(100%); }
+#locations-nav li:hover, #locations-nav li.selected { background: rgba(255, 255, 255, 1); }
+#locations-nav .location:hover img, #locations-nav .selected img { -webkit-filter: grayscale(0%) saturate(150%); }
+#locations-nav .paddle { height: 0px; width:0px;
+  border-left:30px solid transparent;
+  border-right:30px solid rgba(255, 255, 255, 1);
+  border-top:30px solid transparent;
+  border-bottom:30px solid transparent;
+  background:transparent;
+  top: 15px;
+  }
 
-#content { margin:0px auto; padding:50px; width:860px; }
+#locations-nav .paddle.left {
+ left:-35px;
+ }
+
+#locations-nav .paddle.right {
+ border-right:30px solid transparent;
+ border-left:30px solid rgba(255, 255, 255, 1);
+ right:-35px;
+ }
+
+#content { margin:0px auto; padding:30px; background:#fff; }
+  
 
 /* ROLLUPS */
 
@@ -39,14 +59,29 @@ br.clear { height:0; line-height:0 }
 /* LOCATION DETAIL PAGE */
 
 .locations-show #location { position:relative; }
-.locations-show #location-title { margin-bottom:20px; font-size:24px; }
+.locations-show #location-title { position:relative; font-size:38px; }
+.locations-show #map { position:relative; z-index:5; clear:right; float:right; margin:20px 54px 20px 20px; width:394px; height:300px; }
 .locations-show #location #hero-gallery { position:relative; z-index:1; float:right; margin:0 0 0 20px; padding:0 0 20px 0; width:500px; text-align:center; background:#f1f1f1; }
 .locations-show #location #hero-gallery li { float:left; padding-left:5px; width:75px; height:77px; list-style-type:none; }
 .locations-show #location #hero-gallery li img { cursor: pointer; }
 .locations-show #location #hero-gallery li:first-child { padding-left:0px; } 
 .locations-show #location #hero-gallery #hero-large { height: 332px; text-align:center; }
 .locations-show #location #hero-gallery #location-photos { padding-bottom:10px; }
-.locations-show #location #hero-gallery .paddle { margin-top:13px; height:50px; }
+.locations-show #location #hero-gallery .paddle { margin-top:13px; height:0px; width:0px; background:transparent; }
+.locations-show #location #hero-gallery .paddle.left {
+ border-left:25px solid transparent;
+ border-right:25px solid #000;
+ border-bottom:25px solid transparent;
+ border-top:25px solid transparent;
+ left:-15px;
+ }
+.locations-show #location #hero-gallery .paddle.right {
+ border-left:25px solid #000;
+ border-right:25px solid transparent;
+ border-bottom:25px solid transparent;
+ border-top:25px solid transparent;
+ right:-15px;
+ }
 
 .locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
 .locations-show #geo-data #map { margin:20px 0; }
@@ -82,7 +117,6 @@ br.clear { height:0; line-height:0 }
 
 /* SCROLLER */
 .scroller { position:relative; }
-.scroller .paddle { background:rgba(30, 30, 30, 1); }
 .scroller .paddle.left { position:absolute; left:0px; cursor: w-resize; }
 .scroller .paddle.right { position:absolute; right:0px; cursor: e-resize; }
 .scroller .container { position:relative; -webkit-transition:left ease-in-out 500ms; }

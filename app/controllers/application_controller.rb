@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def locations_nav
-   Location.joins(:location_type, :user)
+   Location.joins(:location_type, :user).where("has_visited = true")
   end
 
  def validate_user?

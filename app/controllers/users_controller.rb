@@ -5,6 +5,7 @@ class UsersController < ApplicationController
  end
 
  def me
+  params[:user_id] = current_user.slug
   if validate_user?
    @user = current_user
    render_show

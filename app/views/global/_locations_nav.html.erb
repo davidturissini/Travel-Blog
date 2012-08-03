@@ -1,0 +1,18 @@
+<nav id="locations-nav">
+ <ul class="container">
+  <% locations.each do |location| %>
+   <li<%= ' class="selected"'.html_safe if location == selected %>>
+    <%= link_to location_path(location), { 
+     "data-location_type" => location.location_type.to_json, 
+     "data-json" => location.to_json,
+     "data-user" => location.user.to_json,
+     "class" => "location" } do %>
+      <h2 class="location-title">
+       <%= location.city %>
+      </h2>
+      <%= image_tag location.photo_url %> 
+    <% end %>
+   </li> 
+  <% end %>
+ </ul>
+</nav>

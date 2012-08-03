@@ -22,6 +22,14 @@ var LocationMarker = Backbone.View.extend({
    icon: locMarker.iconUrl
    }
    this.googleMarker.setOptions(markerHash)
+   if( this.model.has("kml_url") ) {
+    var kml = new google.maps.KmlLayer(this.model.get("kml_url"), {preserveViewport:true,suppressInfoWindows:true}),
+    bounds = kml.getDefaultViewport()
+    kml.setMap(this.options.map)
+    if( bounds ) { 
+     this.options.map.fitBounds(bounds)
+    }
+   }
   }
  })
 
@@ -118,9 +126,9 @@ var Scroller = Backbone.View.extend({
    }
   }
   scroller.overflowContainer.style.width = itemsWidth + "px"
-  var diff = (scroller.el.offsetWidth - itemsWidth) / 2
-  scroller.leftPaddle.style.width = diff + "px"
-  scroller.rightPaddle.style.width = diff + "px"
+  var diff = scroller.el.offsetWidth - (itemsWidth + scroller.paddleWidth * 2)
+  scroller.leftPaddle.style.marginLeft = diff / 2 + "px"
+  scroller.rightPaddle.style.marginRight = diff / 2 + "px"
  },
  render: function () {
   var scroller = this
@@ -132,12 +140,10 @@ var Scroller = Backbone.View.extend({
    scroller.el.appendChild(elem)
   });
 
-  scroller.leftPaddle.style.width = scroller.paddleWidth + "px"
-  scroller.rightPaddle.style.width = scroller.paddleWidth + "px";
-  
   [].forEach.call(scroller.options.items, function (elem) {
    scroller.containerWidth += elem.offsetWidth
   })
+
   scroller.options.container.style.width = scroller.containerWidth + "px"
   scroller.determineVisibleItems()  
 
@@ -149,13 +155,15 @@ var Scroller = Backbone.View.extend({
    scroller.next()
   })
   
-  var resizeTimeout;
-  window.addEventListener("resize", function () {
-   clearTimeout(resizeTimeout)
-   resizetimeout = setTimeout(function () {
-    scroller.determineVisibleItems()
-   }, 500);
-  })
+  if( scroller.options.dynamicResize === true ) {
+   var resizeTimeout;
+   window.addEventListener("resize", function () {
+    clearTimeout(resizeTimeout)
+    resizetimeout = setTimeout(function () {
+     scroller.determineVisibleItems()
+    }, 500);
+   })
+  }
   return scroller
  }
 })
