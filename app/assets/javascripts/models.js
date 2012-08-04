@@ -40,7 +40,19 @@ var LocationType = Backbone.Model.extend({
  })
 
 var User = Backbone.Model.extend({
- url: function () {
+ jsonPrefix: false,
+ toJSON: function () {
+  if( this.jsonPrefix ) {
+    return { user: this.attributes}
+  } else {
+    return this.attributes
+  }
+ },
+ isCurrentUser: false,
+ url: function (e) {
+  if( this.isCurrentUser ) {
+    return "/me?format=json"
+  }
   return "/" + this.get("slug")
  } 
 })

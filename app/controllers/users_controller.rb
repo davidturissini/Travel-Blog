@@ -13,7 +13,15 @@ class UsersController < ApplicationController
  end
   
  def update
- 
+  params[:user_id] = current_user.slug
+  if validate_user?
+    params[:user].delete(:id)
+    current_user.update_attributes!(params[:user])
+    respond_to do |format|
+      format.html { redirect_to :action => :me }
+      format.json { render :json => current_user }
+    end
+  end
  end
 
  def logout

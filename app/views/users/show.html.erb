@@ -1,5 +1,9 @@
  <section id="user" data-json="<%= @user.to_json %>">
-  <header><%= @user.name %>'s map</header>
+  <header>Hello, <%= @user.name %></header>
+  <form id="user-form">
+    Your url: /<%= tag :input, :value => @user.slug, :id => "user-slug" %>
+    <input type="submit" value="Update" />
+  </form>
   <section id="location-types">
    <header>Location Types</header>
    <table id="user-location_types" data-json="<%= @user.location_types.to_json %>">
@@ -54,7 +58,7 @@
   window.addEventListener("DOMContentLoaded", function () {
    var userJson = JSON.parse( document.getElementById("user").getAttribute("data-json") ),
    user = new User(userJson),
-   locationTypesJSON = JSON.parse( document.getElementById("user-location_types").getAttribute("data-json")  ) 
+   locationTypesJSON = JSON.parse( document.getElementById("user-location_types").getAttribute("data-json")  ),
    userLocationTypes = new LocationTypeCollection(locationTypesJSON),
    locationsJSON = JSON.parse( document.getElementById("user-locations").getAttribute("data-json") ),
    userLocations = new LocationCollection(locationsJSON),
@@ -113,6 +117,18 @@
    locationList = new LocationList({
     el: document.getElementById("user-locations")
    }).render()
+
+   document.getElementById("user-form").addEventListener("submit", function (e) {
+    e.preventDefault()
+    user.isCurrentUser = true
+    user.jsonPrefix = true
+    user.save({slug: document.getElementById("user-slug").value}, {
+      success:function () {
+        window.location.reload()
+      }
+    })
+   })
+
   })
  </script>
 <% end %>

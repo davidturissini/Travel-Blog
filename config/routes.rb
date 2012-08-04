@@ -2,8 +2,9 @@ Adventureblog::Application.routes.draw do
   root :to => 'welcome#index'
   match '/auth/:provider/callback' => "users#login"
   match '/qunit' => "qunit#test"
-  match '/me' => "users#me"
+  match '/me' => "users#me", :via => :get
   match '/me/logout' => "users#logout"
+  match '/me' => "users#update", :via => :put
 
   match '/:user_id/:id/edit' => "location_types#edit"
   match '/:user_id/location_types/new' => "location_types#new"
