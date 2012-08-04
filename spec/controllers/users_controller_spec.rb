@@ -43,6 +43,18 @@ describe UsersController do
     User.find(user_id).slug.should == slug
   end
 
+  it "should not update an anonymous user" do
+    anon = users(:anonymous)
+    stub_user_cookie(anon)
+    hash = anon.as_json
+    user_id = anon.id
+    slug = "ASDASDSADASDASD"
+    old_slug = hash["slug"]
+    hash[:slug] = slug
+    put :update, :user => hash
+    User.find(user_id).slug.should == old_slug
+  end
+
   it "should not update the users token" do
     stub_user_cookie
     hash = @user.as_json

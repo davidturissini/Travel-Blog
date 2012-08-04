@@ -70,6 +70,7 @@ class UsersController < ApplicationController
     :provider_id => provider_id,
     :user => user
     })
+    user.login!
     set_user_cookie(user)
   end
  end

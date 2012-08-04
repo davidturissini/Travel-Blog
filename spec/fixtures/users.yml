@@ -12,5 +12,5 @@ user_two:
 anonymous:
   name: Another traveler
   id: 3
-  slug: another-traveler
+  slug: anonymous
   token: anonymous
