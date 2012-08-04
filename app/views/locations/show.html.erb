@@ -16,21 +16,20 @@
   <% @location.journal_entries.each do |entry| %>
    <%= render "journal_entry", :entry => entry %>
   <% end %>
-  <% if current_user.owns?(@location) %>
-   <%= link_to "Add new journal entry for #{@location.title}", new_user_location_type_location_journal_entry_path({
-    :user_id => current_user.slug,
-    :location_type_id => @location.location_type.slug,
-    :location_id => @location.slug
-    }), :class => "new-journal-entry-link"
-   %>
-  <% end %>
  </section>
- <% if current_user.owns?(@location) %>
-  <section class="toolbox">
-   <%= link_to "Edit", edit_location_path(@location) %>
-  </section>
- <% end %>
+ 
  <br class="clear" />
+ <% if current_user.owns?(@location) %>
+    <div class="toolbox">
+      <%= link_to "Edit #{@location.title}", edit_location_path(@location) %> |
+      <%= link_to "Add new journal entry for #{@location.title}", new_user_location_type_location_journal_entry_path({
+        :user_id => current_user.slug,
+        :location_type_id => @location.location_type.slug,
+        :location_id => @location.slug
+        }), :class => "new-journal-entry-link"
+      %>
+    </div>
+  <% end %>
 </article>
 
 

@@ -1,15 +1,20 @@
 <div id="location-fields" data-location_type="<%= location.location_type.to_json %>" data-user="<%= location.user.to_json  %>" data-json="<%= location.to_json %>" class="location">
+  <section id="server-messages"></section>
  <section id="location-photo">
   <img src="<%= location.photo_url %>" />
   <%= tag :input, :value => location ? location.photo_url : "", :name => "location[photo_url]", :type => "hidden" %>
  </section>
  <section id="location-meta">
   <%= tag :input, :id => "location-title", :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
-  <%= link_to "Go to #{location.title}", location_path(location), :class => "link-to" %>
+  <select id="location-location_type_id">
+    <% current_user.location_types.each do |loc_type| %>
+      <option<%= ' selected="selected"' if loc_type == location.location_type %> value="<%= loc_type.id %>"><%= loc_type.title %></option>
+    <% end %>
+  </select>
   <section id="location-geo">
    <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
    <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
-   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-visited" %>
+   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
    <label for="location-visited">Visited?</label>
   </section>
   <section id="location-mashup">
@@ -32,19 +37,16 @@
   </ul>
  </section>
  <section id="location-map" style="height:500px"></section>
+ <br class="clear" />
 </div>
 
 <% content_for :scripts_footer do %>
  <script>
   window.addEventListener("DOMContentLoaded", function () {
-  document.getElementById("location-form").onsubmit = function (e) {
-   e.preventDefault()
-   loc.jsonPrefix = true
-   loc.save()
-  }
+  
   var loc = new Location(JSON.parse(document.getElementById("location-fields").getAttribute("data-json"))),
-  locType = new LocationType(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-location_type"))),
-  user = new User(JSON.parse(document.getElementsByClassName("location")[0].getAttribute("data-user")))
+  locType = new LocationType(JSON.parse(document.getElementById("location-fields").getAttribute("data-location_type"))),
+  user = new User(JSON.parse(document.getElementById("location-fields").getAttribute("data-user")))
   loc.setLocationType(locType)
   loc.setUser(user)
 
@@ -71,6 +73,14 @@
        photoSection.getElementsByTagName("img")[0].setAttribute("src", this.get("photo_url")) 
      }
 
+     if( options.changes.has_visited ) { 
+      if( loc.get("has_visited") ) {
+      document.getElementById("location-has_visited").setAttribute("checked", "checked")
+      } else {
+        document.getElementById("location-has_visited").removeAttribute("checked")
+      }
+     }
+
      if( options.changes.city ) { 
       document.getElementById("location-city").setAttribute("value", this.get("city"))
      }
@@ -93,6 +103,8 @@
       form.showPhotos()
      }
     })
+
+    this.serverMessages = document.getElementById("server-messages")
  
    },
    _focusMap: function () {
@@ -165,22 +177,60 @@
      }
     })
  
+   },
+   successMessage:function (message) {
+    var success = document.createElement("p"),
+    text = document.createTextNode(message)
+    success.className = "success"
+    success.appendChild(text)
+    this.serverMessages.innerHTML = ""
+    this.serverMessages.appendChild(success)
+   },
+   errorMessage: function (message) {
+    var error = document.createElement("p"),
+    text = document.createTextNode(message)
+    error.className = "error"
+    error.appendChild(text)
+    this.serverMessages.innerHTML = ""
+    this.serverMessages.appendChild(error)
+    
+   },
+   render: function () {
+    var form = this
+    form.showPhotos()
+    document.getElementById("location-form").onsubmit = function (e) {
+     e.preventDefault()
+     loc.jsonPrefix = true
+     loc.save({}, {
+      success:function () {
+        form.successMessage(loc.get("title") + " successfully saved.")
+      },
+      error: function () {
+        form.errorMessage("There was a problem with your request")
+      }
+     })
+    }
    }
   })
 
   var form = new LocationForm({
    el: document.getElementById("location-form"),
    model: loc
-  })
+  }).render()
  
-  form.showPhotos()
+ 
  
 
-   var fields = ["latitude", "longitude", "title", "city", "country", "flickr_set", "kml_url"]
+   var fields = ["location_type_id", "latitude", "longitude", "title", "city", "country", "flickr_set", "kml_url"]
    fields.forEach(function (field) {
     document.getElementById("location-" + field).addEventListener("change", function (e) {
      loc.set(field, e.currentTarget.value)
     })
+
+    document.getElementById("location-has_visited").addEventListener("change", function (e) {
+     loc.set({has_visited: e.currentTarget.checked})
+    })
+
    })
   })
  </script>

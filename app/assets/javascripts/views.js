@@ -8,7 +8,7 @@ var LocationMarker = Backbone.View.extend({
     if( locMarker.options.click ) { locMarker.options.click() }
    })
    loc.on("change", function (e, options) {
-    if( options.changes.longitude || options.changes.latitude ) { 
+    if( options.changes.longitude || options.changes.latitude || options.changes.kml_url ) {
      locMarker.render() 
     }
    })

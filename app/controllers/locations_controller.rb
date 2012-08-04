@@ -1,5 +1,17 @@
 class LocationsController < ApplicationController
  helper_method :current_location_type
+  
+ def destroy
+  if validate_user?
+   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
+   @location = @location_type.locations.find_by_slug(params[:id])
+   @location.destroy
+   respond_to do |format|
+    format.html 
+    format.json { render :json => @location }
+   end
+  end
+ end
 
  def new
   if validate_user?

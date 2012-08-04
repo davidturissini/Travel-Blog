@@ -61,12 +61,12 @@ br.clear { height:0; line-height:0 }
 .locations-show #location { position:relative; }
 .locations-show #location-title { position:relative; font-size:38px; }
 .locations-show #map { position:relative; z-index:5; clear:right; float:right; margin:20px 54px 20px 20px; width:394px; height:300px; }
-.locations-show #location #hero-gallery { position:relative; z-index:1; float:right; margin:0 0 0 20px; padding:0 0 20px 0; width:500px; text-align:center; background:#f1f1f1; }
+.locations-show #location #hero-gallery { position:relative; z-index:1; float:right; margin:0 0 0 20px; padding:0; width:500px; text-align:center; background:#f1f1f1; }
 .locations-show #location #hero-gallery li { float:left; padding-left:5px; width:75px; height:77px; list-style-type:none; }
 .locations-show #location #hero-gallery li img { cursor: pointer; }
 .locations-show #location #hero-gallery li:first-child { padding-left:0px; } 
 .locations-show #location #hero-gallery #hero-large { height: 332px; text-align:center; }
-.locations-show #location #hero-gallery #location-photos { padding-bottom:10px; }
+.locations-show #location #hero-gallery #location-photos { padding:10px; }
 .locations-show #location #hero-gallery .paddle { margin-top:13px; height:0px; width:0px; background:transparent; }
 .locations-show #location #hero-gallery .paddle.left {
  border-left:25px solid transparent;
@@ -89,14 +89,17 @@ br.clear { height:0; line-height:0 }
 .locations-show #location #journal_entries .entry { position:relative; }
 .locations-show #location #journal_entries .entry-title { margin:20px 0; font-size:18px; }
 .locations-show #location #journal_entries .entry-body { line-height:16px; }
-.locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; float:right; }
-.locations-show #location #journal_entries .new-journal-entry-link { clear: both; float:right; display:inline-block; margin-top:10px; }
+.locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; }
 
-.locations-show #location .toolbox { position:absolute; display:none; right:0px; top:0px; }
+.locations-show #location .toolbox { display:none; }
 .locations-show #location:hover .toolbox { display:block; }
+.locations-show #location > .toolbox { clear:both; }
 
 /* LOCATION FORM */
 #location-form input[type=text] { border:0px; } 
+#location-form #server-messages { margin-bottom:20px; }
+#location-form #server-messages .success { padding:10px; border:1px solid #0f0; color:#0f0;}
+#location-form #server-messages .error { padding:10px; border:1px solid #f00; color:#f00;}
 #location-form #location-mashup { margin:10px 0; }
 #location-form #location-title { display:block; margin-bottom:10px; width:775px; font-size:22px; }
 #location-form #location-meta { margin:0 200px 0 140px; }
@@ -121,3 +124,9 @@ br.clear { height:0; line-height:0 }
 .scroller .paddle.right { position:absolute; right:0px; cursor: e-resize; }
 .scroller .container { position:relative; -webkit-transition:left ease-in-out 500ms; }
 .scroller .overflow-container { overflow-x:hidden; overflow-y:visible; margin:0px auto; }
+
+/* USER ADMIN PAGE */
+.users-me #user section { margin-bottom:20px; text-align:center; }
+.users-me #user section header { font-size:22px; }
+.users-me #user section img { max-height:75px; height:50px; }
+.users-me #user section td { padding:10px;}

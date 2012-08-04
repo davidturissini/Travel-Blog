@@ -1,16 +1,51 @@
  <section id="user" data-json="<%= @user.to_json %>">
   <header><%= @user.name %>'s map</header>
-  <section>
-   <ul id="user-location_types" data-json="<%= @user.location_types.to_json %>">
+  <section id="location-types">
+   <header>Location Types</header>
+   <table id="user-location_types" data-json="<%= @user.location_types.to_json %>">
     <% @user.location_types.each do |type| %>
-     <li>
-      <article class="location-type" data-id="<%=   %>">
-       <%= link_to type.title, user_location_type_path(:user_id => type.user.id, :id => type.slug) %> 
-       <a class="remove">x</a>
-      </article> 
-     </li>
+      <tr class="location-type">
+        <td>
+          <% if type.icon_url %>
+            <%= image_tag type.icon_url %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to type.title, user_location_type_path(:user_id => type.user.id, :id => type.slug) %>
+        </td>
+        <td>
+          <%= type.locations.count %> locations
+          <%= link_to "Create new", new_location_path(type) %>
+        </td>
+        <td>
+          <a class="remove">x</a>
+        </td>
+      </tr> 
     <% end %> 
-   </ul>
+   </table>
+  </section>
+  <section id="locations">
+   <header>Locations</header>
+   <table id="user-locations" data-json="<%= @user.locations.to_json %>">
+    <% @user.locations.each do |location| %>
+      <tr class="location" data-json="<%= location.to_json  %>">
+        <td>
+          <% if location.photo_url %>
+            <%= image_tag location.photo_url %>
+          <% end %>
+        </td>
+        <td>
+          <%= link_to location.title, location_path(location) %> 
+        </td>
+        <td>
+          <%= location.journal_entries.count %> journal entries
+        </td>
+        <td>
+          <a class="remove">x</a>
+        </td>
+      </tr>
+    <% end %> 
+   </table>
   </section>
  </section>
 
@@ -20,7 +55,9 @@
    var userJson = JSON.parse( document.getElementById("user").getAttribute("data-json") ),
    user = new User(userJson),
    locationTypesJSON = JSON.parse( document.getElementById("user-location_types").getAttribute("data-json")  ) 
-   userLocations = new LocationTypeCollection(locationTypesJSON),
+   userLocationTypes = new LocationTypeCollection(locationTypesJSON),
+   locationsJSON = JSON.parse( document.getElementById("user-locations").getAttribute("data-json") ),
+   userLocations = new LocationCollection(locationsJSON),
    LocationTypeList = Backbone.View.extend({
     collection: userLocations,
     initialize: function () {
@@ -47,6 +84,34 @@
    }),
    locationTypeList = new LocationTypeList({
     el: document.getElementById("user-location_types")
+   }).render(),
+   LocationList = Backbone.View.extend({
+    collection: userLocations,
+    initialize: function () {
+     var view = this
+     this.collection.on("remove", function (model, collection, options) {
+      model.setUser(user)
+      model.destroy({
+       success:function () {
+        options.elem.parentNode.removeChild(options.elem)   
+       }
+      })
+     })
+    },
+    render: function () {
+     var list = this;
+     [].forEach.call(this.el.getElementsByClassName("location"), function (elem, index) {
+      var remove = elem.getElementsByClassName("remove").item(0)
+      remove.addEventListener("click", function () {
+       var model = list.collection.at(index)
+       model.setLocationType(userLocationTypes.get(model.get("location_type_id")))
+       list.collection.remove(model, {elem:elem}) 
+      })
+     })
+    }
+   }),
+   locationList = new LocationList({
+    el: document.getElementById("user-locations")
    }).render()
   })
  </script>

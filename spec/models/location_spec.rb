@@ -19,7 +19,21 @@ describe Location do
  end
  
  it "should not create a location without a location type" do
-  lambda { Location.create!({:title => "asd"}) }.should raise_error(ActiveRecord::RecordInvalid)
+  lambda { Location.create!({:title => "asd", :slug => "asd"}) }.should raise_error(ActiveRecord::RecordInvalid)
+ end
+
+ it "should not create a location without a slug" do
+  lambda { Location.create!({
+    :title => "asd", 
+    :location_type => location_types(:vacation)
+    }) }.should raise_error(ActiveRecord::RecordInvalid)
+ end
+
+ it "should not create a location without a title" do
+  lambda { Location.create!({
+    :slug => "asd", 
+    :location_type => location_types(:vacation)
+    }) }.should raise_error(ActiveRecord::RecordInvalid)
  end
 
  it "should have a teaser from its summary" do

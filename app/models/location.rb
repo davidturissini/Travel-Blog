@@ -2,7 +2,7 @@ class Location < ActiveRecord::Base
  belongs_to :location_type
  has_one :user, :through => :location_type
  has_many :journal_entries, :order => "day ASC"
- validates :location_type_id, :presence => true
+ validates :location_type_id, :slug, :title, :presence => true
  
  def self.recent limit = 10
   self.joins(:location_type, :user).order("created_at DESC").limit(limit)
