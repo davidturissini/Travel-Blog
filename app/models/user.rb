@@ -27,6 +27,12 @@ class User < ActiveRecord::Base
    self.token = nil
    self.save!
   end
+
+  def as_json options = {}
+    hash = super(options)
+    hash.delete("salt")
+    hash
+  end
  
   def self.new_traveller options
    user = User.create(options)

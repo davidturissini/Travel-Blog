@@ -14,4 +14,8 @@ describe User do
   location = locations(:sample_vacation)
   @user.locations.should include(location)
  end
+
+ it "should not have its salt in its json" do
+ 	@user.as_json.should_not have_key("salt")
+ end
 end

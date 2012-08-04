@@ -3,6 +3,7 @@ user_one:
   id: 1
   slug: some-traveller
   token: i2u4
+  salt: asdasds
 user_two:
   name: Another traveler
   id: 2
