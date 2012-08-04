@@ -25,6 +25,30 @@ describe JournalEntriesController do
  	}
  end
 
+ describe "/destroy" do
+  it "should complete successfully" do
+    stub_user_cookie
+    entry = @location.journal_entries.first
+    entry_id = entry.id
+    delete :destroy, :id => entry.id, :user_id => @user.slug, :location_type_id => @location_type.slug, :location_id => @location.slug
+    response.status.should == 302
+  end
+  it "should destroy an entry successfully" do
+    stub_user_cookie
+    entry = @location.journal_entries.first
+    entry_id = entry.id
+    delete :destroy, :id => entry.id, :user_id => @user.slug, :location_type_id => @location_type.slug, :location_id => @location.slug
+    lambda { JournalEntry.find(entry_id) }.should raise_error(ActiveRecord::RecordNotFound)
+  end
+  it "should not destroy an entry if the user is incorrect" do
+    stub_user_cookie(users(:anonymous))
+    entry = @location.journal_entries.first
+    entry_id = entry.id
+    delete :destroy, :id => entry.id, :user_id => @user.slug, :location_type_id => @location_type.slug, :location_id => @location.slug
+    JournalEntry.find(entry_id).should_not be_nil
+  end
+ end
+
  describe "/edit" do
   it "should complete successfully" do
     stub_user_cookie
@@ -63,9 +87,5 @@ describe JournalEntriesController do
    post :create, :user_id => @user.slug, :location_type_id => @location_type.slug, :location_id => @location.slug, :journal_entry => hash
    JournalEntry.find_by_title(title).should be_nil
   end
- end
-
- describe "/edit" do
-
  end
 end

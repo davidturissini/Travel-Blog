@@ -31,6 +31,17 @@ class JournalEntriesController < ApplicationController
    end
   end
  end
+
+ def destroy
+  if validate_user?
+    location = get_location 
+    @journal = location.journal_entries.find(params[:id])
+    @journal.destroy
+    respond_to do |format|
+     format.html { redirect_to :controller => "locations", :action => "show", :location_type_id => location.location_type.slug, :user_id => current_user.slug, :id => location.slug }
+    end
+  end
+ end
  
  protected
  def get_location
