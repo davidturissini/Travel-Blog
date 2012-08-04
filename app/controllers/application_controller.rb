@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   def current_user
    if cookies[:user] && cookies[:user] != ""
     cookie = JSON.parse( cookies[:user] )
-    user = User.where({:id => cookie["id"], :token => cookie["token"]}).first
+    user = User.where({:id => cookie["id"], :token => cookie["token"]}).first if !cookie["token"].nil?
    end
    user || User.anonymous
   end

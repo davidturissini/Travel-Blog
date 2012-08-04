@@ -15,7 +15,9 @@ class UsersController < ApplicationController
  def update
   params[:user_id] = current_user.slug
   if validate_user?
-    params[:user].delete(:id)
+    [:id, :token, :salt].each do |prop|
+      params[:user].delete(prop)
+    end
     current_user.update_attributes!(params[:user])
     respond_to do |format|
       format.html { redirect_to :action => :me }
