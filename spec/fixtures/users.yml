@@ -9,3 +9,8 @@ user_two:
   id: 2
   slug: another-traveler
   token: hk2ef
+anonymous:
+  name: Another traveler
+  id: 3
+  slug: another-traveler
+  token: anonymous

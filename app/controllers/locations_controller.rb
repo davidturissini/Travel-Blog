@@ -7,7 +7,7 @@ class LocationsController < ApplicationController
    @location = @location_type.locations.find_by_slug(params[:id])
    @location.destroy
    respond_to do |format|
-    format.html 
+    format.html { redirect_to :controller => "location_types", :action => "show" }
     format.json { render :json => @location }
    end
   end

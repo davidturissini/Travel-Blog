@@ -8,12 +8,41 @@ describe LocationsController do
   @location = locations(:sample_vacation)
  end
 
- def stub_user_cookie
-   request.cookies[:user] = @user.to_json
+ def stub_user_cookie user = @user
+   request.cookies[:user] = user.to_json
  end
   
  def stub_referrer
   @request.env['HTTP_REFERER'] = "/"
+ end
+
+ describe "/destroy" do
+  it "should complete redirect" do
+    stub_user_cookie
+    delete :destroy, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+    response.status.should == 302
+  end
+
+  it "should delete a location" do
+    stub_user_cookie
+    loc_id = @location.id
+    delete :destroy, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+    lambda { Location.find(loc_id) }.should raise_error( ActiveRecord::RecordNotFound )
+  end
+
+  it "should delete a location with format json" do
+    stub_user_cookie
+    loc_id = @location.id
+    delete :destroy, :format => "json", :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+    lambda { Location.find(loc_id) }.should raise_error( ActiveRecord::RecordNotFound )
+  end
+
+  it "should not delete a location with an incorrect user" do
+    stub_user_cookie(users(:anonymous))
+    loc_id = @location.id
+    delete :destroy, :format => "json", :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+    Location.find(loc_id).should_not be_nil
+  end
  end
  
  describe "/edit" do
@@ -22,6 +51,12 @@ describe LocationsController do
    get :edit, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
    response.should be_success
   end 
+
+  it "should not complete successfully if incorrect user" do
+    stub_user_cookie(users(:anonymous))
+    get :edit, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug
+    response.status.should == 302
+  end
  end
 
  describe "/update" do
@@ -31,6 +66,12 @@ describe LocationsController do
    new_title = "this is a very very very new title"
    put :update, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug, :location => { :title => new_title }
    Location.find(@location.id).title.should == new_title 
+  end
+
+  it "should not complete successfully if incorrect user" do
+    stub_user_cookie(users(:anonymous))
+    put :update, :user_id => @user.slug, :location_type_id => @location_type.slug, :id => @location.slug, :location => { :title => "new  title" }
+    response.status.should == 302
   end
  end
  
@@ -46,7 +87,7 @@ describe LocationsController do
 
   it "should not create a new location if the user id doesn't match the cookie user id" do
    stub_referrer
-   request.cookies[:user] = {:id => users(:user_two).id}.to_json
+   stub_user_cookie(users(:anonymous))
    title = "new location title that should be created"
    loc_hash = { :title => title }
    post :create, :user_id => @user.slug, :location_type_id => @location_type.slug, :location => loc_hash

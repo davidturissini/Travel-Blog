@@ -1,4 +1,4 @@
-class LocationTypesController < TravellerController
+class LocationTypesController < ApplicationController
  def index
   user = User.find_by_slug(params[:user_id])
   @location_types = user.location_types

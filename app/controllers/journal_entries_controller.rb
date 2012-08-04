@@ -26,6 +26,9 @@ class JournalEntriesController < ApplicationController
   if validate_user?
    location = get_location 
    @journal = JournalEntry.create({:location => location}.merge(params[:journal_entry]))
+   respond_to do |format|
+    format.html { redirect_to :controller => "locations", :action => "show", :location_type_id => location.location_type.slug, :user_id => current_user.slug, :id => location.slug }
+   end
   end
  end
  
