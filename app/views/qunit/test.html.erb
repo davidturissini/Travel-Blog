@@ -34,7 +34,7 @@
   test("should have proper resource url", function () {
    var user = new User({id:1,slug:"user"}),
    slug = "location-type-slug",
-   l = new LocationType({user:user,slug:slug})
+   l = new LocationType({user:user,slug:slug,id:2})
    equal( l.url(), "/" + user.get("slug") + "/" + l.get("slug") )
   })
 
