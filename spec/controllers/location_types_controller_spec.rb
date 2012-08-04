@@ -8,8 +8,8 @@ describe LocationTypesController do
   @location_type = @user.location_types.first
  end
  
- def stub_user_cookie
-   request.cookies[:user] = @user.to_json
+ def stub_user_cookie user = @user
+   request.cookies[:user] = user.to_json
  end
   
  def stub_referrer
@@ -59,7 +59,7 @@ describe LocationTypesController do
   end
 
   it "shouldn't create a new location type if the current_user's id doesn't match the user id in the url" do
-   request.cookies[:user] = {:id => users(:user_two).id}.to_json
+   stub_user_cookie(users(:user_two))
    title = "Location type that shouldn't be created"
    loc_type_hash = {:title => title}
    post :create, :user_id => @user.slug, :location_type => loc_type_hash

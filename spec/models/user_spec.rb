@@ -20,6 +20,31 @@ describe User do
  	@user.as_json.should_not have_key("salt")
  end
 
+ context "login!" do
+  it "should generate a token for a user" do
+  	@user.logout!
+  	@user.login!
+  	@user.token.should_not be_nil
+  end
+
+  it "should generate a unique token for a user" do
+  	3.times do |t|
+  	  token = @user.token
+	  @user.logout!
+	  @user.login!
+	  @user.token.should_not == token
+	  sleep(1)
+	end
+  end
+ end
+
+ context "logout" do
+ 	it "should delete a token for a user" do
+ 		@user.logout!
+ 		@user.token.should be_nil
+ 	end
+ end
+
  context "anonymous?" do
  	it "should return true when user is anonymous" do
  		@anonymous.anonymous?.should be_true

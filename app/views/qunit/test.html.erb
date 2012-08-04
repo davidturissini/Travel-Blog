@@ -64,6 +64,12 @@
    equal( user.url(), "/" + user.get("slug") ) 
   })
 
+  test("should return proper user url if user is current user", function () {
+   var user = new User({id:1,slug:"user"})
+   user.isCurrentUser = true
+   equal( user.url(), "/me?format=json" ) 
+  })
+
   module("Location")
  
   test("should exist", function () {
@@ -92,16 +98,6 @@
    col = new LocationTypeCollection({user: user})
    equal( col.url(), "/" + user.get("slug") + "/location_types?format=" + col.format )
   })
-
-  asyncTest("Location Type Collection fetch", 1, function () {
-   var user = new User({slug:1,id:1}),
-   col = new LocationTypeCollection({user: user})
-    col.fetch({success: function (e) {
-    ok( e instanceof LocationTypeCollection )
-    start()
-   }, error: function () { start() }})
-  })
- 
 
  </script>
 <% end %>

@@ -3,10 +3,7 @@ class User < ActiveRecord::Base
   has_many :locations, :through => :location_types
 
   def self.anonymous
-   User.new({
-    :name => "anonymous",
-    :token => "anonymous"
-   })
+   User.find_by_slug("anonymous")
   end
 
   def anonymous?
@@ -18,7 +15,7 @@ class User < ActiveRecord::Base
   end
    
   def login!
-    self.token = rand(36**8).to_s(36) 
+    self.token = Digest::SHA1.hexdigest("#{salt}#{Time.now.to_i}")
     self.save!
     self
   end
@@ -36,6 +33,7 @@ class User < ActiveRecord::Base
  
   def self.new_traveller options
    user = User.create(options)
+   user.salt = Digest::SHA1.hexdigest("#{user.id}#{Time.now.to_i}")
    user.slug = user.id
    user.save!
    LocationType.create_defaults({:user => user})
