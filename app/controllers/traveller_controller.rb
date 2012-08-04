@@ -1,3 +1,0 @@
-class TravellerController < ApplicationController
-
-end
