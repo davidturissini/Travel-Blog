@@ -135,7 +135,12 @@ var Scroller = Backbone.View.extend({
  
   scroller.el.innerHTML = ""
   scroller.overflowContainer.appendChild(scroller.options.container)
-  var toAppend = [scroller.leftPaddle, scroller.rightPaddle, scroller.overflowContainer]
+
+  var toAppend = []
+  if( scroller.options.paddles !== false ) {
+    toAppend = toAppend.concat([scroller.leftPaddle, scroller.rightPaddle])
+  }
+  toAppend.push(scroller.overflowContainer)
   toAppend.forEach(function (elem) {
    scroller.el.appendChild(elem)
   });

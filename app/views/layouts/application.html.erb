@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
  <head>
-  <title>Dave &amp; Melissa's Travel Blog</title>
+  <title>Dave &amp; Melissa's Adventures</title>
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssreset/cssreset-min.css">
   <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.5.1/build/cssgrids/grids-min.css">
   <%= yield :stylesheets_header %>
@@ -14,7 +14,9 @@
   <div id="fb-root"></div>
   <div id="container">
    <header id="site-header">
-    <h1 id="site-title"><%= link_to "Dave and Melissa's Travel Blog", root_path %></h1>
+    <h1 id="site-title">
+      <%= link_to "Dave & Melissa's Adventures", root_path %>
+    </h1>
     <%= render "global/locations_nav", :locations => locations_nav, :selected => @location %>
    </header>
    <section id="content">
@@ -24,14 +26,6 @@
    <footer></footer>
   </div>
   <%= javascript_include_tag "underscore", "backbone", "models", "collections", "views" %>
-  <script>
-   var scroller = new Scroller({
-    el:document.getElementById("locations-nav"),
-    items:document.getElementById("locations-nav").getElementsByTagName("li"),
-    container: document.getElementById("locations-nav").getElementsByTagName("ul").item(0),
-    dynamic: false
-   }).render()
-  </script>
   <%= yield :scripts_footer %>
  </body>
 </html>

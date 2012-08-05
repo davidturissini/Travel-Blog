@@ -27,6 +27,7 @@
       </tr> 
     <% end %> 
    </table>
+   <%= link_to "Add new location type", new_location_type_path(:user_id => @user.slug) %>
   </section>
   <section id="locations">
    <header>Locations</header>

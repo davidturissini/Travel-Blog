@@ -11,6 +11,7 @@
       <option<%= ' selected="selected"' if loc_type == location.location_type %> value="<%= loc_type.id %>"><%= loc_type.title %></option>
     <% end %>
   </select>
+  <textarea id="location-summary"><%= location.summary %></textarea>
   <section id="location-geo">
    <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
    <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
@@ -221,7 +222,7 @@
  
  
 
-   var fields = ["location_type_id", "latitude", "longitude", "title", "city", "country", "flickr_set", "kml_url"]
+   var fields = ["summary", "location_type_id", "latitude", "longitude", "title", "city", "country", "flickr_set", "kml_url"]
    fields.forEach(function (field) {
     document.getElementById("location-" + field).addEventListener("change", function (e) {
      loc.set(field, e.currentTarget.value)
