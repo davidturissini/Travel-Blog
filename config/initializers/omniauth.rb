@@ -1,3 +1,8 @@
 Rails.application.config.middleware.use OmniAuth::Builder do
-  provider :facebook, "323085874447289", "0aa721ae8355b2d720c2a37e5def4fa8" 
+ config = YAML::load(File.open("#{Rails.root}/config/omniauth_config.yml"))
+ config.each_pair do |provider, hash|
+ 	puts provider.inspect
+ 	puts hash.inspect
+  provider provider, hash["app_id"], hash["secret"]
+ end
 end
