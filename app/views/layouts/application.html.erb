@@ -23,7 +23,15 @@
     <%= yield %>
    </section>
    <br class="clear" />
-   <footer></footer>
+   <footer>
+    <% if !current_user.anonymous? %>
+      Hi, <%= current_user.name %>
+      <nav id="user-nav">
+        <%= link_to "My Profile", me_path %>
+        <%= link_to "Logout", logout_path %>
+      </nav>
+    <% end %>
+   </footer>
   </div>
   <%= javascript_include_tag "underscore", "backbone", "models", "collections", "views" %>
   <%= yield :scripts_footer %>

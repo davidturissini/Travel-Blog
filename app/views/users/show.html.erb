@@ -15,7 +15,7 @@
           <% end %>
         </td>
         <td>
-          <%= link_to type.title, user_location_type_path(:user_id => type.user.id, :id => type.slug) %>
+          <%= link_to type.title, user_location_type_path(:user_id => type.user.slug, :id => type.slug) %>
         </td>
         <td>
           <%= type.locations.count %> locations
@@ -80,6 +80,7 @@
      var list = this;
      [].forEach.call(this.el.getElementsByClassName("location-type"), function (elem, index) {
       var remove = elem.getElementsByClassName("remove").item(0)
+      console.log(remove)
       remove.addEventListener("click", function () {
        var model = list.collection.at(index)
        list.collection.remove(model, {elem:elem}) 
@@ -88,7 +89,8 @@
     }
    }),
    locationTypeList = new LocationTypeList({
-    el: document.getElementById("user-location_types")
+    el: document.getElementById("user-location_types"),
+    collection: userLocationTypes
    }).render(),
    LocationList = Backbone.View.extend({
     collection: userLocations,
