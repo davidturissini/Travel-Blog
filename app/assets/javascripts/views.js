@@ -14,6 +14,7 @@ var LocationMarker = Backbone.View.extend({
    })
  },
  drawMarker: function () {
+  var locMarker = this
   if( this.model.has("latitude") && this.model.has("longitude") ) {
     markerHash = {
      position: new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")),
@@ -33,7 +34,7 @@ var LocationMarker = Backbone.View.extend({
     google.maps.event.addListener(kml, "defaultviewport_changed", function () {
       var bounds = kml.getDefaultViewport()
       view.options.map.fitBounds(bounds)
-      if( !view.hasLatLng() ) {
+      if( !view.model.hasLatLng() ) {
         var marker = new google.maps.marker({
          position: bounds.getCenter(),
          map: this.options.map,

@@ -82,24 +82,22 @@
       }
      }
 
-     if( options.changes.city ) { 
-      document.getElementById("location-city").setAttribute("value", this.get("city"))
-     }
+     
+     [].forEach.call(["city", "country", "latitude", "longitude"], function (field) {
 
-     if( options.changes.country ) { 
-      document.getElementById("location-country").setAttribute("value", this.get("country"))
-     }
+      if( options.changes[field] ) { 
+        var elem = document.getElementById("location-" + field),
+        newVal = loc.get(field)
+        if( elem.value != newVal) {
+          elem.value = newVal
+        }
+       }
+     })
    
-     if( options.changes.latitude ) {
-      document.getElementById("location-latitude").setAttribute("value", this.get("latitude"))
+     if( options.changes.latitude || options.changes.longitude ) {
       form._focusMap()
      }
  
-     if( options.changes.longitude ) {
-      document.getElementById("location-longitude").setAttribute("value", this.get("longitude"))
-      form._focusMap()
-     }
-
      if( options.changes.flickr_set ) { 
       form.showPhotos()
      }
