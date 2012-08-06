@@ -35,7 +35,7 @@ var LocationMarker = Backbone.View.extend({
       var bounds = kml.getDefaultViewport()
       view.options.map.fitBounds(bounds)
       if( !view.model.hasLatLng() ) {
-        var marker = new google.maps.marker({
+        var marker = new google.maps.Marker({
          position: bounds.getCenter(),
          map: view.options.map,
          title: view.model.get("title"),
