@@ -39,7 +39,7 @@ var LocationMarker = Backbone.View.extend({
          position: bounds.getCenter(),
          map: view.options.map,
          title: view.model.get("title"),
-         icon: locMarker.iconUrl
+         icon: view.iconUrl
          })
       }
     })
