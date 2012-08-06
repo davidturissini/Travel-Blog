@@ -13,23 +13,41 @@ var LocationMarker = Backbone.View.extend({
     }
    })
  },
+ drawMarker: function () {
+  if( this.model.has("latitude") && this.model.has("longitude") ) {
+    markerHash = {
+     position: new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")),
+     map: this.options.map,
+     title: this.model.get("title"),
+     icon: locMarker.iconUrl
+     }
+     this.googleMarker.setOptions(markerHash)
+   }
+ },
+ drawKML: function () {
+  if( this.model.has("kml_url") ) {
+    var view = this,
+    kml = new google.maps.KmlLayer(this.model.get("kml_url"), {preserveViewport:true,suppressInfoWindows:true})
+    
+    kml.setMap(this.options.map)
+    google.maps.event.addListener(kml, "defaultviewport_changed", function () {
+      var bounds = kml.getDefaultViewport()
+      view.options.map.fitBounds(bounds)
+      if( !view.hasLatLng() ) {
+        var marker = new google.maps.marker({
+         position: bounds.getCenter(),
+         map: this.options.map,
+         title: this.model.get("title"),
+         icon: locMarker.iconUrl
+         })
+      }
+    })
+   }
+ },
  render: function () {
   var locMarker = this
-  markerHash = {
-   position: new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")),
-   map: this.options.map,
-   title: this.model.get("title"),
-   icon: locMarker.iconUrl
-   }
-   this.googleMarker.setOptions(markerHash)
-   if( this.model.has("kml_url") ) {
-    var kml = new google.maps.KmlLayer(this.model.get("kml_url"), {preserveViewport:true,suppressInfoWindows:true}),
-    bounds = kml.getDefaultViewport()
-    kml.setMap(this.options.map)
-    if( bounds ) { 
-     this.options.map.fitBounds(bounds)
-    }
-   }
+   this.drawMarker()
+   this.drawKML()
   }
  })
 

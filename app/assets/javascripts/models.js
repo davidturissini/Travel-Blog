@@ -78,6 +78,9 @@ var Location = Backbone.Model.extend({
   this.locationType = locType
   this.setUser(locType.user)
  },
+ hasLatLng: function () {
+  return this.has("latitude") && this.has("longitude")
+ },
  photos: function ( callbacks ) {
   callbacks = callbacks || {}
   $.ajax({

@@ -87,6 +87,38 @@
    notEqual("location" in loc.toJSON(), false)
   })
 
+   test("hasLatLng should return true if location has latitude and longitude", function () {
+    var loc = new Location({
+      latitude:1,
+      longitude:1
+    })
+    ok( loc.hasLatLng() )
+   })
+
+   test("hasLatLng should return false if location is missing longitude", function () {
+    var loc = new Location({
+      latitude:1,
+      longitude:null
+    })
+    equal( loc.hasLatLng(), false )
+   })
+
+   test("hasLatLng should return false if location is missing latitude", function () {
+    var loc = new Location({
+      latitude:null,
+      longitude:1
+    })
+    equal( loc.hasLatLng(), false )
+   })
+
+   test("hasLatLng should return false if location has no latitude or longitude", function () {
+    var loc = new Location({
+      latitude:null,
+      longitude:null
+    })
+    equal( loc.hasLatLng(), false )
+   })
+
   module("LocationTypeCollection")
  
   test("should exist", function () {

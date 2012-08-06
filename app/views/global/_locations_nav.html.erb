@@ -85,13 +85,16 @@
     })
 
     window.addEventListener("DOMContentLoaded", function () {
-      var dropdown = document.getElementById("dropdown"),
-      dHeader = dropdown.getElementsByTagName("header").item(0)
+      var dropdown = document.getElementById("dropdown")
 
-      new DropDown({
-        el:dropdown,
-        control:dHeader
-      }).render()
+      if( dropdown ) {
+        var dHeader = dropdown.getElementsByTagName("header").item(0)
+
+        new DropDown({
+          el:dropdown,
+          control:dHeader
+        }).render()
+      }
     })
   </script>
 <% end %>
