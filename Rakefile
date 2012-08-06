@@ -13,7 +13,8 @@ namespace :travel do
   User.create({
     :name => "anonymous",
     :slug => "anonymous",
-    :token => "anonymous"
+    :token => "anonymous",
+    :salt => "anonymous"
     })
  end
  task :wp_import do

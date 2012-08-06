@@ -14,3 +14,4 @@ anonymous:
   id: 3
   slug: anonymous
   token: anonymous
+  salt: anonymous

@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   end
 
   def anonymous?
-   token == "anonymous"
+   salt == "anonymous"
   end
   
   def owns? content
@@ -21,8 +21,10 @@ class User < ActiveRecord::Base
   end
  
   def logout!
-   self.token = nil
-   self.save!
+   if !anonymous?
+    self.token = nil
+    self.save!
+   end
   end
 
   def as_json options = {}

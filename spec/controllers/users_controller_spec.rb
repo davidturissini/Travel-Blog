@@ -10,6 +10,14 @@ describe UsersController do
    request.cookies[:user] = user.to_json
  end
 
+ describe "/me" do
+  it "should redirect if user is anonymous" do
+    stub_user_cookie(users(:anonymous))
+    get :me
+    response.status.should == 302
+  end
+ end
+
  describe "/logout" do
   it "should log the user out" do
    user_id = @user.id
