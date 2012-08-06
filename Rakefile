@@ -9,14 +9,6 @@ require File.expand_path('../config/application', __FILE__)
 Adventureblog::Application.load_tasks
 
 namespace :travel do
- task :seed_users do
-  User.create({
-    :name => "anonymous",
-    :slug => "anonymous",
-    :token => "anonymous",
-    :salt => "anonymous"
-    })
- end
  task :wp_import do
   user = User.first
   location_type = user.location_types.find_by_slug("vacations")
