@@ -19,7 +19,7 @@ class ApplicationController < ActionController::Base
   end
 
   def locations_nav
-   Location.most_recent_published + Location.most_recent_published
+   Location.most_recent_published
   end
 
  def validate_user?
