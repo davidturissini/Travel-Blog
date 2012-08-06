@@ -10,7 +10,7 @@ Adventureblog::Application.load_tasks
 
 namespace :travel do
  task :wp_import do
-  user = User.first
+  user = User.find_by_name("David Turissini")
   location_type = user.location_types.find_by_slug("vacations")
   vacations = []
   vacations_file = File.open("#{Rails.root}/tmp/vacations.xml")
