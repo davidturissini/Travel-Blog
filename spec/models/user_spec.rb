@@ -43,6 +43,13 @@ describe User do
  		@user.logout!
  		@user.token.should be_nil
  	end
+
+  it "should not delete a token for an anonymous user" do
+    user = users(:anonymous)
+    token = user.token
+    user.logout!
+    user.token.should == token
+  end
  end
 
  context "anonymous?" do

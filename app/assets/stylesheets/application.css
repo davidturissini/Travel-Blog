@@ -18,7 +18,7 @@ br.clear { height:0; line-height:0 }
 #map { height:400px; }
 #map nav { display:none }
 
-#locations-nav { margin:10px -20px 0; }
+#locations-nav { margin:10px -20px 0; height:90px; }
 #locations-nav a { color: #fff; background: rgba(0, 50, 100, .6); }
 
 #locations-nav li:hover a, #locations-nav .selected a { background: rgba(0, 50, 100, .8); }
@@ -26,6 +26,7 @@ br.clear { height:0; line-height:0 }
 
 #locations-nav li:hover img, #locations-nav .selected img { -webkit-filter:saturate(150%); }
 
+#locations-nav #large-buttons { float:left; }
 #locations-nav #large-buttons ul { overflow-y: hidden; }
 #locations-nav #large-buttons li { display: block; float:left; }
 #locations-nav #large-buttons li:hover { box-shadow: -10px -1px 27px -12px #000; }
@@ -39,8 +40,6 @@ br.clear { height:0; line-height:0 }
 
 #locations-nav #large-buttons .location { padding:10px; width:70px; height:70px; border-left:1px solid #000; text-align:center; }
 #locations-nav #large-buttons .location h2 { margin:-5px -10px 0px -10px; height:16px; text-align:center; font-size:10px; }
-
-#locations-nav #large-buttons { float:left; }
 
 #locations-nav #dropdown { position:relative; z-index:10; margin-left:908px; height:90px; }
 #locations-nav #dropdown:after { visibility: hidden; height:0; line-height: 0; clear:both; content:"."; }
