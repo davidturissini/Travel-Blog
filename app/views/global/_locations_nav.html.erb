@@ -17,7 +17,7 @@
         <h2 class="location-title">
          <%= location.city %>
         </h2>
-        <%= image_tag location.photo_url %> 
+        <%= image location.photo_url %> 
       <% end %>
      </li> 
     <% end %>
@@ -38,7 +38,7 @@
          "class" => "location",
          "title" => location.title } do %>
           <div class="image">
-            <%= image_tag location.photo_url %> 
+            <%= image location.photo_url %> 
           </div>
           <h2 class="location-title">
            <%= location.city %>
