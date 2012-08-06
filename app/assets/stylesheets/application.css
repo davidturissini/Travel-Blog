@@ -19,7 +19,7 @@ br.clear { height:0; line-height:0 }
 #map nav { display:none }
 
 #locations-nav { margin:10px -20px 0; height:90px; }
-#locations-nav a { color: #fff; background: rgba(0, 50, 100, .6); }
+#locations-nav a { color: #fff; background: rgba(0, 50, 100, .3); }
 
 #locations-nav li:hover a, #locations-nav .selected a { background: rgba(0, 50, 100, .8); }
 #locations-nav .location img { margin:10px auto; max-width:70px; height:50px; }
