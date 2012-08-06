@@ -1,9 +1,9 @@
 <div id="location_type" data-json="<%= location_type.to_json %>" data-user="<%= location_type.user.to_json %>">
  <%= tag :input, :id => "location-type-title", :value => location_type.title, :type => "text", :placeholder => "title" %>
  <input type="text" id="location-type-slug" placeholder="slug" />
- <%= image_tag @location_type.icon_url || "", :id => "location-type-icon_url-img" %>
+ <%= image @location_type.icon_url, :id => "location-type-icon_url-img" %>
  <%= tag :input, :id => "location-type-icon_url", :value => @location_type.icon_url %>
- <%= image_tag @location_type.icon_not_visited_url, :id => "location-type-icon_not_visited_url-img" %>
+ <%= image @location_type.icon_not_visited_url, :id => "location-type-icon_not_visited_url-img" %>
  <%= tag :input, :id => "location-type-icon_not_visited_url", :value => @location_type.icon_not_visited_url %>
  <input type="submit" value="Save" />
 </div>
