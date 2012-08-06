@@ -37,8 +37,8 @@ var LocationMarker = Backbone.View.extend({
       if( !view.model.hasLatLng() ) {
         var marker = new google.maps.marker({
          position: bounds.getCenter(),
-         map: this.options.map,
-         title: this.model.get("title"),
+         map: view.options.map,
+         title: view.model.get("title"),
          icon: locMarker.iconUrl
          })
       }
