@@ -12,13 +12,16 @@
  </head>
  <body class="<%= params[:controller] %>-<%= params[:action] %>">
   <div id="fb-root"></div>
+  <header id="site-header">
+    <div>
+      <h1 id="site-title">
+        <%= link_to "TravelAddict", root_path %>
+      </h1>
+      <%= render "global/locations_nav", :locations => locations_nav, :selected => @location %>
+      <span id="bg-info">Stonehenge, England</span>
+    </div>
+  </header>
   <div id="container">
-   <header id="site-header">
-    <h1 id="site-title">
-      <%= link_to "Dave & Melissa's Adventures", root_path %>
-    </h1>
-    <%= render "global/locations_nav", :locations => locations_nav, :selected => @location %>
-   </header>
    <section id="content">
     <%= yield %>
    </section>

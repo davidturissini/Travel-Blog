@@ -1,7 +1,4 @@
-body { color: #333; font-size:14px; font-family:Helvetica; background:url(/assets/backgrounds/acadia.jpg) top center no-repeat fixed;  }
-::-webkit-scrollbar-thumb {
-	color:#ccc
-}
+body { color: #333; font-size:14px; font-family:Helvetica; }
 
 a, a:visited, a:active { text-decoration:none; color: #006; }
 a:hover { text-decoration: underline; }
@@ -11,17 +8,19 @@ br.clear { height:0; line-height:0 }
 
 #container { margin:0px auto; width:960px; }
 
-#site-header { margin:0px auto; padding:10px 20px 0; }
+#site-header { position:relative; margin:0px auto; padding:163px 20px 0; max-width: 1116px; border-bottom:10px solid #000; background:url(/assets/backgrounds/stonehenge.jpg) top center no-repeat; }
+#site-header > div { margin:0px auto; width:960px; }
 #site-header #site-title { font-size:32px; }
 #site-header #site-title a { color:#fff; }
+#site-header #bg-info { position:absolute; right:10px; top:5px; font-style: italic; color: #b1b1b1; }
 
 #map { height:400px; }
 #map nav { display:none }
 
 #locations-nav { margin:10px -20px 0; height:90px; }
-#locations-nav a { color: #fff; background: rgba(0, 50, 100, .3); }
+#locations-nav a { color: #fff; background: rgba(0, 0, 0, .5); }
 
-#locations-nav li:hover a, #locations-nav .selected a { background: rgba(0, 50, 100, .8); }
+#locations-nav li:hover a, #locations-nav .selected a { background: rgba(0, 90, 50, .8); }
 #locations-nav .location img { margin:10px auto; max-width:70px; height:50px; }
 
 #locations-nav li:hover img, #locations-nav .selected img { -webkit-filter:saturate(150%); }
