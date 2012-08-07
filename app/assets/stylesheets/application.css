@@ -111,7 +111,7 @@ br.clear { height:0; line-height:0 }
 
 .locations-show #location #journal_entries .entry { position:relative; }
 .locations-show #location #journal_entries .entry-title { margin:20px 0; font-size:18px; }
-.locations-show #location #journal_entries .entry-body { line-height:16px; }
+.locations-show #location #journal_entries .entry-body { line-height:18px; }
 .locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; }
 
 .locations-show #location .toolbox { display:none; }
