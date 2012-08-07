@@ -44,7 +44,7 @@ br.clear { height:0; line-height:0 }
 #locations-nav #dropdown:after { visibility: hidden; height:0; line-height: 0; clear:both; content:"."; }
 #locations-nav #dropdown:hover ul, #locations-nav #dropdown:hover header,
 #locations-nav #dropdown.visible ul, #locations-nav #dropdown.visible header { display:block; box-shadow: -10px -1px 27px -12px #000;}
-#locations-nav #dropdown header { width:52px; height:90px; background: rgba(0, 50, 100, .4); color: #fff; cursor: pointer; }
+#locations-nav #dropdown header { width:52px; height:90px; background: rgba(0, 0, 0, .5); color: #fff; cursor: pointer; }
 #locations-nav #dropdown header span { 
 	height:0;
 	width:0;
