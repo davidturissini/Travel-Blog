@@ -4,9 +4,8 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require 'underscore'
-//= require 'backbone'
-//= require 'models'
-//= require 'collections'
-//= require 'views'
-//= require_tree .
+//= require 'public/underscore'
+//= require 'public/backbone'
+//= require 'public/models'
+//= require 'public/collections'
+//= require 'public/views'

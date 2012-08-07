@@ -7,6 +7,7 @@
 <% end %>
 
 <% content_for :scripts_footer do %>
+  <%= javascript_include_tag "admin/admin" %>
  <script src="http://code.jquery.com/qunit/qunit-1.9.0.js"></script>
  <script>
   module("LocationType")
@@ -129,6 +130,12 @@
    var user = new User({slug:"user",id:2}),
    col = new LocationTypeCollection({user: user})
    equal( col.url(), "/" + user.get("slug") + "/location_types?format=" + col.format )
+  })
+
+  module("LocationTable")
+
+  test("should exist", function () {
+    ok( LocationTable )
   })
 
  </script>

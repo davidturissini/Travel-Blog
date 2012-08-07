@@ -29,7 +29,7 @@
       <span></span>
     </header>
     <ul id="locations-nav-dropdown">
-      <% locations.slice(9, 1).each do |location| %>
+      <% locations.slice(9, locations.length).each do |location| %>
         <li<%= ' class="selected"'.html_safe if location == selected %>>
         <%= link_to location_path(location), { 
          "data-location_type" => location.location_type.to_json, 
