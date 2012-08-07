@@ -63,6 +63,13 @@ class LocationsController < ApplicationController
 
  def show
   @location = current_location_type.locations.find_by_slug(params[:id]) 
+  @og_image = @location.photo_url
+  @og_title = @location.title
+  @canonical_url = user_location_type_location_url({
+    :user_id => @location.user.slug, 
+    :location_type_id => current_location_type.slug, 
+    :id => @location.slug 
+    })
   raise ActiveRecord::RecordNotFound if !@location 
   respond_to do |format|
    format.html
