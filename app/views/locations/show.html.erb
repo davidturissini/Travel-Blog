@@ -3,14 +3,16 @@
   <h2 id="location-title"><%= @location.title %></h2>
   <%= @location.city %>, <%= @location.country %>
  </header>
- <figure id="hero-gallery">
-  <%= image @location.photo_url, :id => "hero-large" %>
-  <div id="location-photos">
-   <ul id="location-thumbs">
+ <section id="hero-gallery">
+  <figure class="hero-large">
+    <%= image @location.photo_url %>
+  </figure>
+  <div class="location-photos">
+   <ul class="location-thumbs">
  
    </ul>
   </div>
- </figure>
+ </section>
   <div id="map"></div>
  <section id="journal_entries">
   <% @location.journal_entries.each do |entry| %>
@@ -49,30 +51,10 @@
     map:map,
     locationType:locationType
    }).render()
-   loc.photos({
-    success:function (e) {
-     var ul = document.getElementById("location-thumbs"),
-     largeImage = document.getElementById("hero-large")
-     e.photoset.photo.forEach(function (photo) {
-      var image = new FlickrImage(photo),
-      li = document.createElement("li"),
-      img = document.createElement("img"),
-      ulWidth = ul.offsetWidth
-      img.setAttribute("src", image.url("s"))
-      li.appendChild(img)
-      ul.appendChild(li)
-      ul.style.width = ulWidth + li.offsetLeft + "px"
-      img.addEventListener("click", function () { 
-       largeImage.setAttribute("src", image.url()) 
-      })
-     })
-     new Scroller({
-      el:document.getElementById("location-photos"),
-      container:document.getElementById("location-thumbs"),
-      items:document.getElementById("location-thumbs").getElementsByTagName("li")
-     }).render()
-    }
-   }) 
+    var gallery = new LocationGallery({
+      el: document.getElementById("hero-gallery"),
+      model:loc
+      }).render()
    })
  </script>
 <% end %>

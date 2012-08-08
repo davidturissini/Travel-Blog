@@ -192,3 +192,64 @@ var Scroller = Backbone.View.extend({
  }
 })
 
+
+var LocationGallery = Backbone.View.extend({
+  largeImage: function () {
+    var className = this.largeImageClassName()
+    return this.el.getElementsByClassName(className).item(0)
+  },
+  largeImageClassName: function () {
+    return "hero-large"
+  },
+  handleTextDisplay: function () {
+    var figCaption = this.largeImage().getElementsByTagName("figcaption").item(0)
+    setTimeout(function () {
+      figCaption.className += " idle"
+    }, 2000)
+  },
+  setLargeImage: function (thumbFigure, flickrImg) {
+    var clone = thumbFigure.cloneNode(true),
+    className = this.largeImageClassName(),
+    cloneImg = clone.getElementsByTagName("img").item(0)
+    clone.className += className
+    cloneImg.setAttribute("src", flickrImg.url())
+    this.el.replaceChild(clone, this.largeImage())
+    this.handleTextDisplay()
+  },
+  render: function () {
+    var loc = this.model,
+    view = this
+    loc.photos({
+      success:function (e) {
+       var thumbContainer = view.el.getElementsByClassName("location-photos").item(0),
+       thumbUl = view.el.getElementsByClassName("location-thumbs").item(0)
+       e.photoset.photo.forEach(function (photo) {
+        var image = new FlickrImage(photo),
+        li = document.createElement("li"),
+        img = document.createElement("img"),
+        thumbFigure = document.createElement("figure"),
+        thumbCaption = document.createElement("figcaption")
+        ulWidth = thumbUl.offsetWidth
+        img.setAttribute("src", image.url("s"))
+        thumbFigure.appendChild(img)
+        if( image.get("title") ) {
+          thumbCaption.appendChild( document.createTextNode(image.get("title")) )
+          thumbFigure.appendChild(thumbCaption)
+        }
+
+        li.appendChild(thumbFigure)
+        thumbUl.appendChild(li)
+        thumbUl.style.width = ulWidth + li.offsetLeft + "px"
+        thumbFigure.addEventListener("click", function () { 
+          view.setLargeImage(thumbFigure, image)
+        }) 
+       })
+       new Scroller({
+        el:thumbContainer,
+        container:thumbUl,
+        items:view.el.getElementsByClassName("location-thumbs").item(0).getElementsByTagName("li")
+       }).render()
+      }
+   }) 
+  }
+})
