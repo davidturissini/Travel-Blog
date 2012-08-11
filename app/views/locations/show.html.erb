@@ -55,6 +55,13 @@
       el: document.getElementById("hero-gallery"),
       model:loc
       }).render()
+    var fullSize = new FullScreenLocationGallery({
+        gallery:gallery
+      })
+
+    gallery.largeImage().addEventListener("click", function () {
+      fullSize.render()
+    })
    })
  </script>
 <% end %>

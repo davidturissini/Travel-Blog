@@ -83,20 +83,24 @@ var Location = Backbone.Model.extend({
  },
  photos: function ( callbacks ) {
   callbacks = callbacks || {}
-  $.ajax({
-   url:"http://api.flickr.com/services/rest",
-   dataType:"jsonp",
-   data: {
-    api_key:"951c0814caade8b4fc2b381778269126",
-    method: "flickr.photosets.getPhotos",
-    format:"json",
-    photoset_id: this.get("flickr_set")
-   },
-   jsonpCallback:"jsonFlickrApi",
-   success:function (e) {
-    if( callbacks.success ) { callbacks.success(e); }
-   }
-  })
+  if( this._flickrResponse ) {
+    callbacks.success(_flickrResponse);
+  } else {
+    $.ajax({
+     url:"http://api.flickr.com/services/rest",
+     dataType:"jsonp",
+     data: {
+      api_key:"951c0814caade8b4fc2b381778269126",
+      method: "flickr.photosets.getPhotos",
+      format:"json",
+      photoset_id: this.get("flickr_set")
+     },
+     jsonpCallback:"jsonFlickrApi",
+     success:function (e) {
+      if( callbacks.success ) { callbacks.success(e); }
+     }
+    })
+  }
  }
 })
 
