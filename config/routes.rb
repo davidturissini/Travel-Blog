@@ -6,13 +6,16 @@ Adventureblog::Application.routes.draw do
   match '/me/logout' => "users#logout", :as => "logout"
   match '/me' => "users#update", :via => :put
 
+  resources :countries, :only => [:index]
+
+  match '/:user_id' => "users#show"
   match '/:user_id/:id/edit' => "location_types#edit"
   match '/:user_id/location_types/new' => "location_types#new", :as => "new_location_type"
   match '/:user_id/:location_type_id/new' => "locations#new"
   match '/:user_id/new' => "location_types#new"
   match '/:user_id/location_types' => "location_types#index", :via => :get
   match '/:user_id/location_types' => "location_types#create", :via => :post
-  
+
   resources :users, {:path => ""} do 
    resources :location_types, {:path => ""}  do 
     resources :locations, {:path => ""} do
