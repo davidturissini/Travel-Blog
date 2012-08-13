@@ -1,10 +1,20 @@
 class User < ActiveRecord::Base
   has_many :location_types
   has_many :locations, :through => :location_types
-  belongs_to :country
+  belongs_to :home_country, :class_name => "Country", :foreign_key => :country_id
+  has_many :countries, :through => :locations
+  has_many :realm_accounts
+
+  def facebook_token
+    realm_accounts.where(:provider => "facebook").first.access_token
+  end
+
+  def countries_count
+    countries.group("countries.id").count.length
+  end
 
   def country_name
-    country.name if country
+    home_country.name if home_country
   end
 
   def self.anonymous

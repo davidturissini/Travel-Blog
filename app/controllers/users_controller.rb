@@ -61,9 +61,12 @@ class UsersController < ApplicationController
  def login_facebook
   provider_id = request.env['omniauth.auth'].uid
   realm = RealmAccount.where({:provider => "facebook", :provider_id => provider_id}).first
+  token = request.env['omniauth.auth'].credentials["token"]
   if( realm )
-   realm.user.login!
-   set_user_cookie(realm.user)
+    realm.access_token = token
+    realm.save!
+    realm.user.login!
+    set_user_cookie(realm.user)
   else
    name = request.env['omniauth.auth'].info.name
    user = User.new_traveller({:name => name})

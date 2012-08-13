@@ -1,11 +1,13 @@
-<%= @user.name %>
+<section>
+	<header>
+		<hgroup>
+			<h1><%= @user.name %></h1>
+			<section id="user-geo"><%= @user.city %>, <%= @user.country_name %></section>
+			<%= @user.name %> has visited <%= @user.countries_count %> countries
+		</hgroup>
+	</header>
+</section>
 
 <% content_for :scripts_footer do %>
-	<script>
-		window.addEventListener("FBready", function () {
-			FB.api("/me", function (e) {
-				debugger
-			})
-		})
-	</script>
+
 <% end %>

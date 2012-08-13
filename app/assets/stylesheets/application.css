@@ -187,6 +187,9 @@ br.clear { height:0; line-height:0 }
  right:-15px;
  }
 
+ /* USER DETAIL PAGE */
+ .users-show header h1 { font-size:28px; }
+
 /* USER ADMIN PAGE */
 .users-me #user #user-header h1 { font-size:32px; }
 .users-me #user #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }

@@ -1,7 +1,7 @@
 <article class="location rollup">
  <header>
   <h1 class="location-title"><%= link_to location.title, location_path(location) %></h1>
-  <%= location.city %>, <%= location.country %> <%= render "locations/date_range", :location => location %>
+  <%= location.city %>, <%= location.country_name %> <%= render "locations/date_range", :location => location %>
  </header>
  <% if location.photo_url %>
   <%= image_tag location.photo_url, :width => 90, :class => "location-photo" %>
