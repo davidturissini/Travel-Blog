@@ -1,9 +1,14 @@
  <section id="user" data-json="<%= @user.to_json %>">
-  <header>Hello, <%= @user.name %></header>
-  <form id="user-form">
-    Your url: /<%= tag :input, :value => @user.slug, :id => "user-slug" %>
-    <input type="submit" value="Update" />
-  </form>
+  <div id="user-map"></div>
+  <header id="user-header">
+    <hgroup>
+      <h1>Hello, <%= @user.name %></h1>
+      <section>
+        <%= @user.city %>, <%= @user.country_name %>
+      </section>
+    </hgroup>
+  </header>
+  
   <section id="location-types">
    <header>Location Types</header>
    <table id="user-location_types" data-json="<%= @user.location_types.to_json %>">
@@ -75,18 +80,24 @@
     user: user,
     el: document.getElementById("user-locations")
    }).render()
+   var mapEl = document.getElementById("user-map")
+   if( mapEl ) {
+     var mapCenter = new google.maps.Geocoder()
+     mapCenter.geocode({address: user.get("city")}, function (results, status) {
+          var result = results[0]
+          if( result ) {
+            var marker = new google.maps.Marker({position:result.geometry.location}),
+            map = new google.maps.Map(mapEl, {
+             zoom: 4,
+             center: result.geometry.location,
+             mapTypeId: google.maps.MapTypeId.HYBRID
+            })
 
-   document.getElementById("user-form").addEventListener("submit", function (e) {
-    e.preventDefault()
-    user.isCurrentUser = true
-    user.jsonPrefix = true
-    user.save({slug: document.getElementById("user-slug").value}, {
-      success:function () {
-        window.location.reload()
-      }
-    })
-   })
+            marker.setMap(map)
+          }
 
+       })
+   }
   })
  </script>
 <% end %>

@@ -15,11 +15,10 @@ var LocationForm = Backbone.View.extend({
      })
     form.drawMapMarker()
     form._bindModelChanges()
-    
 
     this.serverMessages = document.getElementById("server-messages")
 
-    var fields = ["summary", "location_type_id", "latitude", "longitude", "title", "city", "flickr_set", "kml_url"]
+    var fields = ["summary", "location_type_id", "latitude", "longitude", "title", "flickr_set", "kml_url"]
      fields.forEach(function (field) {
       document.getElementById("location-" + field).addEventListener("change", function (e) {
        loc.set(field, e.currentTarget.value)
@@ -56,21 +55,12 @@ var LocationForm = Backbone.View.extend({
       }
      }
 
-     [].forEach.call(["city", "latitude", "longitude", "country_id"], function (field) {
+     [].forEach.call(["latitude", "longitude"], function (field) {
 
       if( options.changes[field] ) {
         form._updateFormField(field)
        }
      })
-
-     if( options.changes.country ) {
-      var country = this.get("country"),
-      country_id = country.get("id")
-      document.getElementById("location-country_name").innerHTML = country.get("name")
-
-      this.set({country:null, country_id:country_id}, {silent:true})
-      form._updateFormField("country_id")
-     }
    
      if( options.changes.latitude || options.changes.longitude ) {
       form._focusMap()
@@ -87,45 +77,29 @@ var LocationForm = Backbone.View.extend({
    _bindMapClicks: function () {
     var form = this,
     loc = form.model,
-    countryList = new CountryCollection()
-    countryList.fetch({
-      success:function (countries) {
-        google.maps.event.addListener(form.map, "click", function (mapEvent) {
-         geocoder = new google.maps.Geocoder();
-         geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
-          var address = (function () {
-           var hash
-           for(var i in e) {
-            if( e[i].types[0] == "locality" ) {
-             hash = e[i]
-            }
-          }
-          if( hash ) { 
-           return hash.formatted_address 
-          }
-          })(),
-          country = (function () {
-           for(var i in e) {
-            if( e[i].types[0] == "country" ) { 
-              var countryName = e[i].formatted_address
-              return countries.where({name:countryName})[0]
-            }
-           }
-          })(), city
-          if( address ) {
-           city = address.split(",")[0]
-          }
+    countryField = new CountryField({
+      model: loc,
+      map: form.map,
+      textElem: document.getElementById("location-country_name"),
+      input: document.getElementById("location-country_id")
+    })
+    countryField.on("ready", function () {
+      var cityField = new CityField({
+        model: loc,
+        map: form.map,
+        input: document.getElementById("location-city")
+      }).render()
 
+      google.maps.event.addListener(form.map, "click", function (mapEvent) {
           loc.set({
-           city: city,
-           country: country,
            latitude: mapEvent.latLng.lat(),
            longitude: mapEvent.latLng.lng()
           })
-         })
         })
-      }
     })
+
+    countryField.render()
+
    },
    drawMapMarker: function () {
     this.mapMarker.render()

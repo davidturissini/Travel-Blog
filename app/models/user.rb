@@ -1,6 +1,11 @@
 class User < ActiveRecord::Base
   has_many :location_types
   has_many :locations, :through => :location_types
+  belongs_to :country
+
+  def country_name
+    country.name if country
+  end
 
   def self.anonymous
    User.find_by_slug("anonymous")

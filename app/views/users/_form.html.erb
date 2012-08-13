@@ -1,0 +1,9 @@
+<form id="user-form">
+    Your url: /<%= tag :input, :value => @user.slug, :id => "user-slug" %>
+    <section id="user-geo">
+      <input type="text" id="user-city" />
+      <span id="user-country"><%= @user.country_name %></span>
+      <input type="hidden" id="user-country_id" />
+    </section>
+    <input type="submit" value="Update" />
+  </form>

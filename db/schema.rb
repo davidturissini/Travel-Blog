@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120812220609) do
+ActiveRecord::Schema.define(:version => 20120813023811) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -69,6 +69,8 @@ ActiveRecord::Schema.define(:version => 20120812220609) do
     t.string   "token"
     t.string   "slug"
     t.boolean  "been_welcomed"
+    t.string   "city"
+    t.integer  "country_id"
   end
 
 end

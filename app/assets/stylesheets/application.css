@@ -1,6 +1,6 @@
 body { color: #333; font-size:14px; font-family:Helvetica; }
 
-a, a:visited, a:active { text-decoration:none; color: #006; }
+a, a:visited, a:active { text-decoration:none; color: rgb(0, 100, 50); }
 a:hover { text-decoration: underline; }
 
 .clear { display:block; clear:both; }
@@ -12,6 +12,7 @@ br.clear { height:0; line-height:0 }
 #site-header > div { margin:0px auto; width:960px; }
 #site-header #site-title { font-size:32px; }
 #site-header #site-title a { color:#fff; }
+#site-header #site-title a:hover { text-decoration: none; }
 #site-header #bg-info { position:absolute; right:10px; top:5px; font-style: italic; color: #b1b1b1; }
 
 #map { height:400px; }
@@ -187,7 +188,12 @@ br.clear { height:0; line-height:0 }
  }
 
 /* USER ADMIN PAGE */
-.users-me #user section { margin-bottom:20px; text-align:center; }
+.users-me #user #user-header h1 { font-size:32px; }
+.users-me #user #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
+.users-me #user #user-header { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid #333; }
+.users-me #user section { margin-bottom:20px; padding:20px; background:#e1e1e1; border:1px solid #333; }
 .users-me #user section header { font-size:22px; }
+.users-me #user section table { text-align: center; }
 .users-me #user section img { max-height:75px; height:50px; }
 .users-me #user section td { padding:10px;}
+.users-me .remove { cursor:pointer; }
