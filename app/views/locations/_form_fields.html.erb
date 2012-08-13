@@ -14,7 +14,8 @@
   <textarea id="location-summary"><%= location.summary %></textarea>
   <section id="location-geo">
    <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
-   <%= tag :input, :id => "location-country", :placeholder => "Country", :value => location ? location.country : "", :name => "location[country]" %>
+    <span id="location-country_name"><%= location.country_name %></span>
+   <%= tag :input, :type => "hidden", :id => "location-country_id", :value => location.country_id, :name => "location[country_id]" %>
    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
    <label for="location-visited">Visited?</label>
   </section>
@@ -42,6 +43,7 @@
 </div>
 
 <% content_for :scripts_footer do %>
+ <%= javascript_include_tag "admin/admin" %>
  <script>
   window.addEventListener("DOMContentLoaded", function () {
   
@@ -51,185 +53,11 @@
   loc.setLocationType(locType)
   loc.setUser(user)
 
-
-  var LocationForm = Backbone.View.extend({
-   initialize: function () {
-    var form = this,
-    loc = this.model
-    form.map = new google.maps.Map(document.getElementById("location-map"), {
-     zoom: 4,
-     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
-     mapTypeId: google.maps.MapTypeId.HYBRID
-    })
-    form._bindMapClicks()
-    this.mapMarker = new LocationMarker({
-      model:loc,
-      map:form.map,
-      locationType:loc.locationType
-     })
-    form.drawMapMarker()
-    loc.on("change", function (e, options) {
-     if( options.changes.photo_url ) {
-       var photoSection = document.getElementById("location-photo")
-       photoSection.getElementsByTagName("img")[0].setAttribute("src", this.get("photo_url")) 
-     }
-
-     if( options.changes.has_visited ) { 
-      if( loc.get("has_visited") ) {
-      document.getElementById("location-has_visited").setAttribute("checked", "checked")
-      } else {
-        document.getElementById("location-has_visited").removeAttribute("checked")
-      }
-     }
-
-     [].forEach.call(["city", "country", "latitude", "longitude"], function (field) {
-
-      if( options.changes[field] ) { 
-        var elem = document.getElementById("location-" + field),
-        newVal = loc.get(field)
-        if( elem.value != newVal) {
-          elem.value = newVal
-        }
-       }
-     })
-   
-     if( options.changes.latitude || options.changes.longitude ) {
-      form._focusMap()
-     }
- 
-     if( options.changes.flickr_set ) { 
-      form.showPhotos()
-     }
-    })
-
-    this.serverMessages = document.getElementById("server-messages")
- 
-   },
-   _focusMap: function () {
-    this.map.panTo(new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")))
-   },
-   _bindMapClicks: function () {
-    var form = this
-    google.maps.event.addListener(form.map, "click", function (mapEvent) {
-     geocoder = new google.maps.Geocoder();
-     geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
-      var address = (function () {
-       var hash
-       for(var i in e) {
-        if( e[i].types[0] == "locality" ) {
-         hash = e[i]
-        }
-      }
-      if( hash ) { 
-       return hash.formatted_address 
-      }
-      })(),
-      country = (function () {
-       for(var i in e) {
-        if( e[i].types[0] == "country" ) { return e[i].formatted_address }
-       }
-      })(), city
-      if( address ) {
-       city = address.split(",")[0]
-      }
-      loc.set({
-       city: city,
-       country: country,
-       latitude: mapEvent.latLng.lat(),
-       longitude: mapEvent.latLng.lng()
-      })
-     })
-    })
-   },
-   drawMapMarker: function () {
-    this.mapMarker.render()
-   },
-   showPhotos: function () {
-    var loc = this.model,
-    photoUl = document.getElementById("flickr-photos").getElementsByTagName("ul")[0]
-    photoUl.innerHTML = "" 
-    loc.photos({
-     success:function (e) {
-      var photos = []
-      if( e.photoset && e.photoset.photo && e.photoset.photo.length > 0 ) {
-       $.each(e.photoset.photo, function (idx, e) {
-        e.url = function () {
-         return "http://farm" + e.farm + ".static.flickr.com/" + e.server + "/" + e.id + "_" + e.secret + ".jpg"
-        } 
-        e.thumbnail = function (size) { 
-         var ary = e.url().split("."),
-         index = ary.length - 2
-         ary[index] = ary[index] + "_" + size
-         return ary.join(".");
-        }
-        var img = document.createElement("img"),
-        li = document.createElement("li")
-        img.setAttribute("src", e.url())
-        li.appendChild(img) 
-        photoUl.appendChild(li)
-        li.addEventListener("click", function () {
-         loc.set({photo_url: e.url()})
-        })
-       })
-      }
-     }
-    })
- 
-   },
-   successMessage:function (message) {
-    var success = document.createElement("p"),
-    text = document.createTextNode(message)
-    success.className = "success"
-    success.appendChild(text)
-    this.serverMessages.innerHTML = ""
-    this.serverMessages.appendChild(success)
-   },
-   errorMessage: function (message) {
-    var error = document.createElement("p"),
-    text = document.createTextNode(message)
-    error.className = "error"
-    error.appendChild(text)
-    this.serverMessages.innerHTML = ""
-    this.serverMessages.appendChild(error)
-    
-   },
-   render: function () {
-    var form = this
-    form.showPhotos()
-    document.getElementById("location-form").onsubmit = function (e) {
-     e.preventDefault()
-     loc.jsonPrefix = true
-     loc.save({}, {
-      success:function () {
-        form.successMessage(loc.get("title") + " successfully saved.")
-      },
-      error: function () {
-        form.errorMessage("There was a problem with your request")
-      }
-     })
-    }
-   }
-  })
-
   var form = new LocationForm({
    el: document.getElementById("location-form"),
    model: loc
   }).render()
- 
- 
- 
 
-   var fields = ["summary", "location_type_id", "latitude", "longitude", "title", "city", "country", "flickr_set", "kml_url"]
-   fields.forEach(function (field) {
-    document.getElementById("location-" + field).addEventListener("change", function (e) {
-     loc.set(field, e.currentTarget.value)
-    })
-
-    document.getElementById("location-has_visited").addEventListener("change", function (e) {
-     loc.set({has_visited: e.currentTarget.checked})
-    })
-
-   })
   })
  </script>
 <% end %>

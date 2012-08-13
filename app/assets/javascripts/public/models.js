@@ -110,3 +110,7 @@ var FlickrImage = Backbone.Model.extend({
   return "http://farm" + this.get("farm") + ".static.flickr.com/" + this.get("server") + "/" + this.get("id") + "_" + this.get("secret") + size + ".jpg"
  } 
 })
+
+var Country = Backbone.Model.extend({
+  
+})

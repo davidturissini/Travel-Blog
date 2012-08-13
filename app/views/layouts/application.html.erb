@@ -12,7 +12,7 @@
   <%= csrf_meta_tags %>
  </head>
  <body class="<%= params[:controller] %>-<%= params[:action] %>">
-  <div id="fb-root"></div>
+  <%= render "global/facebook" %>
   <header id="site-header">
     <div>
       <h1 id="site-title">

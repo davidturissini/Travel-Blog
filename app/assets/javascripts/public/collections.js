@@ -19,3 +19,8 @@ var LocationCollection = Backbone.Collection.extend({
   return "/" + this.user.get("slug") + "/locations?format=" + this.format
  }
 })
+
+var CountryCollection = Backbone.Collection.extend({
+	model:Country,
+	url:"/countries?format=json"
+})

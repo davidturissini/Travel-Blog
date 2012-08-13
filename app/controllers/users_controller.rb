@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
  def show
-  @user = User.find_by_slug(params[:id]) 
+  @user = User.find_by_slug(params[:user_id]) 
   render_show
  end
 
@@ -8,7 +8,9 @@ class UsersController < ApplicationController
   params[:user_id] = current_user.slug
   if validate_user?
    @user = current_user
-   render_show
+    respond_to do |format|
+     format.html { render "users/me" }
+    end
   end
  end
   
