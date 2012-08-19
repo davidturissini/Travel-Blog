@@ -1,16 +1,14 @@
 var CountryField = Backbone.View.extend({
 	initialize: function () {
-		var field = this,
-		countryName = ""
+		var field = this
 
 		field.model.on("change", function (model, options) {
+			var countryName = ""
 		    if( options.changes.country_id ) {
-		    	
 				var country = field.collection.get(field.model.get("country_id"))
 				if( country ) {
 					countryName = country.get("name")
-				}
-
+				} 
 				field.options.textElem.innerHTML = countryName
 				field._updateFormField()
 
