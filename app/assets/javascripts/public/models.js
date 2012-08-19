@@ -48,6 +48,9 @@ var User = Backbone.Model.extend({
     return this.attributes
   }
  },
+ latLng: function () {
+  return new google.maps.LatLng(user.get("latitude"), user.get("longitude"))
+ },
  isCurrentUser: false,
  url: function (e) {
   if( this.isCurrentUser ) {

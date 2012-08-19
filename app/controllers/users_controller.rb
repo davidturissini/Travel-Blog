@@ -4,6 +4,16 @@ class UsersController < ApplicationController
   render_show
  end
 
+ def edit_me
+  params[:user_id] = current_user.slug
+  if validate_user?
+   @user = current_user
+    respond_to do |format|
+     format.html { render "users/edit_me" }
+    end
+  end
+ end
+
  def me
   params[:user_id] = current_user.slug
   if validate_user?
@@ -54,7 +64,8 @@ class UsersController < ApplicationController
    cookies[:user] = {
     :id => user.id,
     :token => user.token,
-    :name => user.name
+    :name => user.name,
+    :photo_url => user.photo_url
    }.to_json
  end
  
@@ -69,11 +80,13 @@ class UsersController < ApplicationController
     set_user_cookie(realm.user)
   else
    name = request.env['omniauth.auth'].info.name
+   username = request.env['omniauth.auth'].info.username
    user = User.new_traveller({:name => name})
    RealmAccount.create({
     :provider => "facebook",
     :provider_id => provider_id,
-    :user => user
+    :user => user,
+    :photo_url => "https://graph.facebook.com/#{username}/picture?type=large"
     })
     user.login!
     set_user_cookie(user)

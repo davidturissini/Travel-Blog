@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120813023811) do
+ActiveRecord::Schema.define(:version => 20120819071534) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -71,6 +71,9 @@ ActiveRecord::Schema.define(:version => 20120813023811) do
     t.boolean  "been_welcomed"
     t.string   "city"
     t.integer  "country_id"
+    t.string   "photo_url"
+    t.float    "latitude"
+    t.float    "longitude"
   end
 
 end

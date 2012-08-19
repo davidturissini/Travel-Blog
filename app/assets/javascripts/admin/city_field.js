@@ -20,35 +20,5 @@ var CityField = Backbone.View.extend({
 		if( elem.value != newVal) {
 		  elem.value = newVal
 		}
-   	},
-	render: function () {
-		var field = this,
-		model = field.model
-		geocoder = new google.maps.Geocoder();
-
-		google.maps.event.addListener(field.options.map, "click", function (mapEvent) {
-         geocoder.geocode({latLng:mapEvent.latLng}, function (e) {
-          var address = (function () {
-           var hash
-           for(var i in e) {
-            if( e[i].types[0] == "locality" ) {
-             hash = e[i]
-            }
-          }
-          if( hash ) { 
-           return hash.formatted_address 
-          }
-          })(), city
-          if( address ) {
-           city = address.split(",")[0]
-          }
-
-          model.set({
-           	city:city || ""
-           })
-
-         })
-        })
-        return this
-	}
+   	}
 })

@@ -339,3 +339,34 @@ var LocationGallery = Backbone.View.extend({
    return this 
   }
 })
+
+var DropDown = Backbone.View.extend({
+  show: function () {
+    var view = this
+    view.el.className += " visible"
+    document.addEventListener("keyup", function (e) {
+      if( e.keyCode == 27 ) {
+        view.hide()
+      }
+    })
+  },
+  hide: function () {
+    var view = this
+    view.el.className -= "visible"
+    document.removeEventListener("keyup")
+  },
+  toggle: function () {
+    var toggle = /visible/.test( dropdown.className )
+    if( toggle ) {
+      this.hide()
+    } else {
+      this.show()
+    }
+  },
+  render: function () {
+    var view = this
+    this.options.control.addEventListener("click", function () {
+      view.toggle()
+    })
+  }
+})

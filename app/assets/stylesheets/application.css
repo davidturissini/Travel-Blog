@@ -200,3 +200,14 @@ br.clear { height:0; line-height:0 }
 .users-me #user section img { max-height:75px; height:50px; }
 .users-me #user section td { padding:10px;}
 .users-me .remove { cursor:pointer; }
+
+/* USER FORM */
+#user-form label { display:inline-block; margin-right:10px; }
+#user-form .field { padding:15px 5px; border-bottom: 1px solid #ccc; }
+#user-form input[type=text] { display:block; width:500px; }
+#user-form .map { height:400px; }
+#user-form .note { padding-top:5px; font-size:10px; color:#666; }
+#user-form .user-photo img { float: left; padding-right:10px; }
+#user-form .user-geo label { display:block; }
+#user-form .user-geo input { display:inline-block; width:300px; }
+#user-form .field:nth-child(even) { background: #f1f1f1; }

@@ -77,28 +77,45 @@ var LocationForm = Backbone.View.extend({
    _bindMapClicks: function () {
     var form = this,
     loc = form.model,
-    countryField = new CountryField({
-      model: loc,
-      map: form.map,
-      textElem: document.getElementById("location-country_name"),
-      input: document.getElementById("location-country_id")
-    })
-    countryField.on("ready", function () {
-      var cityField = new CityField({
-        model: loc,
-        map: form.map,
-        input: document.getElementById("location-city")
-      }).render()
+    decoder = new GeocodeDecoder(),
+    countryList = new CountryCollection();
 
-      google.maps.event.addListener(form.map, "click", function (mapEvent) {
-          loc.set({
-           latitude: mapEvent.latLng.lat(),
-           longitude: mapEvent.latLng.lng()
+    countryList.fetch({
+      success: function (countries) {
+        var cityField = new CityField({
+          model: loc,
+          map: form.map,
+          input: document.getElementById("location-city")
+        }).render()
+
+        var countryField = new CountryField({
+          model: loc,
+          map: form.map,
+          textElem: document.getElementById("location-country_name"),
+          input: document.getElementById("location-country_id")
+        }).render();
+
+        google.maps.event.addListener(form.map, "click", function (mapEvent) {
+          decoder.decode(mapEvent.latLng, {
+            success:function (result) {
+              if( result.data ) {
+                var country = countries.where({name:result.data.country})[0]
+                loc.set({
+                  country_id: country.id,
+                  city:result.data.city || ""
+                })
+              }
+            }
           })
+          
+          loc.set({
+              latitude: mapEvent.latLng.lat(),
+              longitude: mapEvent.latLng.lng()
+            })
         })
+      }
     })
 
-    countryField.render()
 
    },
    drawMapMarker: function () {

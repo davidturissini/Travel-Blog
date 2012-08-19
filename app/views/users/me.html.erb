@@ -2,12 +2,15 @@
   <div id="user-map"></div>
   <header id="user-header">
     <hgroup>
+      <%= image @user.photo_url %>
       <h1>Hello, <%= @user.name %></h1>
       <section>
         <%= @user.city %>, <%= @user.country_name %>
       </section>
     </hgroup>
+    <%= link_to "Edit", edit_me_path %>
   </header>
+  
   
   <section id="location-types">
    <header>Your travel categories</header>
@@ -80,26 +83,6 @@
     user: user,
     el: document.getElementById("user-locations")
    }).render()
-   user.realms = new Backbone.Collection( JSON.parse( document.getElementById("user").getAttribute("data-realms") ) )
-debugger
-   var mapEl = document.getElementById("user-map")
-   if( mapEl ) {
-     var mapCenter = new google.maps.Geocoder()
-     mapCenter.geocode({address: user.get("city")}, function (results, status) {
-          var result = results[0]
-          if( result ) {
-            var marker = new google.maps.Marker({position:result.geometry.location}),
-            map = new google.maps.Map(mapEl, {
-             zoom: 4,
-             center: result.geometry.location,
-             mapTypeId: google.maps.MapTypeId.HYBRID
-            })
-
-            marker.setMap(map)
-          }
-
-       })
-   }
   })
  </script>
 <% end %>

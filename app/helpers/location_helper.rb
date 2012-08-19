@@ -15,4 +15,8 @@ module LocationHelper
   path = location_path loc
   link_to loc.title, path, options.merge({ :class => "location #{loc.location_type.title.downcase}" })
  end
+
+ def location_image loc
+ 	image loc.photo_url, { :title => loc.title, :alt => loc.title }
+ end
 end

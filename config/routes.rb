@@ -5,6 +5,7 @@ Adventureblog::Application.routes.draw do
   match '/me' => "users#me", :via => :get, :as => "me"
   match '/me/logout' => "users#logout", :as => "logout"
   match '/me' => "users#update", :via => :put
+  match '/me/edit' => "users#edit_me", :as => "edit_me"
 
   resources :countries, :only => [:index]
 
