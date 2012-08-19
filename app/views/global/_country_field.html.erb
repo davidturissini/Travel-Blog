@@ -1,0 +1,7 @@
+<span id="<%= object_type %>-country_name"><%= object.country_name %></span>
+<%= tag :input,
+	:type => "hidden", 
+	:id => "#{object_type}-country_id", 
+	:value => object.country_id, 
+	:name => "#{object_type}[country_id]"
+	%>

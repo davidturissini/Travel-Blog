@@ -18,7 +18,7 @@ var LocationForm = Backbone.View.extend({
 
     this.serverMessages = document.getElementById("server-messages")
 
-    var fields = ["summary", "location_type_id", "latitude", "longitude", "title", "flickr_set", "kml_url"]
+    var fields = ["description", "summary", "location_type_id", "latitude", "longitude", "title", "flickr_set", "kml_url"]
      fields.forEach(function (field) {
       document.getElementById("location-" + field).addEventListener("change", function (e) {
        loc.set(field, e.currentTarget.value)

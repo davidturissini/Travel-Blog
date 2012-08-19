@@ -6,6 +6,8 @@ a:hover { text-decoration: underline; }
 .clear { display:block; clear:both; }
 br.clear { height:0; line-height:0 }
 
+.autoclear:after { visibility: hidden; height:0; line-height: 0; clear:both; content:"."; }
+
 #container { margin:0px auto; width:960px; }
 
 #site-header { position:relative; margin:0px auto; padding:163px 20px 0; max-width: 1116px; border-bottom:10px solid #000; background:url(/assets/backgrounds/stonehenge.jpg) top center no-repeat; }
@@ -129,19 +131,17 @@ br.clear { height:0; line-height:0 }
 .locations-show #location > .toolbox { clear:both; }
 
 /* LOCATION FORM */
-#location-form input[type=text] { border:0px; } 
-#location-form #server-messages { margin-bottom:20px; }
-#location-form #server-messages .success { padding:10px; border:1px solid #0f0; color:#0f0;}
-#location-form #server-messages .error { padding:10px; border:1px solid #f00; color:#f00;}
-#location-form #location-mashup { margin:10px 0; }
-#location-form #location-title { display:block; margin-bottom:10px; width:775px; font-size:22px; }
+#location-form .title { width:745px; }
 #location-form #location-meta { margin:0 200px 0 140px; }
-#location-form #location-photo img { float:left; padding-right:20px; width: 120px; }
+#location-form #location-photo { float:left; margin:0px; padding:0 20px 0 0; }
+#location-form #location-photo img { width: 120px; }
+#location-form #location-description { display:block; width: 100%; font-size:18px; }
 #location-form #flickr-photos { float:right; width: 150px; }
 #location-form #flickr-photos img { width: 120px; cursor:pointer; }
 #location-form #flickr-photos ul { max-height:600px; overflow-y:scroll; text-align:center; }
 #location-form input[type=submit] { display:inline-block; margin:10px 0; }
-#location-form #location-summary { display:block; margin:20px 0; width:600px; height: 150px; }
+#location-form #location-summary { display:block; margin-top:5px; width:600px; min-height: 150px; }
+#location-form .field { margin-bottom: 20px; }
 
 /* JOURNAL ENTRY FORM */
 
@@ -201,13 +201,23 @@ br.clear { height:0; line-height:0 }
 .users-me #user section td { padding:10px;}
 .users-me .remove { cursor:pointer; }
 
+/* FORMS */
+form fieldset { clear:both; padding:15px 5px; border-bottom: 1px solid #ccc; }
+form fieldset:nth-child(even) { background: #f1f1f1; }
+form fieldset fieldset { clear:none; margin:0px; padding:0px; border:0px; background: transparent; }
+form label { display:inline-block; margin:0 0 5px 0; }
+form input[type=text] { display:block; }
+form input.ib { display:inline-block; }
+form .title { display:block; font-size:22px; }
+form .note { padding-top:5px; font-size:10px; color:#666; }
+form .messages { margin-bottom:20px; }
+form .messages .success { padding:10px; border:1px solid #0f0; color:#0f0;}
+form .messages .error { padding:10px; border:1px solid #f00; color:#f00;}
+
 /* USER FORM */
 #user-form label { display:inline-block; margin-right:10px; }
-#user-form .field { padding:15px 5px; border-bottom: 1px solid #ccc; }
 #user-form input[type=text] { display:block; width:500px; }
 #user-form .map { height:400px; }
-#user-form .note { padding-top:5px; font-size:10px; color:#666; }
 #user-form .user-photo img { float: left; padding-right:10px; }
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }
-#user-form .field:nth-child(even) { background: #f1f1f1; }

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120819071534) do
+ActiveRecord::Schema.define(:version => 20120819200501) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -52,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20120819071534) do
     t.integer  "user_id"
     t.integer  "location_type_id"
     t.string   "photo_url"
+    t.string   "description"
   end
 
   create_table "realm_accounts", :force => true do |t|

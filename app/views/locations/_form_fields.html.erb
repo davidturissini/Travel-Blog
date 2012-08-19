@@ -1,46 +1,79 @@
 <div id="location-fields" data-location_type="<%= location.location_type.to_json %>" data-user="<%= location.user.to_json  %>" data-json="<%= location.to_json %>" class="location">
-  <section id="server-messages"></section>
- <section id="location-photo">
-  <img src="<%= location.photo_url %>" />
-  <%= tag :input, :value => location ? location.photo_url : "", :name => "location[photo_url]", :type => "hidden" %>
- </section>
- <section id="location-meta">
-  <%= tag :input, :id => "location-title", :placeholder => "Title", :value => location ? location.title : "", :name => "location[title]" %>
-  <select id="location-location_type_id">
-    <% current_user.location_types.each do |loc_type| %>
-      <option<%= ' selected="selected"' if loc_type == location.location_type %> value="<%= loc_type.id %>"><%= loc_type.title %></option>
-    <% end %>
-  </select>
-  <textarea id="location-summary"><%= location.summary %></textarea>
-  <section id="location-geo">
-   <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
-   <%= tag :input, :id => "location-state", :placeholder => "State", :value => location.state, :name => "location[state]" %>
-    <span id="location-country_name"><%= location.country_name %></span>
-   <%= tag :input, :type => "hidden", :id => "location-country_id", :value => location.country_id, :name => "location[country_id]" %>
-   <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
-   <label for="location-visited">Visited?</label>
-  </section>
-  <section id="location-mashup">
-   <label>Flickr Set:</label>
-   <%= tag :input, :type => "text", :id => "location-flickr_set", :placeholder => "Flickr", :value => location ? location.flickr_set : "", :name => "location[flickr_set]" %>
-   <label>KML Url:</label>
-   <%= tag :input, :type => "text", :placeholder => "KML", :id => "location-kml_url", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
-  </section>
-  <section id="location-geo">
-   <label>Latitude:</label>
-   <input type="text" id="location-latitude" value="<%= location.latitude %>" />
-   <label>Longitude:</label>
-   <input type="text" id="location-longitude" value="<%= location.longitude %>" />
-  </section>
-  <input type="submit" value="Save" /> 
- </section>
- <section id="flickr-photos">
-  <ul>
+  <p id="server-messages" class="messages"></p>
+  <fieldset class="autoclear">
+    <figure id="location-photo">
+      <img src="<%= location.photo_url %>" />
+      <%= tag :input, :value => location.photo_url, :name => "location[photo_url]", :type => "hidden" %>
+    </figure>
+    <fieldset>
+      <%= tag :input, 
+        :id => "location-title", 
+        :class => "title",
+        :placeholder => "Title", 
+        :value => location.title, 
+        :name => "location[title]" %>
+      <p class="note">The title of your trip. This will be the text that links to this trip across the site.</p>
+      <label for="location-location_type_id">Filed under:</label>
+      <select id="location-location_type_id">
+        <% current_user.location_types.each do |loc_type| %>
+          <option<%= ' selected="selected"' if loc_type == location.location_type %> value="<%= loc_type.id %>">
+            <%= loc_type.title %>
+          </option>
+        <% end %>
+      </select>
+    </fieldset>
+  </fieldset>
+  <fieldset>
+    <div class="field">
+      <label>Description</label>
+      <input type="text" id="location-description" value="<%= location.description %>" />
+      <p class="note">This will appear as the heading for your journal entries</p>
+    </div>
+  </fieldset>
+  <fieldset>
+    <div class="field">
+      <label for="location-summary">Summary</label>
+      <p class="note">A short description summarizing your trip</p>
+      <textarea id="location-summary"><%= location.summary %></textarea>
+    </div>
+  </fieldset>
+  <fieldset id="location-geo">
+    <label>Location</label>
+    <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
+    <%= tag :input, :id => "location-city", :class => "ib", :placeholder => "City", :value => location.city, :name => "location[city]" %>
+    <%= tag :input, :id => "location-state", :class => "ib", :placeholder => "State", :value => location.state, :name => "location[state]" %>
+    <%= render "global/country_field", :object => location, :object_type => "location" %>
+    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
+    <label for="location-visited">Visited?</label>
+  </fieldset>
+  <fieldset id="location-mashup">
+   <label>Flickr Set</label>
+   <%= tag :input, 
+    :type => "text", 
+    :id => "location-flickr_set", 
+    :placeholder => "Flickr", 
+    :value => location.flickr_set, 
+    :name => "location[flickr_set]" %>
+    <p class="note">The ID of the flickr set with pictures of this trip.</p>
+  </fieldset>
+  <fieldset>
+    <label>KML Url</label>
+    <%= tag :input, :type => "text", :placeholder => "KML", :id => "location-kml_url", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
+  </fieldset>
+  <fieldset id="location-geo">
+    <label>Latitude:</label>
+    <input type="text" id="location-latitude" class="ib" value="<%= location.latitude %>" />
+    <label>Longitude:</label>
+    <input type="text" id="location-longitude" class="ib" value="<%= location.longitude %>" />
+  </fieldset>
+  <input type="submit" value="Save" />
+  <section id="flickr-photos">
+    <ul>
  
-  </ul>
- </section>
- <section id="location-map" style="height:500px"></section>
- <br class="clear" />
+    </ul>
+  </section>
+  <section id="location-map" style="height:500px"></section>
+  <br class="clear" />
 </div>
 
 <% content_for :scripts_footer do %>

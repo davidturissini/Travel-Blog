@@ -1,7 +1,7 @@
 <article id="location" data-location_type="<%= @location.location_type.to_json %>" data-json="<%= @location.to_json %>">
  <header>
   <h2 id="location-title"><%= @location.title %></h2>
-  <%= @location.city %>, <%= @location.country_name %>
+  <%= @location.city %>, <%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
  </header>
  <section id="hero-gallery">
   <figure class="hero-large">
