@@ -62,7 +62,8 @@ class LocationsController < ApplicationController
  end
 
  def show
-  @location = current_location_type.locations.find_by_slug(params[:id]) 
+  @location = current_location_type.locations.find_by_slug(params[:id])
+  @page_title = "#{@location.description} - #{@location.title}"
   @og_image = @location.photo_url
   @og_title = @location.title
   @canonical_url = user_location_type_location_url({
