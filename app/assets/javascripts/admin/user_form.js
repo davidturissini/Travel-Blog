@@ -58,9 +58,10 @@ var UserForm = Backbone.View.extend({
 					decoder.decode(mapEvent.latLng, {
 						success:function (result) {
 							if( result.data ) {
-								var country = countries.where({name:result.data.country})[0]
+								var country = countries.findByName(result.data.country),
+								country_id = country ? country.id : ""
 								user.set({
-									country_id: country.id,
+									country_id: country_id,
 									city:result.data.city || ""
 								})
 							}

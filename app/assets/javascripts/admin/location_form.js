@@ -88,7 +88,14 @@ var LocationForm = Backbone.View.extend({
           input: document.getElementById("location-city")
         }).render()
 
+        var stateField = new StateField({
+          model: loc,
+          map: form.map,
+          input: document.getElementById("location-state")
+        }).render()
+
         var countryField = new CountryField({
+          collection: countryList,
           model: loc,
           map: form.map,
           textElem: document.getElementById("location-country_name"),
@@ -99,10 +106,12 @@ var LocationForm = Backbone.View.extend({
           decoder.decode(mapEvent.latLng, {
             success:function (result) {
               if( result.data ) {
-                var country = countries.where({name:result.data.country})[0]
+                var country = countries.findByName(result.data.country),
+                country_id = country ? country.id : ""
                 loc.set({
-                  country_id: country.id,
-                  city:result.data.city || ""
+                  country_id: country_id,
+                  city: result.data.city || "",
+                  state: result.data.state || ""
                 })
               }
             }

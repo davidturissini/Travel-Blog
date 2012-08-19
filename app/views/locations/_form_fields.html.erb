@@ -14,6 +14,7 @@
   <textarea id="location-summary"><%= location.summary %></textarea>
   <section id="location-geo">
    <%= tag :input, :id => "location-city", :placeholder => "City", :value => location ? location.city : "", :name => "location[city]" %>
+   <%= tag :input, :id => "location-state", :placeholder => "State", :value => location.state, :name => "location[state]" %>
     <span id="location-country_name"><%= location.country_name %></span>
    <%= tag :input, :type => "hidden", :id => "location-country_id", :value => location.country_id, :name => "location[country_id]" %>
    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
