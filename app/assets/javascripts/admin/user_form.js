@@ -47,6 +47,7 @@ var UserForm = Backbone.View.extend({
 				}).render()
 
 				var countryField = new CountryField({
+					el: form.el.querySelector(".user-countries-field"),
 					map:form.options.map,
 					model:user,
 					input: document.getElementById("user-country_id"),

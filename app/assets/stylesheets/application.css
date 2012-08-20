@@ -142,6 +142,9 @@ br.clear { height:0; line-height:0 }
 #location-form input[type=submit] { display:inline-block; margin:10px 0; }
 #location-form #location-summary { display:block; margin-top:5px; width:600px; min-height: 150px; }
 #location-form .field { margin-bottom: 20px; }
+#location-form .show-map { cursor: pointer; }
+#location-form #location-geo fieldset:first-child { padding-top: 0px; }
+#location-form #location-geo fieldset { padding: 10px 0; }
 
 #location-form .map { margin:0px; padding:0px; width:680px; height:400px; }
 #location-form #flickr-photos { width: 540px; }
@@ -217,6 +220,7 @@ form .note { padding-top:5px; font-size:10px; color:#666; }
 form .messages { margin-bottom:20px; }
 form .messages .success { padding:10px; border:1px solid #0f0; color:#0f0;}
 form .messages .error { padding:10px; border:1px solid #f00; color:#f00;}
+form .countries-field, form .countries-field input { display:inline; }
 
 /* USER FORM */
 #user-form label { display:inline-block; margin-right:10px; }

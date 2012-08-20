@@ -1,6 +1,28 @@
 var CountryField = Backbone.View.extend({
 	initialize: function () {
-		var field = this
+		var field = this,
+		options = this.el.querySelectorAll("datalist option")
+		countryJson = [];
+
+		field.input = field.el.querySelector("input");
+
+		[].forEach.call(options, function (option) {
+			var json = JSON.parse( option.getAttribute("data-json") )
+			countryJson.push(json)
+		})
+
+		field.collection = new CountryCollection(countryJson)
+		field.input.addEventListener("change", function (e) {
+			var countryName = e.currentTarget.value,
+			country = field.collection.findByName(countryName)
+			if( country ) {
+				field.model.set({
+					country_id:country.id
+				})
+			} else {
+				field.input.value = ""
+			}
+		})
 
 		field.model.on("change", function (model, options) {
 			var countryName = ""
@@ -8,19 +30,13 @@ var CountryField = Backbone.View.extend({
 				var country = field.collection.get(field.model.get("country_id"))
 				if( country ) {
 					countryName = country.get("name")
-				} 
-				field.options.textElem.innerHTML = countryName
-				field._updateFormField()
+					field.input.value = countryName
+				}  else {
+					field.input.value = ""
+				}
+				
 
 		    }
 	    })
-	},
-	_updateFormField:function () {
-      	var model = this.model,
-		newVal = model.get("country_id"),
-		elem = this.options.input
-		if( elem.value != newVal) {
-		  elem.value = newVal
-		}
-   	}
+	}
 })

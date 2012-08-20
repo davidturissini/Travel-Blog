@@ -1,25 +1,24 @@
 <form id="user-form" data-json="<%= user.to_json %>" data-realms="<%= user.realm_accounts.to_json %>">
-	<section class="field user-photo">
+	<fieldset class="field user-photo">
 		<img src="<%= user.photo_url %>" alt="Your photo" title="Your photo" />
 	    <label>Your photo</label>
 	    <input type="text" class="user-photo_url" value="<%= user.photo_url %>" />
 	    <p class="note">
 	    	This will appear at the top of your posts
 	    </p>
-	</section>
-	<section class="field">
+	</fieldset>
+	<fieldset>
 	    <label>Your username</label><%= tag :input, :value => user.slug, :class => "user-slug" %>
 	    <p class="note">
 	    	This is where people will find you e.g. http://traveladdict.me/<span class="slug-mirror"><%= user.slug %></span>
 	    </p>
-	</section>
-    <section class="user-geo field">
+	</fieldset>
+    <fieldset class="user-geo field">
     	<label>Your hometown</label>
 	    <input type="text" id="user-city" value="<%= user.city %>" />
-	    <span id="user-country"><%= user.country_name %></span>
-	    <input type="hidden" id="user-country_id" />
+	    <%= render "global/country_field", :object => user, :object_type => "user" %>
 	    <p class="note">Fill in your hometown or use the map below</p>
-    </section>
+    </fieldset>
     <section class="map"></section>
     <input type="submit" value="Update" />
   </form>

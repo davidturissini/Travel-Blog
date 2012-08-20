@@ -1,7 +1,8 @@
-<span id="<%= object_type %>-country_name"><%= object.country_name %></span>
-<%= tag :input,
-	:type => "hidden", 
-	:id => "#{object_type}-country_id", 
-	:value => object.country_id, 
-	:name => "#{object_type}[country_id]"
-	%>
+<div class="<%= object_type %>-countries-field countries-field">
+	<input type="text" name="country" value="<%= object.country_name %>" list="<%= object_type %>-countries" />
+	<datalist id="<%= object_type %>-countries">
+		<% Country.all.each do |country| %>
+			<option data-json="<%= country.to_json %>" value="<%= country.name %>"></option>
+		<% end %>
+	</datalist>
+</div>

@@ -71,52 +71,27 @@ var LocationForm = Backbone.View.extend({
    _bindMapClicks: function () {
     var form = this,
     loc = form.model,
-    decoder = new GeocodeDecoder(),
-    countryList = new CountryCollection();
+    decoder = new GeocodeDecoder()
 
-    countryList.fetch({
-      success: function (countries) {
-        var cityField = new CityField({
-          model: loc,
-          map: form.map,
-          input: document.getElementById("location-city")
-        }).render()
-
-        var stateField = new StateField({
-          model: loc,
-          map: form.map,
-          input: document.getElementById("location-state")
-        }).render()
-
-        var countryField = new CountryField({
-          collection: countryList,
-          model: loc,
-          map: form.map,
-          textElem: document.getElementById("location-country_name"),
-          input: document.getElementById("location-country_id")
-        }).render();
-
-        google.maps.event.addListener(form.map, "click", function (mapEvent) {
-          decoder.decode(mapEvent.latLng, {
-            success:function (result) {
-              if( result.data ) {
-                var country = countries.findByName(result.data.country),
-                country_id = country ? country.id : ""
-                loc.set({
-                  country_id: country_id,
-                  city: result.data.city || "",
-                  state: result.data.state || ""
-                })
-              }
-            }
-          })
-          
-          loc.set({
-              latitude: mapEvent.latLng.lat(),
-              longitude: mapEvent.latLng.lng()
+    google.maps.event.addListener(form.map, "click", function (mapEvent) {
+      decoder.decode(mapEvent.latLng, {
+        success:function (result) {
+          if( result.data ) {
+            var country = form.countryField.collection.findByName(result.data.country),
+            country_id = country ? country.id : ""
+            loc.set({
+              country_id: country_id,
+              city: result.data.city || "",
+              state: result.data.state || ""
             })
+          }
+        }
+      })
+      
+      loc.set({
+          latitude: mapEvent.latLng.lat(),
+          longitude: mapEvent.latLng.lng()
         })
-      }
     })
 
 
@@ -189,6 +164,8 @@ var LocationForm = Backbone.View.extend({
     mapElem.className = "map"
 
     form.modal.setView( mapElem )
+    form.modal.setTitle("Select location for " + loc.get("title"))
+    form.modal.render()
 
     form.map = new google.maps.Map(mapElem, {
      zoom: 4,
@@ -196,7 +173,7 @@ var LocationForm = Backbone.View.extend({
      mapTypeId: google.maps.MapTypeId.HYBRID
     })
 
-    form.modal.render()
+    
     form._bindMapClicks()
     this.mapMarker = new LocationMarker({
       model:loc,
@@ -208,6 +185,26 @@ var LocationForm = Backbone.View.extend({
    render: function () {
     var form = this,
     loc = form.model
+
+    form.cityField = new CityField({
+        model: loc,
+        map: form.map,
+        input: document.getElementById("location-city")
+      }).render()
+
+    form.stateField = new StateField({
+          model: loc,
+          map: form.map,
+          input: document.getElementById("location-state")
+        }).render()
+    
+    form.countryField = new CountryField({
+          el: form.el.querySelector(".location-countries-field"),
+          model: loc,
+          map: form.map,
+          textElem: document.getElementById("location-country_name"),
+          input: document.getElementById("location-country_id")
+        }).render();
 
     form.el.querySelector("#location-photo figcaption").addEventListener("click", function () {
       form.showPhotos()

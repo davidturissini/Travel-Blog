@@ -54,12 +54,14 @@
     <p class="note">Upload your tracks to Google Maps and display them on the site</p>
   </fieldset>
   <fieldset id="location-geo">
-    <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
-    <%= tag :input, :id => "location-city", :class => "ib", :placeholder => "City", :value => location.city, :name => "location[city]" %>
-    <%= tag :input, :id => "location-state", :class => "ib", :placeholder => "State", :value => location.state, :name => "location[state]" %>
-    <%= render "global/country_field", :object => location, :object_type => "location" %>
-    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
-    <label for="location-visited">Visited?</label>
+    <fieldset>
+      <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
+      <%= tag :input, :id => "location-city", :class => "ib", :placeholder => "City", :value => location.city, :name => "location[city]" %>
+      <%= tag :input, :id => "location-state", :class => "ib", :placeholder => "State", :value => location.state, :name => "location[state]" %>
+      <%= render "global/country_field", :object => location, :object_type => "location" %>
+      <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
+      <label for="location-visited">Visited?</label>
+    </fieldset>
     <fieldset>
       <label>Latitude:</label>
       <input type="text" id="location-latitude" class="ib" value="<%= location.latitude %>" />
