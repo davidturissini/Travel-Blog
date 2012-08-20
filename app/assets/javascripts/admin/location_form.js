@@ -132,7 +132,13 @@ var LocationForm = Backbone.View.extend({
    },
    showPhotos: function () {
     var loc = this.model,
-    photoUl = document.getElementById("flickr-photos").getElementsByTagName("ul")[0]
+    flickrPhotos = document.createElement("section")
+    photoUl = document.createElement("ul"),
+    modal = new ModalDialog({
+      parentElem:this.el
+    })
+    flickrPhotos.id = "flickr-photos"
+    flickrPhotos.appendChild(photoUl)
     photoUl.innerHTML = "" 
     loc.photos({
      success:function (e) {
@@ -155,8 +161,12 @@ var LocationForm = Backbone.View.extend({
         photoUl.appendChild(li)
         li.addEventListener("click", function () {
          loc.set({photo_url: e.url()})
+         modal.close()
         })
        })
+       modal.setView( flickrPhotos )
+       modal.render()
+
       }
      }
     })
@@ -181,7 +191,11 @@ var LocationForm = Backbone.View.extend({
    render: function () {
     var form = this,
     loc = form.model
-    form.showPhotos()
+
+    form.el.querySelector("#location-photo figcaption").addEventListener("click", function () {
+      form.showPhotos()
+    })
+
     document.getElementById("location-form").onsubmit = function (e) {
      e.preventDefault()
      loc.jsonPrefix = true

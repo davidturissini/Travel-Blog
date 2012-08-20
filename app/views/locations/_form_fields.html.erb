@@ -4,6 +4,7 @@
     <figure id="location-photo">
       <img src="<%= location.photo_url %>" />
       <%= tag :input, :value => location.photo_url, :name => "location[photo_url]", :type => "hidden" %>
+      <figcaption>Change Photo</figcaption>
     </figure>
     <fieldset>
       <%= tag :input, 
@@ -39,12 +40,12 @@
   </fieldset>
   <fieldset id="location-geo">
     <label>Location</label>
-    <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
     <%= tag :input, :id => "location-city", :class => "ib", :placeholder => "City", :value => location.city, :name => "location[city]" %>
     <%= tag :input, :id => "location-state", :class => "ib", :placeholder => "State", :value => location.state, :name => "location[state]" %>
     <%= render "global/country_field", :object => location, :object_type => "location" %>
     <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
     <label for="location-visited">Visited?</label>
+    <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
   </fieldset>
   <fieldset id="location-mashup">
    <label>Flickr Set</label>
@@ -59,6 +60,7 @@
   <fieldset>
     <label>KML Url</label>
     <%= tag :input, :type => "text", :placeholder => "KML", :id => "location-kml_url", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
+    <p class="note">Upload your tracks to Google Maps and display them on the site</p>
   </fieldset>
   <fieldset id="location-geo">
     <label>Latitude:</label>
@@ -67,11 +69,6 @@
     <input type="text" id="location-longitude" class="ib" value="<%= location.longitude %>" />
   </fieldset>
   <input type="submit" value="Save" />
-  <section id="flickr-photos">
-    <ul>
- 
-    </ul>
-  </section>
   <section id="location-map" style="height:500px"></section>
   <br class="clear" />
 </div>

@@ -133,15 +133,20 @@ br.clear { height:0; line-height:0 }
 /* LOCATION FORM */
 #location-form .title { width:745px; }
 #location-form #location-meta { margin:0 200px 0 140px; }
-#location-form #location-photo { float:left; margin:0px; padding:0 20px 0 0; }
+#location-form #location-photo { position:relative; float:left; margin:0 20px 0 0; line-height:0; }
+#location-form #location-photo figcaption { display:none; position:absolute; left: 0px; right: 0px; bottom:0px; padding: 5px; color: #fff; background: rgba(0, 0, 0, .8); font-size: 10px; line-height:1; cursor:pointer; }
+#location-form #location-photo:hover figcaption { display:block; }
 #location-form #location-photo img { width: 120px; }
+#location-form #location-flickr_set, #location-form #location-kml_url { width:100%; }
 #location-form #location-description { display:block; width: 100%; font-size:18px; }
-#location-form #flickr-photos { float:right; width: 150px; }
-#location-form #flickr-photos img { width: 120px; cursor:pointer; }
-#location-form #flickr-photos ul { max-height:600px; overflow-y:scroll; text-align:center; }
 #location-form input[type=submit] { display:inline-block; margin:10px 0; }
 #location-form #location-summary { display:block; margin-top:5px; width:600px; min-height: 150px; }
 #location-form .field { margin-bottom: 20px; }
+
+#location-form #flickr-photos { width: 600px; box-shadow: 0px 0px 70px #000; }
+#location-form #flickr-photos img { width: 120px; cursor:pointer; }
+#location-form #flickr-photos ul { max-height:400px; overflow-y:scroll; text-align:center; }
+#location-form #flickr-photos li { display:inline-block; padding:10px; }
 
 /* JOURNAL ENTRY FORM */
 
@@ -162,8 +167,6 @@ br.clear { height:0; line-height:0 }
 /* full size gallery */
 
 #fullsize-gallery { position:fixed; z-index: 100; top:0px; left:0px; bottom:0px; right:0px; padding:40px; background:rgba(0, 0, 0, .9); color: #fff;}
-#fullsize-gallery .close { position:fixed; top:20px; right:20px; padding:5px; color:#fff; border:1px solid #fff; cursor:pointer; line-height:.5; }
-#fullsize-gallery .close:hover { text-decoration: none; background:#fff; color:#333;}
 #fullsize-gallery .hero-large { position:fixed; top: 40px; bottom:150px; left:50px; right:50px; margin:0px auto; text-align:center; }
 #fullsize-gallery .hero-large figcaption { margin-top:10px; font-size:16px; text-align: center; }
 #fullsize-gallery .hero-large img { max-height:100%; }
@@ -221,3 +224,12 @@ form .messages .error { padding:10px; border:1px solid #f00; color:#f00;}
 #user-form .user-photo img { float: left; padding-right:10px; }
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }
+
+/* MODAL DIALOG */
+.modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100; opacity:0; background:rgba(255, 255, 255, .8); 
+	-webkit-transition:opacity linear 500ms;
+}
+.modal-dialog.visible { opacity: 1; }
+.modal-dialog .viewfinder { background:#fff; }
+.modal-dialog .close { position:fixed; top:20px; right:20px; padding:5px; color:#000; border:1px solid #000; cursor:pointer; line-height:.5; }
+.modal-dialog .close:hover { text-decoration: none; background:#000; color:#fff;}
