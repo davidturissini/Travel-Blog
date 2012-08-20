@@ -142,11 +142,9 @@ br.clear { height:0; line-height:0 }
 #location-form input[type=submit] { display:inline-block; margin:10px 0; }
 #location-form #location-summary { display:block; margin-top:5px; width:600px; min-height: 150px; }
 #location-form .field { margin-bottom: 20px; }
-#location-form .show-map { cursor: pointer; }
 #location-form #location-geo fieldset:first-child { padding-top: 0px; }
 #location-form #location-geo fieldset { padding: 10px 0; }
 
-#location-form .map { margin:0px; padding:0px; width:680px; height:400px; }
 #location-form #flickr-photos { width: 540px; }
 #location-form #flickr-photos img { width: 120px; cursor:pointer; }
 #location-form #flickr-photos ul { max-height:400px; overflow-y:scroll; text-align:center; }
@@ -221,6 +219,8 @@ form .messages { margin-bottom:20px; }
 form .messages .success { padding:10px; border:1px solid #0f0; color:#0f0;}
 form .messages .error { padding:10px; border:1px solid #f00; color:#f00;}
 form .countries-field, form .countries-field input { display:inline; }
+form .show-map { cursor: pointer; }
+
 
 /* USER FORM */
 #user-form label { display:inline-block; margin-right:10px; }
@@ -239,3 +239,4 @@ form .countries-field, form .countries-field input { display:inline; }
 .modal-dialog .viewfinder h1 { padding-bottom:20px; font-size:22px; }
 .modal-dialog .close { position:fixed; top:20px; right:20px; padding:5px; color:#000; border:1px solid #000; cursor:pointer; line-height:.5; }
 .modal-dialog .close:hover { text-decoration: none; background:#000; color:#fff;}
+.modal-dialog .map { margin:0px; padding:0px; width:680px; height:400px; }

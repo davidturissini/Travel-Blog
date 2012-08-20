@@ -3,8 +3,9 @@
 var UserForm = Backbone.View.extend({
 	initialize: function () {
 		var form = this
-		form.userMarker = new google.maps.Marker()
-		form.userMarker.setMap(form.options.map)
+		form.modal = new ModalDialog({
+			parentElem:form.el
+		})
 
 		form.model.on("change", function (model, options) {
 			if( options.changes.photo_url ) {
@@ -16,16 +17,48 @@ var UserForm = Backbone.View.extend({
 				var mirror = form.el.querySelector(".slug-mirror")
 				mirror.innerHTML = model.get("slug")
 			}
-
-			if( options.changes.latitude || options.changes.longitude ) {
-				form.setMapCenter()
-			}
 		})
 	},
-	setMapCenter: function () {
-		var form = this
-		map.setCenter(this.model.latLng())
-        form.userMarker.setPosition(this.model.latLng())
+	showMap: function () {
+	    var mapElem = document.createElement("figure"),
+	    form = this,
+	    loc = this.model
+	    mapElem.className = "map"
+
+	    form.modal.setView( mapElem )
+	    form.modal.setTitle("Select your home location")
+	    form.modal.render()
+
+	    form.map = new google.maps.Map(mapElem, {
+	     zoom: 4,
+	     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
+	     mapTypeId: google.maps.MapTypeId.HYBRID
+	    })
+	    
+	    form._bindMapClicks()
+	},
+	_bindMapClicks: function () {
+		var form = this,
+		decoder = new GeocodeDecoder()
+		google.maps.event.addListener(form.map, "click", function (mapEvent) {
+			decoder.decode(mapEvent.latLng, {
+				success:function (result) {
+					if( result.data ) {
+						var country = form.countryField.collection.findByName(result.data.country),
+						country_id = country ? country.id : ""
+						user.set({
+							country_id: country_id,
+							city:result.data.city || ""
+						})
+					}
+				}
+			})
+			
+			user.set({
+	           latitude: mapEvent.latLng.lat(),
+	           longitude: mapEvent.latLng.lng()
+	        })
+		})
 	},
 	render: function () {
 		var form = this,
@@ -39,43 +72,25 @@ var UserForm = Backbone.View.extend({
 			})
 		})
 
-		countryList.fetch({
-			success: function (countries) {
-				var cityField = new CityField({
-					model:user,
-					input: document.getElementById("user-city")
-				}).render()
+		form.cityField = new CityField({
+			model:user,
+			input: document.getElementById("user-city")
+		}).render()
 
-				var countryField = new CountryField({
-					el: form.el.querySelector(".user-countries-field"),
-					map:form.options.map,
-					model:user,
-					input: document.getElementById("user-country_id"),
-		      		textElem: document.getElementById("user-country"),
-		      		collection:countryList
-				}).render();
+		form.countryField = new CountryField({
+			el: form.el.querySelector(".user-countries-field"),
+			map:form.options.map,
+			model:user,
+			input: document.getElementById("user-country_id"),
+      		textElem: document.getElementById("user-country"),
+      		collection:countryList
+		}).render();
 
-				google.maps.event.addListener(form.options.map, "click", function (mapEvent) {
-					decoder.decode(mapEvent.latLng, {
-						success:function (result) {
-							if( result.data ) {
-								var country = countries.findByName(result.data.country),
-								country_id = country ? country.id : ""
-								user.set({
-									country_id: country_id,
-									city:result.data.city || ""
-								})
-							}
-						}
-					})
-					
-					user.set({
-			           latitude: mapEvent.latLng.lat(),
-			           longitude: mapEvent.latLng.lng()
-			        })
-				})
-			}
-		})
+		
+
+		form.el.querySelector(".show-map").addEventListener("click", function () {
+	      	form.showMap()
+	    })
 		
 		form.el.addEventListener("submit", function (e) {
 		    e.preventDefault()
@@ -88,7 +103,6 @@ var UserForm = Backbone.View.extend({
 		    })
 		})
 
-		form.setMapCenter()
 
 		return this
 	}

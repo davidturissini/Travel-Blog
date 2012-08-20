@@ -5,16 +5,10 @@
 	<script>
 	    var userJson = JSON.parse( document.getElementById("user-form").getAttribute("data-json") ),
    		user = new User(userJson),
-   		formEl = document.getElementById("user-form"),
-	    mapEl = formEl.getElementsByClassName("map").item(0),
-	    map = new google.maps.Map(mapEl, {
-	        zoom: 4,
-	        mapTypeId: google.maps.MapTypeId.HYBRID
-	    })
+   		formEl = document.getElementById("user-form")
 	    user.realms = new Backbone.Collection( JSON.parse( formEl.getAttribute("data-realms") ) )
 
 	    new UserForm({
-	    	map:map,
 		    model:user,
 		    el:formEl
 		   }).render();

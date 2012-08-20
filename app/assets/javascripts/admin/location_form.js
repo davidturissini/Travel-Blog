@@ -175,11 +175,7 @@ var LocationForm = Backbone.View.extend({
 
     
     form._bindMapClicks()
-    this.mapMarker = new LocationMarker({
-      model:loc,
-      map:form.map,
-      locationType:loc.locationType
-     })
+    
     form.drawMapMarker()
    },
    render: function () {
