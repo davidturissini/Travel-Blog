@@ -1,5 +1,5 @@
 <div class="<%= object_type %>-countries-field countries-field">
-	<input type="text" name="country" value="<%= object.country_name %>" list="<%= object_type %>-countries" />
+	<span><%= object.country_name %></span>
 	<datalist id="<%= object_type %>-countries">
 		<% Country.all.each do |country| %>
 			<option data-json="<%= country.to_json %>" value="<%= country.name %>"></option>

@@ -142,8 +142,7 @@ br.clear { height:0; line-height:0 }
 #location-form input[type=submit] { display:inline-block; margin:10px 0; }
 #location-form #location-summary { display:block; margin-top:5px; width:600px; min-height: 150px; }
 #location-form .field { margin-bottom: 20px; }
-#location-form #location-geo fieldset:first-child { padding-top: 0px; }
-#location-form #location-geo fieldset { padding: 10px 0; }
+#location-form #location-geo label { display:block; }
 
 #location-form #flickr-photos { width: 540px; }
 #location-form #flickr-photos img { width: 120px; cursor:pointer; }
@@ -219,7 +218,9 @@ form .messages { margin-bottom:20px; }
 form .messages .success { padding:10px; border:1px solid #0f0; color:#0f0;}
 form .messages .error { padding:10px; border:1px solid #f00; color:#f00;}
 form .countries-field, form .countries-field input { display:inline; }
-form .show-map { cursor: pointer; }
+form .show-map { font-size:12px; cursor: pointer; }
+form .city, form .state { display:inline; }
+form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 
 
 /* USER FORM */

@@ -8,17 +8,17 @@
 	    </p>
 	</fieldset>
 	<fieldset>
-	    <label>Your username</label><%= tag :input, :value => user.slug, :class => "user-slug" %>
+	    <label>Your username</label>
+	    <%= tag :input, :value => user.slug, :class => "user-slug" %>
 	    <p class="note">
 	    	This is where people will find you e.g. http://traveladdict.me/<span class="slug-mirror"><%= user.slug %></span>
 	    </p>
 	</fieldset>
     <fieldset class="user-geo field">
     	<label>Your hometown</label>
-	    <input type="text" id="user-city" value="<%= user.city %>" />
+	    <p id="user-city" class="city"><%= user.city %></p>
 	    <%= render "global/country_field", :object => user, :object_type => "user" %>
-	    <p class="note">Fill in your hometown or use the map below</p>
-	    <a class="show-map">Show map</a>
+	    <a class="show-map">Change</a>
     </fieldset>
     <input type="submit" value="Update" />
-  </form>
+</form>

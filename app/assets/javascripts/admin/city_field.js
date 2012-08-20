@@ -17,8 +17,6 @@ var CityField = Backbone.View.extend({
       	var model = this.model,
 		newVal = model.get("city"),
 		elem = this.options.input
-		if( elem.value != newVal) {
-		  elem.value = newVal
-		}
+		elem.innerHTML = newVal
    	}
 })

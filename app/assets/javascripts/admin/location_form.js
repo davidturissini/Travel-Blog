@@ -12,7 +12,7 @@ var LocationForm = Backbone.View.extend({
 
     this.serverMessages = document.getElementById("server-messages")
 
-    var fields = ["description", "summary", "location_type_id", "latitude", "longitude", "title", "flickr_set", "kml_url"]
+    var fields = ["description", "summary", "location_type_id", "title", "flickr_set", "kml_url"]
      fields.forEach(function (field) {
       document.getElementById("location-" + field).addEventListener("change", function (e) {
        loc.set(field, e.currentTarget.value)
@@ -23,14 +23,6 @@ var LocationForm = Backbone.View.extend({
       })
     })
  
-   },
-   _updateFormField:function (field) {
-      var loc = this.model,
-      elem = document.getElementById("location-" + field),
-        newVal = loc.get(field)
-        if( elem.value != newVal) {
-          elem.value = newVal
-        }
    },
    _bindModelChanges: function () {
     var form = this,
@@ -48,25 +40,11 @@ var LocationForm = Backbone.View.extend({
         document.getElementById("location-has_visited").removeAttribute("checked")
       }
      }
-
-     [].forEach.call(["latitude", "longitude"], function (field) {
-
-      if( options.changes[field] ) {
-        form._updateFormField(field)
-       }
-     })
-   
-     if( options.changes.latitude || options.changes.longitude ) {
-      form._focusMap()
-     }
  
      if( options.changes.flickr_set ) { 
       form.showPhotos()
      }
     })
-   },
-   _focusMap: function () {
-    this.map.panTo(new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")))
    },
    _bindMapClicks: function () {
     var form = this,
@@ -175,7 +153,11 @@ var LocationForm = Backbone.View.extend({
 
     
     form._bindMapClicks()
-    
+    this.mapMarker = new LocationMarker({
+      model:loc,
+      map:form.map,
+      locationType:loc.locationType
+     })
     form.drawMapMarker()
    },
    render: function () {
@@ -190,16 +172,12 @@ var LocationForm = Backbone.View.extend({
 
     form.stateField = new StateField({
           model: loc,
-          map: form.map,
           input: document.getElementById("location-state")
         }).render()
     
     form.countryField = new CountryField({
           el: form.el.querySelector(".location-countries-field"),
-          model: loc,
-          map: form.map,
-          textElem: document.getElementById("location-country_name"),
-          input: document.getElementById("location-country_id")
+          model: loc
         }).render();
 
     form.el.querySelector("#location-photo figcaption").addEventListener("click", function () {
