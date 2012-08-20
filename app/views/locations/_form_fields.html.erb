@@ -38,15 +38,6 @@
       <textarea id="location-summary"><%= location.summary %></textarea>
     </div>
   </fieldset>
-  <fieldset id="location-geo">
-    <label>Location</label>
-    <%= tag :input, :id => "location-city", :class => "ib", :placeholder => "City", :value => location.city, :name => "location[city]" %>
-    <%= tag :input, :id => "location-state", :class => "ib", :placeholder => "State", :value => location.state, :name => "location[state]" %>
-    <%= render "global/country_field", :object => location, :object_type => "location" %>
-    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
-    <label for="location-visited">Visited?</label>
-    <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
-  </fieldset>
   <fieldset id="location-mashup">
    <label>Flickr Set</label>
    <%= tag :input, 
@@ -63,13 +54,21 @@
     <p class="note">Upload your tracks to Google Maps and display them on the site</p>
   </fieldset>
   <fieldset id="location-geo">
-    <label>Latitude:</label>
-    <input type="text" id="location-latitude" class="ib" value="<%= location.latitude %>" />
-    <label>Longitude:</label>
-    <input type="text" id="location-longitude" class="ib" value="<%= location.longitude %>" />
+    <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
+    <%= tag :input, :id => "location-city", :class => "ib", :placeholder => "City", :value => location.city, :name => "location[city]" %>
+    <%= tag :input, :id => "location-state", :class => "ib", :placeholder => "State", :value => location.state, :name => "location[state]" %>
+    <%= render "global/country_field", :object => location, :object_type => "location" %>
+    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
+    <label for="location-visited">Visited?</label>
+    <fieldset>
+      <label>Latitude:</label>
+      <input type="text" id="location-latitude" class="ib" value="<%= location.latitude %>" />
+      <label>Longitude:</label>
+      <input type="text" id="location-longitude" class="ib" value="<%= location.longitude %>" />
+    </fieldset>
+    <a class="show-map">Show map</a>
   </fieldset>
   <input type="submit" value="Save" />
-  <section id="location-map" style="height:500px"></section>
   <br class="clear" />
 </div>
 

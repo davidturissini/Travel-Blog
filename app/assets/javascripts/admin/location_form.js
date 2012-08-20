@@ -2,18 +2,12 @@ var LocationForm = Backbone.View.extend({
    initialize: function () {
     var form = this,
     loc = form.model
-    form.map = new google.maps.Map(document.getElementById("location-map"), {
-     zoom: 4,
-     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
-     mapTypeId: google.maps.MapTypeId.HYBRID
+
+    form.modal = new ModalDialog({
+      parentElem:this.el
     })
-    form._bindMapClicks()
-    this.mapMarker = new LocationMarker({
-      model:loc,
-      map:form.map,
-      locationType:loc.locationType
-     })
-    form.drawMapMarker()
+    
+    
     form._bindModelChanges()
 
     this.serverMessages = document.getElementById("server-messages")
@@ -132,11 +126,10 @@ var LocationForm = Backbone.View.extend({
    },
    showPhotos: function () {
     var loc = this.model,
+    form = this,
     flickrPhotos = document.createElement("section")
-    photoUl = document.createElement("ul"),
-    modal = new ModalDialog({
-      parentElem:this.el
-    })
+    photoUl = document.createElement("ul")
+    
     flickrPhotos.id = "flickr-photos"
     flickrPhotos.appendChild(photoUl)
     photoUl.innerHTML = "" 
@@ -164,8 +157,8 @@ var LocationForm = Backbone.View.extend({
          modal.close()
         })
        })
-       modal.setView( flickrPhotos )
-       modal.render()
+       form.modal.setView( flickrPhotos )
+       form.modal.render()
 
       }
      }
@@ -188,12 +181,40 @@ var LocationForm = Backbone.View.extend({
     this.serverMessages.appendChild(error)
     
    },
+   showMap: function () {
+    var mapElem = document.createElement("figure"),
+    form = this,
+    loc = this.model
+    mapElem.className = "map"
+
+    form.modal.setView( mapElem )
+    form.modal.render()
+
+    form.map = new google.maps.Map(mapElem, {
+     zoom: 4,
+     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
+     mapTypeId: google.maps.MapTypeId.HYBRID
+    })
+
+    form.modal.render()
+    form._bindMapClicks()
+    this.mapMarker = new LocationMarker({
+      model:loc,
+      map:form.map,
+      locationType:loc.locationType
+     })
+    form.drawMapMarker()
+   },
    render: function () {
     var form = this,
     loc = form.model
 
     form.el.querySelector("#location-photo figcaption").addEventListener("click", function () {
       form.showPhotos()
+    })
+
+    form.el.querySelector(".show-map").addEventListener("click", function () {
+      form.showMap()
     })
 
     document.getElementById("location-form").onsubmit = function (e) {

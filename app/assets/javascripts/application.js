@@ -9,3 +9,4 @@
 //= require 'public/models'
 //= require 'public/collections'
 //= require 'public/views'
+//= require 'public/modal_dialog'
