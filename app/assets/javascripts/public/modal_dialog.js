@@ -21,13 +21,16 @@ var ModalDialog = Backbone.View.extend({
   },
   setView: function (elem) {
     this.view = elem
-    this.viewFinder.innerHTML = ""
-    this.viewFinder.appendChild( this.view )
+    
   },
   close: function () {
     this.el.className = this.el.className.replace("visible", "")
     this.el.parentNode.removeChild( this.el )
+    this.viewFinder.style.marginTop = "auto"
+    this.viewFinder.style.marginBottom = "auto"
+    this.viewFinder.style.width = "auto"
     document.body.style.overflow = "auto"
+    this.title = null
   },
   append: function () {
     var dialog = this
@@ -43,13 +46,13 @@ var ModalDialog = Backbone.View.extend({
     var height = this.viewFinder.offsetHeight,
     windowHeight = window.innerHeight,
     margin = (windowHeight - height) / 2
-    this.viewFinder.style.height = height + "px"
     this.viewFinder.style.marginTop = margin + "px"
     this.viewFinder.style.marginBottom = margin + "px"
   },
   autocenter: function () {
     this.viewFinder.style.float = "left"
-    var width = this.viewFinder.offsetWidth
+    var style = getComputedStyle( this.viewFinder ),
+    width = this.viewFinder.offsetWidth - parseInt(style.paddingLeft) - parseInt(style.paddingRight)
     this.viewFinder.style.float = "none"
     this.viewFinder.style.width = width + "px"
     this.viewFinder.style.marginLeft = "auto"
@@ -58,6 +61,9 @@ var ModalDialog = Backbone.View.extend({
   },
   isVisible: function () {
     return this.el.className.indexOf("visible") != -1
+  },
+  setTitle: function (title) {
+    this.title = title
   },
   render:function () {
     var dialog = this,
@@ -68,7 +74,16 @@ var ModalDialog = Backbone.View.extend({
       dialog.close()
     })
 
-    this.el.innerHTML = "";
+    dialog.el.innerHTML = "";
+    dialog.viewFinder.innerHTML = ""
+
+    if( this.title ) {
+      var title = document.createElement("h1")
+      title.appendChild( document.createTextNode(this.title) )
+      dialog.viewFinder.appendChild( title )
+    }
+
+    this.viewFinder.appendChild( this.view );
 
     [].forEach.call([close, dialog.viewFinder], function (elem) {
       dialog.el.appendChild(elem)

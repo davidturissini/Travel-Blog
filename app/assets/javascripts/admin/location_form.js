@@ -158,6 +158,7 @@ var LocationForm = Backbone.View.extend({
         })
        })
        form.modal.setView( flickrPhotos )
+       form.modal.setTitle("Select a photo for " + loc.get("title"))
        form.modal.render()
 
       }
@@ -188,7 +189,6 @@ var LocationForm = Backbone.View.extend({
     mapElem.className = "map"
 
     form.modal.setView( mapElem )
-    form.modal.render()
 
     form.map = new google.maps.Map(mapElem, {
      zoom: 4,
