@@ -87,7 +87,7 @@ br.clear { height:0; line-height:0 }
 .locations-show #location { position:relative; }
 .locations-show #location-title { position:relative; font-size:38px; line-height: 1; }
 .locations-show #map { position:relative; z-index:5; clear:right; float:right; margin:20px 0px 20px 20px; width:444px; height:300px; }
-.locations-show #location #hero-gallery { position:relative; z-index:1; float:right; margin:0 0 0 20px; padding:0; width:443px; text-align:center; background:#f1f1f1; }
+.locations-show #location #hero-gallery { position:relative; z-index:1; margin:0 0 0 20px; padding:0; width:443px; text-align:center; background:#f1f1f1; }
 .locations-show #location #hero-gallery .hero-large { position:relative; margin: 0px; padding:0px; line-height: 0; cursor:pointer; }
 .locations-show #location #hero-gallery .hero-large img { height: 332px; max-width: 100%; }
 .locations-show #location #hero-gallery .hero-large figcaption { position:absolute; left:0px; right:0px; bottom:0px; padding: 10px; color:#fff; background:rgba(0,0,0,.6); text-align:left; line-height: 1; 
@@ -120,7 +120,8 @@ br.clear { height:0; line-height:0 }
 .locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
 .locations-show #geo-data #map { margin:20px 0; }
 
-.locations-show #location #journal_entries .entry { position:relative; }
+.locations-show #location #journal_entries { position:relative; overflow:hidden; }
+.locations-show #location #journal_entries .entry { position:relative; margin-bottom:1000px; }
 .locations-show #location #journal_entries .entry-title { margin:20px 0; font-size:18px; }
 .locations-show #location #journal_entries .entry-body { width: 437px; line-height:18px; }
 .locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
@@ -241,3 +242,7 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .modal-dialog .close { position:fixed; top:20px; right:20px; padding:5px; color:#000; border:1px solid #000; cursor:pointer; line-height:.5; }
 .modal-dialog .close:hover { text-decoration: none; background:#000; color:#fff;}
 .modal-dialog .map { margin:0px; padding:0px; width:680px; height:400px; }
+
+/* PARALAX */
+#paralax-container { position:absolute; top:0px; left:50%; }
+#paralax-container .paralax { position:absolute; }

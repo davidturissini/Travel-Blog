@@ -3,21 +3,26 @@
   <h2 id="location-title"><%= @location.title %></h2>
   <%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
  </header>
- <section id="hero-gallery">
-  <figure class="hero-large">
-    <%= image @location.photo_url %>
-  </figure>
-  <div class="location-photos">
-   <ul class="location-thumbs">
- 
-   </ul>
-  </div>
- </section>
-  <div id="map"></div>
  <section id="journal_entries">
+  <div id="paralax-container">
+    <% @location.journal_entries.each_with_index do |j, index| %>
+      <img data-paralax_speed="25" data-paralax_offset_top="<%= index * 400 %>" data-paralax_target="entry-<%= j.id %>" class="paralax" src="<%= @location.photo_url %>" />
+    <% end %>
+  </div> 
   <% @location.journal_entries.each do |entry| %>
    <%= render "journal_entry", :entry => entry %>
   <% end %>
+  <figure id="map"></figure>
+  <section id="hero-gallery">
+    <figure class="hero-large">
+      <%= image @location.photo_url %>
+    </figure>
+    <div class="location-photos">
+     <ul class="location-thumbs">
+   
+     </ul>
+    </div>
+   </section>
  </section>
  
  <br class="clear" />
@@ -37,7 +42,37 @@
 
 <% content_for :scripts_footer do %>
  <script>
+    var Paralax = Backbone.View.extend({
+      initialize:function () {
+        this.paralaxElements = Array.prototype.slice.call(this.el.getElementsByClassName("paralax"), 0)
+      },
+      render: function () {
+        var paralax = this
+
+        paralax.paralaxElements.forEach(function (p) {
+          var target = document.getElementById(p.getAttribute("data-paralax_target")),
+          offsetTop = target.offsetTop + parseInt( p.getAttribute("data-paralax_offset_top") ) || 0,
+          scrollSpeed = parseInt( p.getAttribute("data-paralax_speed") ) || 25
+          p.style.top = offsetTop + "px"
+
+          window.addEventListener("scroll", function (e) {
+            var scrollY = e.currentTarget.scrollY
+            p.style.top = offsetTop - (scrollY * (scrollSpeed / 100)) + "px"
+          })
+
+        })
+
+        return this
+      }
+    })
+
    window.addEventListener("DOMContentLoaded", function () {
+    var paralax = new Paralax({
+      el: document.getElementById("paralax-container")
+    }).render()
+
+    
+
    var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") )),
    locationType = new Location(JSON.parse( document.getElementById("location").getAttribute("data-location_type") )),
    map = new google.maps.Map(document.getElementById("map"), {
