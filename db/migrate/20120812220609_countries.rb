@@ -9,6 +9,7 @@ class Countries < ActiveRecord::Migration
   	
 
   	countries_list = JSON.parse( File.open("#{Rails.root}/tmp/countries_list.js").read )
+	Location.reset_column_information
   	countries_list.each do |country_json|
   		country = Country.create({
   			:name => country_json["name"].titleize,
@@ -16,7 +17,7 @@ class Countries < ActiveRecord::Migration
   			})
 
   		Location.where({:country_id => country.name}).each do |location|
-  			location.country_id = country.id
+  			location.country_id = country.id.to_s
   			location.save!
   		end
   	end
