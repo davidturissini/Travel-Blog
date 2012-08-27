@@ -7,6 +7,8 @@ var UserForm = Backbone.View.extend({
 			parentElem:form.el
 		})
 
+		form.marker = new google.maps.Marker()
+
 		form.model.on("change", function (model, options) {
 			if( options.changes.photo_url ) {
 				var image = form.el.querySelector("#user-photo img")
@@ -17,7 +19,14 @@ var UserForm = Backbone.View.extend({
 				var mirror = form.el.querySelector(".slug-mirror")
 				mirror.innerHTML = model.get("slug")
 			}
+
+			if( options.changes.latitude || options.changes.longitude ) {
+				form.marker.setPosition(new google.maps.LatLng(user.get("latitude"), user.get("longitude")) )
+			}
 		})
+
+
+	    
 	},
 	showMap: function () {
 	    var mapElem = document.createElement("figure"),
@@ -36,6 +45,12 @@ var UserForm = Backbone.View.extend({
 	    })
 	    
 	    form._bindMapClicks()
+	    form.marker.setOptions({
+		    position: new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")),
+		    map: form.map,
+		    title: this.model.get("title")
+     	})
+	    
 	},
 	_bindMapClicks: function () {
 		var form = this,
