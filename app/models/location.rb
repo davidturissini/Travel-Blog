@@ -4,6 +4,7 @@ class Location < ActiveRecord::Base
  has_one :user, :through => :location_type
  has_many :journal_entries, :order => "day ASC"
  validates :location_type_id, :slug, :title, :presence => true
+ 
 
  def country_name
   country.name if country
@@ -38,9 +39,20 @@ class Location < ActiveRecord::Base
   journal_entries.length > 0
  end
 
+ def photos
+  Rails.cache.fetch("location-#{id}-photos", :expires_in => 1.minute) do
+    flickr.photosets.getPhotos(:photoset_id => flickr_set)
+  end
+ end
+
  def teaser
   t = summary
   t = Sanitize.clean(journal_entries.where("body IS NOT NULL").order("day ASC").first.body) if t == "" || t.nil?
   t
+ end
+
+ private
+ def flickr
+  @flickr ||= FlickRaw::Flickr.new
  end
 end

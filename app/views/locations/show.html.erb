@@ -1,98 +1,87 @@
 <article id="location" data-location_type="<%= @location.location_type.to_json %>" data-json="<%= @location.to_json %>">
- <header>
-  <h2 id="location-title"><%= @location.title %></h2>
-  <%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
- </header>
- <section id="journal_entries">
-  <% @location.journal_entries.each do |entry| %>
-   <%= render "journal_entry", :entry => entry %>
-  <% end %>
-  <figure id="map"></figure>
-  <section id="hero-gallery">
-    <figure class="hero-large">
-      <%= image @location.photo_url %>
-    </figure>
-    <div class="location-photos">
-     <ul class="location-thumbs">
-   
-     </ul>
-    </div>
-   </section>
- </section>
- 
- <br class="clear" />
- <% if current_user.owns?(@location) %>
-    <div class="toolbox">
-      <%= link_to "Edit #{@location.title}", edit_location_path(@location) %> |
-      <%= link_to "Add new journal entry for #{@location.title}", new_user_location_type_location_journal_entry_path({
-        :user_id => current_user.slug,
-        :location_type_id => @location.location_type.slug,
-        :location_id => @location.slug
-        }), :class => "new-journal-entry-link"
-      %>
-    </div>
-  <% end %>
+	<header>
+		<h1 id="location-title"><%= @location.title %></h1>
+		<h2><%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
+	</header>
+	<figure id="map"></figure>
+	<section id="journal_entries">
+		<% @location.journal_entries.each do |entry| %>
+			<%= render "journal_entry", :entry => entry %>
+		<% end %>
+	</section>
+	<section id="hero-gallery">
+		<figure class="hero-large">
+			<%= image @location.photo_url %>
+		</figure>
+		<ul class="location-photos">
+			<% @location.photos["photo"].each do |photo| %>
+				<li><img data-json="<%= photo.to_json %>" src="<%= FlickRaw.url_s(photo) %>" /></li>
+			<% end %>
+		</ul>
+	</section>
+	<br class="clear" />
+	<% if current_user.owns?(@location) %>
+		<div class="toolbox">
+			<%= link_to "Edit #{@location.title}", edit_location_path(@location) %> |
+			<%= link_to "Add new journal entry for #{@location.title}", new_user_location_type_location_journal_entry_path({
+			:user_id => current_user.slug,
+			:location_type_id => @location.location_type.slug,
+			:location_id => @location.slug
+			}), :class => "new-journal-entry-link"
+			%>
+		</div>
+	<% end %>
 </article>
 
 
 <% content_for :scripts_footer do %>
- <script>
+<script>
 
-  function distanceToTop(elem) {
-    var relative = elem.offsetParent,
-    offset = elem.offsetTop
+function distanceToTop(elem) {
+var relative = elem.offsetParent,
+offset = elem.offsetTop
 
-    while(relative != document.body) {
-      offset += relative.offsetTop
-      relative = relative.offsetParent
-    }
+while(relative != document.body) {
+offset += relative.offsetTop
+relative = relative.offsetParent
+}
 
-    return offset
-  }
+return offset
+}
 
-   window.addEventListener("DOMContentLoaded", function () {
-    (function () {
-      var scroll = document.getElementsByClassName("entry");
+window.addEventListener("DOMContentLoaded", function () {
+(function () {
+var scroll = document.getElementsByClassName("entry");
 
-      [].forEach.call(scroll, function (entry) {
-        window.addEventListener("scroll", function (e) {
-          var scrollTop = e.currentTarget.scrollY,
-          elemTop = distanceToTop(entry) * 1.1,
-          visibleYRange = [scrollTop, window.innerHeight + scrollTop]
-          if( elemTop > visibleYRange[0] && elemTop < visibleYRange[1] ) { 
-            if( entry.id == "entry-5" ) { console.log(distanceToTop(entry)) }
-            if( !/visible/.test(entry.className) ) {
-              entry.className += " visible"
-            }
-          }
-        })
-       })
-    })();
+[].forEach.call(scroll, function (entry) {
+window.addEventListener("scroll", function (e) {
+var scrollTop = e.currentTarget.scrollY,
+elemTop = distanceToTop(entry) * 1.1,
+visibleYRange = [scrollTop, window.innerHeight + scrollTop]
+if( elemTop > visibleYRange[0] && elemTop < visibleYRange[1] ) { 
+if( entry.id == "entry-5" ) { console.log(distanceToTop(entry)) }
+if( !/visible/.test(entry.className) ) {
+entry.className += " visible"
+}
+}
+})
+})
+})();
 
-   var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") )),
-   locationType = new Location(JSON.parse( document.getElementById("location").getAttribute("data-location_type") )),
-   map = new google.maps.Map(document.getElementById("map"), {
-     disableDefaultUI: true,
-     zoom: 4,
-     center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
-     mapTypeId: google.maps.MapTypeId.HYBRID
-    })
-   new LocationMarker({
-    model:loc,
-    map:map,
-    locationType:locationType
-   }).render()
-    var gallery = new LocationGallery({
-      el: document.getElementById("hero-gallery"),
-      model:loc
-      }).render()
-    var fullSize = new FullScreenLocationGallery({
-        gallery:gallery
-      })
+var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") )),
+locationType = new Location(JSON.parse( document.getElementById("location").getAttribute("data-location_type") )),
+map = new google.maps.Map(document.getElementById("map"), {
+disableDefaultUI: true,
+zoom: 4,
+center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
+mapTypeId: google.maps.MapTypeId.HYBRID
+})
+new LocationMarker({
+model:loc,
+map:map,
+locationType:locationType
+}).render()
 
-    gallery.largeImage().addEventListener("click", function () {
-      fullSize.render()
-    })
-   })
- </script>
+})
+</script>
 <% end %>
