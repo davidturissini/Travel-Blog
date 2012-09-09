@@ -4,11 +4,6 @@
   <%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
  </header>
  <section id="journal_entries">
-  <div id="paralax-container">
-    <% @location.journal_entries.each_with_index do |j, index| %>
-      <img data-paralax_speed="25" data-paralax_offset_top="<%= index * 400 %>" data-paralax_target="entry-<%= j.id %>" class="paralax" src="<%= @location.photo_url %>" />
-    <% end %>
-  </div> 
   <% @location.journal_entries.each do |entry| %>
    <%= render "journal_entry", :entry => entry %>
   <% end %>
@@ -42,36 +37,37 @@
 
 <% content_for :scripts_footer do %>
  <script>
-    var Paralax = Backbone.View.extend({
-      initialize:function () {
-        this.paralaxElements = Array.prototype.slice.call(this.el.getElementsByClassName("paralax"), 0)
-      },
-      render: function () {
-        var paralax = this
 
-        paralax.paralaxElements.forEach(function (p) {
-          var target = document.getElementById(p.getAttribute("data-paralax_target")),
-          offsetTop = target.offsetTop + parseInt( p.getAttribute("data-paralax_offset_top") ) || 0,
-          scrollSpeed = parseInt( p.getAttribute("data-paralax_speed") ) || 25
-          p.style.top = offsetTop + "px"
+  function distanceToTop(elem) {
+    var relative = elem.offsetParent,
+    offset = elem.offsetTop
 
-          window.addEventListener("scroll", function (e) {
-            var scrollY = e.currentTarget.scrollY
-            p.style.top = offsetTop - (scrollY * (scrollSpeed / 100)) + "px"
-          })
+    while(relative != document.body) {
+      offset += relative.offsetTop
+      relative = relative.offsetParent
+    }
 
-        })
-
-        return this
-      }
-    })
+    return offset
+  }
 
    window.addEventListener("DOMContentLoaded", function () {
-    var paralax = new Paralax({
-      el: document.getElementById("paralax-container")
-    }).render()
+    (function () {
+      var scroll = document.getElementsByClassName("entry");
 
-    
+      [].forEach.call(scroll, function (entry) {
+        window.addEventListener("scroll", function (e) {
+          var scrollTop = e.currentTarget.scrollY,
+          elemTop = distanceToTop(entry) * 1.1,
+          visibleYRange = [scrollTop, window.innerHeight + scrollTop]
+          if( elemTop > visibleYRange[0] && elemTop < visibleYRange[1] ) { 
+            if( entry.id == "entry-5" ) { console.log(distanceToTop(entry)) }
+            if( !/visible/.test(entry.className) ) {
+              entry.className += " visible"
+            }
+          }
+        })
+       })
+    })();
 
    var loc = new Location(JSON.parse( document.getElementById("location").getAttribute("data-json") )),
    locationType = new Location(JSON.parse( document.getElementById("location").getAttribute("data-location_type") )),

@@ -120,10 +120,20 @@ br.clear { height:0; line-height:0 }
 .locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
 .locations-show #geo-data #map { margin:20px 0; }
 
-.locations-show #location #journal_entries { position:relative; overflow:hidden; }
-.locations-show #location #journal_entries .entry { position:relative; margin-bottom:1000px; }
-.locations-show #location #journal_entries .entry-title { margin:20px 0; font-size:18px; }
-.locations-show #location #journal_entries .entry-body { width: 437px; line-height:18px; }
+.locations-show #location #journal_entries .entry { opacity:0; position:relative; 
+	-webkit-transition:opacity 2s;
+}
+.locations-show #location #journal_entries .entry.visible { opacity:1; }
+.locations-show #location #journal_entries .entry-title { margin:20px 0 0 -9999px; font-size:18px; 
+	-webkit-transition:margin-left 2s;
+}
+.locations-show #location #journal_entries .entry-body { margin-left:-9999px; width: 437px; line-height:18px; 
+	-webkit-transition:margin-left 1s;
+}
+
+.locations-show #location #journal_entries .entry.visible .entry-title { margin-left:0; }
+.locations-show #location #journal_entries .entry.visible .entry-body { margin-left:0; }
+
 .locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
 .locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; }
 
@@ -242,7 +252,3 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .modal-dialog .close { position:fixed; top:20px; right:20px; padding:5px; color:#000; border:1px solid #000; cursor:pointer; line-height:.5; }
 .modal-dialog .close:hover { text-decoration: none; background:#000; color:#fff;}
 .modal-dialog .map { margin:0px; padding:0px; width:680px; height:400px; }
-
-/* PARALAX */
-#paralax-container { position:absolute; top:0px; left:50%; }
-#paralax-container .paralax { position:absolute; }
