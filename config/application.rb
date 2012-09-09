@@ -12,6 +12,9 @@ end
 
 module Adventureblog
   class Application < Rails::Application
+    FlickRaw.api_key="951c0814caade8b4fc2b381778269126"
+    FlickRaw.shared_secret="9f84c972d99de24d"
+
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.

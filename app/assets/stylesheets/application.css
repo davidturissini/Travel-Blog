@@ -8,7 +8,7 @@ br.clear { height:0; line-height:0 }
 
 .autoclear:after { visibility: hidden; height:0; line-height: 0; clear:both; content:"."; }
 
-#container { margin:0px auto; width:960px; }
+#container { margin:0px auto; }
 
 #site-header { position:relative; margin:0px auto; padding:163px 20px 0; max-width: 1116px; border-bottom:10px solid #000; background:url(/assets/backgrounds/stonehenge.jpg) top center no-repeat; }
 #site-header > div { margin:0px auto; width:960px; }
@@ -88,53 +88,17 @@ br.clear { height:0; line-height:0 }
 .locations-show #location header { margin-bottom:20px; }
 .locations-show #location-title { position:relative; font-size:38px; }
 .locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
-.locations-show #location #hero-gallery { position:relative; z-index:1; text-align:center; background:#f1f1f1; }
-.locations-show #location #hero-gallery .hero-large { position:relative; margin: 0px; padding:0px; line-height: 0; cursor:pointer; }
-.locations-show #location #hero-gallery .hero-large img { height: 332px; max-width: 100%; }
-.locations-show #location #hero-gallery .hero-large figcaption { position:absolute; left:0px; right:0px; bottom:0px; padding: 10px; color:#fff; background:rgba(0,0,0,.6); text-align:left; line-height: 1; 
-	-webkit-transition:opacity 500ms;
+.locations-show #location #photos { position:relative; z-index:1; margin:30px auto; width:400px; height:400px; }
+.locations-show #location #photos .photo { position:absolute; left:0; top:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; opacity:0;
+	-webkit-transition-property:-webkit-transform;
+	-webkit-transition-duration:1s;
+	-webkit-transform-origin:0 0;
 }
-.locations-show #location #hero-gallery .hero-large figcaption.idle { opacity: 0; }
-.locations-show #location #hero-gallery .hero-large:hover figcaption { opacity: 1; }
-.locations-show #location #hero-gallery li { float:left; padding-left:5px; width:75px; height:78px; list-style-type:none; }
-.locations-show #location #hero-gallery li img { cursor: pointer; }
-.locations-show #location #hero-gallery li figure { margin:0px; padding:0px; }
-.locations-show #location #hero-gallery li figcaption { display:none; }
-.locations-show #location #hero-gallery li:first-child { padding-left:0px; } 
-.locations-show #location #hero-gallery .location-photos { padding:10px; }
-.locations-show #location #hero-gallery .paddle { margin-top:13px; height:0px; width:0px; background:transparent; }
-.locations-show #location #hero-gallery .paddle.left {
- border-left:25px solid transparent;
- border-right:25px solid #000;
- border-bottom:25px solid transparent;
- border-top:25px solid transparent;
- left:-15px;
- }
-.locations-show #location #hero-gallery .paddle.right {
- border-left:25px solid #000;
- border-right:25px solid transparent;
- border-bottom:25px solid transparent;
- border-top:25px solid transparent;
- right:-15px;
- }
 
 .locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
 .locations-show #geo-data #map { margin:20px 0; }
 
-
-.locations-show #location #journal_entries .entry { opacity:0; position:relative; 
-	-webkit-transition:opacity 2s;
-}
-.locations-show #location #journal_entries .entry.visible { opacity:1; }
-.locations-show #location #journal_entries .entry-title { margin:20px 0 0 -9999px; font-size:18px; 
-	-webkit-transition:margin-left 2s;
-}
-.locations-show #location #journal_entries .entry-body { margin-left:-9999px; width: 437px; line-height:18px; 
-	-webkit-transition:margin-left 1s;
-}
-
-.locations-show #location #journal_entries .entry.visible .entry-title { margin-left:0; }
-.locations-show #location #journal_entries .entry.visible .entry-body { margin-left:0; }
+.locations-show #location #journal_entries .entry-title { font-size:18px; }
 
 .locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
 .locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; }
