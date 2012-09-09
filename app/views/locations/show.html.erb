@@ -1,25 +1,24 @@
 <article id="location" data-location_type="<%= @location.location_type.to_json %>" data-json="<%= @location.to_json %>">
  <header>
-  <h2 id="location-title"><%= @location.title %></h2>
-  <%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
+  <h1 id="location-title"><%= @location.title %></h1>
+  <h2><%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
  </header>
- <section id="hero-gallery">
-  <figure class="hero-large">
-    <%= image @location.photo_url %>
-  </figure>
-  <div class="location-photos">
-   <ul class="location-thumbs">
- 
-   </ul>
-  </div>
- </section>
-  <div id="map"></div>
+ <figure id="map"></figure>
  <section id="journal_entries">
   <% @location.journal_entries.each do |entry| %>
    <%= render "journal_entry", :entry => entry %>
   <% end %>
  </section>
+ <section id="hero-gallery">
+  <figure class="hero-large">
+    <%= image @location.photo_url %>
+  </figure>
+  <nav class="location-photos">
+   <ul class="location-thumbs">
  
+   </ul>
+  </nav>
+ </section>
  <br class="clear" />
  <% if current_user.owns?(@location) %>
     <div class="toolbox">
