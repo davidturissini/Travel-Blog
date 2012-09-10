@@ -257,7 +257,16 @@ var ShuffledElements = Backbone.View.extend({
 			}
 		}
 
+		shuffle.__bindHeroClick();
 		
+	},
+	__bindHeroClick: function () {
+		var shuffle = this
+		if( this.options.heroClick ) {
+			shuffle.options.hero.addEventListener("click", function (e) {
+				shuffle.options.heroClick(e, {element:shuffle.options.hero})		
+			})
+		}
 	},
 	__bindElementClick: function (photo, index) {
 		var shuffle = this
@@ -296,7 +305,6 @@ var ShuffledElements = Backbone.View.extend({
 		} else {
 			left += 100
 		}
-
 	
 		photo.style.left = left + "px";
 		photo.style.top = top + "px";
@@ -355,12 +363,37 @@ window.addEventListener("DOMContentLoaded", function () {
 	locationType:locationType
 	}).render();
 
-	var locationPhotos = document.getElementById("photos").querySelectorAll("figure")
+	var locationPhotos = document.getElementById("photos").querySelectorAll("figure"),
+	hero = document.getElementById("photos").querySelector(".hero"),
+	heroIndex = (function () {
+		var index = 0;
+		[].forEach.call(locationPhotos, function (photo, i) {
+			if( photo == hero ) {
+				index = i
+			}
+		})
+
+		return index;
+	})();
+
 
 	var shuffleHash = {
 		el:document.getElementById("photos"),
-		hero:document.getElementById("photos").querySelector(".hero"),
+		hero:hero,
 		elements:Array.prototype.slice.call(locationPhotos, 0, 30),
+		heroClick: function () {
+			if( !gallery ) {
+				gallery = new Gallery({
+						el:shuffleHash.el,
+						photos:locationPhotos,
+						selectedIndex:heroIndex,
+						onClose:function () {
+							gallery = null
+							
+						}
+					}).render()
+			}
+		},
 		elementClick: function (event, options) {
 			if( !gallery ) {
 				gallery = new Gallery({
