@@ -88,18 +88,22 @@ br.clear { height:0; line-height:0 }
 .locations-show #location header { margin-bottom:20px; }
 .locations-show #location-title { position:relative; font-size:38px; }
 .locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
-.locations-show #location #photos { position:relative; z-index:1; margin:50px auto; height:400px; opacity:0; }
+.locations-show #location #photos { position:relative; z-index:1; margin:30px auto; height:400px; opacity:0; }
 .locations-show #location #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
 .locations-show #location #photos figure.hero { z-index:1000; }
 .locations-show #location #photos figure figcaption { display:none; }
-.locations-show #location #photos figure img,
-.locations-show #location #photos.gallery figure.hero img { display:block; max-width:100px; }
+.locations-show #location #photos figure img { display:block; max-width:100px; }
 .locations-show #location #photos figure:hover { z-index:101; background:#333; cursor:pointer; }
+.locations-show #location #photos figure { display:none; }
+.locations-show #location #photos figure.shuffled { display:block; }
 .locations-show #location #photos figure.hero img, 
-.locations-show #location #photos figure.selected img,
+.locations-show #location #photos.gallery figure.selected img,
 .locations-show #location #photos.gallery figure.hero.selected img { max-width:none; width:auto; }
-.locations-show #location #photos.gallery { margin:0 -20px; overflow:hidden; height:auto; }
-.locations-show #location #photos.gallery ul { position:relative; padding:20px 0; width:9000px; border-top:1px solid #ccc; border-bottom:1px solid #ccc;
+.locations-show #location #photos.gallery figure img { max-width:300px; }
+.locations-show #location #photos.gallery { height:auto !important; }
+.locations-show #location #photos.gallery figure { display:block; }
+.locations-show #location #photos.gallery { margin-left:-20px; margin-right:-20px; overflow:hidden; height:auto; border-top:1px solid #ccc; border-bottom:1px solid #ccc; }
+.locations-show #location #photos.gallery ul { position:relative; padding:20px 0; width:9000px; 
 	-webkit-transition:left 500ms;
 }
 .locations-show #location #photos.gallery li { float:left; margin-left:20px; }

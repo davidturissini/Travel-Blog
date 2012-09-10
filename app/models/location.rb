@@ -40,7 +40,7 @@ class Location < ActiveRecord::Base
  end
 
  def photos
-  Rails.cache.fetch("location-#{id}-photos", :expires_in => 1.minute) do
+  Rails.cache.fetch("location-#{id}-photos", :expires_in => 14.days) do
     flickr.photosets.getPhotos(:photoset_id => flickr_set)
   end
  end
