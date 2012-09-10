@@ -9,7 +9,7 @@
 				<li>
 					<figure<%= ' class="hero"'.html_safe if photo_filename(FlickRaw.url(photo)) == photo_filename(@location.photo_url) %>>
 						<img src="<%= FlickRaw.url(photo) %>" class="photo" data-json="<%= photo.to_json %>" alt="<%= photo["title"] %>" title="<%= photo["title"] %>" />
-						<% if photo["title"] %>
+						<% if photo["title"] != "" %>
 							<figcaption>
 								<h1><%= photo['title'] %></h1>
 							</figcaption>
