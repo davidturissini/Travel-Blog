@@ -71,7 +71,7 @@ br.clear { height:0; line-height:0 }
 #locations-nav #dropdown li img { margin:0px auto; }
 #locations-nav #dropdown li h2 { display:inline-block; width:126px; text-align:center; vertical-align: middle; }
 
-#content { margin:0px auto; padding:20px 0; background:#fff; }
+#content { margin:0px auto; padding:20px; background:#fff; }
 
 /* ROLLUPS */
 
@@ -98,7 +98,7 @@ br.clear { height:0; line-height:0 }
 .locations-show #location #photos figure.hero img, 
 .locations-show #location #photos figure.selected img,
 .locations-show #location #photos.gallery figure.hero.selected img { max-width:none; width:auto; }
-.locations-show #location #photos.gallery { overflow:hidden; height:auto; }
+.locations-show #location #photos.gallery { margin:0 -20px; overflow:hidden; height:auto; }
 .locations-show #location #photos.gallery ul { position:relative; padding:20px 0; width:9000px; border-top:1px solid #ccc; border-bottom:1px solid #ccc;
 	-webkit-transition:left 500ms;
 }
@@ -116,7 +116,7 @@ br.clear { height:0; line-height:0 }
 .locations-show #geo-data #map { margin:20px 0; }
 
 .locations-show #location #journal_entries,
-.locations-show #geo-data #map,
+.locations-show #location #map,
 .locations-show #location header { margin:0px auto; width:600px; }
 .locations-show #location #journal_entries .entry-title { font-size:18px; }
 
