@@ -71,7 +71,7 @@ br.clear { height:0; line-height:0 }
 #locations-nav #dropdown li img { margin:0px auto; }
 #locations-nav #dropdown li h2 { display:inline-block; width:126px; text-align:center; vertical-align: middle; }
 
-#content { margin:0px auto; padding:20px; background:#fff; }
+#content { margin:0px auto; padding:20px 0; background:#fff; }
 
 /* ROLLUPS */
 
@@ -84,20 +84,40 @@ br.clear { height:0; line-height:0 }
 
 /* LOCATION DETAIL PAGE */
 
-.locations-show #location { position:relative; margin:0 auto; width:600px; }
+.locations-show #location { position:relative; margin:0 auto; }
 .locations-show #location header { margin-bottom:20px; }
 .locations-show #location-title { position:relative; font-size:38px; }
 .locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
-.locations-show #location #photos { position:relative; z-index:1; margin:30px auto; width:400px; height:400px; }
-.locations-show #location #photos .photo { position:absolute; left:0; top:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; opacity:0;
-	-webkit-transition-property:-webkit-transform;
-	-webkit-transition-duration:1s;
-	-webkit-transform-origin:0 0;
+.locations-show #location #photos { position:relative; z-index:1; margin:50px auto; height:400px; opacity:0; }
+.locations-show #location #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
+.locations-show #location #photos figure.hero { z-index:1000; }
+.locations-show #location #photos figure figcaption { display:none; }
+.locations-show #location #photos figure img,
+.locations-show #location #photos.gallery figure.hero img { display:block; max-width:100px; }
+.locations-show #location #photos figure:hover { z-index:101; background:#333; cursor:pointer; }
+.locations-show #location #photos figure.hero img, 
+.locations-show #location #photos figure.selected img,
+.locations-show #location #photos.gallery figure.hero.selected img { max-width:none; width:auto; }
+.locations-show #location #photos.gallery { overflow:hidden; height:auto; }
+.locations-show #location #photos.gallery ul { position:relative; padding:20px 0; width:9000px; border-top:1px solid #ccc; border-bottom:1px solid #ccc;
+	-webkit-transition:left 500ms;
 }
+.locations-show #location #photos.gallery li { float:left; margin-left:20px; }
+.locations-show #location #photos.gallery li:first-child { margin-left:0px; }
+
+.locations-show #location #photos.gallery figure { position:static; 
+	-webkit-transform:rotate(0deg) !important;
+	-moz-transform:rotate(0deg) !important;
+}
+.locations-show #location #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
+.locations-show #location #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
 
 .locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
 .locations-show #geo-data #map { margin:20px 0; }
 
+.locations-show #location #journal_entries,
+.locations-show #geo-data #map,
+.locations-show #location header { margin:0px auto; width:600px; }
 .locations-show #location #journal_entries .entry-title { font-size:18px; }
 
 .locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
@@ -141,32 +161,6 @@ br.clear { height:0; line-height:0 }
 .scroller .paddle.right { position:absolute; right:0px; cursor: e-resize; }
 .scroller .container { position:relative; -webkit-transition:left ease-in-out 500ms; }
 .scroller .overflow-container { overflow-x:hidden; overflow-y:visible; margin:0px auto; }
-
-/* full size gallery */
-
-#fullsize-gallery { position:fixed; z-index: 100; top:0px; left:0px; bottom:0px; right:0px; padding:40px; background:rgba(0, 0, 0, .9); color: #fff;}
-#fullsize-gallery .hero-large { position:fixed; top: 40px; bottom:150px; left:50px; right:50px; margin:0px auto; text-align:center; }
-#fullsize-gallery .hero-large figcaption { margin-top:10px; font-size:16px; text-align: center; }
-#fullsize-gallery .hero-large img { max-height:100%; }
-#fullsize-gallery .scroller { position:fixed; bottom:0px; left:30px; right:30px; height:100px; }
-#fullsize-gallery .location-thumbs li { float:left; }
-#fullsize-gallery .location-thumbs figure { float:left; margin:0px; padding:10px; cursor:pointer; }
-#fullsize-gallery .location-thumbs figcaption { display:none; }
-#fullsize-gallery .paddle { margin-top:20px; }
-#fullsize-gallery .paddle.left {
- border-left:25px solid transparent;
- border-right:25px solid rgba(255, 255, 255, .7);
- border-bottom:25px solid transparent;
- border-top:25px solid transparent;
- left:-15px;
- }
-#fullsize-gallery .paddle.right {
- border-left:25px solid rgba(255, 255, 255, .7);
- border-right:25px solid transparent;
- border-bottom:25px solid transparent;
- border-top:25px solid transparent;
- right:-15px;
- }
 
  /* USER DETAIL PAGE */
  .users-show header h1 { font-size:28px; }
