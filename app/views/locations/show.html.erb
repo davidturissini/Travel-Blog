@@ -1,3 +1,4 @@
+<%= render "users/aside", :user => @location.user %>
 <article id="location" data-location_type="<%= @location.location_type.to_json %>" data-json="<%= @location.to_json %>">
 	<header>
 		<h1 id="location-title"><%= @location.title %></h1>
@@ -39,7 +40,6 @@
 		</div>
 	<% end %>
 </article>
-
 
 <% content_for :scripts_footer do %>
 <script>

@@ -13,44 +13,45 @@
  </head>
  <body class="<%= params[:controller] %>-<%= params[:action] %>">
   <%= render "global/facebook" %>
-  <header id="site-header">
-    <div>
-      <h1 id="site-title">
-        <%= link_to "TravelAddict", root_path %>
-      </h1>
-      <%= render "global/locations_nav", :locations => locations_nav, :selected => @location %>
-      <span id="bg-info">Stonehenge, England</span>
-    </div>
+  <header id="site-header" class="autoclear">
+    <h1 id="site-title">
+      <%= link_to "TravelAddict", root_path %>
+    </h1>
+    <nav>
+      <ul>
+        <li><a href="#">About</a></li>
+      </ul>
+    </nav>
   </header>
   <div id="container">
-   <section id="content">
-    <%= yield %>
-   </section>
-   <br class="clear" />
-   <footer>
-    <% if !current_user.anonymous? %>
-      Hi, <%= current_user.name %>
-      <nav id="user-nav">
-        <%= link_to "My Profile", me_path %>
-        <%= link_to "Logout", logout_path %>
-      </nav>
-    <% end %>
-   </footer>
-  </div>
-  <%= javascript_include_tag "application" %>
-  <%= yield :scripts_footer %>
-  <% if Rails.env == "production" && params[:controller] != "users" %>
-    <script>
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-31293401-1']);
-      _gaq.push(['_trackPageview']);
+     <section id="content">
+      <%= yield %>
+     </section>
+     <br class="clear" />
+     <footer>
+      <% if !current_user.anonymous? %>
+        Hi, <%= current_user.name %>
+        <nav id="user-nav">
+          <%= link_to "My Profile", me_path %>
+          <%= link_to "Logout", logout_path %>
+        </nav>
+      <% end %>
+     </footer>
+    <%= javascript_include_tag "application" %>
+    <%= yield :scripts_footer %>
+    <% if Rails.env == "production" && params[:controller] != "users" %>
+      <script>
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-31293401-1']);
+        _gaq.push(['_trackPageview']);
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
-  <% end %>
+        (function() {
+          var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+          ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+          var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+      </script>
+    <% end %>
+  </div>
  </body>
 </html>

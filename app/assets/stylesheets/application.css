@@ -1,77 +1,32 @@
 body { color: #333; font-size:14px; font-family:Helvetica; }
 
 a, a:visited, a:active { text-decoration:none; color: rgb(0, 100, 50); }
-a:hover { text-decoration: underline; }
+a:hover { text-decoration:none; }
 
 .clear { display:block; clear:both; }
 br.clear { height:0; line-height:0 }
 
-.autoclear:after { visibility: hidden; height:0; line-height: 0; clear:both; content:"."; }
+.autoclear:after { display:block; visibility:hidden; height:0; line-height: 0; clear:both; content:"."; }
 
-#container { margin:0px auto; }
+#container { margin:0px auto 0; width:960px; background:transparent; }
 
-#site-header { position:relative; margin:0px auto; padding:163px 20px 0; max-width: 1116px; border-bottom:10px solid #000; background:url(/assets/backgrounds/stonehenge.jpg) top center no-repeat; }
-#site-header > div { margin:0px auto; width:960px; }
-#site-header #site-title { font-size:32px; }
-#site-header #site-title a { color:#fff; }
-#site-header #site-title a:hover { text-decoration: none; }
-#site-header #bg-info { position:absolute; right:10px; top:5px; font-style: italic; color: #b1b1b1; }
+#site-header { padding:20px 20px 40px; background:#006600;
+	background:-webkit-gradient(linear, left top, left bottom, from(#00ABEB), to(#fff))
+}
+
+#site-header a { color:#fff; }
+#site-header h1 { float:left; margin-right:40px; font-size:2em; }
+#site-header nav { font-size:.8373em; }
+#site-header nav li { display:inline-block; line-height:1.32353em; }
+#site-header nav li a:hover { text-decoration:none; }
 
 #map { height:400px; }
 #map nav { display:none }
 
-#locations-nav { margin:10px -20px 0; height:90px; }
-#locations-nav a { color: #fff; background: rgba(0, 0, 0, .5); }
+#content { margin:0px auto; padding:0 20px; width:600px; }
 
-#locations-nav li:hover a, #locations-nav .selected a { background: rgba(0, 90, 50, .8); }
-#locations-nav .location img { margin:10px auto; max-width:70px; height:50px; }
-
-#locations-nav li:hover img, #locations-nav .selected img { -webkit-filter:saturate(150%); }
-
-#locations-nav #large-buttons { float:left; }
-#locations-nav #large-buttons ul { overflow-y: hidden; }
-#locations-nav #large-buttons li { display: block; float:left; }
-#locations-nav #large-buttons li:hover { box-shadow: -10px -1px 27px -12px #000; }
-#locations-nav #large-buttons li:first-child { border-left:0px; }
-#locations-nav #large-buttons li:first-child a { padding:0px; width:auto; height:auto; line-height:0; }
-#locations-nav #large-buttons li:first-child img { margin:0px; height:90px; width:90px; max-width: none; -webkit-filter: grayscale(0%); }
-#locations-nav #large-buttons li a { position:relative; display:block; }
-#locations-nav #large-buttons a img, #locations-nav #large-buttons img { -webkit-filter: grayscale(100%); }
-#locations-nav #large-buttons a:hover img, #locations-nav #large-buttons .selected img { -webkit-filter: grayscale(0%); }
-#locations-nav a:hover { text-decoration:none; }
-
-#locations-nav #large-buttons .location { padding:10px; width:70px; height:70px; border-left:1px solid #000; text-align:center; }
-#locations-nav #large-buttons .location h2 { margin:-5px -10px 0px -10px; height:16px; text-align:center; font-size:10px; }
-
-#locations-nav #dropdown { position:relative; z-index:10; margin-left:908px; height:90px; }
-#locations-nav #dropdown:after { visibility: hidden; height:0; line-height: 0; clear:both; content:"."; }
-#locations-nav #dropdown:hover ul, #locations-nav #dropdown:hover header,
-#locations-nav #dropdown.visible ul, #locations-nav #dropdown.visible header { display:block; box-shadow: -10px -1px 27px -12px #000;}
-#locations-nav #dropdown header { width:52px; height:90px; background: rgba(0, 0, 0, .5); color: #fff; cursor: pointer; }
-#locations-nav #dropdown header span { 
-	height:0;
-	width:0;
-	line-height: 0;
-	display:block; 
-	border-left:15px solid transparent;
-	border-right:15px solid transparent;
-	border-top:15px solid #fff;
-	border-bottom:15px solid transparent;
-	position:relative;
-	top:40px;
-	left:10px;
-}
-#locations-nav #dropdown header:hover { box-shadow: -10px -1px 27px -12px #000;}
-#locations-nav #dropdown ul { position:absolute; right:0px; top:90px; display:none; max-height:300px; overflow-y: scroll; }
-#locations-nav #dropdown li { font-size:10px; }
-#locations-nav #dropdown li a { display:block; padding:10px; width:200px; background:#fff; color:#000; }
-#locations-nav #dropdown li a:hover, #locations-nav #dropdown li.selected a { background: rgba(0, 90, 50, 1); color:#fff; }
-#locations-nav #dropdown li h2:after { line-height:0; height:0; content:"."; visibility: hidden; clear:both; }
-#locations-nav #dropdown li .image { display: inline-block; width:70px; text-align:center; margin:0px; vertical-align: middle; }
-#locations-nav #dropdown li img { margin:0px auto; }
-#locations-nav #dropdown li h2 { display:inline-block; width:126px; text-align:center; vertical-align: middle; }
-
-#content { margin:0px auto; padding:20px; width:960px; background:#fff; }
+/* WELCOME PAGE */
+.welcome-index #hero li { display:block; }
 
 /* ROLLUPS */
 
@@ -85,7 +40,7 @@ br.clear { height:0; line-height:0 }
 /* LOCATION DETAIL PAGE */
 
 .locations-show #location { position:relative; margin:0 auto; }
-.locations-show #location header { margin-bottom:20px; }
+.locations-show #location header { margin-bottom:20px; text-align:center; }
 .locations-show #location-title { position:relative; font-size:38px; }
 .locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
 .locations-show #location #photos { position:relative; z-index:1; margin:30px auto; height:400px; opacity:0; }
@@ -122,9 +77,10 @@ br.clear { height:0; line-height:0 }
 .locations-show #location #journal_entries,
 .locations-show #location #map,
 .locations-show #location header { margin:0px auto; width:600px; }
-.locations-show #location #journal_entries .entry-title { font-size:18px; }
+.locations-show #location #journal_entries .entry-title { font-size:18px; text-align:left; }
 
 .locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
+.locations-show #location #journal_entries .entry-body iframe { display:block; margin:20px auto; }
 .locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; }
 
 .locations-show #location .toolbox { display:none; }
@@ -165,6 +121,18 @@ br.clear { height:0; line-height:0 }
 .scroller .paddle.right { position:absolute; right:0px; cursor: e-resize; }
 .scroller .container { position:relative; -webkit-transition:left ease-in-out 500ms; }
 .scroller .overflow-container { overflow-x:hidden; overflow-y:visible; margin:0px auto; }
+
+/* USER ASIDE */
+aside#user { margin:0 -150px 20px; border-bottom:1px solid #ccc; text-align:center; }
+aside#user:hover { border-color:#333; }
+aside#user a { display:block; padding:13px 20px 10px; text-align:left; }
+aside#user a:hover { padding-bottom:7px; border-bottom:3px solid #333; text-decoration:underline; }
+aside#user img { float:left; margin:0 20px 0 0; padding:5px; background:#fff; border:1px solid #ccc; border-radius:5px; vertical-align:middle; }
+aside#user hgroup { float:left; font-size:1.234em; }
+aside#user hgroup h2 { font-size:.7059em; }
+aside#user ul,
+aside#user hgroup { padding-top:13px; }
+aside#user ul { float:right; text-align:right; font-size:.8571em; }
 
  /* USER DETAIL PAGE */
  .users-show header h1 { font-size:28px; }

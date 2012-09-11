@@ -1,0 +1,13 @@
+<aside id="user" class="autoclear">
+	<%= link_to user_path(user.slug), { :class => "autoclear" } do %>
+		<img src="<%= user.photo.url %>" />
+		<hgroup>
+			<h1><%= user.name %></h1>
+			<h2><%= user.city %>, <%= user.country_name %></h2>
+		</hgroup>
+		<ul>
+			<li><%= user_countries_count_text(user) %></li>
+			<li><%= user.locations.count %> Locations</li>
+		</ul>
+	<% end %>
+</aside>
