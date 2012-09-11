@@ -71,7 +71,7 @@ br.clear { height:0; line-height:0 }
 #locations-nav #dropdown li img { margin:0px auto; }
 #locations-nav #dropdown li h2 { display:inline-block; width:126px; text-align:center; vertical-align: middle; }
 
-#content { margin:0px auto; padding:20px; background:#fff; }
+#content { margin:0px auto; padding:20px; width:960px; background:#fff; }
 
 /* ROLLUPS */
 

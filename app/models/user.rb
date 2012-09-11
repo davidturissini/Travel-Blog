@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_many :countries, :through => :locations
   has_many :realm_accounts
 
+  def photo
+    @photo ||= UserPhoto.create(self)
+  end
+
   def facebook_token
     realm_accounts.where(:provider => "facebook").first.access_token
   end

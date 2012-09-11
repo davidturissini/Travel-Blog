@@ -1,11 +1,15 @@
 <section>
 	<header>
-		<hgroup>
-			<h1><%= @user.name %></h1>
-			<section id="user-geo"><%= @user.city %>, <%= @user.country_name %></section>
-			<%= @user.name %> has visited <%= @user.countries_count %> countries
-		</hgroup>
+		<h1><%= @user.name %></h1>
+		<img src="<%= @user.photo.large %>" />
+		<span id="user-geo"><%= @user.city %>, <%= @user.country_name %></span>
+		<%= @user.name %> has visited <%= @user.countries_count %> countries
 	</header>
+	<section>
+		<% @user.locations.each do |location| %>
+
+		<% end %>
+	</section>
 </section>
 
 <% content_for :scripts_footer do %>

@@ -2,7 +2,7 @@
   <div id="user-map"></div>
   <header id="user-header">
     <hgroup>
-      <%= image @user.photo_url %>
+      <%= image @user.photo.url %>
       <h1>Hello, <%= @user.name %></h1>
       <section>
         <%= @user.city %>, <%= @user.country_name %>
