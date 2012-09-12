@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_many :countries, :through => :locations
   has_many :realm_accounts
 
+  def visited_locations options = {}
+    locations.where("has_visited=true").order("id DESC")
+  end
+
   def photo
     @photo ||= UserPhoto.create(self)
   end

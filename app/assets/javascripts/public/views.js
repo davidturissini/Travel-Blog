@@ -342,32 +342,50 @@ var LocationGallery = Backbone.View.extend({
 
 var DropDown = Backbone.View.extend({
   initialize:function () {
-    var drop = this,
+    var view = this,
     dropdown = this.el
-    this.toggle = function () {
-      var toggle = /toggle/.test( drop.options.control.className )
+    view.toggle = function (event) {
+      var toggle = /toggle/.test( view.options.control.className )
       if( toggle ) {
-        drop.hide()
+        view.hide(event)
       } else {
-        drop.show()
+        view.show(event)
       }
     }
+
+    view.hide = function (event) {
+      if( event && event.target && inDropDown(event.target) ) {
+        return
+      }
+      view.el.style.display = "none"
+      view.options.control.className = view.options.control.className.replace(" toggle", "")
+      document.removeEventListener("keyup", view.toggle)
+      document.removeEventListener("click", view.hide)
+    }
+
+    function inDropDown(elem) {
+      if(elem == document.body) {
+        return false
+      } else {
+        return inDropDown(elem.parentNode)
+      }
+    }
+
   },
-  show: function () {
+  show: function (event) {
     var view = this
     view.el.style.display = "block"
     view.options.control.className += " toggle"
+    view.options.control.addEventListener("click", view.hide)
+    if( event && event.stopImmediatePropagation ) {
+        event.stopImmediatePropagation()
+      }
+    document.addEventListener("click", view.hide)
     document.addEventListener("keyup", function (e) {
       if( e.keyCode == 27 ) {
         view.hide()
       }
     })
-  },
-  hide: function () {
-    var view = this
-    view.el.style.display = "none"
-    view.options.control.className = view.options.control.className.replace(" toggle", "")
-    document.removeEventListener("keyup")
   },
   render: function () {
     var view = this

@@ -34,11 +34,14 @@ br.clear { height:0; line-height:0 }
 	border-left:5px solid transparent;
 	border-right:5px solid transparent;
 }
-#site-header #user-info .dropdown { display:none; position:absolute; right:-1px; top:100%; padding:10px 0; border-color:#069; border-style:solid; border-width:0 1px 1px 1px; }
-#site-header #user-info .dropdown a { display:block; padding:5px; min-width:150px; color:#069; }
+#site-header #user-info .dropdown { display:none; position:absolute; right:-1px; top:100%; z-index:1000; padding:10px 0; width:260px; box-shadow:0px 13px 23px #666; background:rgba(255, 255, 255, .9); }
+#site-header #user-info .dropdown ul { text-align:right; margin:10px 20px 0; padding-top:10px; border-top:1px solid #ccc; }
+#site-header #user-info .dropdown ul:first-child { margin-top:0; padding-top:0; border-top:0; }
+#site-header #user-info .dropdown li { display:block; }
+#site-header #user-info .dropdown li img { display:inline; float:none; margin-left:10px; height:20px; vertical-align:middle; }
+#site-header #user-info .dropdown li h2 { display:inline; width:200px; }
+#site-header #user-info .dropdown a { display:block; margin:0 -20px; padding:5px 10px; color:#069; }
 #site-header #user-info .dropdown a:hover { text-decoration:none; background:#069; color:#fff; }
-#site-header #user-info .dropdown ul { text-align:right; }
-
 
 #map { height:400px; }
 #map nav { display:none }

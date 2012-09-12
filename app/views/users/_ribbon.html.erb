@@ -9,6 +9,17 @@
 		</a>
 	    <nav class="dropdown" id="user-nav">
 	    	<ul>
+				<% current_user.visited_locations.each do |location| %>
+					<li>
+						<%= link_to location_path(location), {:class=>"autoclear"} do %>
+							<h2><%= location.title %></h2>
+							<img src="<%= location.photo_url %>" />
+						<% end %>
+					</li>
+				<% end %>
+			</ul>
+	    	<ul>
+	    		<li><%= link_to "My Profile", me_path %></li>
 	     		<li><%= link_to "Logout", logout_path %></li>
 	     	</ul>
 	    </nav>
