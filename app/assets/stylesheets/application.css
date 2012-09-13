@@ -6,8 +6,11 @@ a, a:visited, a:active { text-decoration:none; color:#069; }
 br.clear { height:0; line-height:0 }
 
 .autoclear:after { display:block; visibility:hidden; height:0; line-height: 0; clear:both; content:"."; }
+img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
+
 
 #container { margin:0px auto 0; width:960px; background:transparent; }
+.locations-show #container { width:auto; }
 
 #site-header { padding:10px; background:#006600;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#00ABEB), to(#069));
@@ -46,23 +49,26 @@ br.clear { height:0; line-height:0 }
 #map { height:400px; }
 #map nav { display:none }
 
-#content { margin:0px auto; padding:0 20px; width:600px; }
+#content { margin:0px auto; padding:0 20px; }
+.locations-show #content { width:920px; }
+.locations-show #content #location { width:600px; }
 
 /* WELCOME PAGE */
 .welcome-index #hero li { display:block; }
 
 /* ROLLUPS */
 
-.rollup.location { padding:10px 0; border-bottom:1px solid #ccc; }
-.rollup.location header { margin:0 0 10px; font-size:12px; }
-.rollup.location .location-title { padding-bottom:5px; font-size:22px; }
-.rollup.location .location-photo { float:left; padding-bottom:10px; }
-.rollup.location .location-photo + .location-teaser { margin-left:100px; }
-.rollup.location .more { display:block; padding-top:5px; font-size:12px; }
+.rollup.location { margin-bottom:10px; }
+.rollup.location a { display:block; padding:20px; border:1px solid #ccc; color:#333; }
+.rollup.location .location-title { padding-bottom:5px; font-size:1.243em; color:#069; }
+.rollup.location .location-photo { float:left; margin-right:10px; }
+.rollup.location .location-title,
+.rollup.location .location-teaser { margin-left:110px; }
+.rollup.location .more { display:block; padding-top:10px; color:#069; }
 
 /* LOCATION DETAIL PAGE */
 
-.locations-show #location { position:relative; margin:0 auto; }
+.locations-show #location { position:relative; margin:0 auto 20px; padding-bottom:20px; border-bottom:1px solid #ccc; }
 .locations-show #location header { margin-bottom:20px; text-align:center; }
 .locations-show #location-title { position:relative; font-size:38px; }
 .locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
@@ -94,9 +100,6 @@ br.clear { height:0; line-height:0 }
 .locations-show #location #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
 .locations-show #location #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
 
-.locations-show #geo-data #location-political-geo { font-size:18px; text-align:right; }
-.locations-show #geo-data #map { margin:20px 0; }
-
 .locations-show #location #journal_entries,
 .locations-show #location #map,
 .locations-show #location header { margin:0px auto; width:600px; }
@@ -109,6 +112,18 @@ br.clear { height:0; line-height:0 }
 .locations-show #location .toolbox { display:none; }
 .locations-show #location:hover .toolbox { display:block; }
 .locations-show #location > .toolbox { clear:both; }
+
+.locations-show #related { margin:20px 0 0; text-align:center; color:#fff;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(rgba(0, 171, 235, 1)), to(rgba(0, 102, 153, 1)));
+}
+.locations-show #related h1 { padding:20px 20px 0 20px; font-size:1.334em; text-align:center; }
+.locations-show #related a { color:#fff; }
+.locations-show #related .location { display:inline-block; vertical-align:top; }
+.locations-show #related .location h1 { margin-left:0px; padding-top:15px; max-width:180px; font-size:1.1em; text-align:center; color:#fff; }
+.locations-show #related .location a { border:0; color:#fff; }
+.locations-show #related .location img { float:none; margin:0; width:auto; height:120px; max-width:180px; }
+.locations-show #related .location p,
+.locations-show #related .location .more { display:none; }
 
 /* LOCATION FORM */
 #location-form .title { width:745px; }
@@ -136,7 +151,7 @@ br.clear { height:0; line-height:0 }
 #journal-entry-fields .journal-entry-day { display:block; margin-bottom:20px; width:100%; font-size:22px; }
 
 /* CONTAINER FOOTER */
-#container > footer { clear: both; }
+#container > footer { clear: both; padding:20px; }
 
 /* SCROLLER */
 .scroller { position:relative; }
@@ -146,7 +161,7 @@ br.clear { height:0; line-height:0 }
 .scroller .overflow-container { overflow-x:hidden; overflow-y:visible; margin:0px auto; }
 
 /* USER ASIDE */
-aside#user { margin:0 -150px 20px; border-bottom:1px solid #ccc; text-align:center; }
+aside#user { margin:0 0 20px; border-bottom:1px solid #ccc; text-align:center; }
 aside#user:hover { border-color:#069; }
 aside#user a { display:block; padding:13px 20px 10px; text-align:left; }
 aside#user a:hover { padding-bottom:7px; border-bottom:3px solid #069; text-decoration:underline; }
@@ -158,7 +173,12 @@ aside#user hgroup { padding-top:13px; }
 aside#user ul { float:right; text-align:right; font-size:.8571em; }
 
  /* USER DETAIL PAGE */
- .users-show header h1 { font-size:28px; }
+.users-show #content header hgroup { margin-bottom:10px; padding:10px 0; border-bottom:1px solid #ccc; }
+.users-show #content header hgroup h1 { font-size:1.567em; }
+.users-show #content header img { float:left; margin:0 10px 0 0; padding:5px; border:1px solid #ccc; border-radius:5px; background:#fff; }
+.users-show #content #user-locations { float:left; margin-top:20px; width:630px; }
+.users-show #content #user-locations header h1 { margin-bottom:5px; font-size:1.5367em; }
+.users-show #content #map { margin-top:20px; }
 
 /* USER ADMIN PAGE */
 .users-me #user #user-header h1 { font-size:32px; }

@@ -1,16 +1,14 @@
 <article class="location rollup">
- <header>
-  <h1 class="location-title"><%= link_to location.title, location_path(location) %></h1>
-  <%= location.city %>, <%= location.country_name %> <%= render "locations/date_range", :location => location %>
- </header>
- <% if location.photo_url %>
-  <%= image_tag location.photo_url, :width => 90, :class => "location-photo" %>
- <% end %>
- <% if location.teaser %>
-  <p class="location-teaser">
-   <%= truncate(location.teaser.html_safe, :length => 300) %>
-   <%= link_to "Continue Reading", location_path(location), :class => "more" %>
-  </p>
- <% end %>
- <br class="clear" />
+	<%= link_to location_path(location), { :class => "autoclear" } do %>
+		<% if location.photo_url %>
+			<%= image_tag location.photo_url, :width => 90, :class => "location-photo framed" %>
+		<% end %>
+		<h1 class="location-title"><%= location.title %></h1>
+		<% if location.teaser %>
+			<p class="location-teaser">
+				<%= truncate(location.teaser.html_safe, :length => 300) %>
+				<span class="more">Continue Reading</span>
+			</p>
+		<% end %>
+	<% end %>
 </article>

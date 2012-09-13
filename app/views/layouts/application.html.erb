@@ -23,9 +23,10 @@
      <section id="content">
       <%= yield %>
      </section>
+     <%= yield :below_content %>
      <br class="clear" />
      <footer>
-      
+        Traveladdict.me footer
      </footer>
     <%= javascript_include_tag "application" %>
     <%= yield :scripts_footer %>

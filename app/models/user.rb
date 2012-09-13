@@ -5,6 +5,10 @@ class User < ActiveRecord::Base
   has_many :countries, :through => :locations
   has_many :realm_accounts
 
+  def random_locations limit = 5
+    locations.limit(limit).order("RAND()").where("has_visited" => true)
+  end
+
   def visited_locations options = {}
     locations.where("has_visited=true").order("id DESC")
   end

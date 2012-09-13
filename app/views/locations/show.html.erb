@@ -6,7 +6,7 @@
 	</header>
 	<section id="photos">
 		<ul class="autoclear">
-			<% @location.photos["photo"].each do |photo| %>
+			<% @location.photos.each do |photo| %>
 				<li>
 					<figure<%= ' class="hero"'.html_safe if photo_filename(FlickRaw.url(photo)) == photo_filename(@location.photo_url) %>>
 						<img src="<%= FlickRaw.url(photo) %>" class="photo" data-json="<%= photo.to_json %>" alt="<%= photo["title"] %>" title="<%= photo["title"] %>" />
@@ -40,6 +40,15 @@
 		</div>
 	<% end %>
 </article>
+
+<% content_for :below_content do %>
+	<section id="related" class="autoclear">
+		<h1>More of <%= link_to "#{@location.user.name}'s", user_path(@location.user.slug) %> travels</h1>
+		<% @location.related(3).each do |location| %>
+			<%= render "locations/rollup", :location => location %>
+		<% end %>
+	</section>
+<% end %>
 
 <% content_for :scripts_footer do %>
 <script>

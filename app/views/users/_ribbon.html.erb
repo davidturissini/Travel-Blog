@@ -1,8 +1,10 @@
 <% if !current_user.anonymous? %>
 	<section id="user-info" class="autoclear">
 		<header>
-			<img src="<%= current_user.photo.url %>" />
-			<h1><%= link_to "Hi, #{current_user.name}", me_path %></h1>
+			<%= link_to user_path(current_user.slug) do %>
+				<img src="<%= current_user.photo.url %>" />
+				<h1><%= "Hi, #{current_user.name}" %></h1>
+			<% end %>
 		</header>
 		<a class="control" id="user-dropdown-control">
 			<span class="arrow"></span>

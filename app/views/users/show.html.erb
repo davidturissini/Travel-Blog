@@ -1,17 +1,43 @@
-<section>
+<section id="user" data-json="<%= @user.to_json %>">
 	<header>
-		<h1><%= @user.name %></h1>
 		<img src="<%= @user.photo.large %>" />
-		<span id="user-geo"><%= @user.city %>, <%= @user.country_name %></span>
-		<%= @user.name %> has visited <%= @user.countries_count %> countries
+		<hgroup>
+			<h1><%= @user.name %></h1>
+			<h2 id="user-geo"><%= @user.city %>, <%= @user.country_name %></h2>
+		</hgroup>
+		<p><%= @user.description %></p>
 	</header>
-	<section>
-		<% @user.locations.each do |location| %>
-
-		<% end %>
-	</section>
+	<section id="map" data-location_types="<%= @user.location_types.to_json %>" data-locations="<%= @user.visited_locations.to_json %>"></section>
 </section>
 
 <% content_for :scripts_footer do %>
+	<script>
+		window.addEventListener("DOMContentLoaded", function () {
+			var mapElem = document.getElementById("map"),
+			locations = new LocationCollection( JSON.parse( mapElem.getAttribute("data-locations") ) ),
+			user = new User( JSON.parse( document.getElementById("user").getAttribute("data-json") ) ),
+			locationTypesJSON = JSON.parse( mapElem.getAttribute("data-location_types") ),
+			locationTypes = new Backbone.Collection(locationTypesJSON),
+			map = new google.maps.Map(mapElem, {
+			     zoom: 3,
+			     center: new google.maps.LatLng(0, 0),
+			     mapTypeId: google.maps.MapTypeId.HYBRID
+			    })
 
+
+			locations.each(function (location, index) { 
+				var locationType = locationTypes.get(location.get("location_type_id"))
+				locationType.user = user
+				location.setLocationType(locationType)
+				new LocationMarker({
+					model:location,
+					locationType:locationType,
+					map:map,
+					click:function () {
+						window.location.href = location.url()
+					}
+				}).render()
+			})
+		})
+	</script>
 <% end %>

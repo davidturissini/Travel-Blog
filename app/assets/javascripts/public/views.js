@@ -342,26 +342,6 @@ var LocationGallery = Backbone.View.extend({
 
 var DropDown = Backbone.View.extend({
   initialize:function () {
-    var view = this,
-    dropdown = this.el
-    view.toggle = function (event) {
-      var toggle = /toggle/.test( view.options.control.className )
-      if( toggle ) {
-        view.hide(event)
-      } else {
-        view.show(event)
-      }
-    }
-
-    view.hide = function (event) {
-      if( event && event.target && inDropDown(event.target) ) {
-        return
-      }
-      view.el.style.display = "none"
-      view.options.control.className = view.options.control.className.replace(" toggle", "")
-      document.removeEventListener("keyup", view.toggle)
-      document.removeEventListener("click", view.hide)
-    }
 
     function inDropDown(elem) {
       if(elem == document.body) {
@@ -371,7 +351,29 @@ var DropDown = Backbone.View.extend({
       }
     }
 
-  },
+    return function () {
+      var view = this,
+      dropdown = this.el
+      view.toggle = function (event) { 
+        var toggle = /toggle/.test( view.options.control.className )
+        if( toggle ) {
+          view.hide(event)
+        } else {
+          view.show(event)
+        }
+      }
+
+      view.hide = function (event) {
+        if( event && event.target && inDropDown(event.target) ) {
+          return
+        }
+        view.el.style.display = "none"
+        view.options.control.className = view.options.control.className.replace(" toggle", "")
+        document.removeEventListener("keyup", view.toggle)
+        document.removeEventListener("click", view.hide)
+      }
+    }
+  }(),
   show: function (event) {
     var view = this
     view.el.style.display = "block"

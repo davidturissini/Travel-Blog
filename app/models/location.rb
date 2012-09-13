@@ -34,14 +34,20 @@ class Location < ActiveRecord::Base
   return [] if !journal_entries?
   [journal_entries.first, journal_entries.last].collect { |entry| entry.day }.uniq.compact
  end
+
+ def related limit = 5
+  user.random_locations(limit)
+ end
  
  def journal_entries?
   journal_entries.length > 0
  end
 
  def photos
-  Rails.cache.fetch("location-#{id}-photos", :expires_in => 14.days) do
-    flickr.photosets.getPhotos(:photoset_id => flickr_set)
+  return [] if !flickr_set
+  Rails.cache.fetch("location-#{id}-photos", :expires_in => 1.minute) do
+    photos = flickr.photosets.getPhotos(:photoset_id => flickr_set)
+    photos['photo']
   end
  end
 
