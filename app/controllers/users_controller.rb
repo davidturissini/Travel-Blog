@@ -80,13 +80,12 @@ class UsersController < ApplicationController
     set_user_cookie(realm.user)
   else
    name = request.env['omniauth.auth'].info.name
-   username = request.env['omniauth.auth'].info.username
-   user = User.new_traveller({:name => name})
+   username = request.env['omniauth.auth'].info.nickname
+   user = User.new_traveller({:name => name, :photo_url => "https://graph.facebook.com/#{username}/picture"})
    RealmAccount.create({
     :provider => "facebook",
     :provider_id => provider_id,
-    :user => user,
-    :photo_url => "https://graph.facebook.com/#{username}/picture?type=large"
+    :user => user
     })
     user.login!
     set_user_cookie(user)

@@ -1,17 +1,22 @@
-
-<section id="hero">
- <ul>
-  <% @hero_locations.each do |location| %>
-   <li>
-    <%= render "locations/rollup", :location => location %>
-   </li>
-  <% end %>
- </ul>
+<section id="hero" class="autoclear">
+	<% @welcome_locations.each_with_index do |location, index| %>
+		<article id="location-<%= index %>">
+			<%= link_to location_path(location), :class => "figure-link" do %>
+				<figure>
+					<img src="<%= location.photo_url %>" />
+					<figcaption>
+						<h1><%= location.title %></h1>
+					</figcaption>
+				</figure>
+			<% end %>
+			<span>by</span> 
+			<h2><%= link_to location.user.name, user_path(location.user.slug) %></h2>
+		</article>
+	<% end %>	
 </section>
-
-<% content_for :scripts_footer do %>
- <script>
-  window.addEventListener("DOMContentLoaded", function () {
-  })
- </script>
-<% end %>
+<section id="promo">
+	<%= link_to login_path("facebook") do %>
+		<h1>Join TravelAddict and share your adventures</h1>
+		<%= image_tag "facebook-connect.png" %>
+	<% end %>
+</section>

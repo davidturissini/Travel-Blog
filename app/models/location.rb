@@ -5,6 +5,9 @@ class Location < ActiveRecord::Base
  has_many :journal_entries, :order => "day ASC"
  validates :location_type_id, :slug, :title, :presence => true
  
+ def self.random limit = 3
+  limit(limit).order("RAND()").where("has_visited" => true)
+ end
 
  def country_name
   country.name if country
