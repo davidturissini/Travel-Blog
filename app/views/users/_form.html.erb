@@ -8,11 +8,8 @@
 	    </p>
 	</fieldset>
 	<fieldset>
-	    <label>Your username</label>
-	    <%= tag :input, :value => user.slug, :class => "user-slug" %>
-	    <p class="note">
-	    	This is where people will find you e.g. http://traveladdict.me/<span class="slug-mirror"><%= user.slug %></span>
-	    </p>
+	    <label>Your name</label>
+	    <%= tag :input, :value => user.name, :class => "user-name" %>
 	</fieldset>
     <fieldset class="user-geo field">
     	<label>Your hometown</label>

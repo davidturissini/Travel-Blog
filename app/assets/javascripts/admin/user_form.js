@@ -15,11 +15,6 @@ var UserForm = Backbone.View.extend({
 				image.setAttribute("src", model.get("photo_url"))
 			}
 
-			if( options.changes.slug ) {
-				var mirror = form.el.querySelector(".slug-mirror")
-				mirror.innerHTML = model.get("slug")
-			}
-
 			if( options.changes.latitude || options.changes.longitude ) {
 				form.marker.setPosition(new google.maps.LatLng(user.get("latitude"), user.get("longitude")) )
 			}
@@ -81,7 +76,7 @@ var UserForm = Backbone.View.extend({
 		decoder = new GeocodeDecoder(),
 		countryList = new CountryCollection();
 
-		[].forEach.call(["slug", "photo_url"], function (field) {
+		[].forEach.call(["photo_url", "name"], function (field) {
 			form.el.getElementsByClassName("user-" + field).item(0).addEventListener("change", function (e) {
 				user.set(field, e.currentTarget.value)
 			})

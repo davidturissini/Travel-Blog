@@ -1,9 +1,14 @@
-<%= render "users/aside", :user => @location.user %>
 <article id="location" data-location_type="<%= @location.location_type.to_json %>" data-json="<%= @location.to_json %>">
 	<header>
 		<h1 id="location-title"><%= @location.title %></h1>
 		<h2><%= "#{@location.city}, " if @location.city %><%= "#{@location.state}, " if @location.state %><%= @location.country_name %>
 	</header>
+	<section id="user" class="autoclear">
+		<%= link_to user_path(@location.user.slug), { :class => "autoclear" } do %>
+			<img src="<%= @location.user.photo.url %>" />
+			<h1><%= @location.user.name %></h1>
+		<% end %>
+	</section>
 	<section id="photos">
 		<ul class="autoclear">
 			<% @location.photos.each do |photo| %>
@@ -43,7 +48,7 @@
 
 <% content_for :below_content do %>
 	<section id="related" class="autoclear">
-		<h1>More of <%= link_to "#{@location.user.name}'s", user_path(@location.user.slug) %> travels</h1>
+		<h1>More from <%= link_to @location.user.name, user_path(@location.user.slug) %></h1>
 		<% @location.related(3).each do |location| %>
 			<%= render "locations/rollup", :location => location %>
 		<% end %>
@@ -140,6 +145,9 @@ var Gallery = Backbone.View.extend({
 		var gallery = this
 		this.el.className = this.el.className.replace(" gallery", "")
 		this.el.style.left = "auto";
+		this.el.style.marginLeft = "auto"
+		this.el.style.marginRight = "auto";
+		this.el.querySelector("ul").style.width = "auto";
 		[].forEach.call(gallery.options.photos, function (photo, index) {
 			photo.style.marginTop =  "0px"
 			photo.className = photo.className.replace(" selected", "")
@@ -203,8 +211,11 @@ var Gallery = Backbone.View.extend({
 	positionPhotos:function () {
 		var gallery = this,
 		ul = gallery.el.querySelector("ul"),
-		computedULHeight = parseInt( getComputedStyle(ul).height ),
 		selectedPhoto = this.selectedPhoto()
+		selectedPhoto.style.marginTop = "0px"
+		
+		var computedULHeight = parseInt( getComputedStyle(ul).height )
+
 
 		if( selectedPhoto.offsetHeight > computedULHeight ) {
 			ul.style.height = selectedPhoto.offsetHeight + "px";
@@ -217,8 +228,12 @@ var Gallery = Backbone.View.extend({
 
 	},
 	render:function () {
-		var gallery = this
+		var gallery = this,
+		margin = this.__distanceToLeft()
 		this.el.className += " gallery"
+
+		this.el.style.marginLeft = -margin + "px"
+		this.el.style.marginRight = -margin + "px"
 
 		this.focusSelected();
 		[].forEach.call(this.options.photos, function (photo, index) {
@@ -226,6 +241,7 @@ var Gallery = Backbone.View.extend({
 				gallery.setSelected(index)
 			})
 		})
+
 
 		document.addEventListener("keyup", gallery.__keyup)
 
