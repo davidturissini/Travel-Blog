@@ -7,6 +7,8 @@ Adventureblog::Application.routes.draw do
   match '/me' => "users#update", :via => :put
   match '/me/edit' => "users#edit_me", :as => "edit_me"
 
+  match '/about' => "static#about"
+
   resources :countries, :only => [:index]
 
   match '/:user_id' => "users#show"
