@@ -6,8 +6,15 @@ a, a:visited, a:active { text-decoration:none; color:#069; }
 br.clear { height:0; line-height:0 }
 
 .autoclear:after { display:block; visibility:hidden; height:0; line-height: 0; clear:both; content:"."; }
-img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
+.clear { display:block; clear:both; }
 
+.left { float:left; }
+.clear-left { clear:left; }
+
+.right { float:right; }
+.clear-right { clear:right; }
+
+img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 #container { margin:0px auto 0; width:960px; background:transparent; }
 .locations-show #container { width:auto; }
@@ -197,10 +204,20 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
  /* USER DETAIL PAGE */
 .users-show #content header hgroup { margin-bottom:10px; padding:10px 0; border-bottom:1px solid #ccc; }
 .users-show #content header hgroup h1 { font-size:1.567em; }
-.users-show #content header img { float:left; margin:0 10px 0 0; padding:5px; border:1px solid #ccc; border-radius:5px; background:#fff; }
+.users-show #content header img { margin:0 10px 0 0; padding:20px; border:1px solid #ccc; border-radius:5px; background:#fff; }
+.users-show #content ul { margin:10px 0 0 10px; }
+.users-show #content ul li { padding:5px 0; font-size:.875em; }
 .users-show #content #user-locations { float:left; margin-top:20px; width:630px; }
 .users-show #content #user-locations header h1 { margin-bottom:5px; font-size:1.5367em; }
-.users-show #content #map { margin-top:20px; }
+.users-show #content #user-stats { width:220px; }
+.users-show #content #user-geo { padding:10px; border-bottom:1px solid #ccc; text-align:center; }
+.users-show #content #user-geo h1 { margin-bottom:10px; }
+.users-show #content #user-travel { margin-left:200px; overflow:hidden; }
+.users-show #content #user-travel article a { border-width:0 0 1px; }
+.users-show #content #user-travel article .location-photo { margin-right:20px; }
+.users-show #content #user-travel article .static-map { margin-left:20px; }
+.users-show #content #user-travel .location-title, 
+.users-show #content #user-travel .location-teaser { margin-left:180px; }
 
 /* USER ADMIN PAGE */
 .users-me #user #user-header h1 { font-size:32px; }

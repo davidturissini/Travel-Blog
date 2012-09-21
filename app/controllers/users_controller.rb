@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
  def show
   @user = User.find_by_slug(params[:user_id]) 
+  @user_locations = Location.most_recent_published.where("location_types.user_id" => @user.id)
   render_show
  end
 

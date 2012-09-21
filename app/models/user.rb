@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
     locations.where("has_visited=true").order("id DESC")
   end
 
+  def location?
+    !(latitude.nil? && longitude.nil?)
+  end
+
   def photo
     @photo ||= UserPhoto.create(self)
   end

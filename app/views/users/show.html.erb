@@ -1,43 +1,42 @@
 <section id="user" data-json="<%= @user.to_json %>">
 	<header>
-		<img src="<%= @user.photo.large %>" />
+		<img src="<%= @user.photo.large %>" class="left" />
 		<hgroup>
 			<h1><%= @user.name %></h1>
-			<h2 id="user-geo"><%= @user.city %>, <%= @user.country_name %></h2>
 		</hgroup>
 		<p><%= @user.description %></p>
 	</header>
-	<section id="map" data-location_types="<%= @user.location_types.to_json %>" data-locations="<%= @user.visited_locations.to_json %>"></section>
+	<section id="user-stats" class="left clear-left"> 
+		<% if @user.location? %>
+			<section id="user-geo">
+				<h1>
+					<%= "#{@user.city}, " if !@user.city.blank? %><%= @user.country_name %>
+				</h1>
+				<img src="<%= static_map_url @user.latitude, @user.longitude, :width => 90, :height => 90 %>" />
+			</section>
+		<% end %>
+		<ul>
+			<li><%= @user.locations.count %> Locations</li>
+			<li><%= @user.countries_count %> Countries</li>
+		</ul>
+	</section>
+	<section id="user-travel">
+		<% @user_locations.each do |location| %>
+			<article class="location rollup">
+				<%= link_to location_path(location), { :class => "autoclear" } do %>
+					<img src="<%= static_map_url location.latitude, location.longitude, :width => 90, :height => 90 %>" class="static-map right" />
+					<% if location.photo_url %>
+						<%= image_tag location.photo_url, :width => 150, :class => "location-photo left framed" %>
+					<% end %>
+					<h1 class="location-title"><%= location.title %></h1>
+					<% if location.teaser %>
+						<p class="location-teaser">
+							<%= truncate(location.teaser.html_safe, :length => 300) %>
+							<span class="more">Continue Reading</span>
+						</p>
+					<% end %>
+				<% end %>
+			</article>
+		<% end %>
+	</section>
 </section>
-
-<% content_for :scripts_footer do %>
-	<script>
-		window.addEventListener("DOMContentLoaded", function () {
-			var mapElem = document.getElementById("map"),
-			locations = new LocationCollection( JSON.parse( mapElem.getAttribute("data-locations") ) ),
-			user = new User( JSON.parse( document.getElementById("user").getAttribute("data-json") ) ),
-			locationTypesJSON = JSON.parse( mapElem.getAttribute("data-location_types") ),
-			locationTypes = new Backbone.Collection(locationTypesJSON),
-			map = new google.maps.Map(mapElem, {
-			     zoom: 3,
-			     center: new google.maps.LatLng(0, 0),
-			     mapTypeId: google.maps.MapTypeId.HYBRID
-			    })
-
-
-			locations.each(function (location, index) { 
-				var locationType = locationTypes.get(location.get("location_type_id"))
-				locationType.user = user
-				location.setLocationType(locationType)
-				new LocationMarker({
-					model:location,
-					locationType:locationType,
-					map:map,
-					click:function () {
-						window.location.href = location.url()
-					}
-				}).render()
-			})
-		})
-	</script>
-<% end %>
