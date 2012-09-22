@@ -201,6 +201,17 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .scroller .container { position:relative; -webkit-transition:left ease-in-out 500ms; }
 .scroller .overflow-container { overflow-x:hidden; overflow-y:visible; margin:0px auto; }
 
+/* USER WELCOME PAGE */
+.welcome-user #user { margin:0px auto; width:600px; }
+.welcome-user #user h1 { display:inline; font-size:2.427em; }
+.welcome-user #user h2 { font-size:1.5em; }
+.welcome-user #user p { margin-top:20px; font-size:1em; }
+.welcome-user #user img { display:inline; margin-right:10px; vertical-align:middle; }
+.welcome-user #user form { margin-top:10px; padding-top:10px; border-top:1px solid #ccc; }
+.welcome-user #user form p { margin:5px 0; }
+.welcome-user #user form input[type=text] { display:block; width:100%; font-size:1.3em; }
+.welcome-user #user form input[type=submit] { margin:10px 0; font-size:1.5em; }
+
  /* USER DETAIL PAGE */
 .users-show #content header hgroup { margin-bottom:10px; padding:10px 0; border-bottom:1px solid #ccc; }
 .users-show #content header hgroup h1 { font-size:1.567em; }

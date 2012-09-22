@@ -1,14 +1,22 @@
 class WelcomeController < ApplicationController 
  def index
- 	if !current_user.anonymous?
- 		user_welcome_screen
+ 	if !current_user.anonymous? && !current_user.incomplete?
+ 		user_home
+ 	elsif current_user.incomplete?
+ 		redirect_to welcome_user_path
  	else
  		anonymous_welcome_screen
  	end
  end
 
+ def user
+ 	if current_user.anonymous? || !current_user.incomplete?
+ 		redirect_to("/")
+ 	end
+ end
+
  private
- def user_welcome_screen
+ def user_home
  	@user = current_user
  	respond_to do |format|
  		format.html { render "users/me" }
@@ -16,7 +24,7 @@ class WelcomeController < ApplicationController
  end
 
  def anonymous_welcome_screen
- 	@welcome_locations = []
+ 	@welcome_locations = Location.random(5)
  	respond_to do |format|
  		format.html { render "welcome/index" }
  	end

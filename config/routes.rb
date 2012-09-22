@@ -6,6 +6,7 @@ Adventureblog::Application.routes.draw do
   match '/me/logout' => "users#logout", :as => "logout"
   match '/me' => "users#update", :via => :put
   match '/me/edit' => "users#edit_me", :as => "edit_me"
+  match '/welcome' => "welcome#user", :as => "welcome_user"
 
   match '/about' => "static#about"
 

@@ -17,11 +17,13 @@ class UsersController < ApplicationController
 
  def me
   params[:user_id] = current_user.slug
-  if validate_user?
+  if validate_user? && !current_user.incomplete?
    @user = current_user
     respond_to do |format|
      format.html { render "users/me" }
     end
+  elsif current_user.incomplete?
+    redirect_to_user_welcome
   end
  end
   
@@ -48,13 +50,20 @@ class UsersController < ApplicationController
  end
 
  def login
-  if params[:provider] == "facebook"
-   login_facebook
+  send("login_#{params[:provider]}")
+
+  if current_user.incomplete?
+    redirect_to_user_welcome
+  else
+    redirect_to("/")
   end
-  redirect_to("/")
  end
  
  protected
+ def redirect_to_user_welcome
+  redirect_to(welcome_user_path)
+ end
+
  def render_show
   respond_to do |format|
    format.html { render "users/show" }
@@ -80,9 +89,12 @@ class UsersController < ApplicationController
     realm.user.login!
     set_user_cookie(realm.user)
   else
-   name = request.env['omniauth.auth'].info.name
+   name = request.env['omniauth.auth'].info.first_name
    username = request.env['omniauth.auth'].info.nickname
-   user = User.new_traveller({:name => name, :photo_url => "https://graph.facebook.com/#{username}/picture"})
+   user = User.new_traveller({
+    :name => name, 
+    :photo_url => "https://graph.facebook.com/#{username}/picture"
+    })
    RealmAccount.create({
     :provider => "facebook",
     :provider_id => provider_id,

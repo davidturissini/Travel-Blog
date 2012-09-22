@@ -1,0 +1,42 @@
+<section id="user" data-json="<%= current_user.to_json %>">
+	<header class="autoclear">
+		<img src="<%= current_user.photo.large %>" class="framed" />
+		<h1>Welcome, <%= current_user.name %>!</h1>
+		<p>Thanks for choosing TravelAddict! We look forward to hearing about your travels and helping you discover new places to visit.</p>
+	</header>
+	<form>
+		<h2>Pick a nickname</h2>
+		<p>This will be how people can find your travels on the site.</p>
+		<input type="text" class="user-slug" />
+		<p>http://www.traveladdict.me/<span id="slug-mirror"></span></p>
+		<input type="submit" value="Save" />
+	</form>
+</section>
+
+<% content_for :scripts_footer do %>
+	<%= javascript_include_tag "admin/admin" %>
+	<script>
+		var user = User.createFromDataAttribute( document.getElementById("user") )
+		user.isCurrentUser = true;
+		new UserSlugField({
+			model:user,
+			el:document.querySelector("#user .user-slug")
+		}).render()
+
+		user.on("change", function (model, options) {
+			if(options.changes.slug) {
+				var mirror = document.querySelector("#slug-mirror")
+				mirror.innerHTML = model.get("slug")
+			}
+		})
+
+		document.querySelector("#user input[type=submit]").addEventListener("click", function (e) {
+			e.preventDefault()
+			user.save({}, {
+				success:function () {
+					window.location.href = "/"
+				}
+			})
+		})
+	</script>
+<% end %>

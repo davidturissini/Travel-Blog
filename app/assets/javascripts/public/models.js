@@ -60,6 +60,13 @@ var User = Backbone.Model.extend({
  } 
 })
 
+User.createFromDataAttribute = function (node, attributeName) {
+    attributeName = attributeName || "data-json";
+    var userJson = JSON.parse( node.getAttribute(attributeName) );
+
+    return new User(userJson)
+  }
+
 var Location = Backbone.Model.extend({
  url: function () {
   var str = "/" + this.user.get("slug") + "/" + this.locationType.get("slug")

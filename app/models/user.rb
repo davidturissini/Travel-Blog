@@ -37,6 +37,10 @@ class User < ActiveRecord::Base
    User.find_by_slug("anonymous")
   end
 
+  def incomplete?
+    slug.nil?
+  end
+
   def anonymous?
    salt == "anonymous"
   end
@@ -67,7 +71,6 @@ class User < ActiveRecord::Base
   def self.new_traveller options
    user = User.create(options)
    user.salt = Digest::SHA1.hexdigest("#{user.id}#{Time.now.to_i}")
-   user.slug = user.id
    user.save!
    LocationType.create_defaults({:user => user})
    user

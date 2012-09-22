@@ -1,5 +1,3 @@
-
-
 var UserForm = Backbone.View.extend({
 	initialize: function () {
 		var form = this
