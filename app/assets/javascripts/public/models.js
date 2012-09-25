@@ -51,13 +51,15 @@ var User = Backbone.Model.extend({
  latLng: function () {
   return new google.maps.LatLng(user.get("latitude"), user.get("longitude"))
  },
- isCurrentUser: false,
  url: function (e) {
-  if( this.isCurrentUser ) {
+  if( this.isCurrentUser() ) {
     return "/me?format=json"
   }
   return "/" + this.get("slug")
- } 
+ } ,
+ isCurrentUser:function () {
+  return this.get("id") == TA.currentUser.get("id");
+ }
 })
 
 User.createFromDataAttribute = function (node, attributeName) {

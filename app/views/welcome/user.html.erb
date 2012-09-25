@@ -16,8 +16,8 @@
 <% content_for :scripts_footer do %>
 	<%= javascript_include_tag "admin/admin" %>
 	<script>
-		var user = User.createFromDataAttribute( document.getElementById("user") )
-		user.isCurrentUser = true;
+		var user = User.createFromDataAttribute( document.getElementById("user") );
+		
 		new UserSlugField({
 			model:user,
 			el:document.querySelector("#user .user-slug")

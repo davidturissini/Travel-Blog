@@ -10,6 +10,7 @@ class WelcomeController < ApplicationController
  end
 
  def user
+ 	@user = current_user
  	if current_user.anonymous? || !current_user.incomplete?
  		redirect_to("/")
  	end
