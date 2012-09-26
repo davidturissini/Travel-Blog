@@ -26,24 +26,11 @@ class UsersController < ApplicationController
  end
  
  protected
- def redirect_to_user_welcome
-  redirect_to(welcome_user_path)
- end
 
  def render_show
   respond_to do |format|
    format.html { render "users/show" }
   end
- end
-
- def set_user_cookie user
-   cookies[:user] = {
-    :id => user.id,
-    :token => user.token,
-    :name => user.name,
-    :photo_url => user.photo_url,
-    :slug => user.slug
-   }.to_json
  end
  
  def login_facebook

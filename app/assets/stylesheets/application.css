@@ -275,6 +275,21 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .user-image:hover .user-button { display:block; }
 .user-image .user-button { display:none; position:absolute; right:0px; top:0px; padding:5px; background:rgba(255, 255, 255, .7); }
 
+#user-photo-modal { width:600px; }
+#user-photo-modal .user-image { text-align:center; }
+#user-photo-modal .user-image img { display:inline; }
+#user-photo-modal .user-image figcaption { margin-bottom:10px; font-size:1.34em; }
+#user-photo-modal figure { margin:0; padding:0; }
+#user-photo-modal ul { margin:20px auto 0; width:220px; }
+#user-photo-modal li { position:relative; float:left; margin-right:10px; width:100px; font-size:.8745em; text-align:center; cursor:pointer; }
+#user-photo-modal li img { position:relative; z-index:10; }
+#user-photo-modal .email { position:absolute; top:10px; z-index:1; padding:0 0 10px 20px; padding-bottom:10px; padding-left:20px; width:250px; border-bottom:1px solid #ccc; opacity:0;
+	-webkit-transition:all linear 300ms;
+}
+#user-photo-modal .expanded .email { right:-220px; opacity:1; }
+#user-photo-modal .email label { display:block; padding:0 0 5px 25px; text-align:left; font-weight:bold; }
+#user-photo-modal .save { clear:both; float:right; margin:20px 20px 0 0; font-size:2em; }
+
 /* MODAL DIALOG */
 .modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100; opacity:0; background:rgba(255, 255, 255, .8); 
 	-webkit-transition:opacity linear 500ms;

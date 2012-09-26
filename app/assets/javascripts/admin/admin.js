@@ -5,6 +5,7 @@ window.TA = window.TA || {};
 window.addEventListener("DOMContentLoaded", function () {
 	var userLocationButtons = document.getElementsByClassName("user-location-button"), 
 	userImageButtons = document.getElementsByClassName("user-image-button"),
+	userImages = document.getElementsByClassName("user-image"),
 	countryList = new CountryCollection(),
 	i;
 
@@ -25,13 +26,20 @@ window.addEventListener("DOMContentLoaded", function () {
 		success:function () {
 			renderUserLocationButtons(userLocationButtons)
 		}
-	})
+	});
 
 	for(i = 0; i < userImageButtons.length; i++) {
 		new UserImageField({
 			el:userImageButtons[i],
 			model:TA.currentUser
 		}).render()
+	};
+
+	for(i = 0; i < userImages.length; i++) {
+		new UserImage({
+			el:userImages[i],
+			model:TA.currentUser
+		}).render();
 	}
 
 })

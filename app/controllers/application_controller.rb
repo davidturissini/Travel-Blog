@@ -22,6 +22,21 @@ class ApplicationController < ActionController::Base
    Location.most_recent_published
   end
 
+ def redirect_to_user_welcome
+  redirect_to(welcome_user_path)
+ end
+
+ 
+ def set_user_cookie user
+   cookies[:user] = {
+    :id => user.id,
+    :token => user.token,
+    :name => user.name,
+    :photo_url => user.photo_url,
+    :slug => user.slug
+   }.to_json
+ end
+
  def validate_user?
   params[:user_id] = current_user.slug if params[:controller] == "admin/users"
   user = User.find_by_slug(params[:user_id])

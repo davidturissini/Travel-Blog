@@ -1,8 +1,26 @@
-<div>
-	<img src="<%= current_user.photo.large %>" alt="Your photo" title="Your photo" />
-    <label>Your photo</label>
-    <input type="text" class="user-photo_url" value="<%= current_user.photo_url %>" />
-    <p class="note">
-    	This will appear at the top of your posts
-    </p>
+<div id="user-photo-modal" class="autoclear">
+	<figure class="user-image">
+		<figcaption>Your picture</figcaption>
+		<img src="<%= current_user.photo.large %>" alt="Your photo" title="Your photo" />
+	</figure>
+	<ul class="photo-services">
+	    <li data-service="facebook" data-service_id="<%= current_user.facebook_id %>">
+	    	<figure>
+	    		<%= image_tag "facebook-logo.jpeg", :width => 70 %>
+	    		<figcaption>Use your Facebook photo</figcaption>
+	    	</figure>
+	    </li>
+	    <li class="gravatar" data-service="gravatar">
+	    	<figure>
+	    		<%= image_tag "gravatar-logo.png", :width => 70 %>
+	    		<div class="email">
+	    			<label>Enter your Gravatar email</label>
+	    			<input type="email" />
+	    			<input class="button" type="button" value="Load" />
+	    		</div>
+	    		<figcaption>Use your Gravatar photo</figcaption>
+	    	</figure>
+	    </li>
+	</ul>
+	<input type="button" value="Save Picture" class="save" />
 </div>
