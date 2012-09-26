@@ -232,7 +232,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 /* USER ADMIN PAGE */
 .user-welcome #user-header h1 { font-size:32px; }
-.user-welcome #user-header img { float:left; margin-right:10px; vertical-align:middle; }
+.user-welcome #user-header .user-image { float:left; margin-right:10px; vertical-align:middle; }
 .user-welcome #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
 .user-welcome section { margin-bottom:20px; padding:20px; background:#e1e1e1; border:1px solid #333; }
@@ -266,6 +266,14 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 #user-form .user-photo img { float: left; padding-right:10px; }
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }
+
+/* USER GLOBAL BUTTONS */
+.user-button { border-bottom:1px transparent; color:#333; }
+.user-button:hover { border-bottom:1px dotted; cursor:pointer; }
+
+.user-image { position:relative; }
+.user-image:hover .user-button { display:block; }
+.user-image .user-button { display:none; position:absolute; right:0px; top:0px; padding:5px; background:rgba(255, 255, 255, .7); }
 
 /* MODAL DIALOG */
 .modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100; opacity:0; background:rgba(255, 255, 255, .8); 

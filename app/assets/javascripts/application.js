@@ -4,9 +4,9 @@
 // It's not advisable to add code directly here, but if you do, it'll appear at the bottom of the
 // the compiled file.
 //
-//= require 'public/cookie'
 //= require 'public/underscore'
 //= require 'public/backbone'
+//= require 'public/template'
 //= require 'public/models'
 //= require 'public/collections'
 //= require 'public/views'

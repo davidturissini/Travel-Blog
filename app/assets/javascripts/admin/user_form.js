@@ -102,7 +102,6 @@ var UserForm = Backbone.View.extend({
 		
 		form.el.addEventListener("submit", function (e) {
 		    e.preventDefault()
-		    user.isCurrentUser = true
 		    user.jsonPrefix = true
 		    user.save({}, {
 			    success:function () {

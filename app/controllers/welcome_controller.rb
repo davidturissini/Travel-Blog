@@ -20,7 +20,7 @@ class WelcomeController < ApplicationController
  def user_home
  	@user = current_user
  	respond_to do |format|
- 		format.html { render "users/me" }
+ 		format.html { render "admin/users/me" }
  	end
  end
 

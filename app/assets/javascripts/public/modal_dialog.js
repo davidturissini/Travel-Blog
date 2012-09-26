@@ -21,7 +21,6 @@ var ModalDialog = Backbone.View.extend({
   },
   setView: function (elem) {
     this.view = elem
-    
   },
   close: function () {
     this.el.className = this.el.className.replace("visible", "")

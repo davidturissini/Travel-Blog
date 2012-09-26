@@ -23,6 +23,7 @@ class ApplicationController < ActionController::Base
   end
 
  def validate_user?
+  params[:user_id] = current_user.slug if params[:controller] == "admin/users"
   user = User.find_by_slug(params[:user_id])
   if( current_user.anonymous? || user.token != current_user.token )
    unauthorized

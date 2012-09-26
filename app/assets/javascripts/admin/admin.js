@@ -4,7 +4,9 @@ window.TA = window.TA || {};
 
 window.addEventListener("DOMContentLoaded", function () {
 	var userLocationButtons = document.getElementsByClassName("user-location-button"), 
-	countryList = new CountryCollection();
+	userImageButtons = document.getElementsByClassName("user-image-button"),
+	countryList = new CountryCollection(),
+	i;
 
 	TA.currentUser = new User( JSON.parse( YAHOO.util.Cookie.get("user") ));
 
@@ -24,5 +26,12 @@ window.addEventListener("DOMContentLoaded", function () {
 			renderUserLocationButtons(userLocationButtons)
 		}
 	})
+
+	for(i = 0; i < userImageButtons.length; i++) {
+		new UserImageField({
+			el:userImageButtons[i],
+			model:TA.currentUser
+		}).render()
+	}
 
 })

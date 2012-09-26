@@ -1,11 +1,10 @@
  <section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
   <header id="user-header" class="autoclear">
+    <%= render "users/image", :user => @user %>
     <hgroup>
-      <%= image @user.photo.large %>
       <h1>Hello, <%= @user.name %></h1>
       <%= render "users/location", :user => @user %>
     </hgroup>
-    <%= link_to "Edit", edit_me_path %>
   </header>
   
   
