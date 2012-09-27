@@ -1,7 +1,7 @@
-<div class="user-location">
+<a class="user-button user-location-button user-location">
 	<% if @user.location? %>
 		<%= @user.city %>, <%= @user.country_name %>
 	<% else %>
-		<a class="user-button user-location-button">Tell us where you are from!</a>
+		Tell us where you are from!
 	<% end %>
-</div>
+</a>

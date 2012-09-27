@@ -30,6 +30,9 @@ var ModalDialog = Backbone.View.extend({
     this.viewFinder.style.width = "auto"
     document.body.style.overflow = "auto"
     this.title = null
+    if( this.options.onclose && typeof this.options.onclose === "function" ) {
+      this.options.onclose();
+    }
   },
   append: function () {
     var dialog = this

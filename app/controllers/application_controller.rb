@@ -25,7 +25,6 @@ class ApplicationController < ActionController::Base
  def redirect_to_user_welcome
   redirect_to(welcome_user_path)
  end
-
  
  def set_user_cookie user
    cookies[:user] = {
@@ -33,7 +32,10 @@ class ApplicationController < ActionController::Base
     :token => user.token,
     :name => user.name,
     :photo_url => user.photo_url,
-    :slug => user.slug
+    :slug => user.slug,
+    :latitude => user.latitude,
+    :longitude => user.longitude,
+    :city => user.city
    }.to_json
  end
 

@@ -43,6 +43,7 @@ var UserImageField = Backbone.View.extend({
 		});
 
 		field.userImage.setAttribute("src", photo.large());
+		field.model.set({photo_url: photo.url()});
 
 	},
 	launchPhotoPicker: function () {
@@ -52,8 +53,11 @@ var UserImageField = Backbone.View.extend({
 			id:"user_picture_field"
 		});
 
-		field.dialog = new ModalDialog();
-
+		field.dialog = new ModalDialog({
+			onclose:function () {
+				field.dialogClose();
+			}
+		});
 
 		template.load({
 			success:function (e) {
@@ -67,21 +71,29 @@ var UserImageField = Backbone.View.extend({
 
 
 				field.dialogView.querySelector(".save").addEventListener("click", function () {
-					field.model.set({photo_url: field.userImage.getAttribute("src")});
 					field.model.save({}, {
 						success:function () {
+							field.__didSave = true;
 							field.dialog.close();
 						}
 					})
 				})
-				
+
 				field.__bindServiceClicks()
 			}
 		})
 
 	},
+	dialogClose:function () {
+		if( this.__didSave === true ) { return }
+		this.model.set({
+			photo_url:this.__originalUserPhoto
+		});
+	},
 	render:function () {
 		var field = this;
+
+		field.__originalUserPhoto = this.model.get("photo_url");
 		field.el.addEventListener("click", function (e) {
 			field.launchPhotoPicker();
 		});

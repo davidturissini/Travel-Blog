@@ -2,7 +2,7 @@
 	<section id="user-info" class="autoclear">
 		<header>
 			<%= link_to user_path(current_user.slug) do %>
-				<img src="<%= current_user.photo.url %>" />
+				<img src="<%= current_user.photo.url %>" class="user-image" />
 				<h1><%= "Hi, #{current_user.name}" %></h1>
 			<% end %>
 		</header>

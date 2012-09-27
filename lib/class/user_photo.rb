@@ -30,7 +30,7 @@ class UserGravatarPhoto < UserPhoto
 	end
 
 	def large
-		return "#{@user.photo_url.strip}"
+		return "#{@user.photo_url.strip}?s=200"
 	end
 end
 
