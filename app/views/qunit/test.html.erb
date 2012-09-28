@@ -39,6 +39,15 @@
    equal( l.url(), "/" + user.get("slug") + "/" + l.get("slug") )
   })
 
+  test("should have proper resource url is user is current user", function () {
+   var user = new User({id:1,slug:"user"}),
+   slug = "location-type-slug",
+   l = new LocationType({user:user,slug:slug,id:2})
+   TA.currentUser = user;
+   equal( l.url(), "/" + user.get("slug") + "/" + l.get("slug") );
+   TA.currentUser = null;
+  })
+
   test("should throw exception if user isn't specified", function () {
    throws(
     function () {
@@ -64,10 +73,24 @@
    var user = new User({id:1,slug:"user"})
    equal( user.url(), "/" + user.get("slug") ) 
   })
+ 
+  test("current user should return true if user is current user", function () {
+    var user = new User({id:1,slug:"user"});
+    TA.currentUser = new User({id:1,slug:"user"});
+    equal( user.isCurrentUser(), true);
+    TA.currentUser = null;
+  })
+
+  test("current user should return false if user is not current user", function () {
+    var user = new User({id:1,slug:"user"});
+    TA.currentUser = new User({id:2,slug:"user"});
+    equal( user.isCurrentUser(), false);
+    TA.currentUser = null;
+  })
 
   test("should return proper user url if user is current user", function () {
    var user = new User({id:1,slug:"user"})
-   user.isCurrentUser = true
+   TA.currentUser = user;
    equal( user.url(), "/me?format=json" ) 
   })
 

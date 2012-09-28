@@ -9,10 +9,8 @@
 //= require 'public/underscore'
 //= require 'public/backbone'
 //= require 'public/template'
-//= require 'public/models'
+//= require_tree ./public/models/
 //= require 'public/collections'
-//= require 'public/views'
-//= require 'public/modal_dialog'
 //= require_tree ./public/views/
 
 
