@@ -5,6 +5,8 @@ var UserLocationField = Backbone.View.extend({
 			parentElem:document.body
 		});
 
+		field.modal.setTitle("Select your home location");
+
 		field.marker = new google.maps.Marker();
 	},
 	showMap: function () {
@@ -20,7 +22,6 @@ var UserLocationField = Backbone.View.extend({
 				var mapElem = e.querySelector("figure");
 
 			    field.modal.setView( e );
-			    field.modal.setTitle("Select your home location");
 			    field.modal.render();
 
 			    field.map = new google.maps.Map(mapElem, {

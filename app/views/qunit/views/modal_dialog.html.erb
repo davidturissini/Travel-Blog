@@ -1,0 +1,103 @@
+<div id="qunit">
+
+</div>
+
+<% content_for :stylesheets_header do %>
+ <link rel="stylesheet" href="http://code.jquery.com/qunit/qunit-1.9.0.css" type="text/css" />
+<% end %>
+
+<% content_for :scripts_footer do %>
+	<%= javascript_include_tag "admin/admin" %>
+	<script src="http://code.jquery.com/qunit/qunit-1.9.0.js"></script>
+	<script>
+		(function () {
+
+			var dialog;
+
+			QUnit.testStart = function () {
+				dialog = new ModalDialog();
+			}
+
+			QUnit.reset = function () {
+				if( dialog.isVisible() ) {
+					dialog.close();
+				}
+			}
+
+			module("Modal Dialog");
+
+			test("should append view as child of viewfinder", function () {
+				var view = document.createElement("div"),
+				id = "some-random-id"
+				view.id = id;
+				view.innerHTML = "ASDASD";
+
+				dialog.setView(view);
+				dialog.render();
+				equal(dialog.el.querySelector(".modal-content").children[0], view);
+			});
+
+			test("should display title properly", function () {
+				var title = "ADASDASDASD";
+
+				dialog.setTitle(title);
+				dialog.render();
+				equal(dialog.el.querySelector(".modal-title").innerHTML, title);
+			});
+
+			test("should be able to display the title after dialog is already visible", function () {
+				var title = "ADASDASDASD";
+
+				dialog.render();
+				dialog.setTitle(title);
+				equal(dialog.el.querySelector(".modal-title").innerHTML, title);
+			});
+
+			test("should only display title once if dialog is closed and reopened", function () {
+				var title = "ADASDASDASD";
+
+				dialog.setTitle(title);
+				dialog.render();
+				dialog.close();
+				dialog.setTitle(title);
+				dialog.render();
+				equal(dialog.el.querySelector(".modal-title").innerHTML, title);
+			});
+
+			test("closing the dialog should remove it from the DOM", function () {
+				dialog.render();
+				dialog.close();
+				equal(dialog.el.parentNode, null);
+			});
+
+			test("rendering the dialog should append it to the document body", function () {
+				dialog.render();
+				equal(dialog.el.parentNode, document.body);
+			});
+
+			test("isVisible should be true when dialog is visible", function () {
+				dialog.render();
+				equal(dialog.isVisible(), true);
+			});
+
+			test("isVisible should be false when dialog is not visible", function () {
+				dialog.render();
+				dialog.close();
+				equal(dialog.isVisible(), false);
+			});
+
+			test("should have a close button", function () {
+				dialog.render();
+				equal(dialog.el.querySelectorAll(".close").length, 1);
+			});
+
+			test("should only have 1 close button after dialog has been closed and reopened", function () {
+				dialog.render();
+				dialog.close();
+				dialog.render();
+				equal(dialog.el.querySelectorAll(".close").length, 1);
+			});
+
+		})();
+	</script>
+ <% end %>

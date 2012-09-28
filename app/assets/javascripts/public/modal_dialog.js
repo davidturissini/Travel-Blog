@@ -1,14 +1,17 @@
 var ModalDialog = Backbone.View.extend({
   el:document.createElement("div"),
   initialize: function () {
-    var dialog = this
-    this.view = null
-    this.options.parentElem = this.options.parentElem || document.body
-    this.viewFinder = document.createElement("section")
-    this.viewFinder.className = "viewfinder"
-    this.el.className = "modal-dialog"
+    var dialog = this;
+    this.view = null;
+    this.options.parentElem = this.options.parentElem || document.body;
+    this.viewFinder = document.createElement("section");
+    this.viewFinder.className = "viewfinder";
+    this.content = document.createElement("div");
+    this.content.className = "modal-content";
+    this.el.className = "modal-dialog";
 
-
+    this.titleElem = document.createElement("h1");
+    this.titleElem.className = "modal-title";
 
     document.addEventListener("keyup", function (e) {
       if( !dialog.isVisible() ) { return }
@@ -18,79 +21,83 @@ var ModalDialog = Backbone.View.extend({
           break;
       }
     })
+
   },
   setView: function (elem) {
-    this.view = elem
+    this.view = elem;
+    this.content.innerHTML = "";
+    this.content.appendChild( this.view );
   },
   close: function () {
-    this.el.className = this.el.className.replace("visible", "")
-    this.el.parentNode.removeChild( this.el )
-    this.viewFinder.style.marginTop = "auto"
-    this.viewFinder.style.marginBottom = "auto"
-    this.viewFinder.style.width = "auto"
-    document.body.style.overflow = "auto"
-    this.title = null
+    this.el.className = this.el.className.replace("visible", "");
+    this.el.parentNode.removeChild( this.el );
+    this.viewFinder.style.marginTop = "auto";
+    this.viewFinder.style.marginBottom = "auto";
+    this.viewFinder.style.width = "auto";
+    document.body.style.overflow = "auto";
+    this.title = null;
     if( this.options.onclose && typeof this.options.onclose === "function" ) {
       this.options.onclose();
     }
   },
   append: function () {
-    var dialog = this
-    dialog.options.parentElem.appendChild( this.el )
+    var dialog = this;
+    dialog.options.parentElem.appendChild( this.el );
   },
   show: function () {
-    this.append()
-    this.autocenter()
-    document.body.style.overflow = "hidden"
-    this.el.className += " visible"
+    this.append();
+    this.autocenter();
+    document.body.style.overflow = "hidden";
+    this.el.className += " visible";
   },
   __verticalCenter: function () {
     var height = this.viewFinder.offsetHeight,
     windowHeight = window.innerHeight,
-    margin = (windowHeight - height) / 2
-    this.viewFinder.style.marginTop = margin + "px"
-    this.viewFinder.style.marginBottom = margin + "px"
+    margin = (windowHeight - height) / 2;
+    this.viewFinder.style.marginTop = margin + "px";
+    this.viewFinder.style.marginBottom = margin + "px";
   },
   autocenter: function () {
-    this.viewFinder.style.float = "left"
+    this.viewFinder.style.float = "left";
     var style = getComputedStyle( this.viewFinder ),
-    width = this.viewFinder.offsetWidth - parseInt(style.paddingLeft) - parseInt(style.paddingRight)
-    this.viewFinder.style.float = "none"
-    this.viewFinder.style.width = width + "px"
-    this.viewFinder.style.marginLeft = "auto"
-    this.viewFinder.style.marginRight = "auto"
-    this.__verticalCenter()
+    width = this.viewFinder.offsetWidth - parseInt(style.paddingLeft) - parseInt(style.paddingRight);
+    this.viewFinder.style.float = "none";
+    this.viewFinder.style.width = width + "px";
+    this.viewFinder.style.marginLeft = "auto";
+    this.viewFinder.style.marginRight = "auto";
+    this.__verticalCenter();
   },
   isVisible: function () {
-    return this.el.className.indexOf("visible") != -1
+    return this.el.className.indexOf("visible") != -1;
   },
   setTitle: function (title) {
-    this.title = title
+    var dialog = this;
+    this.title = title;
+    if( this.el.querySelector(".modal-title") === null ) {
+      dialog.viewFinder.appendChild( this.titleElem );
+    }
+    this.titleElem.innerHTML = "";
+    this.titleElem.appendChild( document.createTextNode(this.title) );
+  },
+  appendCloseButton:function () {
+    var dialog = this;
+    if( dialog.el.querySelector(".close") !== null ) { return }
+    var close = document.createElement("a");
+    close.className = "close";
+    close.innerHTML = "x";
+    close.addEventListener("click", function () {
+      dialog.close();
+    });
+    dialog.viewFinder.appendChild(close);
   },
   render:function () {
-    var dialog = this,
-    close = document.createElement("a")
-    close.className = "close"
-    close.innerHTML = "x"
-    close.addEventListener("click", function () {
-      dialog.close()
-    })
+    var dialog = this
 
-    dialog.el.innerHTML = "";
-    dialog.viewFinder.innerHTML = ""
+    dialog.appendCloseButton();
 
-    if( this.title ) {
-      var title = document.createElement("h1")
-      title.appendChild( document.createTextNode(this.title) )
-      dialog.viewFinder.appendChild( title )
-    }
+    dialog.el.appendChild(dialog.viewFinder);
+    dialog.viewFinder.appendChild(this.content);
 
-    this.viewFinder.appendChild( this.view );
-
-    [].forEach.call([close, dialog.viewFinder], function (elem) {
-      dialog.el.appendChild(elem)
-    })
-
-    this.show()
+    dialog.show();
   }
 })

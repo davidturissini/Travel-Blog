@@ -13,3 +13,12 @@
 //= require 'public/collections'
 //= require 'public/views'
 //= require 'public/modal_dialog'
+//= require_tree ./public/views/
+
+
+window.addEventListener("DOMContentLoaded", function () {
+	new DropDown({
+		el:document.querySelector("#user-info .dropdown"),
+		control:document.querySelector("#user-info .control")
+	}).render()
+})
