@@ -235,11 +235,14 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .user-welcome #user-header .user-picture { float:left; margin-right:10px; vertical-align:middle; }
 .user-welcome #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
-.user-welcome section { margin-bottom:20px; padding:20px; background:#e1e1e1; border:1px solid #333; }
-.user-welcome section header { font-size:22px; }
-.user-welcome section table { text-align: center; }
-.user-welcome section td { padding:10px;}
 .user-welcome .remove { cursor:pointer; }
+
+.user-welcome .locations li { position:relative; }
+.user-welcome .locations li:hover .remove { display:block; }
+.user-welcome .locations li:hover .location { color:#fff; background:#069; }
+.user-welcome .locations li .remove { display:none; position:absolute; top:0; left:-24px; padding:5px; width:1em; background:#fff; }
+
+.user-welcome .locations .location { display:block; padding:5px; }
 
 /* FORMS */
 form fieldset { clear:both; padding:15px 5px; border-bottom: 1px solid #ccc; }

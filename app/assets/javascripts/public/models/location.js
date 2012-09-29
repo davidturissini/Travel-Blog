@@ -1,8 +1,13 @@
 var Location = Backbone.Model.extend({
  url: function () {
-  var str = "/" + this.user.get("slug") + "/" + this.locationType.get("slug")
-  if( this.id ) { str += "/" + this.get("slug") }
-  return str
+  var str = "/" + this.user.get("slug");
+  debugger
+  if( this.isNew() ) { 
+    str += "/locations/create";
+  } else {
+    str += "/" + this.get("slug"); 
+  }
+  return str;
  },
  jsonPrefix: false,
  toJSON: function () {

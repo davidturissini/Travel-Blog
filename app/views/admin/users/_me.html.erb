@@ -1,86 +1,22 @@
- <section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
-  <header id="user-header" class="autoclear">
-    <%= render "users/image", :user => @user %>
-    <hgroup>
-      <h1>Hello, <%= @user.name %></h1>
-      <%= render "users/location", :user => @user %>
-    </hgroup>
-  </header>
-  
-  
-  <section id="location-types">
-   <header>Your travel categories</header>
-   <table id="user-location_types" data-json="<%= @user.location_types.to_json %>">
-    <% @user.location_types.each do |type| %>
-      <tr class="location-type" data-json="<%= type.to_json %>">
-        <td>
-          <% if type.icon_url %>
-            <%= image_tag type.icon_url %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to type.title, user_location_type_path(:user_id => type.user.slug, :id => type.slug) %>
-        </td>
-        <td>
-          <%= type.locations.count %> locations
-          <%= link_to "Create new", new_location_path(type) %>
-        </td>
-        <td>
-          <a class="remove">x</a>
-        </td>
-      </tr> 
-    <% end %> 
-   </table>
-   <%= link_to "Add new location type", new_location_type_path(:user_id => @user.slug) %>
-  </section>
-  <section id="locations">
-   <header>Your trips</header>
-   <table id="user-locations" data-json="<%= @user.locations.to_json %>">
-    <% @user.locations.each do |location| %>
-      <tr class="location" data-json="<%= location.to_json  %>">
-        <td>
-          <% if location.photo_url %>
-            <%= image_tag location.photo_url %>
-          <% end %>
-        </td>
-        <td>
-          <%= link_to location.title, location_path(location) %> 
-        </td>
-        <td>
-          <%= location.journal_entries.count %> journal entries
-        </td>
-        <td>
-          <a class="remove">x</a>
-        </td>
-      </tr>
-    <% end %> 
-   </table>
-  </section>
- </section>
+<section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
+    <header id="user-header">
+        <%= render "users/image", :user => @user %>
+        <hgroup>
+            <h1>Hello, <%= @user.name %></h1>
+            <%= render "users/location", :user => @user %>
+        </hgroup>
+    </header>
+
+    <section id="location-form">
+        <%= render "admin/locations/form", :location => Location.new, :user => @user %>
+    </section>
+
+    <section class="left clear-left">
+        <header>Your Travels</header>
+        <%= render "admin/users/locations", :user => @user %>
+    </section>
+</section>
 
 <% content_for :scripts_footer do %>
   <%= javascript_include_tag "admin/admin" %>
-  <script>
-    var user = User.createFromDataAttribute( document.getElementById("user") )
-    new UserSlugField({
-      model:user,
-      el:document.querySelector("#user .user-slug")
-    }).render()
-
-    user.on("change", function (model, options) {
-      if(options.changes.slug) {
-        var mirror = document.querySelector("#slug-mirror")
-        mirror.innerHTML = model.get("slug")
-      }
-    })
-
-    document.querySelector("#user input[type=submit]").addEventListener("click", function (e) {
-      e.preventDefault()
-      user.save({}, {
-        success:function () {
-          window.location.href = "/"
-        }
-      })
-    })
-  </script>
 <% end %>

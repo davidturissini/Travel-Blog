@@ -1,0 +1,12 @@
+<% if @user.locations.length > 0 %>
+    <ul id="user-locations" class="locations" data-json="<%= @user.locations.to_json %>">
+        <% @user.locations.each do |location| %>
+            <li data-json="<%= location.to_json  %>">
+                <%= link_to location.title, location_path(location), :class => "location" %>
+                <a class="remove">x</a>
+            </li>
+        <% end %> 
+    </ul>
+<% else %>
+    You have no locations
+<% end %>

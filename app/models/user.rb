@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   has_many :location_types
-  has_many :locations, :through => :location_types
+  has_many :locations
   belongs_to :home_country, :class_name => "Country", :foreign_key => :country_id
   has_many :countries, :through => :locations
   has_many :realm_accounts
@@ -81,7 +81,6 @@ class User < ActiveRecord::Base
    user = User.create(options)
    user.salt = Digest::SHA1.hexdigest("#{user.id}#{Time.now.to_i}")
    user.save!(:validate => false)
-   LocationType.create_defaults({:user => user})
    user
   end
 

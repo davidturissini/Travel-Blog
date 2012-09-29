@@ -1,9 +1,8 @@
 class Location < ActiveRecord::Base
- belongs_to :location_type
+ belongs_to :user
  belongs_to :country
- has_one :user, :through => :location_type
  has_many :journal_entries, :order => "day ASC"
- validates :location_type_id, :slug, :title, :presence => true
+ validates :slug, :title, :presence => true
  
  def self.random limit = 3
   limit(limit).order("RAND()").where("has_visited" => true)
