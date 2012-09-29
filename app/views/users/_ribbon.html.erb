@@ -11,7 +11,7 @@
 		</a>
 	    <nav class="dropdown" id="user-nav">
 	    	<ul>
-				<% current_user.visited_locations.each do |location| %>
+				<% current_user.locations.each do |location| %>
 					<li>
 						<%= link_to location_path(location), {:class=>"autoclear"} do %>
 							<h2><%= location.title %></h2>

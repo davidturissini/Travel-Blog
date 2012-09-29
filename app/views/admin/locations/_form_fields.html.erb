@@ -53,10 +53,6 @@
     <a class="show-map">Change location</a>
     <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
   </fieldset>
-  <fieldset>
-    <%= check_box "location", "has_visited", :checked => location && location.has_visited === true ? "checked" : "", :id => "location-has_visited" %>
-    <label for="location-visited">Visited?</label>
-  </fieldset>
   <input type="submit" value="Save" />
   <br class="clear" />
 </div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120929061023) do
+ActiveRecord::Schema.define(:version => 20120929064208) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -31,7 +31,6 @@ ActiveRecord::Schema.define(:version => 20120929061023) do
     t.text     "summary"
     t.string   "flickr_set"
     t.string   "slug"
-    t.boolean  "has_visited"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.float    "latitude"

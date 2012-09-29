@@ -7,9 +7,7 @@
         </hgroup>
     </header>
 
-    <section id="location-form">
-        <%= render "admin/locations/form", :location => Location.new, :user => @user %>
-    </section>
+    <%= render "admin/locations/form", :location => Location.new, :user => @user %>
 
     <section class="left clear-left">
         <header>Your Travels</header>

@@ -244,6 +244,10 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 .user-welcome .locations .location { display:block; padding:5px; }
 
+.user-welcome #location-form { margin-left:210px; padding:20px; border:1px solid #ccc; border-radius:5px; }
+.user-welcome #location-form fieldset { clear:none; }
+.user-welcome #location-form .title { width:655px; }
+
 /* FORMS */
 form fieldset { clear:both; padding:15px 5px; border-bottom: 1px solid #ccc; }
 form fieldset:nth-child(even) { background: #f1f1f1; }

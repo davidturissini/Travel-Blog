@@ -5,7 +5,7 @@ class Location < ActiveRecord::Base
  validates :slug, :title, :presence => true
  
  def self.random limit = 3
-  limit(limit).order("RAND()").where("has_visited" => true)
+  limit(limit).order("RAND()")
  end
 
  def country_name
@@ -17,7 +17,7 @@ class Location < ActiveRecord::Base
  end
 
  def self.most_recent_published
-   self.joins(:journal_entries, :location_type, :user).where("locations.has_visited = true").order("journal_entries.day DESC").group("journal_entries.location_id")
+   self.joins(:journal_entries, :location_type, :user).order("journal_entries.day DESC").group("journal_entries.location_id")
  end
 
  def self.with_recent_entries limit = 10
