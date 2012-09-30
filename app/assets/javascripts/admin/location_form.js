@@ -8,19 +8,16 @@ var LocationForm = Backbone.View.extend({
     })
     
     
-    form._bindModelChanges()
+    form._bindModelChanges();
 
-    this.serverMessages = document.getElementById("server-messages")
+    this.serverMessages = document.getElementById("server-messages");
 
-    var fields = ["description", "summary", "title", "flickr_set", "kml_url"]
+    var fields = ["description", "summary", "title", "kml_url"]
      fields.forEach(function (field) {
       document.getElementById("location-" + field).addEventListener("change", function (e) {
-       loc.set(field, e.currentTarget.value)
+       loc.set(field, e.currentTarget.value);
       })
 
-      document.getElementById("location-has_visited").addEventListener("change", function (e) {
-       loc.set({has_visited: e.currentTarget.checked})
-      })
     })
  
    },
@@ -31,14 +28,6 @@ var LocationForm = Backbone.View.extend({
      if( options.changes.photo_url ) {
        var photoSection = document.getElementById("location-photo")
        photoSection.getElementsByTagName("img")[0].setAttribute("src", this.get("photo_url")) 
-     }
-
-     if( options.changes.has_visited ) { 
-      if( loc.get("has_visited") ) {
-      document.getElementById("location-has_visited").setAttribute("checked", "checked")
-      } else {
-        document.getElementById("location-has_visited").removeAttribute("checked")
-      }
      }
  
      if( options.changes.flickr_set ) { 
@@ -106,14 +95,13 @@ var LocationForm = Backbone.View.extend({
         li.appendChild(img) 
         photoUl.appendChild(li)
         li.addEventListener("click", function () {
-         loc.set({photo_url: e.url()})
-         modal.close()
+         loc.set({photo_url: e.url()});
+         modal.close();
         })
        })
-       form.modal.setView( flickrPhotos )
-       form.modal.setTitle("Select a photo for " + loc.get("title"))
-       form.modal.render()
-
+       form.modal.setView( flickrPhotos );
+       form.modal.setTitle("Select a photo for " + loc.get("title"));
+       form.modal.render();
       }
      }
     })
@@ -121,10 +109,10 @@ var LocationForm = Backbone.View.extend({
    successMessage:function (message) {
     var success = document.createElement("p"),
     text = document.createTextNode(message)
-    success.className = "success"
-    success.appendChild(text)
-    this.serverMessages.innerHTML = ""
-    this.serverMessages.appendChild(success)
+    success.className = "success";
+    success.appendChild(text);
+    this.serverMessages.innerHTML = "";
+    this.serverMessages.appendChild(success);
    },
    errorMessage: function (message) {
     var error = document.createElement("p"),
@@ -164,11 +152,13 @@ var LocationForm = Backbone.View.extend({
     var form = this,
     loc = form.model
 
-    form.cityField = new CityField({
-        model: loc,
-        map: form.map,
-        input: document.getElementById("location-city")
-      }).render()
+    form.el.querySelector("#location-photo figcaption").addEventListener("click", function () {
+      form.showPhotos();
+    })
+
+    form.el.querySelector(".show-map").addEventListener("click", function () {
+      form.showMap();
+    })
 
     form.stateField = new StateField({
           model: loc,
@@ -180,25 +170,135 @@ var LocationForm = Backbone.View.extend({
           model: loc
         }).render();
 
-    form.el.querySelector("#location-photo figcaption").addEventListener("click", function () {
-      form.showPhotos()
-    })
 
-    form.el.querySelector(".show-map").addEventListener("click", function () {
-      form.showMap()
-    })
+    var PhotoUploader = Backbone.View.extend({
+      initialize:function () {
+        this.files = [];
+      },
+      __updateProgress:function (progressEvent, index) {
+        var progressElem = document.getElementById("image-preview-" + index).getElementsByTagName("progress")[0],
+        progress = (progressEvent.loaded / progressEvent.total) * 100;
+        if( progressElem.getAttribute("value") === progressElem.getAttribute("max") ) {
+          progressElem.setAttribute("value", 0);
+        }
+        progressElem.setAttribute("value", progress);
+      },
+      uploadFiles:function () {
+        var uploader = this;
+
+        function upload (index) {
+          var reader = new FileReader(),
+          photo = uploader.files[index];
+          if( !photo ) { return }
+
+          reader.onprogress = function (f) {
+            uploader.__updateProgress(f, index);
+          }
+
+          reader.onload = function (f) {
+              $.ajax({
+                url:"/me/us-101/photos",
+                data:{
+                  photo:f.target.result
+                },
+                type:"POST",
+                complete:function () {
+                  upload( index + 1 )
+                },
+                success:function (e) {
+                  debugger
+                }
+              })
+          }
+
+          reader.readAsDataURL( photo );
+        }
+        upload(0)
+      },
+      previewFiles:function () {
+        var uploader = this;
+
+        var loadPreview = function (index) {
+            var photo = uploader.files[index];
+            if( !photo ) { return }
+
+            var div = document.createElement("div"),
+            canvas = document.createElement("canvas"),
+            progress = document.createElement("progress")
+
+            progress.setAttribute("max", 100);
+            progress.setAttribute("value", 0);
+
+            div.className = "image-upload";
+            div.id = "image-preview-" + index;
+            
+            div.appendChild(progress);
+
+            uploader.options.previewElem.appendChild(div);
+
+            var originalImage = document.createElement("img"),
+            s = window.URL.createObjectURL(photo)
+
+            originalImage.onload = function () {
+              
+              var ctx = canvas.getContext("2d"),
+              ratio = originalImage.height / originalImage.width,
+              width = 125, height = width * ratio;
+
+              canvas.height = height;
+              canvas.width = width;
+              ctx.drawImage(originalImage, 0, 0, width, height);
+              loadPreview( index + 1 );
+            }
+            div.appendChild(canvas);
+            originalImage.src = s;
+            
+          };
+
+          loadPreview( 0 )
+      },
+      __setupInput:function () {
+        var uploader = this;
+
+        uploader.el.addEventListener("change", function (e) {
+          var i, files = e.currentTarget.files;
+          uploader.files = files;
+
+          if( uploader.options.previewElem ) {
+            uploader.previewFiles();
+          }
+        });
+      },
+      render:function () {
+        window.URL = window.URL || window.webkitURL;
+        this.__setupInput();
+      }
+    });
+
+    var photoUploader = new PhotoUploader({
+      model:this.model,
+      el:this.el.querySelector(".photo_upload"),
+      previewElem:this.el.querySelector("#photo-container")
+    });
+
+    photoUploader.render();
 
     document.getElementById("location-form").onsubmit = function (e) {
-     e.preventDefault()
-     loc.jsonPrefix = true
+     e.preventDefault();
+     loc.jsonPrefix = true;
+
+     photoUploader.uploadFiles();
+/*
      loc.save({}, {
       success:function () {
-        form.successMessage(loc.get("title") + " successfully saved.")
+        form.successMessage(loc.get("title") + " successfully saved.");
       },
       error: function () {
-        form.errorMessage("There was a problem with your request")
+        form.errorMessage("There was a problem with your request");
       }
      })
+
+     */
     }
    }
   })

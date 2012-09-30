@@ -7,14 +7,22 @@
         </hgroup>
     </header>
 
-    <%= render "admin/locations/form", :location => Location.new, :user => @user %>
-
     <section class="left clear-left">
         <header>Your Travels</header>
         <%= render "admin/users/locations", :user => @user %>
     </section>
+
+    <section id="new-location">
+        <h1>Add a new trip</h1>
+        <%= render "admin/locations/form", :location => Location.new, :user => @user %>
+    </section>
+    
 </section>
 
 <% content_for :scripts_footer do %>
   <%= javascript_include_tag "admin/admin" %>
+  <script>
+    window.addEventListener("DOMContentLoaded", function () {
+    });
+  </script>
 <% end %>

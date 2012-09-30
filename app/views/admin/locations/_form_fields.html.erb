@@ -31,14 +31,9 @@
     </div>
   </fieldset>
   <fieldset id="location-mashup">
-   <label>Flickr Set</label>
-   <%= tag :input, 
-    :type => "text", 
-    :id => "location-flickr_set", 
-    :placeholder => "Flickr", 
-    :value => location.flickr_set, 
-    :name => "location[flickr_set]" %>
-    <p class="note">The ID of the flickr set with pictures of this trip.</p>
+   <label>Photos</label>
+    <div id="photo-container" class="autoclear"></div>
+    <input type="file" name="myfiles" multiple="multiple" class="photo_upload" />
   </fieldset>
   <fieldset>
     <label>KML Url</label>

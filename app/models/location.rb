@@ -2,7 +2,8 @@ class Location < ActiveRecord::Base
  belongs_to :user
  belongs_to :country
  has_many :journal_entries, :order => "day ASC"
- validates :slug, :title, :presence => true
+ has_many :photos
+ validates :slug, :title, :latitude, :longitude, :presence => true
  
  def self.random limit = 3
   limit(limit).order("RAND()")
@@ -55,7 +56,10 @@ class Location < ActiveRecord::Base
 
  def teaser
   t = summary
-  t = Sanitize.clean(journal_entries.where("body IS NOT NULL").order("day ASC").first.body) if t == "" || t.nil?
+  if t == "" || t.nil?
+    entry = journal_entries.where("body IS NOT NULL").order("day ASC").first
+    t = Sanitize.clean(entry.body) if !entry.nil?
+  end
   t
  end
 

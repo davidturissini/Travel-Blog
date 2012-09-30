@@ -185,6 +185,12 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #location-form #flickr-photos ul { max-height:400px; overflow-y:scroll; text-align:center; }
 #location-form #flickr-photos li { display:inline-block; padding:0 10px 10px 0; }
 
+#location-form #photo-container .image-upload { position:relative; float:left; margin-right:20px; margin-bottom:10px; width:125px; border:2px solid #ccc; }
+#location-form #photo-container .image-upload canvas { display:block; }
+#location-form #photo-container progress { position:absolute; left:0; bottom:0; width:100%; }
+#location-form #photo-container progress[value='0'],
+#location-form #photo-container progress[value='100'] { display:none; }
+
 /* JOURNAL ENTRY FORM */
 
 #journal-entry-fields .journal-entry-title { display:block; width:100%; font-size:22px; }
@@ -244,7 +250,8 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 .user-welcome .locations .location { display:block; padding:5px; }
 
-.user-welcome #location-form { margin-left:210px; padding:20px; border:1px solid #ccc; border-radius:5px; }
+.user-welcome #new-location { margin-left:210px; padding:20px; border:1px solid #ccc; border-radius:5px; }
+.user-welcome #new-location h1 { font-size:2.4em; cursor:pointer; }
 .user-welcome #location-form fieldset { clear:none; }
 .user-welcome #location-form .title { width:655px; }
 
