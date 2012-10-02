@@ -3,7 +3,27 @@ class Location < ActiveRecord::Base
  belongs_to :country
  has_many :journal_entries, :order => "day ASC"
  has_many :photos
- validates :slug, :title, :latitude, :longitude, :presence => true
+ has_many :statuses, :dependent => :destroy
+ validates :slug, :country_id, :presence => true
+
+  def to_s 
+    return title if title
+    return geo_string
+  end
+
+  def geo_string
+    s = ""
+      if( !city.blank? && state )
+          s = "#{city}, #{state}"
+      elsif (city.blank? && state && country)
+          s = "#{state}, #{country_name}"
+      elsif (!city.blank? && country)
+          s = "#{city}, #{country_name}"
+      elsif country
+          s = country_name
+      end
+      s
+  end
  
  def self.random limit = 3
   limit(limit).order("RAND()")
@@ -47,15 +67,11 @@ class Location < ActiveRecord::Base
  end
 
  def photos
-  return [] if !flickr_set
-  Rails.cache.fetch("location-#{id}-photos", :expires_in => 1.minute) do
-    photos = flickr.photosets.getPhotos(:photoset_id => flickr_set)
-    photos['photo']
-  end
+  return []
  end
 
  def teaser
-  t = summary
+  t = ""
   if t == "" || t.nil?
     entry = journal_entries.where("body IS NOT NULL").order("day ASC").first
     t = Sanitize.clean(entry.body) if !entry.nil?

@@ -3,7 +3,7 @@ var AdminTemplate = Template.extend({
 		var template = this;
 		callbacks = callbacks || {};
 		$.ajax({
-			url:template.get("user").get("slug") + "/template/" + template.id,
+			url:template.get("user").url({includeFormat:false}) + "/template/" + template.id,
 			success:function (e) {
 				var div = document.createElement("div");
 				div.innerHTML = e;

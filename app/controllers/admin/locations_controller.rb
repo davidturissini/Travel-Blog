@@ -1,7 +1,6 @@
 class Admin::LocationsController < Admin::AdminController
 	def destroy
-	   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
-	   @location = @location_type.locations.find_by_slug(params[:id])
+	   @location = current_user.locations.find_by_slug(params[:location_id])
 	   @location.destroy
 	   respond_to do |format|
 	    format.html { redirect_to :controller => "location_types", :action => "show" }
@@ -16,12 +15,11 @@ class Admin::LocationsController < Admin::AdminController
 	 end
 
 	 def edit
-	   @location_type = current_user.location_types.find_by_slug(params[:location_type_id])
-	   @location = @location_type.locations.find_by_slug(params[:id])
+	   @location = current_user.locations.find_by_slug(params[:location_id])
 	 end
 
 	 def update
-	   @location = current_location_type.locations.find_by_slug(params[:id])
+	   @location = current_user.locations.find_by_slug(params[:location_id])
 	   @location.update_attributes!(params[:location])  
 	   respond_to do |format|
 	    format.html { redirect_to request.referrer }
@@ -30,15 +28,16 @@ class Admin::LocationsController < Admin::AdminController
 	 end
 
 	 def create
-	 	user = User.find_by_slug(params[:user_id])
-	   p_slug = params[:location][:slug]
-	   p_slug = params[:location][:title] if p_slug.nil?
-	   params[:location][:slug] = String.slugify( p_slug )
-	   params[:location][:user_id] = user.id
-	   @location = Location.create!( params[:location] )
-	   respond_to do |format| 
-	    format.html { redirect_to request.referrer }
-	    format.json { render :json => @location }
-	   end
+		@location = Location.new( params[:location] )
+		p_slug = params[:location][:slug]
+		p_slug = params[:location][:title] if p_slug.nil?
+		p_slug = @location.to_s if p_slug.nil?
+		@location.slug = String.slugify( p_slug )
+		@location.user = current_user
+		@location.save!
+		respond_to do |format| 
+			format.html { redirect_to request.referrer }
+			format.json { render :json => @location }
+		end
 	 end
 end

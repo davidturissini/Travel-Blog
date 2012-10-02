@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
   has_many :location_types
   has_many :locations
+  has_many :statuses, :through => :locations
   belongs_to :home_country, :class_name => "Country", :foreign_key => :country_id
   has_many :countries, :through => :locations
   has_many :realm_accounts

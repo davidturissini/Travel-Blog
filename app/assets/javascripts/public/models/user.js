@@ -2,7 +2,7 @@ var User = Backbone.Model.extend({
  jsonPrefix: false,
  toJSON: function () {
   if( this.jsonPrefix ) {
-    return { user: this.attributes}
+    return { user: this.attributes }
   } else {
     return this.attributes
   }
@@ -11,8 +11,13 @@ var User = Backbone.Model.extend({
   return new google.maps.LatLng(user.get("latitude"), user.get("longitude"))
  },
  url: function (e) {
+  e = e || {}
   if( this.isCurrentUser() ) {
-    return "/me?format=json"
+    var url = "/me"
+    if( e.includeFormat !== false ) {
+      url += "?format=json"
+    }
+    return url;
   }
   return "/" + this.get("slug")
  } ,

@@ -1,55 +1,17 @@
 <div id="location-fields" data-user="<%= user.to_json  %>" data-json="<%= location.to_json %>" class="location">
   <p id="server-messages" class="messages"></p>
-  <fieldset class="autoclear">
-    <figure id="location-photo">
-      <img src="<%= location.photo_url %>" />
-      <%= tag :input, :value => location.photo_url, :name => "location[photo_url]", :type => "hidden" %>
-      <figcaption>Change Photo</figcaption>
-    </figure>
-    <fieldset>
-      <%= tag :input, 
-        :id => "location-title", 
-        :class => "title",
-        :placeholder => "Title", 
-        :value => location.title, 
-        :name => "location[title]" %>
-      <p class="note">The title of your trip. This will be the text that links to this trip across the site.</p>
-    </fieldset>
-  </fieldset>
-  <fieldset>
-    <div class="field">
-      <label>Description</label>
-      <input type="text" id="location-description" value="<%= location.description %>" />
-      <p class="note">This will appear as the heading for your journal entries</p>
-    </div>
-  </fieldset>
-  <fieldset>
-    <div class="field">
-      <label for="location-summary">Summary</label>
-      <p class="note">A short description summarizing your trip</p>
-      <textarea id="location-summary"><%= location.summary %></textarea>
-    </div>
-  </fieldset>
-  <fieldset id="location-mashup">
-   <label>Photos</label>
-    <div id="photo-container" class="autoclear"></div>
-    <input type="file" name="myfiles" multiple="multiple" class="photo_upload" />
-  </fieldset>
-  <fieldset>
-    <label>KML Url</label>
-    <%= tag :input, :type => "text", :placeholder => "KML", :id => "location-kml_url", :value => location ? location.kml_url : "", :name => "location[kml_url]" %>
-    <p class="note">Upload your tracks to Google Maps and display them on the site</p>
-  </fieldset>
+  <section id="location-photos">
+    <div id="photo-container"></div>
+    <input type="file" class="photo_upload" multiple="multiple" />
+  </section>
   <fieldset id="location-geo">
-    <label>Location</label>
     <p id="location-city" class="city"><%= location.city %></p>
     <p id="location-state" class="state"><%= location.state %></p>
     <%= render "global/country_field", :object => location, :object_type => "location" %>
-    <a class="show-map">Change location</a>
+    <a class="show-map">New location</a>
     <p class="note">Where was your trip? You can fill in the data or use the map to select.</p>
   </fieldset>
   <input type="submit" value="Save" />
-  <br class="clear" />
 </div>
 
 <% content_for :scripts_footer do %>

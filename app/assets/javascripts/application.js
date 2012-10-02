@@ -14,10 +14,13 @@
 //= require_tree ./public/views/
 //= require 'public/views'
 
+window.TA = {
+	countries: new CountryCollection()
+};
 
 window.addEventListener("DOMContentLoaded", function () {
 	new DropDown({
 		el:document.querySelector("#user-info .dropdown"),
 		control:document.querySelector("#user-info .control")
-	}).render()
+	}).render();
 })

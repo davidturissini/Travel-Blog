@@ -19,4 +19,10 @@ module LocationHelper
  def location_image loc
  	image loc.photo_url, { :title => loc.title, :alt => loc.title }
  end
+
+ def location_string_for_status location
+ 	s = ""
+ 	s = "#{s} #{link_to location.title, location_path(location)} in " if location.title
+ 	s += link_to location.geo_string, location_path(location)
+ end
 end

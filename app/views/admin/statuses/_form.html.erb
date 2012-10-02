@@ -1,0 +1,35 @@
+<form id="status-form">
+	<input type="text" name="text" class="text" autocomplete="off" placeholder="Share your travel status" />
+	<select class="locations">
+		<option>Select a location</option>
+		<option value="__NEW__">Add new location</option>
+		<option>-----------------</option>
+		<% user.locations.each do |location| %>
+			<option value="<%= location.to_json %>"><%= location.to_s %></option>
+		<% end %>
+	</select>
+	<input type="submit" class="save" value="Post" />
+</form>
+
+<% content_for :scripts_footer do %>
+	<%= javascript_include_tag "admin/admin" %>
+	<script>
+		window.addEventListener("DOMContentLoaded", function () {
+			var userStatus = new Status(),
+			location = new Location();
+			location.setUser(TA.currentUser);
+
+			var locationMap = new LocationMap({
+				model:location
+			}),
+			form = new StatusForm({
+				el:document.getElementById("status-form"),
+				model:userStatus,
+				locationMap:locationMap
+			}).render();
+
+			userStatus.setUser( TA.currentUser );
+
+		});
+	</script>
+<% end %>

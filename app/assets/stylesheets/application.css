@@ -243,17 +243,20 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
 .user-welcome .remove { cursor:pointer; }
 
-.user-welcome .locations li { position:relative; }
-.user-welcome .locations li:hover .remove { display:block; }
-.user-welcome .locations li:hover .location { color:#fff; background:#069; }
-.user-welcome .locations li .remove { display:none; position:absolute; top:0; left:-24px; padding:5px; width:1em; background:#fff; }
+.user-welcome #user-locations { margin-top:20px; padding-top:20px; width:200px; border-top:1px solid #ccc; }
+.user-welcome #user-locations h1 { padding-left:5px; font-size:1.253em;}
+.user-welcome #user-locations .locations li { position:relative; }
+.user-welcome #user-locations .locations li:hover .location-link { color:#fff; background:#069; }
+.user-welcome #user-locations .locations li .location-link { display:block; padding:5px; }
 
-.user-welcome .locations .location { display:block; padding:5px; }
+.user-welcome #user-locations .locations li:hover .toolbar { display:block; }
 
-.user-welcome #new-location { margin-left:210px; padding:20px; border:1px solid #ccc; border-radius:5px; }
-.user-welcome #new-location h1 { font-size:2.4em; cursor:pointer; }
-.user-welcome #location-form fieldset { clear:none; }
-.user-welcome #location-form .title { width:655px; }
+
+.user-welcome #status-form { margin-left:215px; padding:10px; border:1px solid #ccc; border-radius:5px; text-align:right; font-size:2em; }
+.user-welcome #status-form .text { display:block; margin-bottom:10px; width:680px; }
+.user-welcome #status-form .save { border-radius:0; }
+
+.user-welcome #user-statuses { margin-top:50px; margin-left:215px; padding:25px 0 0 25px; overflow:hidden; }
 
 /* FORMS */
 form fieldset { clear:both; padding:15px 5px; border-bottom: 1px solid #ccc; }
@@ -305,6 +308,27 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 #user-photo-modal .save { clear:both; float:right; margin:20px 20px 0 0; font-size:2em; }
 
 #user-location-modal .save { float:right; margin-top:20px; font-size:2em; }
+
+/* STATUSES */
+.status { position:relative; margin-bottom:40px; padding:10px 10px 10px 40px; border:1px solid #ccc; border-radius:10px; }
+.status img { position:absolute; left:-25px; top:-25px; border-radius:10px; }
+.status h1 { margin-bottom:10px; font-size:1.647em; }
+.status p { display:inline; font-size:.9em; }
+.status .location { display:inline; float:right; font-size:.9em; }
+.status:hover .toolbar { display:block; right:0; }
+
+/* TOOLBAR */
+.toolbar { display:none; position:absolute; z-index:100; top:0; right:-32px; background:#fff; }
+.toolbar .edit { background:url(/assets/pencil_icon.png) top left no-repeat; }
+.toolbar .remove { background:url(/assets/x_icon.gif) top left no-repeat; }
+.toolbar li { display:inline-block; }
+.toolbar li a { display:inline-block; width:16px; height:16px; text-indent:-999px; background-color:transparent; cursor:pointer; }
+
+
+/* LOCATION MAP */
+.modal-dialog .viewfinder .location-map .title { padding:5px; width:665px; font-size:1.362em; }
+.modal-dialog .viewfinder .location-map h1 { margin:10px 0 0; height:15px; font-size:.9em; text-align:right; }
+.modal-dialog .viewfinder .location-map .save { float:right; margin:10px 0 0; }
 
 /* MODAL DIALOG */
 .modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100; opacity:0; background:rgba(255, 255, 255, .8); 

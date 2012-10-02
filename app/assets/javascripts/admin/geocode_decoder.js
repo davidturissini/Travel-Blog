@@ -8,7 +8,18 @@ function GeocodeDecoder () {
 				var data = __parse( e )
 				if( callbacks.success ) {
 					callbacks.success({
-						data:data
+						data:data,
+						geoString:function () {
+				    		if( data.city && data.state && data.country ) {
+								return data.city + ", " + data.state + ", " + data.country;
+							} else if( data.city && data.country) {
+								return data.city + ", " + data.country;
+							} else if( data.state && data.country ) {
+								return data.state + ", " + data.country;
+							} else if ( data.country ) {
+								return data.country
+							}
+				    	}
 					})
 				}
 			}

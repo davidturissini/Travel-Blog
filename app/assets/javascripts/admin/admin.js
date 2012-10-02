@@ -1,6 +1,5 @@
 //= require_tree .
 
-window.TA = window.TA || {};
 
 window.addEventListener("DOMContentLoaded", function () {
 	var userLocationButtons = document.getElementsByClassName("user-location-button"), 

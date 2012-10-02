@@ -21,22 +21,12 @@
 		</ul>
 	</section>
 	<section id="user-travel">
-		<% @user_locations.each do |location| %>
-			<article class="location rollup">
-				<%= link_to location_path(location), { :class => "autoclear" } do %>
-					<img src="<%= static_map_url location.latitude, location.longitude, :width => 90, :height => 90 %>" class="static-map right" />
-					<% if location.photo_url %>
-						<%= image_tag location.photo_url, :width => 150, :class => "location-photo left framed" %>
-					<% end %>
-					<h1 class="location-title"><%= location.title %></h1>
-					<% if location.teaser %>
-						<p class="location-teaser">
-							<%= truncate(location.teaser.html_safe, :length => 300) %>
-							<span class="more">Continue Reading</span>
-						</p>
-					<% end %>
-				<% end %>
-			</article>
-		<% end %>
+		<ul>
+            <% @user.statuses.order("created_at DESC").each do |status| %>
+                <li>
+                    <%= render "statuses/status", :status => status %>
+                </li>
+            <% end %>
+        </ul>
 	</section>
 </section>

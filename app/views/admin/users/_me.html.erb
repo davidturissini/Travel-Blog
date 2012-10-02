@@ -1,20 +1,26 @@
 <section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
     <header id="user-header">
         <%= render "users/image", :user => @user %>
-        <hgroup>
-            <h1>Hello, <%= @user.name %></h1>
-            <%= render "users/location", :user => @user %>
-        </hgroup>
+        <h1>Hello, <%= @user.name %></h1>
     </header>
 
-    <section class="left clear-left">
-        <header>Your Travels</header>
+    <section class="left clear-left" id="user-locations">
+        <h1>Your travels</h1>
         <%= render "admin/users/locations", :user => @user %>
     </section>
 
-    <section id="new-location">
-        <h1>Add a new trip</h1>
-        <%= render "admin/locations/form", :location => Location.new, :user => @user %>
+    <section id="new-status">
+        <%= render "admin/statuses/form", :user => @user %>
+    </section>
+
+    <section id="user-statuses">
+        <ul>
+            <% @user.statuses.order("created_at DESC").each do |status| %>
+                <li>
+                    <%= render "statuses/status", :status => status %>
+                </li>
+            <% end %>
+        </ul>
     </section>
     
 </section>
@@ -23,6 +29,47 @@
   <%= javascript_include_tag "admin/admin" %>
   <script>
     window.addEventListener("DOMContentLoaded", function () {
+        var locationMap = new LocationMap();
+        [].forEach.call(document.querySelectorAll("#user-locations .location"), function (elem) {
+            var location = Location.createFromDataAttribute(elem);
+            location.setUser(TA.currentUser);
+            location.loadCountry({
+                success:function () {
+                    var editElem = elem.querySelector(".edit");
+                    editElem.addEventListener("click", function (e) {
+                        e.preventDefault();
+                        locationMap.setModel( location );
+                        locationMap.options.onsave = function () {
+                            location.save({});
+                        }
+                        locationMap.render();
+                    });
+
+                    var removeElem = elem.querySelector(".remove");
+                    removeElem.addEventListener("click", function (e) {
+                        e.stopPropagation();
+                        if( confirm("Delete " + location.geoString() + "?"))
+                        location.destroy({
+                            success:function () {
+                                elem.parentNode.removeChild(elem);
+                            }
+                        })
+                    })
+                }
+            });
+        });
+
+        [].forEach.call(document.querySelectorAll("#user-statuses .status"), function (elem) {
+            var status = Status.createFromDataAttribute(elem)
+            status.setUser(TA.currentUser);
+            elem.querySelector(".remove").addEventListener("click", function () {
+                status.destroy({
+                    success:function () {
+                        elem.parentNode.removeChild(elem);
+                    }
+                })
+            })
+        })
     });
   </script>
 <% end %>

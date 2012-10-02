@@ -1,7 +1,9 @@
 class RemovingLocationTypes < ActiveRecord::Migration
   def up
   	Location.all.each do |location|
-  		user = location.user
+      location_type_id = location.location_type_id
+      location_type = LocationType.find(location_type_id)
+      user = location_type.user
   		location.user_id = user.id
   		location.save!
   	end
