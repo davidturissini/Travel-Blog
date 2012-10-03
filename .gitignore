@@ -8,3 +8,4 @@ config/database.yml
 config/environment.rb
 ./Gemfile.lock
 config/omniauth_config.yml
+public/user_images/*
