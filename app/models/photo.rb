@@ -1,3 +1,12 @@
 class Photo < ActiveRecord::Base
-	belongs_to :location
+	has_and_belongs_to_many :locations
+	has_one :user, :through => :locations
+
+	def url
+		"/user_images/#{user.slug}/photos/#{slug}.jpg"
+	end
+
+	def user
+		@user || locations.first.user
+	end
 end

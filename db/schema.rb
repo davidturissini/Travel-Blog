@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120930215302) do
+ActiveRecord::Schema.define(:version => 20121003071355) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -41,11 +41,17 @@ ActiveRecord::Schema.define(:version => 20120930215302) do
     t.string   "photo_url"
   end
 
+  create_table "locations_photos", :id => false, :force => true do |t|
+    t.integer "location_id"
+    t.integer "photo_id"
+  end
+
   create_table "photos", :force => true do |t|
     t.string  "title"
     t.string  "description"
     t.integer "width"
     t.integer "height"
+    t.string  "slug"
   end
 
   create_table "realm_accounts", :force => true do |t|

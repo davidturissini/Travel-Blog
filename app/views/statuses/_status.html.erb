@@ -4,7 +4,7 @@
     <% end %>
     <h1 class="text"><%= status.text %></h1>
     <p class="timestamp"><%= time_ago_in_words(status.created_at) %> ago</p>
-    <h5 class="location"><%= location_string_for_status(status.location).html_safe %></h5>
+    <h5 class="location"><%= location_string(status.location).html_safe %></h5>
     <% if current_user.owns?(status) %>
     	<div class="toolbar">
     		<ul>

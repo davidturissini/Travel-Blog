@@ -24,6 +24,9 @@ var User = Backbone.Model.extend({
  isCurrentUser:function () {
   if( !TA.currentUser ) { return false }
   return this.get("id") == TA.currentUser.get("id");
+ },
+ isAnonymous:function () {
+  return this.get("token") == "anonymous";
  }
 })
 

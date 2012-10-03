@@ -24,7 +24,7 @@ var PhotoUploader = Backbone.View.extend({
 
           reader.onload = function (f) {
               $.ajax({
-                url:"/me/us-101/photos",
+                url:uploader.model.url() + "/photos",
                 data:{
                   photo:f.target.result
                 },

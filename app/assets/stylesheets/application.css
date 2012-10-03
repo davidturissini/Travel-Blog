@@ -14,6 +14,9 @@ br.clear { height:0; line-height:0 }
 .right { float:right; }
 .clear-right { clear:right; }
 
+.rounded { border-radius:5px; }
+.rounded-large { border-radius:10px; }
+
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 #container { margin:0px auto 0; width:960px; background:transparent; }
@@ -102,18 +105,10 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 /* LOCATION DETAIL PAGE */
 .locations-show #content { width:920px; }
 .locations-show #location { position:relative; margin:0 auto 20px; padding-bottom:20px; }
-.locations-show #location header { margin-bottom:20px; text-align:center; }
-.locations-show #location-title { position:relative; font-size:38px; }
+.locations-show #location header { margin-bottom:20px; }
+.locations-show h1 { position:relative; font-size:1.847em; }
+.locations-show h1 img { vertical-align:middle; }
 .locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
-
-
-/* USER ASIDE */
-.locations-show #user { margin:0 0 20px; border-bottom:1px solid #ccc; }
-.locations-show #user:hover { border-color:#069; }
-.locations-show #user a { display:block; padding:13px 20px 10px; text-align:center; }
-.locations-show #user h1 { display:inline; }
-.locations-show #user img { margin:0 10px 0 0; padding:5px; background:#fff; border:1px solid #ccc; border-radius:5px; vertical-align:middle; }
-
 
 .locations-show #location #photos { position:relative; z-index:1; margin:30px auto; height:400px; opacity:0; }
 .locations-show #location #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
@@ -143,9 +138,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #location #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
 .locations-show #location #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
 
-.locations-show #location #journal_entries,
-.locations-show #location #map,
-.locations-show #location header { margin:0px auto; width:600px; }
 .locations-show #location #journal_entries .entry-title { font-size:18px; text-align:left; }
 
 .locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
@@ -155,16 +147,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #location .toolbox { display:none; }
 .locations-show #location:hover .toolbox { display:block; }
 .locations-show #location > .toolbox { clear:both; }
-
-.locations-show #related { margin:20px 0 0; text-align:center; border:1px solid #ccc; border-bottom:1px solid #ccc; }
-.locations-show #related h1 { padding:20px 20px 0 20px; font-size:1.334em; text-align:center; }
-.locations-show #related .location { display:inline-block; margin-bottom:0; vertical-align:top; }
-.locations-show #related .location h1 { margin-left:0px; padding-top:15px; max-width:180px; font-size:1.1em; text-align:center; }
-.locations-show #related .location a { border:0; color:#069; }
-.locations-show #related .location a:hover { text-decoration:underline; }
-.locations-show #related .location img { float:none; margin:0; width:auto; height:120px; max-width:180px; }
-.locations-show #related .location p,
-.locations-show #related .location .more { display:none; }
 
 /* LOCATION FORM */
 #location-form .title { width:745px; }
@@ -315,6 +297,7 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .status h1 { margin-bottom:10px; font-size:1.647em; }
 .status p { display:inline; font-size:.9em; }
 .status .location { display:inline; float:right; font-size:.9em; }
+.status .location a:hover { text-decoration:underline; }
 .status:hover .toolbar { display:block; right:0; }
 
 /* TOOLBAR */

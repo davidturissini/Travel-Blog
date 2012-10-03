@@ -19,8 +19,10 @@ window.TA = {
 };
 
 window.addEventListener("DOMContentLoaded", function () {
-	new DropDown({
-		el:document.querySelector("#user-info .dropdown"),
-		control:document.querySelector("#user-info .control")
-	}).render();
+	if( TA.currentUser && !TA.currentUser.isAnonymous() ) {
+		new DropDown({
+			el:document.querySelector("#user-info .dropdown"),
+			control:document.querySelector("#user-info .control")
+		}).render();
+	}
 })

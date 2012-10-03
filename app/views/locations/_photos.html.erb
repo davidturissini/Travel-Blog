@@ -1,0 +1,18 @@
+<% if photos.length > 0 %>
+	<section id="photos">
+		<ul class="autoclear">
+			<% photos.each do |photo| %>
+				<li>
+					<figure>
+						<img src="<%= photo.url %>" class="photo" data-json="<%= photo.to_json %>" alt="<%= photo["title"] %>" title="<%= photo["title"] %>" />
+						<% if photo["title"] != "" %>
+							<figcaption>
+								<h1><%= photo['title'] %></h1>
+							</figcaption>
+						<% end %>
+					</figure>
+				</li>
+			<% end %>
+		</ul>
+	</section>
+<% end %>

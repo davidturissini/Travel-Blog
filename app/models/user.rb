@@ -7,6 +7,25 @@ class User < ActiveRecord::Base
   has_many :realm_accounts
   validates :slug, :presence => true, :on => :update
 
+  def server_directory
+    "#{Rails.root}/public/user_images/#{slug}/"
+  end
+
+  def create_server_dir_if_not_exists!
+    if( !File.directory?(server_directory) )
+      Dir.mkdir(server_directory)
+    end
+  end
+
+  def create_subdir_if_not_exists! dir
+    create_server_dir_if_not_exists!
+    directory = "#{server_directory}#{dir}/"
+    if( !File.directory?(directory) )
+      Dir.mkdir(directory)
+    end
+    directory
+  end
+
   def random_locations limit = 5
     locations.limit(limit).order("RAND()")
   end

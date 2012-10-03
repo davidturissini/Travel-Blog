@@ -2,7 +2,7 @@ class Location < ActiveRecord::Base
  belongs_to :user
  belongs_to :country
  has_many :journal_entries, :order => "day ASC"
- has_many :photos
+ has_and_belongs_to_many :photos
  has_many :statuses, :dependent => :destroy
  validates :slug, :country_id, :presence => true
 
@@ -65,11 +65,7 @@ class Location < ActiveRecord::Base
  def journal_entries?
   journal_entries.length > 0
  end
-
- def photos
-  return []
- end
-
+ 
  def teaser
   t = ""
   if t == "" || t.nil?
