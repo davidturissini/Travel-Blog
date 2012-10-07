@@ -12,11 +12,17 @@
 		</h1>
 	</header>
 	<%= render "locations/photos", :photos => @location.photos %>
-	<section id="photo-upload">
-		<div id="photo-container" class="autoclear" style="min-height:200px;border:3px dashed red"></div>
-		Drag photos above or <input type="file" multiple="multiple" />
-	</section>
-	<input type="button" id="save" />
+	<% if current_user.owns?(@location) %>
+		<section id="photo-upload">
+			<hgroup>
+				<h1>Drag photos</h1>
+				<h2>or <input type="file" multiple="multiple" /></h2>
+			</hgroup>
+			<div id="photo-container" class="autoclear"></div>
+			
+			<input type="button" value="Save" id="save-photos" />
+		</section>
+	<% end %>
 	<figure id="map"></figure>
 	<section id="journal_entries">
 		<ul>
@@ -37,14 +43,19 @@
 				loc.setUser(TA.currentUser);
 				var photoUploader = new PhotoUploader({
 			      model:loc,
-			      el:document.querySelector("#photo-upload input"),
-			      previewElem:document.querySelector("#photo-container"),
-			      dropTarget:document.querySelector("#photo-container")
+			      el:document.getElementById("photo-upload"),
+			      input:document.querySelector("#photo-upload input"),
+			      previewElem:document.getElementById("photo-container"),
+			      dropTarget:document.getElementById("photo-container")
 			    });
+
+			    photoUploader.on("photos_uploaded", function (e) {
+			    	window.location.reload();
+			    })
 
 			    photoUploader.render();
 
-			    document.getElementById("save").addEventListener("click", function () {
+			    document.getElementById("save-photos").addEventListener("click", function () {
 			    	photoUploader.uploadFiles();
 			    })
 

@@ -167,12 +167,20 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #location-form #flickr-photos ul { max-height:400px; overflow-y:scroll; text-align:center; }
 #location-form #flickr-photos li { display:inline-block; padding:0 10px 10px 0; }
 
-#photo-container .image-upload { position:relative; float:left; margin-right:20px; margin-bottom:10px; width:125px; border:2px solid #ccc; }
-#photo-container .image-upload canvas { display:block; }
-#photo-container progress { position:absolute; left:0; bottom:0; width:100%; }
-#photo-container progress[value='0'],
-#photo-container progress[value='100'] { display:none; }
-#photo-container .delete { position:absolute; top:0px; right:0px; height:16px; width:16px; background:red; cursor:pointer; }
+#photo-upload { position:relative; }
+#photo-upload hgroup { position:absolute; bottom:25px; left:0; right:0; text-align:center; color:#ccc; }
+#photo-upload hgroup h2 { margin:5px auto 0; width:179px; }
+#photo-upload.dragenter hgroup { display:none; }
+#photo-upload #save-photos { display:none; float:right; font-size:2.237em; }
+#photo-upload.has-photos #save-photos { display:block; }
+#photo-upload #photo-container { margin-bottom:10px; padding-bottom:100px; border:3px dashed #333; }
+#photo-upload #photo-container .image-upload { position:relative; float:left; margin-right:20px; margin-bottom:10px; max-height:90px; border:2px solid #ccc; }
+#photo-upload #photo-container .image-upload canvas { display:block; }
+#photo-upload #photo-container .image-upload .delete { display:none; position:absolute; top:0px; right:0px; height:16px; width:16px; background:red; cursor:pointer; }
+#photo-upload #photo-container .image-upload:hover .delete { display:block; }
+#photo-upload #photo-container .image-upload progress { position:absolute; left:0; bottom:0; width:100%; }
+#photo-upload #photo-container .image-upload progress[value='0'],
+#photo-upload #photo-container .image-upload progress[value='100'] { display:none; }
 
 /* JOURNAL ENTRY FORM */
 
