@@ -1,6 +1,6 @@
 <section id="user" data-json="<%= @user.to_json %>">
 	<header>
-		<img src="<%= @user.photo.large %>" class="left" />
+		<img src="<%= @user.photo.large %>" class="left rounded" />
 		<hgroup>
 			<h1><%= @user.name %></h1>
 		</hgroup>
@@ -18,6 +18,7 @@
 		<ul>
 			<li><%= @user.locations.count %> Locations</li>
 			<li><%= @user.countries_count %> Countries</li>
+			<li><%= @user.photos_count %> Pictures</li>
 		</ul>
 	</section>
 	<section id="user-travel">

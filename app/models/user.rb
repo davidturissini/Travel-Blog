@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   has_many :countries, :through => :locations
   has_many :realm_accounts
   validates :slug, :presence => true, :on => :update
+  has_many :photos, :through => :locations
 
   def server_directory
     "#{Rails.root}/public/user_images/#{slug}/"
@@ -15,6 +16,10 @@ class User < ActiveRecord::Base
     if( !File.directory?(server_directory) )
       Dir.mkdir(server_directory)
     end
+  end
+
+  def photos_count
+    photos.count
   end
 
   def create_subdir_if_not_exists! dir
