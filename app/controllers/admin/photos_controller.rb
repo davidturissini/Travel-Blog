@@ -23,6 +23,9 @@ class Admin::PhotosController < Admin::AdminController
 				image = Magick::Image.read(tmp_filename).first
 				image.format = "JPG"
 				image.write("#{photos_dir}#{filename}.jpg")
+				
+				generate_thumbnails image, photo
+
 				photo.save!
 				location.photos << photo
 				location.save!
@@ -34,29 +37,20 @@ class Admin::PhotosController < Admin::AdminController
 		render :json => photo
 	end
 
-	def temp
-		photo = params[:photo]
-		index = rand(100)
-		split = photo.split(",") #"data:image/jpeg;base64,
-		filetype = split[0].scan(/data:image\/[a-z]\;base64/)
-		decoded = Base64.decode64(split[1]) 
-		filename = "#{current_user.slug}_#{index}"
-		tmp_filename = "#{filename}.tmp"
-		path = "#{Rails.root}/#{filename}"
-
-		File.open(tmp_filename, "w+") do |f|
-		  f.write(decoded)
-		end
-
-		image = Magick::Image.read(tmp_filename).first
-		image.format = "JPG"
-		thumb = image.resize_to_fit(125, 125)
-		thumb.write("#{Rails.root}/public/tmp/user_images/#{filename}.jpg")
-
-		render :json => { :id => index }
-	end
-
 	def update
 
+	end
+
+	private
+	def generate_thumbnails raw_image, ar_photo
+		thumb_sizes.each do |size|
+			thumb_dir = current_user.create_subdir_if_not_exists!("photos/#{size}")
+			thumbnail = raw_image.resize_to_fit(size, size)
+			thumbnail.write("#{thumb_dir}/#{ar_photo.slug}.jpg")
+		end
+	end
+
+	def thumb_sizes
+		[50, 125, 500, 800]
 	end
 end

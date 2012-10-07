@@ -3,7 +3,7 @@ class Photo < ActiveRecord::Base
 	has_one :user, :through => :locations
 
 	def url
-		"/user_images/#{user.slug}/photos/#{slug}.jpg"
+		"/user_images/#{user.slug}/photos/500/#{slug}.jpg"
 	end
 
 	def user

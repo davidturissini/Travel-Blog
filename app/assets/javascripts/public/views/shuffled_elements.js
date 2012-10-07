@@ -19,7 +19,7 @@ var ShuffledElements = Backbone.View.extend({
 			element.style.left = left + "px"
 			element.style.top = top + "px"
 
-			shuffle.__numElementsLoaded++
+			shuffle.positionDone();
 			callback.success()
 		}
 
@@ -60,6 +60,12 @@ var ShuffledElements = Backbone.View.extend({
 			verticalCenter:(this.options.hero.offsetTop + (this.options.hero.offsetTop + this.options.hero.offsetHeight)) / 2
 		}
 	},
+	positionDone:function () {
+		this.__numElementsLoaded += 1
+		if( this.__numElementsLoaded == this.numElements() ) {
+			this.el.style.opacity = 1;
+		}
+	},
 	positionElement:function (photo, index) {
 		if( photo == this.options.hero ) {
 			return
@@ -85,10 +91,7 @@ var ShuffledElements = Backbone.View.extend({
 		photo.style.webkitTransform = "rotate(" + rotate + "deg)"
 		photo.style.MozTransform = "rotate(" + rotate + "deg)"
 		
-		this.__numElementsLoaded++
-		if( this.__numElementsLoaded == this.numElements() ) {
-			photosContainer.style.opacity = 1
-		}
+		shuffle.positionDone();
 		
 	},
 	render:function () {

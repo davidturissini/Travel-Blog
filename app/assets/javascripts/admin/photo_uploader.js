@@ -1,6 +1,16 @@
 var PhotoUploader = Backbone.View.extend({
       initialize:function () {
-        this.files = [];
+        var uploader = this;
+        this.files = new Backbone.Collection();
+
+        this.files.on("add", function (model) {
+          uploader.previewPhoto(model);
+        })
+
+        this.files.on("remove", function (model) {
+          uploader.removePreview(model);
+        })
+
       },
       __updateProgress:function (progressEvent, index) {
         var progressElem = document.getElementById("image-preview-" + index).getElementsByTagName("progress")[0],
@@ -15,7 +25,7 @@ var PhotoUploader = Backbone.View.extend({
 
         function upload (index) {
           var reader = new FileReader(),
-          photo = uploader.files[index];
+          photo = uploader.files.at(index);
           if( !photo ) { return }
 
           reader.onprogress = function (f) {
@@ -33,71 +43,127 @@ var PhotoUploader = Backbone.View.extend({
                   upload( index + 1 )
                 },
                 success:function (e) {
-                  debugger
+                  console.log("upload success")
                 }
               })
           }
 
-          reader.readAsDataURL( photo );
+          reader.readAsDataURL( photo.raw );
         }
         upload(0)
       },
-      previewFiles:function () {
-        var uploader = this;
+      removePreview:function(photo) {
+        var elem = this.options.previewElem.querySelector("#" + this.generatePhotoPreviewId(photo));
+        elem.parentNode.removeChild(elem);
+      },
+      previewPhoto: (function () {
+        var queue = [], isWorking = false;
 
-        var loadPreview = function (index) {
-            var photo = uploader.files[index];
-            if( !photo ) { return }
+        function addToQueue( photo ) {
+          queue.push(photo);
+          if( !isWorking ) {
+            showPreview.call(this, queue[0]);
+            isWorking = true;
+          }
+        }
 
-            var div = document.createElement("div"),
-            canvas = document.createElement("canvas"),
-            progress = document.createElement("progress")
+        function previewDone() {
+          queue.shift();
+          if( queue.length === 0 ) {
+            isWorking = false;
+          } else {
+            showPreview.call(this, queue[0]);
+          }
+        }
 
-            progress.setAttribute("max", 100);
-            progress.setAttribute("value", 0);
+        function showPreview ( photo ) {
+          var uploader = this,
+          html = uploader.generatePreviewHTML(photo),
+          originalImage = document.createElement("img"),
+          photoBlobUrl = window.URL.createObjectURL(photo.raw);
 
-            div.className = "image-upload";
-            div.id = "image-preview-" + index;
-            
-            div.appendChild(progress);
+          originalImage.onload = function () {
+            var ctx = html.canvas.getContext("2d"),
+            ratio = originalImage.height / originalImage.width,
+            width = 125, height = width * ratio;
 
-            uploader.options.previewElem.appendChild(div);
+            html.canvas.height = height;
+            html.canvas.width = width;
+            ctx.drawImage(originalImage, 0, 0, width, height);
 
-            var originalImage = document.createElement("img"),
-            s = window.URL.createObjectURL(photo)
+            previewDone.call(uploader);
+          }
 
-            originalImage.onload = function () {
-              
-              var ctx = canvas.getContext("2d"),
-              ratio = originalImage.height / originalImage.width,
-              width = 125, height = width * ratio;
+          html.div.appendChild(canvas);
+          originalImage.src = photoBlobUrl;
+        }
 
-              canvas.height = height;
-              canvas.width = width;
-              ctx.drawImage(originalImage, 0, 0, width, height);
-              loadPreview( index + 1 );
-            }
-            div.appendChild(canvas);
-            originalImage.src = s;
-            
-          };
+        return addToQueue;
+      })(),
+      generatePhotoPreviewId:function(photo) {
+        return "image-preview-" + photo.cid;
+      },
+      generatePreviewHTML:function ( photo ) {
+        var uploader = this,
+        elemId = uploader.generatePhotoPreviewId(photo);
+        div = document.createElement("div"),
+        canvas = document.createElement("canvas"),
+        progress = document.createElement("progress"),
+        remove = document.createElement("a")
 
-          loadPreview( 0 )
+        remove.className = "delete";
+
+        remove.addEventListener("click", function () {
+          uploader.files.remove(photo);
+        })
+
+        progress.setAttribute("max", 100);
+        progress.setAttribute("value", 0);
+
+        div.className = "image-upload";
+        div.id = elemId;
+        
+        div.appendChild(progress);
+        div.appendChild(remove);
+
+        uploader.options.previewElem.appendChild(div);
+
+        return {
+          div:div,
+          canvas:canvas
+        }
+      },
+      addPhotos:function (photos) {
+        for(var i = 0; i < photos.length; i += 1) {
+          var model = new Photo(photos[i]);
+          this.files.add(model);
+        }
       },
       __setupInput:function () {
         var uploader = this;
 
         uploader.el.addEventListener("change", function (e) {
           var i, files = e.currentTarget.files;
-          uploader.files = files;
-
-          if( uploader.options.previewElem ) {
-            uploader.previewFiles();
-          }
+          uploader.addPhotos(files);
+          
         });
+      },
+      __setupDropTarget:function () {
+        if( !this.options.dropTarget ) { return }
+
+        (function (uploader) {
+          uploader.options.dropTarget.addEventListener("drop", function (event) {
+          event.stopPropagation();
+          event.preventDefault();
+
+          uploader.addPhotos(event.dataTransfer.files);
+
+          }, false);
+        })(this);
       },
       render:function () {
         window.URL = window.URL || window.webkitURL;
+        this.__setupDropTarget();
         this.__setupInput();
       }
     });

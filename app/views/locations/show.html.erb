@@ -2,7 +2,7 @@
 	<header>
 		<h1>
 			<%= link_to user_path(@location.user.slug) do %>
-				<%= image_tag @location.user.photo_url, :class => "rounded-large" %>
+				<%= image_tag @location.user.photo_url, :class => "rounded-large", :width => 80 %>
 				<%= @location.user.name %>'s<% end %> trip
 			<% if @location.title %>
 				<%= location_string(@location) %>
@@ -11,21 +11,13 @@
 			<% end %>
 		</h1>
 	</header>
+	<%= render "locations/photos", :photos => @location.photos %>
 	<section id="photo-upload">
-		<div id="photo-container"></div>
-		<input type="file" multiple="multiple" />
+		<div id="photo-container" class="autoclear" style="min-height:200px;border:3px dashed red"></div>
+		Drag photos above or <input type="file" multiple="multiple" />
 	</section>
 	<input type="button" id="save" />
 	<figure id="map"></figure>
-<!--
-	<section id="user" class="autoclear">
-		<%= link_to user_path(@location.user.slug), { :class => "autoclear" } do %>
-			<img src="<%= @location.user.photo.url %>" />
-			<h1><%= @location.user.name %></h1>
-		<% end %>
-	</section>
--->
-	<%= render "locations/photos", :photos => @location.photos %>
 	<section id="journal_entries">
 		<ul>
 			<% @location.journal_entries.each do |entry| %>
@@ -46,7 +38,8 @@
 				var photoUploader = new PhotoUploader({
 			      model:loc,
 			      el:document.querySelector("#photo-upload input"),
-			      previewElem:document.querySelector("#photo-container")
+			      previewElem:document.querySelector("#photo-container"),
+			      dropTarget:document.querySelector("#photo-container")
 			    });
 
 			    photoUploader.render();
@@ -78,8 +71,11 @@
 
 		if( !document.getElementById("photos") ) { return }
 		var locationPhotos = document.getElementById("photos").querySelectorAll("figure"),
-		hero = document.getElementById("photos").querySelector(".hero"),
-		heroIndex = (function () {
+		hero = document.getElementById("photos").querySelector(".hero") || locationPhotos[0];
+		hero.className += " hero";
+
+		if( locationPhotos.length === 0 ) { return }
+		var heroIndex = (function () {
 			var index = 0;
 			[].forEach.call(locationPhotos, function (photo, i) {
 				if( photo == hero ) {
