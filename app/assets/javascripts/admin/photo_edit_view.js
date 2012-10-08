@@ -1,4 +1,7 @@
 var PhotoEditView = Backbone.View.extend({
+	disableSubmit:function () {
+		this.save.setAttribute("disabled", "disabled");
+	},
 	__buildLoadingView:function () {
 		var div = document.createElement("div"),
 		message = document.createElement("h4"),
@@ -23,30 +26,52 @@ var PhotoEditView = Backbone.View.extend({
 			var loading = new Loading({
 				el:form.el
 			}),
-			loadingMessage = form.__buildLoadingView();
+			loadingMessage = form.__buildLoadingView(),
+			totalToProcess = form.collection.models.length + form.removedCollection.models.length
 			loading.render();
 
-			loadingMessage.message.innerHTML = "Saving 0 of " + form.collection.models.length + " photos";
+			loadingMessage.message.innerHTML = "Saving 0 of " + totalToProcess + " photos";
 			loading.setLoadingView(loadingMessage.div);
 			
 			loading.loading();
+
+			function updateLoadingMessage() {
+				numSaved += 1;
+				loadingMessage.progress.setAttribute("value", numSaved);
+				loadingMessage.message.innerHTML = "Saving " + numSaved + " of " + totalToProcess + " photos";
+				if( numSaved === totalToProcess ) {
+					loading.doneLoading();
+				}
+			}
+
 			form.collection.each(function (photo) {
 				photo.save({}, {
 					success:function () {
-						numSaved += 1;
-						loadingMessage.progress.setAttribute("value", numSaved);
-						loadingMessage.message.innerHTML = "Saving " + numSaved + " of " + form.collection.models.length + " photos";
+						updateLoadingMessage();
+					}
+				})
+			})
 
-						if( numSaved === form.collection.models.length ) {
-							loading.doneLoading();
-						}
+			form.removedCollection.each(function (photo) {
+				photo.destroy({
+					success:function () {
+						updateLoadingMessage();
 					}
 				})
 			})
 		})
 	},
+	__bindPhotoRemoval:function () {
+		var view = this;
+		this.collection.on("remove", function (model) {
+			view.removedCollection.add(model);
+		});
+	},
 	render:function () {
 		this.save = this.el.getElementsByClassName("save").item(0);
+		this.removedCollection = new PhotosCollection();
 		this.__bindSaveButton();
+		this.__bindPhotoRemoval();
+		return this;
 	}
 })

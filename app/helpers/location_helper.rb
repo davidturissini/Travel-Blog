@@ -37,4 +37,8 @@ module LocationHelper
  	s = "#{location.title} in " if location.title
  	s += location.geo_string
  end
+
+ def photos_edit_path location
+ 	location_photos_edit_path(:location_id => location.slug)
+ end
 end

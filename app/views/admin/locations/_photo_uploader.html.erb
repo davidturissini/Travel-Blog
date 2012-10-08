@@ -10,14 +10,10 @@
 				<% end %>
 			</ul>
 			<% if @user_flickr_sets %>
-				<div class="tabs" id="user-flickr-controller" data-realm="<%= current_user.flickr_account.to_json %>">
+				<div id="user-flickr-controller" data-realm="<%= current_user.flickr_account.to_json %>">
 					<nav>
 						<ul><li>
-							<a href="#user-flickr-sets" class="flickr-tab-link">Choose from Flickr Sets</a>
-						</li><li>
-							<a href="#user-flickr-galleries" class="flickr-tab-link">Choose from Flickr Galleries</a>
-						</li><li>
-							<a href="#user-flickr-photos">Load all photos</a>
+							<a href="#user-flickr-sets" class="flickr-tab-link">Import from your Flickr Sets</a>
 						</li></ul>
 					</nav>
 					<ul id="user-flickr-sets" class="flickr-tab tab">
@@ -25,19 +21,15 @@
 							<li>
 								<a class="flickr-set" data-set="<%= set.to_json %>">
 									<img src="<%= flickr_photoset_url set %>" />
+									<h3><%= set["title"] %></h3>
 								</a>
 							</li>
 						<% end %>
 					</ul>
-					<ul id="user-flickr-galleries" class="flickr-tab tab">
-					</ul>
 				</div>
 			<% end %>
 		</header>
-		<div id="photo-container" class="autoclear">
-			
-		</div>
-		
-		<input type="button" value="Save" id="save-photos" />
+		<div id="photo-container" class="autoclear"></div>
+		<input type="button" value="Import Photos" id="save-photos" />
 	</section>
 <% end %>

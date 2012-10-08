@@ -20,43 +20,60 @@ window.addEventListener("DOMContentLoaded", function () {
 
     photoUploader.render();
 
-    document.getElementById("save-photos").addEventListener("click", function () {
-      photoUploader.uploadFiles();
-    })
+
 
     var flickrController = document.getElementById("user-flickr-controller"),
     flickrRealm = JSON.parse( flickrController.getAttribute("data-realm") );
 
     if( flickrController ) {
-      new Tabs({
-        el:flickrController,
-        tabLinks:flickrController.getElementsByClassName("flickr-tab-link"),
-        tabViews:flickrController.getElementsByClassName("flickr-tab")
-      }).render();
 
-      var flickrPhotoSetLinks = flickrController.getElementsByClassName("flickr-set");
+      var flickrPhotoSetLinks = flickrController.getElementsByClassName("flickr-set"),
+      flickrDialog = new ModalDialog();
 
       for(var i = 0; i < flickrPhotoSetLinks.length; i += 1) {
         var link = flickrPhotoSetLinks[i];
         link.addEventListener("click", function (evt) {
+          flickrDialog.close();
+
           var data = JSON.parse( evt.currentTarget.getAttribute("data-set") )
           TA.currentUser.flickrset_photos(data.id, {
-            success:function (e) {
-              var photos = e.photo;
+            success:function (evt) {
+              var photos = evt.photo;
               for(var i = 0; i < photos.length; i += 1) {
-                (function (photo) {
+                (function (flickrPhoto, event) {
                   var image = new Image();
                   image.onload = function (e) {
-                    photoUploader.addImage(image);
+                    var photo = new Photo();
+
+                    if( flickrPhoto.get("title") ) {
+                      photo.set({title:flickrPhoto.get("title")})
+                    }
+
+                    if( flickrPhoto.get("description") ) {
+                      photo.set({title:flickrPhoto.get("description")})
+                    }
+                    photo.setRaw(image);
+                    photoUploader.addPhoto(photo);
                   }
 
-                  image.src = photo.url();
-                })( new FlickrImage(photos[i]) );
+                  image.src = flickrPhoto.url();
+                })( new FlickrImage(photos[i]), evt );
               }
             }
           });
         })
       }
+
+      var flickrSetsLink = flickrController.getElementsByClassName("flickr-tab-link")[0],
+      dialogHTML = document.getElementById("user-flickr-sets");
+      
+      flickrDialog.setView( dialogHTML );
+      flickrDialog.setTitle("Import photos from flickr");
+
+      flickrSetsLink.addEventListener("click", function (evt) {
+        evt.preventDefault();
+        flickrDialog.render();
+      });
 
     }
   locationPhotos.each(function (photo) {
@@ -65,11 +82,20 @@ window.addEventListener("DOMContentLoaded", function () {
       model:photo,
       el:document.getElementById("photo-" + photo.id)
     }).render();
-  })
+    form.on("removed", function (e) {
+      locationPhotos.remove(e.form.model);
+    });
+  });
 
   var edit = new PhotoEditView({
     el:document.getElementById("location-photos"),
     collection:locationPhotos
   }).render();
+
+  document.getElementById("save-photos").addEventListener("click", function (e) {
+    e.currentTarget.setAttribute("disabled", "disabled");
+    edit.disableSubmit();
+    photoUploader.uploadFiles();
+  })
 
 })

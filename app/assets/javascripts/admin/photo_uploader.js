@@ -51,6 +51,15 @@ var PhotoUploader = Backbone.View.extend({
             } else if (options.url) {
               hash.photo.url = options.url;
             }
+
+            if( options.photo.get("title") ) {
+              hash.photo.title = options.photo.get("title");
+            }
+
+            if( options.photo.get("description") ) {
+              hash.photo.description = options.photo.get("description");
+            }
+
             $.ajax({
                 url:uploader.model.url() + "/photos",
                 data:hash,
@@ -71,22 +80,23 @@ var PhotoUploader = Backbone.View.extend({
             photo.getBinary({
               success:function (binary) {
                 var hash = {
-                    complete:function () {
-                      upload( index + 1 )
-                    },
-                    success:function (e) {
-                      uploaded.push(photo);
-                      h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
-                      progress.setAttribute("value", uploaded.length);
-                      if( uploaded.length == uploader.files.length ) {
-                        uploader.trigger("photos_uploaded", {photos:uploader.files})
-                      }
+                  photo:photo,
+                  complete:function () {
+                    upload( index + 1 )
+                  },
+                  success:function (e) {
+                    uploaded.push(photo);
+                    h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
+                    progress.setAttribute("value", uploaded.length);
+                    if( uploaded.length == uploader.files.length ) {
+                      uploader.trigger("photos_uploaded", {photos:uploader.files})
+                    }
                   }
                 }
 
 
                 if( binary === false ) {
-                  hash.url = photo.get("url");
+                  hash.url = photo.src();
                 } else {
                   hash.data = binary;
                 }
@@ -134,9 +144,10 @@ var PhotoUploader = Backbone.View.extend({
             ratio = originalImage.height / originalImage.width,
             width = 125, height = width * ratio;
 
-            if( originalImage.height > originalImage.width ) {
+
+            if( originalImage.height > originalImage.width || height < 90 ) {
               height = 90;
-              width = height * (1/ratio);
+              width = height * (1 / ratio);
             }
 
             html.canvas.height = height;
@@ -186,8 +197,11 @@ var PhotoUploader = Backbone.View.extend({
       addPhotos:function (photos) {
         for(var i = 0; i < photos.length; i += 1) {
           var model = new Photo(photos[i]);
-          this.files.add( model );
+          this.addPhoto(model);
         }
+      },
+      addPhoto:function (photo) {
+        this.files.add( photo );
       },
       __setupInput:function () {
         var uploader = this;
@@ -217,28 +231,8 @@ var PhotoUploader = Backbone.View.extend({
           }, false);
         })(this);
       },
-      __bindFlickr:function () {
-        if( !this.options.flickrButton ) { return }
-          this.options.flickrButton.addEventListener("click", function () {
-            $.ajax({
-                    url:"http://api.flickr.com/services/rest",
-                    dataType:"jsonp",
-                    data: {
-                    api_key:"951c0814caade8b4fc2b381778269126",
-                    method: "flickr.photosets.getPhotos",
-                    format:"json",
-                    photoset_id: this.get("flickr_set")
-                },
-                jsonpCallback:"jsonFlickrApi",
-                success:function (e) {
-                    if( callbacks.success ) { callbacks.success(e); }
-                }
-            })
-          })
-      },
       render:function () {
         this.__setupDropTarget();
         this.__setupInput();
-        this.__bindFlickr();
       }
     });

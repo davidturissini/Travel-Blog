@@ -11,6 +11,13 @@ class Admin::PhotosController < Admin::AdminController
 		render :json => photo
 	end
 
+	def delete
+		location = current_user.locations.find_by_slug(params[:location_id])
+		photo = location.photos.find_by_slug(params[:slug])
+		photo.destroy
+		render :json => photo
+	end
+
 	def update
 		location = current_user.locations.find_by_slug(params[:location_id])
 		photo = location.photos.find_by_slug(params[:slug])
@@ -21,47 +28,14 @@ class Admin::PhotosController < Admin::AdminController
 	end
 
 	private
-	def generate_thumbnails raw_image, ar_photo
-		thumb_sizes.each do |size|
-			thumb_dir = current_user.create_subdir_if_not_exists!("photos/#{size}")
-			thumbnail = raw_image.resize_to_fit(size, size)
-			thumbnail.write("#{thumb_dir}/#{ar_photo.slug}.jpg")
-		end
-	end
+	
 
-	def thumb_sizes
-		[50, 125, 500, 800]
-	end
-
-	def save_photo raw
+	def save_photo raw, photo_hash = {}
 		location = current_user.locations.find_by_slug(params[:location_id])
+
 		ActiveRecord::Base.transaction do
-			photo = Photo.create()
-			slug = Digest::SHA1.hexdigest("#{photo.id}")
-			photo.slug = slug
-			filename = "#{slug}"
-			tmp_filename = "tmp/user_images/#{filename}.tmp"
-			path = "#{Rails.root}/#{filename}"
-
-			File.open(tmp_filename, "w+") do |f|
-			  f.write(raw)
-			end
-
-			photos_dir = current_user.create_subdir_if_not_exists!("photos")
-
-			if photos_dir
-				image = Magick::Image.read(tmp_filename).first
-				image.format = "JPG"
-				image.write("#{photos_dir}#{filename}.jpg")
-				
-				generate_thumbnails image, photo
-
-				photo.save!
-				location.photos << photo
-				location.save!
-			else
-				throw Exception.new
-			end
+			photo = location.photos.create(photo_hash)
+			photo.save_with_raw!(raw)
 		end
 	end
 
@@ -75,8 +49,8 @@ class Admin::PhotosController < Admin::AdminController
 	end
 
 	def create_from_url photo
-		url = photo[:url]
+		url = photo.delete(:url)
 		raw = open(url).read
-		save_photo raw
+		save_photo raw, photo
 	end
 end

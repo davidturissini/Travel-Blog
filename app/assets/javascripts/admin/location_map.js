@@ -64,7 +64,10 @@ var LocationMap = Backbone.View.extend({
 		var form = this,
 		template = new AdminTemplate({
 			user:this.model.user,
-			id:"location_map"
+			id:"location_map",
+			params:{
+				location_id:this.model.get("slug")
+			}
 		});
 
 		template.load({

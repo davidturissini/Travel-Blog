@@ -1,7 +1,7 @@
 <% if !(current_user.incomplete? || current_user.anonymous?) %>
 	<section id="user-info" class="autoclear">
 		<header>
-			<%= link_to user_path(current_user.slug) do %>
+			<%= link_to me_path do %>
 				<img src="<%= current_user.photo.url %>" class="user-image rounded" />
 				<h1><%= "Hi, #{current_user.name}" %></h1>
 			<% end %>
