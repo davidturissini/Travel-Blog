@@ -1,0 +1,18 @@
+<% if current_user.owns?(@location) %>
+    <section id="admin-tabs" class="admin-ribbon tabs" data-user_realms="<%= current_user.realm_accounts.to_json %>">
+      <a class="close">Close</a>
+      <nav>
+        <h1>Manage <%= @location.to_s %></h1>
+        <ul>
+          <li><a href="#tab-edit-locations" class="tab-link">Edit</a></li><li>
+          <a href="#tab-add-photos" class="tab-link">Add Photos</a></li>
+        </ul>
+      </nav>
+      <section id="tab-edit-locations" class="tab">
+        edit location
+      </section>
+      <section id="tab-add-photos" class="tab">
+        <%= render "admin/locations/photo_uploader", :location => @location %>
+      </section>
+    </section>
+  <% end %>

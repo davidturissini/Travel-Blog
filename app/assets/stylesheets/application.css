@@ -106,9 +106,13 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #content { width:920px; }
 .locations-show #location { position:relative; margin:0 auto 20px; padding-bottom:20px; }
 .locations-show #location header { margin-bottom:20px; }
-.locations-show h1 { position:relative; font-size:1.847em; }
-.locations-show h1 img { vertical-align:middle; }
-.locations-show #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
+.locations-show #location header h1 { position:relative; margin-bottom:10px; padding-top:10px; font-size:1.67em; }
+.locations-show #location header img { float:left; margin-right:20px; width:80px; }
+.locations-show #location header ul li { display:inline-block; margin-right:10px; }
+.locations-show #location header ul li a  { display:block; width:100px; height:100px; text-align:center; background:#ccc; }
+.locations-show #location #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
+
+.locations-show #admin { display:none; }
 
 .locations-show #location #photos { position:relative; z-index:1; margin:30px auto; height:400px; opacity:0; }
 .locations-show #location #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
@@ -138,15 +142,22 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #location #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
 .locations-show #location #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
 
-.locations-show #location #journal_entries .entry-title { font-size:18px; text-align:left; }
+.locations-show #location #posts h1 { font-size:18px; text-align:left; }
 
-.locations-show #location #journal_entries .entry-body p { margin-bottom:20px; }
-.locations-show #location #journal_entries .entry-body iframe { display:block; margin:20px auto; }
-.locations-show #location #journal_entries .edit-journal-entry-link { display:inline-block; margin-top:10px; }
+.locations-show #location #posts p { margin-bottom:20px; }
+.locations-show #location #posts iframe { display:block; margin:20px auto; }
 
 .locations-show #location .toolbox { display:none; }
 .locations-show #location:hover .toolbox { display:block; }
 .locations-show #location > .toolbox { clear:both; }
+
+/* LOCATION EDIT PHOTOS */
+.admin-locations-edit_photos #location-photos li { display:inline-block; padding:10px 10px 10px 10px; }
+.admin-locations-edit_photos #location-photos li article { max-width:200px; height:200px; }
+.admin-locations-edit_photos #location-photos li article img { display:block; margin:0 auto 10px; max-height:70%; max-width:100%; width:auto; }
+.admin-locations-edit_photos #location-photos li article input { width:100%; margin-bottom:5px; }
+.admin-locations-edit_photos #location-photos .loading-ui div { margin:0 auto; width:180px; color:#fff; }
+.admin-locations-edit_photos #location-photos .loading-ui div h4 { margin-bottom:10px; }
 
 /* LOCATION FORM */
 #location-form .title { width:745px; }
@@ -168,11 +179,12 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #location-form #flickr-photos li { display:inline-block; padding:0 10px 10px 0; }
 
 #photo-upload { position:relative; }
-#photo-upload hgroup { position:absolute; bottom:25px; left:0; right:0; text-align:center; color:#ccc; }
-#photo-upload hgroup h2 { margin:5px auto 0; width:179px; }
-#photo-upload.dragenter hgroup { display:none; }
+#photo-upload header { position:absolute; bottom:5px; left:0; right:0; text-align:center; color:#ccc; }
+#photo-upload header h2 { margin:5px auto 0; width:179px; }
+#photo-upload.dragenter header { display:none; }
 #photo-upload #save-photos { display:none; float:right; font-size:2.237em; }
 #photo-upload.has-photos #save-photos { display:block; }
+#photo-upload.loading .loading-ui div { font-size:.847em; }
 #photo-upload #photo-container { margin-bottom:10px; padding-bottom:100px; border:3px dashed #333; }
 #photo-upload #photo-container .image-upload { position:relative; float:left; margin-right:20px; margin-bottom:10px; max-height:90px; border:2px solid #ccc; }
 #photo-upload #photo-container .image-upload canvas { display:block; }
@@ -181,6 +193,8 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #photo-upload #photo-container .image-upload progress { position:absolute; left:0; bottom:0; width:100%; }
 #photo-upload #photo-container .image-upload progress[value='0'],
 #photo-upload #photo-container .image-upload progress[value='100'] { display:none; }
+
+#photo-upload #user-flickr-controller .flickr-tab li { display:inline-block; }
 
 /* JOURNAL ENTRY FORM */
 
@@ -315,11 +329,33 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .toolbar li { display:inline-block; }
 .toolbar li a { display:inline-block; width:16px; height:16px; text-indent:-999px; background-color:transparent; cursor:pointer; }
 
+/* TABS */
+.tabs { position:relative; }
+.tabs .tab { display:none; }
+.tabs .tab.visible { display:block; }
+.tabs .close { display:none; position:absolute; right:20px; top:10px; cursor:pointer; }
+.tabs.open .close { display:block; }
+
+/* ADMIN TABS */
+#admin-tabs { margin-top:-20px; margin-bottom:20px; padding:10px 10px; border:1px solid #aaa; border-top:0; background:#069; color:#fff; text-align:center; }
+#admin-tabs a { color:#fff; }
+#admin-tabs a:hover { border-bottom:1px dotted #fff; }
+#admin-tabs nav h1 { display:inline; margin-right:10px; }
+#admin-tabs nav ul { display:inline; }
+#admin-tabs nav li { display:inline-block; padding:0 5px; border-left:1px solid #fff; }
+#admin-tabs nav li:first-child { border-left:0; }
+#admin-tabs .tab { margin-top:10px; }
+
 
 /* LOCATION MAP */
 .modal-dialog .viewfinder .location-map .title { padding:5px; width:665px; font-size:1.362em; }
 .modal-dialog .viewfinder .location-map h1 { margin:10px 0 0; height:15px; font-size:.9em; text-align:right; }
 .modal-dialog .viewfinder .location-map .save { float:right; margin:10px 0 0; }
+
+/* LOADING */
+.loading { position:relative; }
+.loading-ui { display:none; position:absolute; z-index:1000; left:0; top:0; right:0; bottom:0; background:rgba(0, 0, 0, .7); }
+.loading > .loading-ui { display:block; color:#fff; }
 
 /* MODAL DIALOG */
 .modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100; opacity:0; background:rgba(255, 255, 255, .8); 

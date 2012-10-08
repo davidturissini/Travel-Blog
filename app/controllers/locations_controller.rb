@@ -15,6 +15,7 @@ class LocationsController < ApplicationController
   @page_title = "#{@location.title}"
   @og_image = @location.photo_url
   @og_title = @location.title
+
   @canonical_url = user_location_url({
     :user_id => @location.user.slug,
     :id => @location.slug 

@@ -27,6 +27,18 @@ var User = Backbone.Model.extend({
  },
  isAnonymous:function () {
   return this.get("token") == "anonymous";
+ },
+ flickrset_photos:function (photosetID, callbacks) {
+  callbacks = callbacks || {};
+  $.ajax({
+      url:this.url({includeFormat:false}) + "/flickr_photoset_photos/" + photosetID,
+      jsonpCallback:"jsonFlickrApi",
+      success:function (e) {
+          if( callbacks.success ) {
+            callbacks.success(e);
+          }
+      }
+  })
  }
 })
 

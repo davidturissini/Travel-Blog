@@ -6,6 +6,14 @@ class Location < ActiveRecord::Base
  has_many :statuses, :dependent => :destroy
  validates :slug, :country_id, :presence => true
 
+  def journal_entries_count
+    journal_entries.count
+  end
+
+  def photos_count
+    photos.count
+  end
+
   def to_s 
     return title if title
     return geo_string

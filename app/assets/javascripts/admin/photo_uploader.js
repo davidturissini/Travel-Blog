@@ -19,48 +19,81 @@ var PhotoUploader = Backbone.View.extend({
         })
 
       },
-      __updateProgress:function (progressEvent, photo) {
-        var progressElem = document.getElementById(this.generatePhotoPreviewId(photo)).getElementsByTagName("progress")[0],
-        progress = (progressEvent.loaded / progressEvent.total) * 100;
-        if( progressElem.getAttribute("value") === progressElem.getAttribute("max") ) {
-          progressElem.setAttribute("value", 0);
-        }
-        progressElem.setAttribute("value", progress);
+      addImage:function (image) {
+        image.id = image.src;
+        this.addPhotos([image]);
       },
       uploadFiles:(function () {
         var uploaded = [];
         return function () {
-          var uploader = this;
+          var uploader = this,
+          loader = new Loading({
+            el:uploader.el
+          }).render(),
+          loadingView = document.createElement("div"),
+          h5 = document.createElement("h5"),
+          progress = document.createElement("progress")
+
+          progress.setAttribute("value", 0);
+          progress.setAttribute("max", uploader.files.length);
+
+          h5.innerHTML = "Uploaded 0 of " + uploader.files.length;  
+          loadingView.appendChild(h5);
+          loadingView.appendChild(progress);
+
+          loader.setLoadingView(loadingView);
+          loader.loading();
+
+          function doUpload( options ) {
+            var hash = {photo:{}};
+            if( options.data ) {
+              hash.photo.binary = options.data;
+            } else if (options.url) {
+              hash.photo.url = options.url;
+            }
+            $.ajax({
+                url:uploader.model.url() + "/photos",
+                data:hash,
+                type:"POST",
+                complete:function (e) {
+                  options.complete(e);
+                },
+                success:function (e) {
+                  options.success(e);
+                }
+              })
+          }
 
           function upload (index) {
-            var reader = new FileReader(),
-            photo = uploader.files.at(index);
+            var photo = uploader.files.at(index);
             if( !photo ) { return }
 
-            reader.onprogress = function (f) {
-              uploader.__updateProgress(f, photo);
-            }
-
-            reader.onload = function (f) {
-                $.ajax({
-                  url:uploader.model.url() + "/photos",
-                  data:{
-                    photo:f.target.result
-                  },
-                  type:"POST",
-                  complete:function () {
-                    upload( index + 1 )
-                  },
-                  success:function (e) {
-                    uploaded.push(photo);
-                    if( uploaded.length == uploader.files.length ) {
-                      uploader.trigger("photos_uploaded", {photos:uploader.files})
-                    }
+            photo.getBinary({
+              success:function (binary) {
+                var hash = {
+                    complete:function () {
+                      upload( index + 1 )
+                    },
+                    success:function (e) {
+                      uploaded.push(photo);
+                      h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
+                      progress.setAttribute("value", uploaded.length);
+                      if( uploaded.length == uploader.files.length ) {
+                        uploader.trigger("photos_uploaded", {photos:uploader.files})
+                      }
                   }
-                })
-            }
+                }
 
-            reader.readAsDataURL( photo.raw );
+
+                if( binary === false ) {
+                  hash.url = photo.get("url");
+                } else {
+                  hash.data = binary;
+                }
+
+                doUpload(hash);
+
+            }})
           }
           upload(0)
         }
@@ -94,7 +127,7 @@ var PhotoUploader = Backbone.View.extend({
           var uploader = this,
           html = uploader.generatePreviewHTML(photo),
           originalImage = document.createElement("img"),
-          photoBlobUrl = window.URL.createObjectURL(photo.raw);
+          photoUrl = photo.src();
 
           originalImage.onload = function () {
             var ctx = html.canvas.getContext("2d"),
@@ -116,7 +149,7 @@ var PhotoUploader = Backbone.View.extend({
           canvas.width = 100;
           canvas.height = 100;
           html.div.appendChild(canvas);
-          originalImage.src = photoBlobUrl;
+          originalImage.src = photoUrl;
         }
 
         return addToQueue;
@@ -129,7 +162,6 @@ var PhotoUploader = Backbone.View.extend({
         elemId = uploader.generatePhotoPreviewId(photo);
         div = document.createElement("div"),
         canvas = document.createElement("canvas"),
-        progress = document.createElement("progress"),
         remove = document.createElement("a")
 
         remove.className = "delete";
@@ -138,13 +170,10 @@ var PhotoUploader = Backbone.View.extend({
           uploader.files.remove(photo);
         })
 
-        progress.setAttribute("max", 100);
-        progress.setAttribute("value", 0);
 
         div.className = "image-upload";
         div.id = elemId;
         
-        div.appendChild(progress);
         div.appendChild(remove);
 
         uploader.options.previewElem.appendChild(div);
@@ -157,7 +186,7 @@ var PhotoUploader = Backbone.View.extend({
       addPhotos:function (photos) {
         for(var i = 0; i < photos.length; i += 1) {
           var model = new Photo(photos[i]);
-          this.files.add(model);
+          this.files.add( model );
         }
       },
       __setupInput:function () {
@@ -188,9 +217,28 @@ var PhotoUploader = Backbone.View.extend({
           }, false);
         })(this);
       },
+      __bindFlickr:function () {
+        if( !this.options.flickrButton ) { return }
+          this.options.flickrButton.addEventListener("click", function () {
+            $.ajax({
+                    url:"http://api.flickr.com/services/rest",
+                    dataType:"jsonp",
+                    data: {
+                    api_key:"951c0814caade8b4fc2b381778269126",
+                    method: "flickr.photosets.getPhotos",
+                    format:"json",
+                    photoset_id: this.get("flickr_set")
+                },
+                jsonpCallback:"jsonFlickrApi",
+                success:function (e) {
+                    if( callbacks.success ) { callbacks.success(e); }
+                }
+            })
+          })
+      },
       render:function () {
-        window.URL = window.URL || window.webkitURL;
         this.__setupDropTarget();
         this.__setupInput();
+        this.__bindFlickr();
       }
     });

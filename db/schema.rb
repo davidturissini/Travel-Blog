@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121003071355) do
+ActiveRecord::Schema.define(:version => 20121007223134) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20121003071355) do
     t.integer "user_id"
     t.string  "provider"
     t.string  "access_token"
+    t.string  "shared_secret"
   end
 
   create_table "statuses", :force => true do |t|

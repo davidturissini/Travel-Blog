@@ -1,5 +1,6 @@
 //= require_tree .
 
+TA.currentUser = new User( JSON.parse( YAHOO.util.Cookie.get("user") ));
 
 window.addEventListener("DOMContentLoaded", function () {
 	var userLocationButtons = document.getElementsByClassName("user-location-button"), 
@@ -8,7 +9,6 @@ window.addEventListener("DOMContentLoaded", function () {
 	countryList = new CountryCollection(),
 	i;
 
-	TA.currentUser = new User( JSON.parse( YAHOO.util.Cookie.get("user") ));
 
 	function renderUserLocationButtons(elems) {
 		var i = 0;

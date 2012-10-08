@@ -1,9 +1,5 @@
 <div id="location-fields" data-user="<%= user.to_json  %>" data-json="<%= location.to_json %>" class="location">
   <p id="server-messages" class="messages"></p>
-  <section id="location-photos">
-    <div id="photo-container"></div>
-    <input type="file" class="photo_upload" multiple="multiple" />
-  </section>
   <fieldset id="location-geo">
     <p id="location-city" class="city"><%= location.city %></p>
     <p id="location-state" class="state"><%= location.state %></p>
@@ -16,18 +12,4 @@
 
 <% content_for :scripts_footer do %>
  <%= javascript_include_tag "admin/admin" %>
- <script>
-  window.addEventListener("DOMContentLoaded", function () {
-  
-  var loc = new Location(JSON.parse(document.getElementById("location-fields").getAttribute("data-json"))),
-  user = User.createFromDataAttribute(document.getElementById("location-fields"), "data-user");
-  loc.setUser(user);
-
-  var form = new LocationForm({
-   el: document.getElementById("location-form"),
-   model: loc
-  }).render()
-
-  })
- </script>
 <% end %>

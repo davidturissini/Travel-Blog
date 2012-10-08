@@ -1,0 +1,34 @@
+var Loading = Backbone.View.extend({
+	doneLoading:function () {
+		this.el.className = this.el.className.replace(" loading", "");
+		if( this.loadingUI.parentNode ) {
+			this.loadingUI.parentNode.removeChild(this.loadingUI);
+		}
+	},
+	setLoadingView:function (html) {
+		this.loadingUI.innerHTML = "";
+		this.loadingUI.appendChild(html);
+	},
+	loading:function () {
+		this.el.className += " loading";
+		if( this.loadingUI.parentNode !== this.el ) {
+			this.el.appendChild(this.loadingUI);
+		}
+		this.center();
+	},
+	center:function () {
+		if( this.options.center === false || this.loadingUI.children.length === 0 ) { return }
+		var height = this.el.offsetHeight,
+		viewHeight = this.loadingUI.children[0].offsetHeight;
+		this.loadingUI.style.paddingTop = parseInt( (height / 2) - (viewHeight / 2) ) + "px";
+
+	},
+	createLoadingUI:function () {
+		this.loadingUI = document.createElement("div");
+		this.loadingUI.className = "loading-ui";
+	},
+	render:function () {
+		this.createLoadingUI();
+		return this;
+	}
+})

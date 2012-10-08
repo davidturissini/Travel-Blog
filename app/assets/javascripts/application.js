@@ -12,6 +12,7 @@
 //= require_tree ./public/models/
 //= require 'public/collections'
 //= require_tree ./public/views/
+//= require_tree './public/collections'
 //= require 'public/views'
 
 window.TA = {

@@ -8,6 +8,13 @@ class Admin::LocationsController < Admin::AdminController
 	   end
 	 end
 
+	 def edit_photos
+	 	@location = current_user.locations.find_by_slug(params[:location_id])
+	  	if current_user.has_flickr?
+	  	  @user_flickr_sets = current_user.flickr_sets
+	  	end
+	 end
+
 	 def new
 	   @location = Location.new({
 	    :location_type => current_location_type

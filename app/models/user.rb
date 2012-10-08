@@ -1,3 +1,5 @@
+require 'flickraw'
+
 class User < ActiveRecord::Base
   has_many :location_types
   has_many :locations
@@ -16,6 +18,18 @@ class User < ActiveRecord::Base
     if( !File.directory?(server_directory) )
       Dir.mkdir(server_directory)
     end
+  end
+
+  def flickr_sets
+    flickr.access_token = flickr_account.access_token
+    FlickRaw.shared_secret = flickr_account.shared_secret
+    flickr.photosets.getList
+  end
+
+  def flickr_set_photos flickrset_id
+    flickr.access_token = flickr_account.access_token
+    FlickRaw.shared_secret = flickr_account.shared_secret
+    flickr.photosets.getPhotos({:photoset_id => flickrset_id})
   end
 
   def photos_count
@@ -41,6 +55,14 @@ class User < ActiveRecord::Base
 
   def photo
     @photo ||= UserPhoto.create(self)
+  end
+
+  def has_flickr?
+    !flickr_account.nil?
+  end
+
+  def flickr_account
+    realm_accounts.where(:provider => "flickr").first
   end
 
   def facebook

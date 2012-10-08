@@ -20,6 +20,8 @@ class UsersController < ApplicationController
 
   if current_user.incomplete?
     redirect_to_user_welcome
+  elsif !params[:redirect].nil?
+    redirect_to(params[:redirect])
   else
     redirect_to("/")
   end
@@ -30,6 +32,26 @@ class UsersController < ApplicationController
  def render_show
   respond_to do |format|
    format.html { render "users/show" }
+  end
+ end
+
+ def login_flickr
+  provider_id = request.env['omniauth.auth'].uid
+  realm = RealmAccount.where({:provider => "flickr", :provider_id => provider_id}).first
+  token = request.env['omniauth.auth'].credentials["token"]
+  secret = request.env['omniauth.auth'].credentials["secret"]
+  if !current_user.anonymous? && !realm
+    RealmAccount.create({
+      :provider => "flickr",
+      :provider_id => provider_id,
+      :access_token => token,
+      :user => current_user,
+      :shared_token => secret
+      })
+  elsif realm
+    realm.shared_secret = secret
+    realm.access_token = token
+    realm.save!
   end
  end
  

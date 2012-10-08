@@ -30,4 +30,10 @@ class Admin::UsersController < Admin::AdminController
 			format.json { render :json => current_user }
 		end
 	end
+
+	def photoset_photos
+		photoset_id = params[:photoset_id]
+		photos = current_user.flickr_set_photos(photoset_id)
+		render :json => photos
+	end
 end

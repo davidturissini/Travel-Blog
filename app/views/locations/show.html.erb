@@ -1,67 +1,29 @@
 <article id="location" data-json="<%= @location.to_json %>">
-	<header>
+	<header class="autoclear">
+		<%= image_tag @location.user.photo.large, :class => "rounded-large left", :width => 80 %>
 		<h1>
 			<%= link_to user_path(@location.user.slug) do %>
-				<%= image_tag @location.user.photo_url, :class => "rounded-large", :width => 80 %>
-				<%= @location.user.name %>'s<% end %> trip
+				<%= @location.user.name %>'s<% end %> trip to
 			<% if @location.title %>
 				<%= location_string(@location) %>
 			<% else %>
 				<%= @location.geo_string %>
 			<% end %>
 		</h1>
+		
 	</header>
 	<%= render "locations/photos", :photos => @location.photos %>
-	<% if current_user.owns?(@location) %>
-		<section id="photo-upload">
-			<hgroup>
-				<h1>Drag photos</h1>
-				<h2>or <input type="file" multiple="multiple" /></h2>
-			</hgroup>
-			<div id="photo-container" class="autoclear"></div>
-			
-			<input type="button" value="Save" id="save-photos" />
-		</section>
-	<% end %>
 	<figure id="map"></figure>
-	<section id="journal_entries">
-		<ul>
-			<% @location.journal_entries.each do |entry| %>
-				<li><%= entry.title %></li>	
-			<% end %>
-		</ul>
+	<section id="posts">
+		<% @location.journal_entries.each do |entry| %>
+			<h1><%= entry.title %></h1>	
+			<div><%= entry.body.html_safe %>
+		<% end %>
 	</section>
 	<br class="clear" />
 </article>
 
 <% content_for :scripts_footer do %>
-	<% if current_user.owns?(@location) %>
-		<%= javascript_include_tag "admin/admin" %>
-		<script>
-			window.addEventListener("DOMContentLoaded", function () {
-				var loc = Location.createFromDataAttribute( document.getElementById("location") );
-				loc.setUser(TA.currentUser);
-				var photoUploader = new PhotoUploader({
-			      model:loc,
-			      el:document.getElementById("photo-upload"),
-			      input:document.querySelector("#photo-upload input"),
-			      previewElem:document.getElementById("photo-container"),
-			      dropTarget:document.getElementById("photo-container")
-			    });
-
-			    photoUploader.on("photos_uploaded", function (e) {
-			    	window.location.reload();
-			    })
-
-			    photoUploader.render();
-
-			    document.getElementById("save-photos").addEventListener("click", function () {
-			    	photoUploader.uploadFiles();
-			    })
-
-			})
-		</script>
-	<% end %>
 	<script>
 
 	window.addEventListener("DOMContentLoaded", function () {

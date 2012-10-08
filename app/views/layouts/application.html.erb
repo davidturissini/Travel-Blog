@@ -12,7 +12,7 @@
   <%= stylesheet_link_tag "yui-reset", "application" %>
   <%= csrf_meta_tags %>
  </head>
- <body class="<%= params[:controller] %>-<%= params[:action] %>">
+ <body class="<%= params[:controller].gsub("/", "-") %>-<%= params[:action] %>">
   <%= render "global/facebook" %>
   <header id="site-header" class="autoclear">
     <%= render "users/ribbon" %>
@@ -29,6 +29,9 @@
         Traveladdict.me footer
      </footer>
     <%= javascript_include_tag "application" %>
+    <% if !current_user.anonymous? %>
+      <%= javascript_include_tag "admin/admin" %>
+    <% end %>
     <%= yield :scripts_footer %>
     <% if Rails.env == "production" && params[:controller] != "users" %>
       <script>

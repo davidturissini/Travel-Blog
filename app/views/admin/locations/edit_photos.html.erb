@@ -1,0 +1,18 @@
+<section id="location" data-json="<%= @location.to_json %>">
+	<h1>Manage photos for <%= @location.to_s %></h1>
+	<%= render "admin/locations/photo_uploader", :location => @location %>
+	<section id="location-photos" data-json="<%= @location.photos.to_json %>">
+		<ul>
+			<% @location.photos.each do |photo| %>
+				<li>
+					<article class="photo" id="photo-<%= photo.id %>">
+						<img src="<%= photo.url %>" width="200" />
+						<input type="text" value="<%= photo.title %>" placeholder="Title" class="title" />
+						<input type="text" value="<%= photo.description %>" placeholder="Description" class="description" />
+					</article>
+				</li>
+			<% end %>
+		</ul>
+		<input type="button" class="save" value="Save" />
+	</section>
+</section>
