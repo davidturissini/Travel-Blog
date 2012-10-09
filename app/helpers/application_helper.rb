@@ -15,7 +15,7 @@ module ApplicationHelper
 
  def render_admin_ribbon
  	filename = "admin_ribbon"
- 	partial_path = "admin/#{params[:controller]}/"
+ 	partial_path = "#{params[:controller]}/"
  	full_path = "#{Rails.root}/app/views/#{partial_path}_#{filename}.html.erb"
  	if( File.exists?(full_path) )
  		render(:partial => "#{partial_path}#{filename}")

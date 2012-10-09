@@ -46,7 +46,7 @@ class UsersController < ApplicationController
       :provider_id => provider_id,
       :access_token => token,
       :user => current_user,
-      :shared_token => secret
+      :shared_secret => secret
       })
   elsif realm
     realm.shared_secret = secret

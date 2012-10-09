@@ -41,4 +41,8 @@ module LocationHelper
  def photos_edit_path location
  	location_photos_edit_path(:location_id => location.slug)
  end
+
+ def new_location_photos_path location
+ 	location_photos_new_path(:location_id => location.slug)
+ end
 end

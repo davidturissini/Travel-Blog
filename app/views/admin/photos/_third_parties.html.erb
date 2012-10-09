@@ -1,0 +1,10 @@
+<% url = current_user.has_flickr? ? "#flickr-dialog" : "/auth/flickr?redirect=#{request.fullpath}%3Fflickr" %>
+
+<a href="<%= url %>" id="photo-upload-flickr">
+	<figure>
+		<img src="/assets/flickr_logo.png" height="48" width="48" alt="" />
+		<figcaption>
+			Import your photos from Flickr
+		</figcaption>
+	</figure>
+</a>

@@ -61,6 +61,8 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 #content { margin:0px auto; padding:0 20px; }
 
+#page-title { position:relative; margin-bottom:10px; padding-top:10px; font-size:1.67em; }
+
 /* WELCOME PAGE */
 .welcome-index #hero { margin:30px auto 0; text-align:center; vertical-align:middle; }
 .welcome-index #hero article { display:inline-block; position:relative; max-width:180px; font-size:.8571em; }
@@ -183,20 +185,24 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #location-form #flickr-photos li { display:inline-block; padding:0 10px 10px 0; }
 
 #photo-upload { position:relative; margin-top:20px; }
-#photo-upload header { position:absolute; bottom:10px; left:0; right:0; text-align:center; color:#ccc; }
+#photo-upload header { text-align:center; color:#ccc; }
 #photo-upload header h1 { font-size:1.234em; }
 #photo-upload header span { display:block; margin:5px 0; }
-#photo-upload header h2 { margin:5px auto 0; width:179px; }
-#photo-upload header ul li { display:inline-block; }
-#photo-upload .tab { background:#fff; border-left:3px dashed #333; border-right:3px dashed #333; }
+#photo-upload header #native-photos { float:left; margin-top:15px; margin-left:330px; }
+#photo-upload header #third-party-photos { float:right; margin-right:300px; }
+#photo-upload header input { width:88px; }
+
+#photo-upload header figure { width:100px; font-size:.835em; }
 #photo-upload #user-flickr-controller { margin-top:10px; }
 #photo-upload #user-flickr-controller li { margin:0 5px; }
 #photo-upload #user-flickr-sets { display:none; }
 #photo-upload.dragenter header { display:none; }
-#photo-upload #save-photos { display:none; position:relative; float:right; margin-top:-40px; margin-right:10px; font-size:2.237em; }
-#photo-upload.has-photos #save-photos { display:block; }
+#photo-upload .button { display:none; position:relative; font-size:2.237em; }
+#photo-upload .button#save-photos { float:right; margin-top:-40px; margin-right:10px; }
+#photo-upload .button#clear-photos { float:right; margin-top:-40px; margin-right:120px; }
+#photo-upload.has-photos .button { display:block; }
 #photo-upload.loading .loading-ui div { margin:0 auto; width:120px; font-size:.847em; }
-#photo-upload #photo-container { margin-bottom:10px; padding-bottom:100px; border:3px dashed #333; }
+#photo-upload #photo-container { clear:both; margin-bottom:10px; padding-bottom:30px; min-height:70px; border:3px dashed #333; }
 #photo-upload #photo-container .image-upload { position:relative; float:left; margin-right:15px; margin-bottom:10px; max-height:90px; border:2px solid #ccc; }
 #photo-upload #photo-container .image-upload canvas { display:block; }
 #photo-upload #photo-container .image-upload .delete { display:none; position:absolute; top:0px; right:0px; height:16px; width:16px; background:red; cursor:pointer; }
@@ -378,7 +384,7 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .loading > .loading-ui { display:block; color:#fff; }
 
 /* MODAL DIALOG */
-.modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100; opacity:0; background:rgba(255, 255, 255, .8); 
+.modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100000; opacity:0; background:rgba(255, 255, 255, .8); 
 	-webkit-transition:opacity linear 500ms;
 }
 .modal-dialog.visible { opacity: 1; }

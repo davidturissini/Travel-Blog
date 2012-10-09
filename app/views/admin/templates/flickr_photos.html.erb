@@ -1,0 +1,19 @@
+<div id="user-flickr-controller" class="tabs">
+	<nav>
+		<ul><li>
+			<a href="#user-flickr-sets" class="tab-link">Your photosets</a>
+		</li></ul>
+	</nav>
+	<section id="user-flickr-sets">
+		<ul class="flickr-tab">
+			<% @user_flickr_sets.each do |set| %>
+				<li>
+					<a class="flickr-set" data-set="<%= set.to_json %>">
+						<img src="<%= flickr_photoset_url set %>" />
+						<h3><%= set["title"] %></h3>
+					</a>
+				</li>
+			<% end %>
+		</ul>
+	</section>
+</div>

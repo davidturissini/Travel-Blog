@@ -1,35 +1,18 @@
 <% if current_user.owns?(location) %>
 	<section id="photo-upload">
 		<header>
-			<h1>Drag photos</h1>
-			<span class="or">Or</span>
-			<ul>
-				<li><input type="file" multiple="multiple" /></li>
-				<% if !current_user.has_flickr? %>
-					<li id="photo-upload-flickr"><a href="/auth/flickr?redirect=<%= request.fullpath %>%3Fflickr">Import from Flickr</a></li>
-				<% end %>
-			</ul>
-			<% if @user_flickr_sets %>
-				<div id="user-flickr-controller" data-realm="<%= current_user.flickr_account.to_json %>">
-					<nav>
-						<ul><li>
-							<a href="#user-flickr-sets" class="flickr-tab-link">Import from your Flickr Sets</a>
-						</li></ul>
-					</nav>
-					<ul id="user-flickr-sets" class="flickr-tab tab">
-						<% @user_flickr_sets.each do |set| %>
-							<li>
-								<a class="flickr-set" data-set="<%= set.to_json %>">
-									<img src="<%= flickr_photoset_url set %>" />
-									<h3><%= set["title"] %></h3>
-								</a>
-							</li>
-						<% end %>
-					</ul>
-				</div>
-			<% end %>
+			<section id="native-photos">
+				<h1>Drag photos</h1>
+				<span class="or">Or</span>
+				<input type="file" multiple="multiple" />
+			</section>
+			<section id="third-party-photos">
+				<%= render "admin/photos/third_parties" %>
+			</section>
 		</header>
+		
 		<div id="photo-container" class="autoclear"></div>
-		<input type="button" value="Import Photos" id="save-photos" />
+		<input type="button" value="Clear" class="button" id="clear-photos" />
+		<input type="button" value="Import Photos" class="button" id="save-photos" />
 	</section>
 <% end %>

@@ -11,6 +11,10 @@ var PhotoUploader = Backbone.View.extend({
           }
         })
 
+        this.files.on("reset", function (e) {
+          uploader.options.previewElem = "";
+        })
+
         this.files.on("remove", function (model) {
           uploader.removePreview(model);
           if( uploader.files.length === 0 ) {
@@ -18,6 +22,9 @@ var PhotoUploader = Backbone.View.extend({
           }
         })
 
+      },
+      clear:function () {
+        this.files.reset();
       },
       addImage:function (image) {
         image.id = image.src;
@@ -33,6 +40,13 @@ var PhotoUploader = Backbone.View.extend({
           loadingView = document.createElement("div"),
           h5 = document.createElement("h5"),
           progress = document.createElement("progress")
+
+          if( uploader.options.uploadButton ) {
+            uploader.options.uploadButton.setAttribute("disabled", "disabled");
+            uploader.options.clearButton.setAttribute("disabled", "disabled");
+          }
+
+          uploader.trigger("upload_start");
 
           progress.setAttribute("value", 0);
           progress.setAttribute("max", uploader.files.length);
@@ -231,8 +245,22 @@ var PhotoUploader = Backbone.View.extend({
           }, false);
         })(this);
       },
+      __bindUploadButton:function () {
+        var uploader = this;
+        this.options.uploadButton.addEventListener("click", function (e) {
+          uploader.uploadFiles();
+        })
+      },
+      __bindClearButton:function () {
+        var uploader = this;
+        this.options.clearButton.addEventListener("click", function (e) {
+          uploader.clear();
+        })
+      },
       render:function () {
         this.__setupDropTarget();
         this.__setupInput();
+        this.__bindUploadButton();
+        this.__bindClearButton();
       }
     });

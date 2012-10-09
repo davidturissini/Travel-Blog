@@ -1,6 +1,5 @@
 <section id="location" data-json="<%= @location.to_json %>">
-	<h1>Manage photos for <%= @location.to_s %></h1>
-	<%= render "admin/locations/photo_uploader", :location => @location %>
+	<h1 id="page-title">Manage photos for <%= @location.to_s %></h1>
 	<section id="location-photos" data-json="<%= @location.photos.to_json %>">
 		<% @location.photos.each do |photo| %>
 			<figure class="photo" id="photo-<%= photo.id %>">

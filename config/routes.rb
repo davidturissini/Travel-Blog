@@ -17,6 +17,7 @@ Adventureblog::Application.routes.draw do
   match '/me/flickr_photoset_photos/:photoset_id' => "admin/users#photoset_photos", :user_id => "me"
   match '/me/:location_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
   match '/me/:location_id/photos/edit' => "admin/locations#edit_photos", :user_id => "me", :as => "location_photos_edit"
+  match '/me/:location_id/photos/new' => "admin/locations#new_photos", :user_id => "me", :as => "location_photos_new"
   match '/me/:location_id/photos/:slug' => "admin/photos#delete", :user_id => "me", :via => "delete"
   match '/me/:location_id/photos/:slug' => "admin/photos#update", :user_id => "me"
   match '/me/:location_id/edit' => "admin/locations#edit", :user_id => "me"
