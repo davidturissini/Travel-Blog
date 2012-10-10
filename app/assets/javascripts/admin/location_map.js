@@ -14,19 +14,16 @@ var LocationMap = Backbone.View.extend({
 		if( this.model.country ) {
 	 		this.modelClone.setCountry(this.model.country)
 	 	}
-	 	this.showLocationString("");
 	},
 	showLocationString:function(string) {
-		if( this.el.querySelector("h1") ) {
-			this.el.querySelector("h1").innerHTML = string;
-		}
+		this.options.geoElem.innerHTML = string;
 	},
 	_bindMapClicks: function () {
 		var form = this,
 		loc = form.model,
 		decoder = new GeocodeDecoder();
 
-		google.maps.event.addListener(form.map, "click", function (mapEvent) {
+		google.maps.event.addListener(form.options.map, "click", function (mapEvent) {
 			decoder.decode(mapEvent.latLng, {
 			success:function (result) {
 				if( result.data ) {
@@ -51,42 +48,34 @@ var LocationMap = Backbone.View.extend({
 	},
 
 	drawMapMarker: function () {
-		this.mapMarker.render()
+		this.markerClone.render();
 	},
-	showMap: function () {
-		var form = this,
-		titleElem = form.el.querySelector(".title");
+	bindMap: function () {
+		var form = this;
 
-		form.el.querySelector(".save").addEventListener("click", function () {
+		form.options.doneButton.addEventListener("click", function () {
 			form.model.set(form.modelClone.attributes, {silent:true});
 			form.model.setCountry(form.modelClone.country);
 		})
 
-		titleElem.addEventListener("keyup", function (e) {
+		form.options.titleElem.addEventListener("keyup", function (e) {
 			form.modelClone.set({title: e.currentTarget.value});
 		})
 
 		var loc = form.model;
 
-		form.map = new google.maps.Map(form.options.mapElem, {
-			center: new google.maps.LatLng(form.modelClone.get("latitude") || 40.7142, form.modelClone.get("longitude") || -74.0064),
-			zoom: 4,
-			mapTypeId: google.maps.MapTypeId.HYBRID
-		})
+		form._bindMapClicks();
 
-		form._bindMapClicks()
-		form.mapMarker = new LocationMarker({
-			model:form.modelClone,
-			map:form.map,
-			locationType:loc.locationType
-		})
+		this.markerClone = new LocationMarker({
+	        model:this.modelClone,
+	        map:this.options.map
+	    });
+
 		form.drawMapMarker();
+		form.el.className += " map-active";
 	},
 	render: function () {
-		var form = this,
-		loc = form.model
-
-		form.showMap();
+		this.bindMap();
 
 	}
 })

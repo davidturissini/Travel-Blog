@@ -1,1 +1,18 @@
-<%= render "admin/locations/form", :location => @location, :user => @location.user %>
+<article id="location" data-json="<%= @location.to_json %>">
+	<header>
+		<h1 id="page-title">
+			<input type="text" id="location-title" placeholder="Title" value="<%= @location.title %>" />
+		</h1>
+		<%= link_to "Manage Photos", photos_edit_path(@location) %>
+		<a id="delete-location">Delete</a>
+	</header>
+	<section id="geo">
+		<a id="edit-location" href="#">Edit Geo</a>
+		<h1 id="location-geo"><%= @location.geo_string %></h1>
+		<figure id="map" class="clear"></figure>
+		<input type="button" id="map-edit-done" value="Done Editing Map" />
+	</section>
+	<footer class="buttons">
+		<input id="location-save" type="button" value="Save" />
+	</footer>
+</article>

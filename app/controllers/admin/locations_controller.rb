@@ -22,7 +22,7 @@ class Admin::LocationsController < Admin::AdminController
 	   })
 	 end
 
-	 def show
+	 def edit
 	 	@location = current_location
 	 end
 

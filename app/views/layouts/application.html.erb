@@ -22,14 +22,15 @@
   </header>
   <%= render_admin_ribbon %>
   <div id="container">
-     <div id="content">
+     <div id="content" class="autoclear">
       <%= yield %>
      </div>
      <%= yield :below_content %>
-     <footer>
-        Traveladdict.me footer
-     </footer>
-    <%= javascript_include_tag "application" %>
+  </div>
+  <footer id="site-footer">
+      Traveladdict.me footer
+  </footer>
+   <%= javascript_include_tag "application" %>
     <% if !current_user.anonymous? %>
       <%= javascript_include_tag "admin/admin" %>
     <% end %>
@@ -47,6 +48,5 @@
         })();
       </script>
     <% end %>
-  </div>
  </body>
 </html>

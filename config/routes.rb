@@ -15,15 +15,15 @@ Adventureblog::Application.routes.draw do
   match '/me/statuses/' => "admin/statuses#create", :user_id => "me", :via => :post
   match '/me/statuses/:status_id' => "admin/statuses#destroy", :user_id => "me", :via => :delete
   match '/me/flickr_photoset_photos/:photoset_id' => "admin/users#photoset_photos", :user_id => "me"
-  match '/me/:location_id' => "admin/locations#show", :user_id => "me", :as => "admin_location_detail"
+  match '/me/:location_id' => "admin/locations#edit", :user_id => "me", :via => "get", :as => "admin_location_detail"
+  match '/me/:location_id' => "admin/locations#update", :user_id => "me", :via => "put"
+  match '/me/:location_id' => "admin/locations#destroy", :user_id => "me", :via => "delete"
   match '/me/:location_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
   match '/me/:location_id/photos/edit' => "admin/locations#edit_photos", :user_id => "me", :as => "location_photos_edit"
   match '/me/:location_id/photos/new' => "admin/locations#new_photos", :user_id => "me", :as => "location_photos_new"
   match '/me/:location_id/photos/:slug' => "admin/photos#delete", :user_id => "me", :via => "delete"
   match '/me/:location_id/photos/:slug' => "admin/photos#update", :user_id => "me"
   match '/me/:location_id/edit' => "admin/locations#edit", :user_id => "me"
-  match '/me/:location_id' => "admin/locations#update", :user_id => "me", :via => "put"
-  match '/me/:location_id' => "admin/locations#destroy", :user_id => "me", :via => "delete"
   match "/:user_id/template/:path" => "admin/template#load"
   match '/:user_id/locations/create' => "admin/locations#create"
 

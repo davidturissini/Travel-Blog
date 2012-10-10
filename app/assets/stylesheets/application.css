@@ -23,7 +23,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #container { margin:0 auto; width:960px; background:#fff; }
 .locations-show #container { width:auto; }
 
-#site-header { padding:10px; background:#069;
+#site-header { padding:10px; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
 }
 
@@ -56,7 +56,12 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #site-header #user-info .dropdown a { display:block; margin:0 -20px; padding:5px 10px; color:#069; }
 #site-header #user-info .dropdown a:hover { text-decoration:none; background:#069; color:#fff; }
 
-#map { height:400px; }
+#site-footer { padding:20px; color:#fff; background:#333; 
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#000));
+}
+#site-footer a { color:#fff; }
+
+#map { margin:0; padding:0; height:400px; }
 #map nav { display:none }
 
 #content { margin:0px auto; padding:20px; }
@@ -153,6 +158,19 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #location:hover .toolbox { display:block; }
 .locations-show #location > .toolbox { clear:both; }
 
+/* GLOBAL EDIT/NEW STYLES */
+footer.buttons { position:fixed; bottom:0; left:0; right:0; z-index:10000; padding:20px; height:20px; border-top:3px solid #333; background:#fff; text-align:right; }
+
+/* ADMIN LOCATION EDIT */
+.admin-locations-edit { padding-bottom:60px; }
+.admin-locations-edit #subnav { display:none; }
+.admin-locations-edit #location #page-title { padding-top:0; }
+.admin-locations-edit #location #location-title { width:100%; border:0px; }
+.admin-locations-edit #location #location-geo { float:left; margin:5px 0; font-size:1.242em; }
+.admin-locations-edit #location #edit-location { float:right; margin-top:10px; cursor:pointer; }
+.admin-locations-edit #location #map-edit-done { display:none; }
+.admin-locations-edit #location.map-active #map-edit-done { display:block; }
+
 /* LOCATION EDIT PHOTOS */
 .admin-locations-edit_photos { padding-bottom:60px; }
 .admin-locations-edit_photos #location-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; text-align:center; }
@@ -163,7 +181,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .admin-locations-edit_photos #location-photos figure:hover .remove { display:block; }
 .admin-locations-edit_photos #location-photos .loading-ui div { margin:0 auto; width:180px; color:#fff; }
 .admin-locations-edit_photos #location-photos .loading-ui div h4 { margin-bottom:10px; }
-.admin-locations-edit_photos #location-photos footer { position:fixed; bottom:0; left:0; right:0; z-index:10000; padding:20px; height:20px; border-top:3px solid #333; background:#fff; text-align:right; }
 
 /* LOCATION FORM */
 #location-form .title { width:745px; }
@@ -197,10 +214,9 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #photo-upload #user-flickr-controller li { margin:0 5px; }
 #photo-upload #user-flickr-sets { display:none; }
 #photo-upload.dragenter header { display:none; }
-#photo-upload .button { display:none; position:relative; font-size:2.237em; }
-#photo-upload .button#save-photos { float:right; margin-top:-40px; margin-right:10px; }
-#photo-upload .button#clear-photos { float:right; margin-top:-40px; margin-right:120px; }
-#photo-upload.has-photos .button { display:block; }
+#photo-upload .buttons { display:none; }
+#photo-upload.has-photos .buttons { display:block; }
+#photo-upload .buttons .button { position:relative; font-size:2.237em; }
 #photo-upload.loading .loading-ui div { margin:0 auto; width:120px; font-size:.847em; }
 #photo-upload #photo-container { clear:both; margin-bottom:10px; padding-bottom:30px; min-height:70px; border:3px dashed #333; }
 #photo-upload #photo-container .image-upload { position:relative; float:left; margin-right:15px; margin-bottom:10px; max-height:90px; border:2px solid #ccc; }
@@ -217,9 +233,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #journal-entry-fields .journal-entry-title { display:block; width:100%; font-size:22px; }
 #journal-entry-fields .journal-entry-body { display:block; margin:20px 0; width:100%; min-height:300px; }
 #journal-entry-fields .journal-entry-day { display:block; margin-bottom:20px; width:100%; font-size:22px; }
-
-/* CONTAINER FOOTER */
-#container > footer { clear: both; padding:20px; }
 
 /* SCROLLER */
 .scroller { position:relative; }
