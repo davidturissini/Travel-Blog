@@ -2,13 +2,7 @@
     <ul class="locations">
         <% @user.locations.each do |location| %>
             <li data-json="<%= location.to_json  %>" class="location">
-                <%= link_to location.to_s, location_path(location), :class => "location-link location-geotext" %>
-                <div class="toolbar">
-                	<ul>
-                		<li><a class="edit">edit</a></li>
-	                	<li><a class="remove">delete</a></li>
-	                </ul>
-	            </div>
+                <%= link_to location.to_s, admin_location_path(location), :class => "location-link location-geotext" %>
             </li>
         <% end %> 
     </ul>

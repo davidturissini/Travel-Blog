@@ -7,13 +7,6 @@ var LocationMap = Backbone.View.extend({
 		if( this.model ) {
 			this.setModel(this.model);
 		}
-		form.modal = new ModalDialog({
-			onclose:function () {
-				if( form.options.onsave ) {
-					form.options.onsave();
-				}
-			}
-		})
 	},
 	setModel:function (model) {
 		this.model = model;
@@ -37,9 +30,9 @@ var LocationMap = Backbone.View.extend({
 			decoder.decode(mapEvent.latLng, {
 			success:function (result) {
 				if( result.data ) {
-					form.countryCollection.fetch({
+					form.options.countryCollection.fetch({
 						success:function () {
-							var country = form.countryCollection.findByName(result.data.country);
+							var country = form.options.countryCollection.findByName(result.data.country);
 							form.modelClone.set({
 								city: result.data.city || "",
 								state: result.data.state || "",
@@ -62,65 +55,37 @@ var LocationMap = Backbone.View.extend({
 	},
 	showMap: function () {
 		var form = this,
-		template = new AdminTemplate({
-			user:this.model.user,
-			id:"location_map",
-			params:{
-				location_id:this.model.get("slug")
-			}
-		});
+		titleElem = form.el.querySelector(".title");
 
-		template.load({
-			success:function (html) {
-				form.el = html,
-				titleElem = form.el.querySelector(".title");
-
-				if( form.model.has("title") ) {
-					titleElem.value = form.model.get("title");
-				}
-
-				if( form.model.geoString() ) {
-					form.showLocationString( form.model.geoString({includeTitle:false}) );
-				}
-
-				form.el.querySelector(".save").addEventListener("click", function () {
-					form.model.set(form.modelClone.attributes, {silent:true});
-					form.model.setCountry(form.modelClone.country);
-					form.modal.close()
-				})
-
-				titleElem.addEventListener("keyup", function (e) {
-					form.modelClone.set({title: e.currentTarget.value});
-				})
-
-				var mapElem = html.querySelector("figure"),
-				loc = form.model;
-
-				form.modal.setView( html )
-				form.modal.setTitle("Add new location")
-				form.modal.render()
-
-				form.map = new google.maps.Map(mapElem, {
-					center: new google.maps.LatLng(form.modelClone.get("latitude") || 40.7142, form.modelClone.get("longitude") || -74.0064),
-					zoom: 4,
-					mapTypeId: google.maps.MapTypeId.HYBRID
-				})
-
-				form._bindMapClicks()
-				form.mapMarker = new LocationMarker({
-					model:form.modelClone,
-					map:form.map,
-					locationType:loc.locationType
-				})
-				form.drawMapMarker()
-			}
+		form.el.querySelector(".save").addEventListener("click", function () {
+			form.model.set(form.modelClone.attributes, {silent:true});
+			form.model.setCountry(form.modelClone.country);
 		})
+
+		titleElem.addEventListener("keyup", function (e) {
+			form.modelClone.set({title: e.currentTarget.value});
+		})
+
+		var loc = form.model;
+
+		form.map = new google.maps.Map(form.options.mapElem, {
+			center: new google.maps.LatLng(form.modelClone.get("latitude") || 40.7142, form.modelClone.get("longitude") || -74.0064),
+			zoom: 4,
+			mapTypeId: google.maps.MapTypeId.HYBRID
+		})
+
+		form._bindMapClicks()
+		form.mapMarker = new LocationMarker({
+			model:form.modelClone,
+			map:form.map,
+			locationType:loc.locationType
+		})
+		form.drawMapMarker();
 	},
 	render: function () {
 		var form = this,
 		loc = form.model
 
-		form.countryCollection = new CountryCollection();
 		form.showMap();
 
 	}

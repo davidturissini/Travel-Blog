@@ -1,18 +1,24 @@
 <section id="location" data-json="<%= @location.to_json %>">
-	<h1 id="page-title">Manage photos for <%= @location.to_s %></h1>
+	<h1 id="page-title">Manage photos</h1>
+	<%= link_to "Add photos", new_location_photos_path(@location) %>
+	<p id="server-messages"></p>
 	<section id="location-photos" data-json="<%= @location.photos.to_json %>">
 		<% @location.photos.each do |photo| %>
 			<figure class="photo" id="photo-<%= photo.id %>">
-				<a class="remove">X</a>
-				<img src="<%= photo.url %>" width="200" />
+				<div class="image-wrapper">
+					<a class="remove">X</a>
+					<img src="<%= photo.url %>" width="200" w />
+				</div>
 				<figcaption>
 					<input type="text" value="<%= photo.title %>" placeholder="Title" class="title" />
 					<textarea placeholder="Description" class="description"><%= photo.description %></textarea>
 				</figcaption>
 			</figure>
 		<% end %>
-		<footer>
-			<input type="button" class="save" value="Save photos for <%= @location.to_s %>" />
-		</footer>
+		<% if @location.photos.count > 0 %>
+			<footer>
+				<input type="button" class="save" value="Save photos for <%= @location.to_s %>" />
+			</footer>
+		<% end %>
 	</section>
 </section>

@@ -35,7 +35,7 @@ var PhotoUploader = Backbone.View.extend({
         return function () {
           var uploader = this,
           loader = new Loading({
-            el:uploader.el
+            el:document.body
           }).render(),
           loadingView = document.createElement("div"),
           h5 = document.createElement("h5"),

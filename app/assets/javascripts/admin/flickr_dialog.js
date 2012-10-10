@@ -21,10 +21,10 @@ var FlickrDialog = ModalDialog.extend({
 		flickrTemplate.load({
             success:function (html) {
 				dialog.setView( html );
-				dialog.setTitle("Import photos from flickr");
 				dialog.__bindFlickrClicks();
 
 				ModalDialog.prototype.render.call(dialog);
+				dialog.trigger("load");
             }
         });
 

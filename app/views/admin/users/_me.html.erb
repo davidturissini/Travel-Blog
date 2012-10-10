@@ -28,37 +28,6 @@
 <% content_for :scripts_footer do %>
   <%= javascript_include_tag "admin/admin" %>
   <script>
-    window.addEventListener("DOMContentLoaded", function () {
-        var locationMap = new LocationMap();
-        [].forEach.call(document.querySelectorAll("#user-locations .location"), function (elem) {
-            var location = Location.createFromDataAttribute(elem);
-            location.setUser(TA.currentUser);
-            location.loadCountry({
-                success:function () {
-                    var editElem = elem.querySelector(".edit");
-                    editElem.addEventListener("click", function (e) {
-                        e.preventDefault();
-                        locationMap.setModel( location );
-                        locationMap.options.onsave = function () {
-                            location.save({});
-                        }
-                        locationMap.render();
-                    });
-
-                    var removeElem = elem.querySelector(".remove");
-                    removeElem.addEventListener("click", function (e) {
-                        e.stopPropagation();
-                        if( confirm("Delete " + location.geoString() + "?"))
-                        location.destroy({
-                            success:function () {
-                                elem.parentNode.removeChild(elem);
-                            }
-                        })
-                    })
-                }
-            });
-        });
-
         [].forEach.call(document.querySelectorAll("#user-statuses .status"), function (elem) {
             var status = Status.createFromDataAttribute(elem)
             status.setUser(TA.currentUser);
@@ -70,6 +39,5 @@
                 })
             })
         })
-    });
   </script>
 <% end %>

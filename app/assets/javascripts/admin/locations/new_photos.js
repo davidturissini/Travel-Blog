@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     photoUploader.on("photos_uploaded", function (e) {
-      window.location.reload();
+      window.location.href = loc.editPhotosUrl();
     });
 
     photoUploader.render();
@@ -39,6 +39,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   var flickrSetsLink = document.getElementById("photo-upload-flickr"),
   flickrDialog = new FlickrDialog();
+  flickrDialog.setTitle("Import photos from Flickr for " + loc.toString());
 
   flickrDialog.on("photoset_click", function (event) {
         TA.currentUser.flickrset_photos(event.photoset.id, {
@@ -71,6 +72,19 @@ window.addEventListener("DOMContentLoaded", function () {
   flickrSetsLink.addEventListener("click", function (evt) {
     if( /auth\/flickr/.test( flickrSetsLink.getAttribute("href") ) ) { return }
       evt.preventDefault();
+      var loading = new Loading({
+        el:document.body
+      }),
+      loadingView = document.createElement("span");
+      loadingView.innerHTML = "Loading flickr photos";
+
+      loading.render();
+      loading.setLoadingView(loadingView);
+      loading.loading();
+
+      flickrDialog.on("load", function () {
+        loading.doneLoading();
+      })
       flickrDialog.render();
   });
 

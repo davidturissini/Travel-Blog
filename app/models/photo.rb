@@ -10,6 +10,14 @@ class Photo < ActiveRecord::Base
 		@user || locations.first.user
 	end
 
+	def proportion
+		width.to_f / height.to_f
+	end
+
+	def proportional_height width
+		height * (1/proportion)
+	end
+
 	def save_with_raw! raw
 		_slug = Digest::SHA1.hexdigest("#{id}")
 		self.slug = _slug
@@ -20,19 +28,17 @@ class Photo < ActiveRecord::Base
 		location = locations.first
 		user = location.user
 
-		File.open(tmp_filename, "w+") do |f|
-		  f.write(raw)
-		end
-
 		photos_dir = user.create_subdir_if_not_exists!("photos")
+		originals_dir = user.create_subdir_if_not_exists!("photos/originals")
 
 		if photos_dir
-			image = Magick::Image.read(tmp_filename).first
-			image.format = "JPG"
-			image.write("#{photos_dir}#{filename}.jpg")
+			image = Magick::Image.from_blob(raw).first
+			image.write("#{originals_dir}#{filename}.jpg")
 			
 			generate_thumbnails image
 
+			width = image.columns
+			height = image.rows
 			save!
 		else
 			throw Exception.new

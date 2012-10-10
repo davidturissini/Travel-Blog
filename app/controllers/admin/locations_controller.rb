@@ -1,6 +1,6 @@
 class Admin::LocationsController < Admin::AdminController
 	def destroy
-	   @location = current_user.locations.find_by_slug(params[:location_id])
+	   @location = current_location
 	   @location.destroy
 	   respond_to do |format|
 	    format.html { redirect_to :controller => "location_types", :action => "show" }
@@ -9,11 +9,11 @@ class Admin::LocationsController < Admin::AdminController
 	 end
 
 	 def new_photos
-	 	@location = current_user.locations.find_by_slug(params[:location_id])
+	 	@location = current_location
 	 end
 
 	 def edit_photos
-	 	@location = current_user.locations.find_by_slug(params[:location_id])
+	 	@location = current_location
 	 end
 
 	 def new
@@ -22,12 +22,16 @@ class Admin::LocationsController < Admin::AdminController
 	   })
 	 end
 
+	 def show
+	 	@location = current_location
+	 end
+
 	 def edit
-	   @location = current_user.locations.find_by_slug(params[:location_id])
+	   @location = current_location
 	 end
 
 	 def update
-	   @location = current_user.locations.find_by_slug(params[:location_id])
+	   @location = current_location
 	   @location.update_attributes!(params[:location])  
 	   respond_to do |format|
 	    format.html { redirect_to request.referrer }
@@ -47,5 +51,10 @@ class Admin::LocationsController < Admin::AdminController
 			format.html { redirect_to request.referrer }
 			format.json { render :json => @location }
 		end
+	 end
+
+	 protected
+	 def current_location
+	 	current_user.locations.find_by_slug(params[:location_id])
 	 end
 end

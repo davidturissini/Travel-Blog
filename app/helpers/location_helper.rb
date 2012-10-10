@@ -45,4 +45,8 @@ module LocationHelper
  def new_location_photos_path location
  	location_photos_new_path(:location_id => location.slug)
  end
+
+ def admin_location_path location
+ 	admin_location_detail_path(location.slug)
+ end
 end

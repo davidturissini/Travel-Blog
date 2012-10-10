@@ -1,4 +1,5 @@
-body { color: #333; font-size:14px; font-family:Helvetica; }
+html { background:#333; }
+body { color:#333; font-size:14px; font-family:Helvetica; }
 
 a, a:visited, a:active { text-decoration:none; color:#069; }
 
@@ -19,14 +20,13 @@ br.clear { height:0; line-height:0 }
 
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
-#container { margin:0px auto 0; width:960px; background:transparent; }
+#container { margin:0 auto; width:960px; background:#fff; }
 .locations-show #container { width:auto; }
 
 #site-header { padding:10px; background:#069;
-	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#09C), to(#069));
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
 }
 
-#site-header { margin-bottom:20px; }
 #site-header a { color:#fff; }
 #site-header a:hover { text-decoration:underline; }
 #site-header h1 { margin-right:40px; font-size:1.25em; }
@@ -59,7 +59,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #map { height:400px; }
 #map nav { display:none }
 
-#content { margin:0px auto; padding:0 20px; }
+#content { margin:0px auto; padding:20px; }
 
 #page-title { position:relative; margin-bottom:10px; padding-top:10px; font-size:1.67em; }
 
@@ -155,11 +155,11 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 /* LOCATION EDIT PHOTOS */
 .admin-locations-edit_photos { padding-bottom:60px; }
-.admin-locations-edit_photos #location-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; }
-.admin-locations-edit_photos #location-photos figure img { display:block; margin:0 auto 10px; max-height:70%; max-width:100%; width:auto; }
+.admin-locations-edit_photos #location-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; text-align:center; }
+.admin-locations-edit_photos #location-photos figure .image-wrapper { display:inline-block; position:relative; margin:0 auto; }
+.admin-locations-edit_photos #location-photos figure .image-wrapper img { display:block; margin:0 auto 10px; max-height:70%; max-width:100%; width:auto; }
 .admin-locations-edit_photos #location-photos figure input { width:100%; margin-bottom:5px; }
 .admin-locations-edit_photos #location-photos figure textarea { position:relative; z-index:10; width:100%; height:2.4em; }
-.admin-locations-edit_photos #location-photos figure .remove { display:none; position:absolute; right:0; top:0; padding-left:4px; padding-top:1px; width:12px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:.85em; color:#333; }
 .admin-locations-edit_photos #location-photos figure:hover .remove { display:block; }
 .admin-locations-edit_photos #location-photos .loading-ui div { margin:0 auto; width:180px; color:#fff; }
 .admin-locations-edit_photos #location-photos .loading-ui div h4 { margin-bottom:10px; }
@@ -339,9 +339,8 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .status:hover .toolbar { display:block; right:0; }
 
 /* TOOLBAR */
-.toolbar { display:none; position:absolute; z-index:100; top:0; right:-32px; background:#fff; }
+.toolbar { display:none; position:absolute; z-index:100; top:0; right:-50px; background:#fff; }
 .toolbar .edit { background:url(/assets/pencil_icon.png) top left no-repeat; }
-.toolbar .remove { background:url(/assets/x_icon.gif) top left no-repeat; }
 .toolbar li { display:inline-block; }
 .toolbar li a { display:inline-block; width:16px; height:16px; text-indent:-999px; background-color:transparent; cursor:pointer; }
 
@@ -353,14 +352,12 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .tabs.open .close { display:block; }
 
 /* ADMIN TABS */
-#admin-tabs { margin-top:-20px; margin-bottom:20px; padding:10px 10px; border:1px solid #aaa; border-top:0; background:#069; color:#fff; text-align:center; }
-#admin-tabs a { color:#fff; }
-#admin-tabs a:hover { border-bottom:1px dotted #fff; }
-#admin-tabs nav h1 { display:inline; margin-right:10px; }
-#admin-tabs nav ul { display:inline; }
-#admin-tabs nav li { display:inline-block; padding:0 5px; border-left:1px solid #fff; }
-#admin-tabs nav li:first-child { border-left:0; }
-#admin-tabs .tab { margin-top:10px; }
+#subnav { margin:20px auto; padding:10px 10px; width:940px; background:#fff; }
+#subnav a:hover { border-bottom:1px dotted #333; }
+#subnav h1 { display:inline; margin-right:10px; font-size:1.342em; }
+#subnav ul { display:inline; }
+#subnav li { display:inline; padding:0 5px; border-left:1px solid #333; }
+#subnav li:first-child { border-left:0; padding-left:0; }
 
 
 /* LOCATION MAP */
@@ -378,10 +375,18 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .modal-dialog .viewfinder #user-flickr-sets h3 { display:none; position:absolute; left:0; bottom:0; right:0; padding:5px; color:#fff; background:rgba(0, 0, 0, .7); }
 .modal-dialog .viewfinder #user-flickr-sets li:hover h3 { display:block; }
 
+/* SUCCESS/ERROR */
+.success { color:#090; font-weight:bold; }
+.error { color:#f00; font-weight:bold; }
+
+/* REMOVE BUTTON */
+.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:0; padding-top:1px; width:16px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:.85em; color:#333; }
+
 /* LOADING */
 .loading { position:relative; }
-.loading-ui { display:none; position:absolute; z-index:1000; left:0; top:0; right:0; bottom:0; background:rgba(0, 0, 0, .7); }
-.loading > .loading-ui { display:block; color:#fff; }
+.loading-ui { display:none; position:absolute; z-index:10000; left:0; top:0; right:0; bottom:0; background:rgba(0, 0, 0, .7); }
+.loading > .loading-ui { display:block; color:#fff; text-align:center; }
+body.loading > .loading-ui { position:fixed; left:0; right:0; top:0; bottom:0; }
 
 /* MODAL DIALOG */
 .modal-dialog { position:fixed; top:0px; left:0px; right:0px; bottom:0px; z-index:100000; opacity:0; background:rgba(255, 255, 255, .8); 

@@ -1,4 +1,4 @@
-var PhotoEditView = Backbone.View.extend({
+var PhotoManager = Backbone.View.extend({
 	disableSubmit:function () {
 		this.save.setAttribute("disabled", "disabled");
 	},
@@ -7,7 +7,6 @@ var PhotoEditView = Backbone.View.extend({
 		message = document.createElement("h4"),
 		progress = document.createElement("progress")
 
-		progress.setAttribute("max", this.collection.models.length);
 		progress.setAttribute("valie", 0);
 		div.appendChild(message);
 		div.appendChild(progress);
@@ -24,14 +23,17 @@ var PhotoEditView = Backbone.View.extend({
 		this.save.addEventListener("click", function (e) {
 			e.preventDefault();
 			var loading = new Loading({
-				el:form.el
+				el:document.body
 			}),
 			loadingMessage = form.__buildLoadingView(),
-			totalToProcess = form.collection.models.length + form.removedCollection.models.length
+			numEdited = form.collection.models.length,
+			numDeleted = form.removedCollection.models.length,
+			totalToProcess = numEdited + numDeleted
 			loading.render();
 
 			loadingMessage.message.innerHTML = "Saving 0 of " + totalToProcess + " photos";
 			loading.setLoadingView(loadingMessage.div);
+			loadingMessage.progress.setAttribute("max", totalToProcess);
 			
 			loading.loading();
 
@@ -41,6 +43,12 @@ var PhotoEditView = Backbone.View.extend({
 				loadingMessage.message.innerHTML = "Saving " + numSaved + " of " + totalToProcess + " photos";
 				if( numSaved === totalToProcess ) {
 					loading.doneLoading();
+					form.trigger("photos_processed", {
+						numEdited:numEdited,
+						numDeleted:numDeleted,
+						edited:form.collection,
+						deleted:form.removedCollection
+					})
 				}
 			}
 
@@ -52,13 +60,14 @@ var PhotoEditView = Backbone.View.extend({
 				})
 			})
 
-			form.removedCollection.each(function (photo) {
+			_.chain(form.removedCollection.models).clone().each(function(photo){
 				photo.destroy({
 					success:function () {
 						updateLoadingMessage();
 					}
 				})
-			})
+			});
+
 		})
 	},
 	__bindPhotoRemoval:function () {

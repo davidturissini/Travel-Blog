@@ -14,10 +14,37 @@ window.addEventListener("DOMContentLoaded", function () {
 
   /* INTIALIZE PHOTO EDIT */
 
-  var edit = new PhotoEditView({
+  var edit = new PhotoManager({
     el:document.getElementById("location-photos"),
     collection:locationPhotos
-  }).render();
+  })
+
+  edit.on("photos_processed", function (event) {
+    var messageElem = document.getElementById("server-messages"),
+    singular = "photo",
+    plural = "photos",
+    insert = "",
+    message = "Success! ";
+    if( event.numEdited > 0 ) { 
+      insert = event.numEdited === 1 ? singular : plural;
+      message += event.numEdited + " " + insert + " saved. ";
+    } 
+
+    if( event.numDeleted > 0 ) {
+      insert = event.numEdited === 1 ? singular : plural;
+      message += event.numDeleted + " " + insert + " deleted.";
+    }
+
+    if( !/success/.test(messageElem.className) ) {
+      messageElem.className += " success";
+    }
+    messageElem.innerHTML = message;
+
+  })
+
+  edit.render();
+
+
 
   
 

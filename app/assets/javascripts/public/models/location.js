@@ -8,6 +8,12 @@ var Location = Backbone.Model.extend({
         }
         return str;
     },
+    toString:function () {
+        if( this.get("title") ) {
+            return this.get("title");
+        }
+        return this.geoString();
+    },
     jsonPrefix: false,
     toJSON: function () {
         if( this.jsonPrefix ) {
