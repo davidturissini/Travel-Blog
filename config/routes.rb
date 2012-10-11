@@ -15,6 +15,7 @@ Adventureblog::Application.routes.draw do
   match '/me/statuses/' => "admin/statuses#create", :user_id => "me", :via => :post
   match '/me/statuses/:status_id' => "admin/statuses#destroy", :user_id => "me", :via => :delete
   match '/me/flickr_photoset_photos/:photoset_id' => "admin/users#photoset_photos", :user_id => "me"
+  match '/me/locations/new' => "admin/locations#new", :user_id => "me", :via => "get", :as => "admin_location_detail"
   match '/me/:location_id' => "admin/locations#edit", :user_id => "me", :via => "get", :as => "admin_location_detail"
   match '/me/:location_id' => "admin/locations#update", :user_id => "me", :via => "put"
   match '/me/:location_id' => "admin/locations#destroy", :user_id => "me", :via => "delete"

@@ -30,6 +30,7 @@ var LocationMap = Backbone.View.extend({
 					form.options.countryCollection.fetch({
 						success:function () {
 							var country = form.options.countryCollection.findByName(result.data.country);
+							if(!country) { return }
 							form.modelClone.set({
 								city: result.data.city || "",
 								state: result.data.state || "",
@@ -56,6 +57,12 @@ var LocationMap = Backbone.View.extend({
 		form.options.doneButton.addEventListener("click", function () {
 			form.model.set(form.modelClone.attributes, {silent:true});
 			form.model.setCountry(form.modelClone.country);
+			form.el.className = form.el.className.replace(" map-active", "");
+			form.markerClone.removeMarker();
+			if( form.options.originalMapOptions ) {
+				form.options.map.setOptions(form.options.originalMapOptions);
+			}
+			form.trigger("done");
 		})
 
 		form.options.titleElem.addEventListener("keyup", function (e) {
@@ -70,6 +77,14 @@ var LocationMap = Backbone.View.extend({
 	        model:this.modelClone,
 	        map:this.options.map
 	    });
+
+	    form.options.map.setOptions({
+            zoom: 4,
+            mapTypeId: google.maps.MapTypeId.HYBRID,
+            disableDefaultUI:false,
+            scrollwheel: true,
+            maxZoom:100
+        })
 
 		form.drawMapMarker();
 		form.el.className += " map-active";

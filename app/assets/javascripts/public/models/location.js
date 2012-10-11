@@ -14,6 +14,9 @@ var Location = Backbone.Model.extend({
         }
         return this.geoString();
     },
+    latLng:function () {
+        return new google.maps.LatLng(this.get("latitude") || 40.7142, this.get("longitude") || -74.0064)
+    },
     jsonPrefix: false,
     toJSON: function () {
         if( this.jsonPrefix ) {
@@ -43,8 +46,10 @@ var Location = Backbone.Model.extend({
 
         TA.countries.fetch({
             success:function (countries) {
-                var country = countries.get(location.get("country_id"));
-                location.setCountry(country, {silent:true});
+                if( location.get("country_id") ) {
+                    var country = countries.get(location.get("country_id"));
+                    location.setCountry(country, {silent:true});
+                }
                 if( callbacks.success ) {
                     callbacks.success(country);
                 }

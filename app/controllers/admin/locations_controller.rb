@@ -8,6 +8,10 @@ class Admin::LocationsController < Admin::AdminController
 	   end
 	 end
 
+	 def new
+	 	@location = Location.new
+	 end
+
 	 def new_photos
 	 	@location = current_location
 	 end
@@ -16,18 +20,8 @@ class Admin::LocationsController < Admin::AdminController
 	 	@location = current_location
 	 end
 
-	 def new
-	   @location = Location.new({
-	    :location_type => current_location_type
-	   })
-	 end
-
 	 def edit
 	 	@location = current_location
-	 end
-
-	 def edit
-	   @location = current_location
 	 end
 
 	 def update

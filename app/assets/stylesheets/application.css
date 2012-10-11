@@ -1,5 +1,6 @@
 html { background:#333; }
 body { color:#333; font-size:14px; font-family:Helvetica; }
+figure { margin:0; }
 
 a, a:visited, a:active { text-decoration:none; color:#069; }
 
@@ -56,13 +57,12 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #site-header #user-info .dropdown a { display:block; margin:0 -20px; padding:5px 10px; color:#069; }
 #site-header #user-info .dropdown a:hover { text-decoration:none; background:#069; color:#fff; }
 
-#site-footer { padding:20px; color:#fff; background:#333; 
-	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#000));
-}
+#site-footer { padding:20px; color:#fff; background:#333; }
 #site-footer a { color:#fff; }
 
+/* MAPS */
 #map { margin:0; padding:0; height:400px; }
-#map nav { display:none }
+.map-active .map { box-shadow:0px 5px 10px #000; }
 
 #content { margin:0px auto; padding:20px; }
 
@@ -159,7 +159,8 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #location > .toolbox { clear:both; }
 
 /* GLOBAL EDIT/NEW STYLES */
-footer.buttons { position:fixed; bottom:0; left:0; right:0; z-index:10000; padding:20px; height:20px; border-top:3px solid #333; background:#fff; text-align:right; }
+footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-size:3em; }
+.map-active footer.buttons { display:none; }
 
 /* ADMIN LOCATION EDIT */
 .admin-locations-edit { padding-bottom:60px; }
@@ -168,8 +169,10 @@ footer.buttons { position:fixed; bottom:0; left:0; right:0; z-index:10000; paddi
 .admin-locations-edit #location #location-title { width:100%; border:0px; }
 .admin-locations-edit #location #location-geo { float:left; margin:5px 0; font-size:1.242em; }
 .admin-locations-edit #location #edit-location { float:right; margin-top:10px; cursor:pointer; }
-.admin-locations-edit #location #map-edit-done { display:none; }
-.admin-locations-edit #location.map-active #map-edit-done { display:block; }
+.admin-locations-edit #location #geo figure { text-align:center; }
+.admin-locations-edit #location #map-edit-done { display:none; margin-top:20px; font-size:3em; }
+.admin-locations-edit #location.map-active #map-edit-done { display:inline; }
+.admin-locations-edit #location.map-active #edit-location { display:none; }
 
 /* LOCATION EDIT PHOTOS */
 .admin-locations-edit_photos { padding-bottom:60px; }

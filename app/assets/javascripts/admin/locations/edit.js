@@ -1,11 +1,18 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( !/admin\-locations\-edit/.test(document.body.className) ) { return }
+	if( 
+        !/admin\-locations\-edit/.test(document.body.className) &&
+        !/admin\-locations\-new/.test(document.body.className)
+     ) { return }
     var location = Location.createFromDataAttribute( document.getElementById("location") ),
-    map = new google.maps.Map(document.getElementById("map"), {
-            center: new google.maps.LatLng(location.get("latitude") || 40.7142, location.get("longitude") || -74.0064),
+    mapOptions = {
+            center: location.latLng(),
             zoom: 4,
-            mapTypeId: google.maps.MapTypeId.HYBRID
-        }),
+            mapTypeId: google.maps.MapTypeId.HYBRID,
+            disableDefaultUI:true,
+            scrollwheel: false,
+            maxZoom:4
+        },
+    map = new google.maps.Map(document.getElementById("map"), mapOptions),
     mapMarker = new LocationMarker({
         model:location,
         map:map
@@ -13,8 +20,11 @@ window.addEventListener("DOMContentLoaded", function () {
 
     mapMarker.drawMarker();
 
-
     location.setUser(TA.currentUser);
+
+    document.getElementById("location-title").addEventListener("keyup", function (e) {
+        location.set({title:e.currentTarget.value});
+    })
 
     location.loadCountry({
         success:function () {
@@ -25,6 +35,7 @@ window.addEventListener("DOMContentLoaded", function () {
                 titleElem:document.getElementById("location-title"),
                 map:map,
                 mapMarker:mapMarker,
+                originalMapOptions:mapOptions,
                 doneButton:document.getElementById("map-edit-done"),
                 geoElem:document.getElementById("location-geo")
             }),
@@ -37,31 +48,36 @@ window.addEventListener("DOMContentLoaded", function () {
                 mapMarker.removeMarker();
             });
 
+            locationMap.on("done", function () {
+                map.setCenter(location.latLng());
+                mapMarker.drawMarker();
+            })
+
             document.getElementById("location-save").addEventListener("click", function () {
                 var loading = new Loading({
                     el:document.body
                 });
                 loading.render();
                 loading.loading();
-                form.model.save({}, {
+                location.save({}, {
                     success:function () {
-                        form.trigger("location_save", {location:form.model});
-                        form.markerClone.removeMarker();
-                        loading.loadingDone();
+                        loading.doneLoading();
                     }
                 });
             })
             
             var removeElem = document.getElementById("delete-location");
-            removeElem.addEventListener("click", function (e) {
-                e.stopPropagation();
-                if( confirm("Delete " + location.geoString() + "?"))
-                location.destroy({
-                    success:function () {
-                        window.location.href = TA.currentUser.url({includeFormat:false});
-                    }
+            if( removeElem ) {
+                removeElem.addEventListener("click", function (e) {
+                    e.stopPropagation();
+                    if( confirm("Delete " + location.geoString() + "?"))
+                    location.destroy({
+                        success:function () {
+                            window.location.href = TA.currentUser.url({includeFormat:false});
+                        }
+                    })
                 })
-            })
+            }
         }
     });
 })
