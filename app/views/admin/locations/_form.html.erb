@@ -1,14 +1,22 @@
-<article id="location" data-json="<%= location.to_json %>">
+<article id="location" class="form" data-json="<%= location.to_json %>">
 	<header>
 		<h1 id="page-title">
 			<input type="text" id="location-title" placeholder="Title" value="<%= location.title %>" />
 		</h1>
 		<% if !location.new_record? %>
-			<%= link_to "Add Photos", "#" %>
-			<%= link_to "Edit Photos", photos_edit_path(location) %>
-			<%= link_to "Add Maps", "#" %>
-			<%= link_to "Edit Maps", "#" %>
-			<a id="delete-location">Delete</a>
+			<nav>
+				<ul>
+					<li><%= link_to "Add Photos", new_location_photos_path(location) %></li>
+					<% if location.photos.count > 0 %>
+						<li><%= link_to "Edit Photos", photos_edit_path(location) %></li>
+					<% end %>
+					<li><%= link_to "Add Maps", "#" %></li>
+					<% if location.maps.count > 0 %>
+						<li><%= link_to "Edit Maps", "#" %></li>
+					<% end %>
+				</ul>
+			</nav>
+			<a id="delete-location" class="remove">X</a>
 		<% end %>
 	</header>
 	<section id="geo">

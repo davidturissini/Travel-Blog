@@ -4,7 +4,9 @@ class Location < ActiveRecord::Base
  has_many :journal_entries, :order => "day ASC"
  has_and_belongs_to_many :photos
  has_many :statuses, :dependent => :destroy
+ belongs_to :photo
  validates :slug, :country_id, :presence => true
+ has_many :maps, :dependent => :destroy
 
   def journal_entries_count
     journal_entries.count
@@ -31,6 +33,13 @@ class Location < ActiveRecord::Base
           s = country_name
       end
       s
+  end
+
+  def picture
+    if photo.nil?
+      return GoogleMapPhoto.new(self)
+    end
+    photo
   end
  
  def self.random limit = 3

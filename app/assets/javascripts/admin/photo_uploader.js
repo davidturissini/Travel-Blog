@@ -18,7 +18,7 @@ var PhotoUploader = Backbone.View.extend({
         this.files.on("remove", function (model) {
           uploader.removePreview(model);
           if( uploader.files.length === 0 ) {
-            uploader.el.className = uploader.className.replace("has-photos", "");
+            uploader.el.className = uploader.el.className.replace("has-photos", "");
           }
         })
 
@@ -188,8 +188,9 @@ var PhotoUploader = Backbone.View.extend({
         div = document.createElement("div"),
         canvas = document.createElement("canvas"),
         remove = document.createElement("a")
+        remove.innerHTML = "X";
 
-        remove.className = "delete";
+        remove.className = "remove";
 
         remove.addEventListener("click", function () {
           uploader.files.remove(photo);

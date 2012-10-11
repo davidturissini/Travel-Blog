@@ -18,9 +18,9 @@ var Loading = Backbone.View.extend({
 	},
 	center:function () {
 		if( this.options.center === false || this.loadingUI.children.length === 0 ) { return }
-		var height = this.el.offsetHeight,
+		var height = this.loadingUI.offsetHeight,
 		viewHeight = this.loadingUI.children[0].offsetHeight;
-		this.loadingUI.style.paddingTop = parseInt( (height / 2) - (viewHeight / 2) ) + "px";
+		this.loadingUI.style.paddingTop = parseInt(height / 2) - parseInt(viewHeight / 2) + "px";
 
 	},
 	createLoadingUI:function () {

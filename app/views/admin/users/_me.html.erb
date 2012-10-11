@@ -4,40 +4,12 @@
         <h1>Hello, <%= @user.name %></h1>
     </header>
 
-    <section class="left clear-left" id="user-locations">
-        <h1>Your travels</h1>
+    <section id="user-locations">
         <%= render "admin/users/locations", :user => @user %>
-    </section>
-
-    <section id="new-status">
-        <%= render "admin/statuses/form", :user => @user %>
-    </section>
-
-    <section id="user-statuses">
-        <ul>
-            <% @user.statuses.order("created_at DESC").each do |status| %>
-                <li>
-                    <%= render "statuses/status", :status => status %>
-                </li>
-            <% end %>
-        </ul>
     </section>
     
 </section>
 
 <% content_for :scripts_footer do %>
   <%= javascript_include_tag "admin/admin" %>
-  <script>
-        [].forEach.call(document.querySelectorAll("#user-statuses .status"), function (elem) {
-            var status = Status.createFromDataAttribute(elem)
-            status.setUser(TA.currentUser);
-            elem.querySelector(".remove").addEventListener("click", function () {
-                status.destroy({
-                    success:function () {
-                        elem.parentNode.removeChild(elem);
-                    }
-                })
-            })
-        })
-  </script>
 <% end %>

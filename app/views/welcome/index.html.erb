@@ -3,7 +3,7 @@
 		<article id="location-<%= index %>">
 			<%= link_to location_path(location), :class => "figure-link" do %>
 				<figure>
-					<img src="<%= location.photo_url %>" />
+					<img src="<%= location.picture.large %>" />
 					<figcaption>
 						<h1><%= location.title %></h1>
 					</figcaption>

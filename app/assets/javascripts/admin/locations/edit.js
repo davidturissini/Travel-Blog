@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
 	if( 
-        !/admin\-locations\-edit/.test(document.body.className) &&
-        !/admin\-locations\-new/.test(document.body.className)
+        !/admin\-locations\-edit\s/.test(document.body.className) &&
+        !/admin\-locations\-new\s/.test(document.body.className)
      ) { return }
     var location = Location.createFromDataAttribute( document.getElementById("location") ),
     mapOptions = {

@@ -48,7 +48,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 	border-left:5px solid transparent;
 	border-right:5px solid transparent;
 }
-#site-header #user-info .dropdown { display:none; position:absolute; right:-1px; top:100%; z-index:1000; padding:10px 0; width:260px; box-shadow:0px 13px 23px #666; background:rgba(255, 255, 255, .9); }
+#site-header #user-info .dropdown { display:none; position:absolute; right:0; top:100%; z-index:1000; padding:10px 0; width:260px; box-shadow:0px 13px 23px #666; background:rgba(255, 255, 255, 1); }
 #site-header #user-info .dropdown ul { text-align:right; margin:10px 20px 0; padding-top:10px; border-top:1px solid #ccc; }
 #site-header #user-info .dropdown ul:first-child { margin-top:0; padding-top:0; border-top:0; }
 #site-header #user-info .dropdown li { display:block; }
@@ -149,10 +149,11 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .locations-show #location #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
 .locations-show #location #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
 
+.locations-show #location #posts { margin:0 auto; width:600px; }
 .locations-show #location #posts h1 { font-size:18px; text-align:left; }
-
 .locations-show #location #posts p { margin-bottom:20px; }
 .locations-show #location #posts iframe { display:block; margin:20px auto; }
+.locations-show #location #posts .post { margin-bottom:20px; }
 
 .locations-show #location .toolbox { display:none; }
 .locations-show #location:hover .toolbox { display:block; }
@@ -162,17 +163,19 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-size:3em; }
 .map-active footer.buttons { display:none; }
 
-/* ADMIN LOCATION EDIT */
-.admin-locations-edit { padding-bottom:60px; }
-.admin-locations-edit #subnav { display:none; }
+/* ADMIN LOCATION FORM */
+.admin-locations-edit #subnav,
+.admin-locations-new #subnav{ display:none; }
 .admin-locations-edit #location #page-title { padding-top:0; }
-.admin-locations-edit #location #location-title { width:100%; border:0px; }
-.admin-locations-edit #location #location-geo { float:left; margin:5px 0; font-size:1.242em; }
-.admin-locations-edit #location #edit-location { float:right; margin-top:10px; cursor:pointer; }
-.admin-locations-edit #location #geo figure { text-align:center; }
-.admin-locations-edit #location #map-edit-done { display:none; margin-top:20px; font-size:3em; }
-.admin-locations-edit #location.map-active #map-edit-done { display:inline; }
-.admin-locations-edit #location.map-active #edit-location { display:none; }
+#location.form header { position:relative; }
+#location.form header .remove { display:block; padding-left:4px; width:12px; }
+#location.form #location-title { width:100%; border:0px; }
+#location.form #location-geo { float:left; margin:5px 0; font-size:1.242em; }
+#location.form #edit-location { float:right; margin-top:10px; cursor:pointer; }
+#location.form #geo figure { text-align:center; }
+#location.form #map-edit-done { display:none; margin-top:20px; font-size:3em; }
+#location.form.map-active #map-edit-done { display:inline; }
+#location.form.map-active #edit-location { display:none; }
 
 /* LOCATION EDIT PHOTOS */
 .admin-locations-edit_photos { padding-bottom:60px; }
@@ -205,7 +208,7 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 #location-form #flickr-photos li { display:inline-block; padding:0 10px 10px 0; }
 
 #photo-upload { position:relative; margin-top:20px; }
-#photo-upload header { text-align:center; color:#ccc; }
+#photo-upload header { margin-bottom:20px; text-align:center; color:#ccc; }
 #photo-upload header h1 { font-size:1.234em; }
 #photo-upload header span { display:block; margin:5px 0; }
 #photo-upload header #native-photos { float:left; margin-top:15px; margin-left:330px; }
@@ -215,8 +218,6 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 #photo-upload header figure { width:100px; font-size:.835em; }
 #photo-upload #user-flickr-controller { margin-top:10px; }
 #photo-upload #user-flickr-controller li { margin:0 5px; }
-#photo-upload #user-flickr-sets { display:none; }
-#photo-upload.dragenter header { display:none; }
 #photo-upload .buttons { display:none; }
 #photo-upload.has-photos .buttons { display:block; }
 #photo-upload .buttons .button { position:relative; font-size:2.237em; }
@@ -224,8 +225,7 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 #photo-upload #photo-container { clear:both; margin-bottom:10px; padding-bottom:30px; min-height:70px; border:3px dashed #333; }
 #photo-upload #photo-container .image-upload { position:relative; float:left; margin-right:15px; margin-bottom:10px; max-height:90px; border:2px solid #ccc; }
 #photo-upload #photo-container .image-upload canvas { display:block; }
-#photo-upload #photo-container .image-upload .delete { display:none; position:absolute; top:0px; right:0px; height:16px; width:16px; background:red; cursor:pointer; }
-#photo-upload #photo-container .image-upload:hover .delete { display:block; }
+#photo-upload #photo-container .image-upload:hover .remove { display:block; }
 #photo-upload #photo-container .image-upload progress { position:absolute; left:0; bottom:0; width:100%; }
 #photo-upload #photo-container .image-upload progress[value='0'],
 #photo-upload #photo-container .image-upload progress[value='100'] { display:none; }
@@ -279,11 +279,14 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
 .user-welcome .remove { cursor:pointer; }
 
-.user-welcome #user-locations { margin-top:20px; padding-top:20px; width:200px; border-top:1px solid #ccc; }
+.user-welcome #user-locations { margin-left:200px; }
 .user-welcome #user-locations h1 { padding-left:5px; font-size:1.253em;}
-.user-welcome #user-locations .locations li { position:relative; }
-.user-welcome #user-locations .locations li:hover .location-link { color:#fff; background:#069; }
-.user-welcome #user-locations .locations li .location-link { display:block; padding:5px; }
+.user-welcome #user-locations .locations li { display:inline-block; }
+.user-welcome #user-locations .locations li .location { text-align:center; }
+.user-welcome #user-locations .locations li .location h1 { margin-bottom:10px; }
+.user-welcome #user-locations .locations li .location a { display:block; position:relative; margin-bottom:10px; padding:5px; width:215px; color:#000; }
+.user-welcome #user-locations .locations li .location a:hover { color:#fff; background:#069; }
+.user-welcome #user-locations .locations li .location img { border:1px solid #ccc; }
 
 .user-welcome #user-locations .locations li:hover .toolbar { display:block; }
 
@@ -396,7 +399,7 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .error { color:#f00; font-weight:bold; }
 
 /* REMOVE BUTTON */
-.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:0; padding-top:1px; width:16px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:.85em; color:#333; }
+.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:0; padding-top:1px; width:16px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:12px; color:#333; text-transform:uppercase; }
 
 /* LOADING */
 .loading { position:relative; }

@@ -27,7 +27,7 @@ class ApplicationController < ActionController::Base
  end
  
  def set_user_cookie user
-   cookies[:user] = {
+   cookie_hash = {
     :id => user.id,
     :token => user.token,
     :name => user.name,
@@ -37,6 +37,8 @@ class ApplicationController < ActionController::Base
     :longitude => user.longitude,
     :city => user.city
    }.to_json
+   
+   cookies[:user] = cookie_hash
  end
 
  def validate_user?

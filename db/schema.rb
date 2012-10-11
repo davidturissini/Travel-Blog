@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121007223134) do
+ActiveRecord::Schema.define(:version => 20121011062109) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -38,12 +38,19 @@ ActiveRecord::Schema.define(:version => 20121007223134) do
     t.string   "state"
     t.string   "kml_url"
     t.integer  "user_id"
-    t.string   "photo_url"
+    t.integer  "photo_id"
   end
 
   create_table "locations_photos", :id => false, :force => true do |t|
     t.integer "location_id"
     t.integer "photo_id"
+  end
+
+  create_table "maps", :force => true do |t|
+    t.integer  "location_id"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "photos", :force => true do |t|

@@ -15,7 +15,7 @@
 					<li>
 						<%= link_to location_path(location), {:class=>"autoclear"} do %>
 							<h2><%= location.to_s %></h2>
-							<img src="<%= location.photo_url %>" />
+							<img src="<%= location.picture.url %>" />
 						<% end %>
 					</li>
 				<% end %>

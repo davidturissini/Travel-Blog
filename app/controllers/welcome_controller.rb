@@ -25,7 +25,7 @@ class WelcomeController < ApplicationController
  end
 
  def anonymous_welcome_screen
- 	@welcome_locations = Location.random(5).where("photo_url IS NOT NULL")
+ 	@welcome_locations = Location.random(5)
  	respond_to do |format|
  		format.html { render "welcome/index" }
  	end

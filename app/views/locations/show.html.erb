@@ -12,13 +12,15 @@
 		</h1>
 	</header>
 	<%= render "locations/photos", :photos => @location.photos %>
-	<figure id="map"></figure>
 	<section id="posts">
 		<% @location.journal_entries.each do |entry| %>
-			<h1><%= entry.title %></h1>	
-			<div><%= entry.body.html_safe %>
+			<section class="post">
+				<h1><%= entry.title %></h1>	
+				<div><%= entry.body.html_safe %></div>
+			</section>
 		<% end %>
 	</section>
+	<figure id="map"></figure>
 	<br class="clear" />
 </article>
 

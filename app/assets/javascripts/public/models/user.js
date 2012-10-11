@@ -1,4 +1,7 @@
 var User = Backbone.Model.extend({
+  initialize:function (attributes) {
+    this.set({name:attributes.name.replace("+", " ")});
+  },
  jsonPrefix: false,
  toJSON: function () {
   if( this.jsonPrefix ) {

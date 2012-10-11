@@ -71,6 +71,7 @@ var UserImageField = Backbone.View.extend({
 
 
 				field.dialogView.querySelector(".save").addEventListener("click", function () {
+					debugger
 					field.model.save({}, {
 						success:function () {
 							field.__didSave = true;

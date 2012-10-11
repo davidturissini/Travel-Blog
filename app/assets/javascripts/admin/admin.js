@@ -1,5 +1,4 @@
 //= require_tree .
-
 TA.currentUser = new User( JSON.parse( YAHOO.util.Cookie.get("user") ));
 
 window.addEventListener("DOMContentLoaded", function () {
