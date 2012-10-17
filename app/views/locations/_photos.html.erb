@@ -3,7 +3,7 @@
 		<ul class="autoclear">
 			<% photos.each do |photo| %>
 				<li>
-					<figure>
+					<figure<%= ' class="hero"'.html_safe if photo === location.photo %>>
 						<img src="<%= photo.url %>" class="photo" data-json="<%= photo.to_json %>" alt="<%= photo["title"] %>" title="<%= photo["title"] %>" />
 						<% if photo["title"] != "" %>
 							<figcaption>

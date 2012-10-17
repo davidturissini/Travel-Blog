@@ -11,7 +11,7 @@
 			<% end %>
 		</h1>
 	</header>
-	<%= render "locations/photos", :photos => @location.photos %>
+	<%= render "locations/photos", :photos => @location.photos, :location => @location %>
 	<section id="posts">
 		<% @location.journal_entries.each do |entry| %>
 			<section class="post">

@@ -16,6 +16,18 @@ var Photo = Backbone.Model.extend({
       	return false;
       	return canvas.toDataURL('image/jpeg');
 	},
+	setUser:function (user) {
+		this._user = user;
+	},
+	user:function () {
+		return this._user;
+	},
+	proportion:function () {
+		return this.get("width") / this.get("height");
+	},
+	proportionHeight:function ( width ) {
+		return this.proportion() * width;
+	},
 	src:function () {
 		if( this.getRaw() ) {
 			if( this.getRaw().src ) {
@@ -26,6 +38,9 @@ var Photo = Backbone.Model.extend({
 			 }
 		}
 	},
+	source:function () {
+		return "/user_images/" + this.user().get("slug") + "/photos/500/" + this.get("slug") + ".jpg";
+	},
 	getRaw:function (raw) {
 		return this._raw;
 	},
@@ -33,7 +48,7 @@ var Photo = Backbone.Model.extend({
 		this._raw = raw;
 	},
 	url:function () {
-		return this.location().url() + "/photos/" + this.get("slug")
+		return this.location().url() + "/photos/" + this.get("slug");
 	},
 	setLocation:function (location) {
 		this._location = location;
@@ -60,3 +75,11 @@ var Photo = Backbone.Model.extend({
 		}
 	}
 })
+
+
+Photo.createFromDataAttribute = function (node, attributeName) {
+    attributeName = attributeName || "data-json";
+    var json = JSON.parse( node.getAttribute(attributeName) );
+
+    return new Photo(json)
+}

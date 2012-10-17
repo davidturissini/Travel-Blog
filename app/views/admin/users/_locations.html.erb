@@ -1,16 +1,15 @@
 <% if @user.locations.length > 0 %>
-    <ul class="locations">
+    <section class="locations">
         <% @user.locations.each do |location| %>
-            <li>
             	<article class="location">
-	                <%= link_to admin_location_path(location) do %>
-	                	<h1><%= location.to_s %></h1>
-	                	<img src="<%= location.picture.large %>" />
-	                <% end %>
-	            </article>
+                    <%= link_to admin_location_path(location) do %>
+                    	<img src="<%= location.picture.large %>" width="200" class="rounded" />
+                        <h1><%= location.to_s %></h1>
+                    <% end %>
+                </article>
             </li>
-        <% end %> 
-    </ul>
+        <% end %>
+    </section>
 <% else %>
     You have no locations
 <% end %>

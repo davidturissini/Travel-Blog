@@ -3,6 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
         !/admin\-locations\-edit\s/.test(document.body.className) &&
         !/admin\-locations\-new\s/.test(document.body.className)
      ) { return }
+
     var location = Location.createFromDataAttribute( document.getElementById("location") ),
     mapOptions = {
             center: location.latLng(),
@@ -22,9 +23,23 @@ window.addEventListener("DOMContentLoaded", function () {
 
     location.setUser(TA.currentUser);
 
-    document.getElementById("location-title").addEventListener("keyup", function (e) {
-        location.set({title:e.currentTarget.value});
+    [].forEach.call(document.getElementsByClassName("location-photo"), function (elem) {
+        new LocationPhotoView({
+            el:elem,
+            model:location
+        }).render();
     })
+
+    document.getElementById("location-title").addEventListener("keyup", (function () {
+        var timeout = null;
+        return function (e) {
+            location.set({title:e.currentTarget.value});
+            if( timeout ) { clearTimeout(timeout) };
+            setTimeout(function () {
+                location.save({});
+            }, 500);
+        }
+    })())
 
     location.loadCountry({
         success:function () {
@@ -51,20 +66,25 @@ window.addEventListener("DOMContentLoaded", function () {
             locationMap.on("done", function () {
                 map.setCenter(location.latLng());
                 mapMarker.drawMarker();
-            })
+                location.save({});
+            });
 
-            document.getElementById("location-save").addEventListener("click", function () {
-                var loading = new Loading({
-                    el:document.body
+            document.getElementById("change-location-photo").addEventListener("click", function () {
+                var dialog = new LocationPhotoDialog({
+                    model:location
                 });
-                loading.render();
-                loading.loading();
-                location.save({}, {
-                    success:function () {
-                        loading.doneLoading();
-                    }
-                });
-            })
+
+                dialog.on("photo_click", function (e) {
+                    location.setPhoto(e.photo);
+                    location.save({}, {
+                        success:function () {
+                            dialog.close();
+                        }
+                    })
+                })
+
+                dialog.render();
+            });
             
             var removeElem = document.getElementById("delete-location");
             if( removeElem ) {

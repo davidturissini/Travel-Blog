@@ -1,4 +1,4 @@
 <div class="user-picture">
-	<%= image user.photo.large, :class => "user-image rounded", "data-photo-size" => "large" %>
+	<%= image user.photo.large, :class => "user-image rounded", "data-photo-size" => defined?(:size) ? size : "large" %>
 	<a class="user-button user-image-button">Change Picture</a>
 </div>

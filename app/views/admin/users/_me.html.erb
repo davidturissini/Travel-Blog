@@ -1,6 +1,9 @@
 <section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
     <header id="user-header">
-        <%= render "users/image", :user => @user %>
+        <div class="user-picture">
+			<%= image @user.photo.url %>
+			<a class="user-button user-image-button">Change Picture</a>
+		</div>
         <h1>Hello, <%= @user.name %></h1>
     </header>
 

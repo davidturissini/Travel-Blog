@@ -2,8 +2,8 @@ class Photo < ActiveRecord::Base
 	has_and_belongs_to_many :locations
 	has_one :user, :through => :locations
 
-	def url
-		"/user_images/#{user.slug}/photos/500/#{slug}.jpg"
+	def url size = 500
+		"/user_images/#{user.slug}/photos/#{size}/#{slug}.jpg"
 	end
 
 	def user
@@ -16,6 +16,18 @@ class Photo < ActiveRecord::Base
 
 	def proportional_height width
 		height * (1/proportion)
+	end
+
+	def thumbnail
+		url(50)
+	end
+
+	def small
+		url(150)
+	end
+
+	def large
+		url(800)
 	end
 
 	def save_with_raw! raw

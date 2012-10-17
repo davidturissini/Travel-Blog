@@ -6,6 +6,11 @@ class Admin::TemplateController < Admin::AdminController
 	end
 
 	protected
+	def initialize_location_photos
+		@location = current_user.locations.find_by_slug(params[:location_id])
+		@photos = @location.photos
+	end
+
 	def initialize_location_map
 		@location = current_user.locations.find_by_slug(params[:location_id])
 	end

@@ -11,6 +11,11 @@ class Admin::PhotosController < Admin::AdminController
 		render :json => photo
 	end
 
+	def index
+		location = current_user.locations.find_by_slug(params[:location_id])
+		render :json => location.photos.to_json
+	end
+
 	def delete
 		location = current_user.locations.find_by_slug(params[:location_id])
 		photo = location.photos.find_by_slug(params[:slug])

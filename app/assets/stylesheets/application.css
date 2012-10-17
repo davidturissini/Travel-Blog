@@ -1,4 +1,3 @@
-html { background:#333; }
 body { color:#333; font-size:14px; font-family:Helvetica; }
 figure { margin:0; }
 
@@ -167,18 +166,28 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .admin-locations-edit #subnav,
 .admin-locations-new #subnav{ display:none; }
 .admin-locations-edit #location #page-title { padding-top:0; }
-#location.form header { position:relative; }
+.admin-locations-edit .location-photo { position:relative; margin-right:10px; width:200px; }
+.admin-locations-edit .location-photo #change-location-photo { display:none; position:absolute; top:0; right:0; padding:5px; background:rgba(0,0,0,.8); color:#fff; font-size:.7em; }
+.admin-locations-edit .location-photo:hover #change-location-photo { display:block; }
+
+/* LOCATION FORM */
+#location.form header { position:relative; margin-bottom:30px; }
 #location.form header .remove { display:block; padding-left:4px; width:12px; }
-#location.form #location-title { width:100%; border:0px; }
-#location.form #location-geo { float:left; margin:5px 0; font-size:1.242em; }
-#location.form #edit-location { float:right; margin-top:10px; cursor:pointer; }
-#location.form #geo figure { text-align:center; }
+#location.form #location-title { margin-top:45px; width:700px; border:0; border-bottom:1px dashed #ccc; outline:0; }
+#location.form #location-geo { margin:5px 0; font-size:1.242em; }
+#location.form #edit-location { cursor:pointer; }
 #location.form #map-edit-done { display:none; margin-top:20px; font-size:3em; }
 #location.form.map-active #map-edit-done { display:inline; }
 #location.form.map-active #edit-location { display:none; }
 
+#location.form section { float:left; height:200px; width:200px; text-align:center; background:#ccc; }
+#location.form section a { display:block; width:100%; height:100%; }
+#location.form section#photos { position:relative; margin-right:20px; }
+#location.form section#photos div { position:absolute; }
+#location.form section#geo { float:right; width:auto; }
+#location.form section#geo #map { width:480px; height:200px; }
+
 /* LOCATION EDIT PHOTOS */
-.admin-locations-edit_photos { padding-bottom:60px; }
 .admin-locations-edit_photos #location-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; text-align:center; }
 .admin-locations-edit_photos #location-photos figure .image-wrapper { display:inline-block; position:relative; margin:0 auto; }
 .admin-locations-edit_photos #location-photos figure .image-wrapper img { display:block; margin:0 auto 10px; max-height:70%; max-width:100%; width:auto; }
@@ -279,17 +288,12 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
 .user-welcome .remove { cursor:pointer; }
 
-.user-welcome #user-locations { margin-left:200px; }
-.user-welcome #user-locations h1 { padding-left:5px; font-size:1.253em;}
-.user-welcome #user-locations .locations li { display:inline-block; }
-.user-welcome #user-locations .locations li .location { text-align:center; }
-.user-welcome #user-locations .locations li .location h1 { margin-bottom:10px; }
-.user-welcome #user-locations .locations li .location a { display:block; position:relative; margin-bottom:10px; padding:5px; width:215px; color:#000; }
-.user-welcome #user-locations .locations li .location a:hover { color:#fff; background:#069; }
-.user-welcome #user-locations .locations li .location img { border:1px solid #ccc; }
-
-.user-welcome #user-locations .locations li:hover .toolbar { display:block; }
-
+.user-welcome #user-locations .locations .location { display:inline-block; }
+.user-welcome #user-locations .locations .location { text-align:center; }
+.user-welcome #user-locations .locations .location h1 { margin-bottom:10px; }
+.user-welcome #user-locations .locations .location a { display:block; position:relative; margin-bottom:10px; padding:5px; width:215px; color:#000; }
+.user-welcome #user-locations .locations .location a:hover { color:#fff; background:#069; }
+.user-welcome #user-locations .locations .location img { border:1px solid #ccc; }
 
 .user-welcome #status-form { margin-left:215px; padding:10px; border:1px solid #ccc; border-radius:5px; text-align:right; font-size:2em; }
 .user-welcome #status-form .text { display:block; margin-bottom:10px; width:680px; }
@@ -378,6 +382,9 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 #subnav li { display:inline; padding:0 5px; border-left:1px solid #333; }
 #subnav li:first-child { border-left:0; padding-left:0; }
 
+/* LOCATION PHOTO DIALOG */
+#location-photos-dialog { height:400px; overflow-y:scroll; }
+#location-photos-dialog .photo { display:inline-block; width:200px; height:200px; }
 
 /* LOCATION MAP */
 .modal-dialog .viewfinder .location-map .title { padding:5px; width:665px; font-size:1.362em; }
@@ -412,8 +419,8 @@ body.loading > .loading-ui { position:fixed; left:0; right:0; top:0; bottom:0; }
 	-webkit-transition:opacity linear 500ms;
 }
 .modal-dialog.visible { opacity: 1; }
-.modal-dialog .viewfinder { position:relative; padding:20px; background:#fff; box-shadow: 0px 0px 70px #000; }
-.modal-dialog .viewfinder h1 { padding-bottom:20px; font-size:22px; }
+.modal-dialog .viewfinder { position:relative; padding:20px; max-width:750px; background:#fff; box-shadow: 0px 0px 70px #000; }
+.modal-dialog .viewfinder h1 { margin-right:30px; padding-bottom:20px; font-size:22px; }
 .modal-dialog .close { position:absolute; top:20px; right:20px; padding:5px; color:#000; border:1px solid #000; cursor:pointer; line-height:.5; }
 .modal-dialog .close:hover { text-decoration: none; background:#000; color:#fff;}
 .modal-dialog .map { margin:0px; padding:0px; width:680px; height:400px; }

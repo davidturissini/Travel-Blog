@@ -56,6 +56,28 @@ var Location = Backbone.Model.extend({
             }
         })
     },
+    photo:function () {
+        return this._photo;
+    },
+    setPhoto:function ( photo ) {
+        this._photo = photo;
+        this.set({photo_id:photo.id});
+    },
+    photos:function (options) {
+        var location = this;
+        options = options || {};
+        this._photos = this._photos || new LocationPhotosCollection({location:this});
+        this._photos.fetch({
+            success:function (photos) {
+                photos.each(function (photo) {
+                    photo.setUser(location.user);
+                })
+                if( options.success ) {
+                    options.success(photos);
+                }
+            }
+        })
+    },
     setCountry: function (country, options) {
         options = options || {};
         this.country = country;
@@ -70,27 +92,6 @@ var Location = Backbone.Model.extend({
     },
     hasLatLng: function () {
         return this.has("latitude") && this.has("longitude")
-    },
-    photos: function ( callbacks ) {
-        callbacks = callbacks || {}
-        if( this._flickrResponse ) {
-            callbacks.success(_flickrResponse);
-        } else {
-            $.ajax({
-                    url:"http://api.flickr.com/services/rest",
-                    dataType:"jsonp",
-                    data: {
-                    api_key:"951c0814caade8b4fc2b381778269126",
-                    method: "flickr.photosets.getPhotos",
-                    format:"json",
-                    photoset_id: this.get("flickr_set")
-                },
-                jsonpCallback:"jsonFlickrApi",
-                success:function (e) {
-                    if( callbacks.success ) { callbacks.success(e); }
-                }
-            })
-        }
     }
 })
 

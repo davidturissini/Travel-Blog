@@ -4,6 +4,10 @@ var ShuffledElements = Backbone.View.extend({
 		return this.options.elements.length
 	},
 	positionHero:function (callback) {
+		if( !this.options.hero ) {
+			callback.success()
+			return
+		}
 		var shuffle = this,
 		element = this.options.hero,
 		image = element.querySelector("img")
