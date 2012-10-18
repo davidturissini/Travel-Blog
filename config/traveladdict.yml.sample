@@ -1,0 +1,5 @@
+static_path: /Users/davidturissini/Sites/Travel-Blog/public/static/
+remote_test_static_path: /teststatic.traveladdict.me/static/
+test_static_domain: teststatic.traveladdict.me
+user_static_path: users/
+static_domain: /

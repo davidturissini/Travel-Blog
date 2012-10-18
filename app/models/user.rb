@@ -10,13 +10,13 @@ class User < ActiveRecord::Base
   validates :slug, :presence => true, :on => :update
   has_many :photos, :through => :locations
 
-  def server_directory
-    "#{Rails.root}/public/user_images/#{slug}/"
+  def static_directory
+    "#{CONFIG['static']['server']['path']}#{CONFIG['static']['user_path']}#{slug}/"
   end
 
-  def create_server_dir_if_not_exists!
-    if( !File.directory?(server_directory) )
-      Dir.mkdir(server_directory)
+  def create_static_dir_if_not_exists!
+    if( !File.directory?(static_directory) )
+      Dir.mkdir(static_directory)
     end
   end
 
@@ -37,8 +37,8 @@ class User < ActiveRecord::Base
   end
 
   def create_subdir_if_not_exists! dir
-    create_server_dir_if_not_exists!
-    directory = "#{server_directory}#{dir}/"
+    create_static_dir_if_not_exists!
+    directory = "#{static_directory}#{dir}/"
     if( !File.directory?(directory) )
       Dir.mkdir(directory)
     end
