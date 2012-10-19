@@ -26,7 +26,7 @@ class Admin::LocationsController < Admin::AdminController
 
 	 def update
 	   @location = current_location
-	   @location.update_attributes!(params[:location])  
+	   @location.update_attributes!(params[:location])
 	   respond_to do |format|
 	    format.html { redirect_to request.referrer }
 	    format.json { render :json => @location }

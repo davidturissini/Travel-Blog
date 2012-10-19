@@ -9,15 +9,27 @@ class User < ActiveRecord::Base
   has_many :realm_accounts
   validates :slug, :presence => true, :on => :update
   has_many :photos, :through => :locations
+  include HasFiles
 
   def static_directory
-    "#{CONFIG['static']['server']['path']}#{CONFIG['static']['user_path']}#{slug}/"
+    "#{CONFIG['static']['user_path']}#{slug}/"
   end
 
-  def create_static_dir_if_not_exists!
-    if( !File.directory?(static_directory) )
-      Dir.mkdir(static_directory)
-    end
+  def create_user_dir!
+    create_dir_if_not_exists! "#{static_directory}"
+  end
+
+  def create_content_dir! dir
+    create_dir_if_not_exists! "#{static_directory}#{dir}"
+  end
+
+  def save_photo! file, path
+    save_file(file, { :path => "#{static_directory}photos/#{path}" })
+  end
+
+  def save_map! file, path
+    create_content_dir! "maps"
+    save_file(file, { :path => "#{static_directory}maps/#{path}" })
   end
 
   def flickr_sets
@@ -34,15 +46,6 @@ class User < ActiveRecord::Base
 
   def photos_count
     photos.count
-  end
-
-  def create_subdir_if_not_exists! dir
-    create_static_dir_if_not_exists!
-    directory = "#{static_directory}#{dir}/"
-    if( !File.directory?(directory) )
-      Dir.mkdir(directory)
-    end
-    directory
   end
 
   def random_locations limit = 5

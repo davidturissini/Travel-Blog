@@ -30,12 +30,17 @@
   <footer id="site-footer">
       Traveladdict.me footer
   </footer>
+  <script>
+    window.TA = {
+      config: <%= config_json.html_safe %>
+    }
+  </script>
    <%= javascript_include_tag "application" %>
     <% if !current_user.anonymous? %>
       <%= javascript_include_tag "admin/admin" %>
     <% end %>
     <%= yield :scripts_footer %>
-    <% if Rails.env == "production" && params[:controller] != "users" %>
+    <% if Rails.env == "production" %>
       <script>
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-31293401-1']);

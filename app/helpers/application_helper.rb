@@ -25,4 +25,12 @@ module ApplicationHelper
  def flickr_photoset_url set_params
  	"http://farm#{set_params["farm"]}.staticflickr.com/#{set_params["server"]}/#{set_params['primary']}_#{set_params['secret']}_q.jpg"
  end
+
+ def config_json
+ 	json_hash = CONFIG.clone
+ 	json_hash['static'] = CONFIG['static'].clone
+ 	json_hash['static'].delete("username")
+ 	json_hash['static'].delete("password")
+ 	json_hash.to_json
+ end
 end

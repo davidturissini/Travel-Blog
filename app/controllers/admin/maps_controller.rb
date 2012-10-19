@@ -9,24 +9,28 @@ class Admin::MapsController < Admin::AdminController
 		@maps = @location.maps
 	end
 
-	def save_tmp
-		map_hash = params[:map]
-		slug = Digest::SHA1.hexdigest(map_hash)
-		path = "#{CONFIG['remote_static_test']['path']}#{slug}.kml"
+	def edit
+		@location = current_location
+		@map = @location.maps.find_by_slug(params[:map_id])
+	end
 
-		remote_path = "#{CONFIG['remote_static_test']['server_path']}#{path}"
+	def update
+		@location = current_location
+		@map = @location.maps.find_by_slug(params[:map_id])
+		@map.update_attributes!(params[:map])
+		render :json => @map
+	end
 
-		Net::SCP.start(CONFIG['remote_static_test']['domain'], CONFIG['remote_static_test']['username'], :password => CONFIG['remote_static_test']['password']) do |scp|
-			scp.upload! StringIO.new(map_hash), remote_path
+	def create
+		map = current_location.maps.new
+		ActiveRecord::Base.transaction do
+			map.save_with_xml!(Nokogiri.parse(params[:map][:xml]))
 		end
+		render :json => map
+	end
 
-		Net::SSH.start(CONFIG['remote_static_test']['domain'], CONFIG['remote_static_test']['username'], :password => CONFIG['remote_static_test']['password']) do |ssh|
-			ssh.exec!("chmod 0644 #{remote_path}")
-		end
+	def delete
 
-		url = "http://#{path}"
-
-		render :json => { :url => url }
 	end
 
 	protected

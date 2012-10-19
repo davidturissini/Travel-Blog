@@ -15,9 +15,7 @@
 //= require_tree './public/collections'
 //= require 'public/views'
 
-window.TA = {
-	countries: new CountryCollection()
-};
+window.TA.countries = new CountryCollection();
 
 window.addEventListener("DOMContentLoaded", function () {
 	if( TA.currentUser && !TA.currentUser.isAnonymous() ) {

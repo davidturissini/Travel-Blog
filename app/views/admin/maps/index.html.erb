@@ -1,1 +1,17 @@
-<%= link_to "Create a new map", new_map_path(@location) %>
+<section id="location" data-json="<%= @location.to_json %>">
+	<%= link_to "Create a new map", new_map_path(@location) %>
+	<section id="maps">
+		<% @location.maps.each do |map| %>
+			<figure>
+				<div class="map" data-json="<%= map.to_json %>"></div>
+				<% if map.title? || map.description %>
+					<figcaption>
+						<h1><%= map.title %></h1>
+						<p><%= map.description %></p>
+					</figcaption>
+				<% end %>
+				<%= link_to "Edit Map", edit_map_path(map) %>
+			</figure>
+		<% end %>
+	</section>
+</section>

@@ -3,7 +3,11 @@ class Photo < ActiveRecord::Base
 	has_one :user, :through => :locations
 
 	def url size = 500
-		"/user_images/#{user.slug}/photos/#{size}/#{slug}.jpg"
+		"http://#{CONFIG['static']['domain']}#{static_photo_path}#{size}/#{slug}.jpg"
+	end
+
+	def static_photo_path
+		"/#{CONFIG['static']['user_path']}#{user.slug}/photos/"
 	end
 
 	def user
@@ -23,7 +27,7 @@ class Photo < ActiveRecord::Base
 	end
 
 	def small
-		url(150)
+		url(125)
 	end
 
 	def large
@@ -40,30 +44,25 @@ class Photo < ActiveRecord::Base
 		location = locations.first
 		user = location.user
 
-		photos_dir = user.create_subdir_if_not_exists!("photos")
-		originals_dir = user.create_subdir_if_not_exists!("photos/originals")
+		photos_dir = user.create_content_dir!("photos/originals/")
 
-		if photos_dir
-			image = Magick::Image.from_blob(raw).first
-			image.write("#{originals_dir}#{filename}.jpg")
-			
-			generate_thumbnails image
+		image = Magick::Image.from_blob(raw).first
+		user.save_photo! StringIO.open(image.to_blob), "originals/#{filename}.jpg"
+		
+		generate_thumbnails image
 
-			width = image.columns
-			height = image.rows
-			save!
-		else
-			throw Exception.new
-		end
+		self.width = image.columns
+		self.height = image.rows
+		self.save!
 	end
 
 	private
 	def generate_thumbnails raw_image
 		user = locations.first.user
 		thumb_sizes.each do |size|
-			thumb_dir = user.create_subdir_if_not_exists!("photos/#{size}")
+			thumb_dir = user.create_content_dir!("photos/#{size}")
 			thumbnail = raw_image.resize_to_fit(size, size)
-			thumbnail.write("#{thumb_dir}/#{slug}.jpg")
+			user.save_photo! StringIO.open(thumbnail.to_blob), "#{size}/#{slug}.jpg"
 		end
 	end
 

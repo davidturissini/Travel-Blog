@@ -39,7 +39,7 @@ var Photo = Backbone.Model.extend({
 		}
 	},
 	source:function () {
-		return "/user_images/" + this.user().get("slug") + "/photos/500/" + this.get("slug") + ".jpg";
+		return this.user().staticPath() + "photos/500/" + this.get("slug") + ".jpg";
 	},
 	getRaw:function (raw) {
 		return this._raw;

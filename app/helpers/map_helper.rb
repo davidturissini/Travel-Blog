@@ -9,4 +9,8 @@ module MapHelper
 	def new_map_path location
 		new_location_map_path(:location_id => location.slug)
 	end
+
+	def edit_map_path map
+		edit_location_map_path(:location_id => map.location.slug, :map_id => map.slug)
+	end
 end

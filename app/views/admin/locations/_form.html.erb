@@ -15,7 +15,14 @@
 	<% if !location.new_record? %>
 		<section id="photos" class="rounded">
 			<% if location.photos.count > 0 %>
-				<%= link_to "<h1>Photos</h1>".html_safe, photos_edit_path(location), :class => "rounded" %>
+				<%= link_to photos_edit_path(location), :class => "rounded" do %>
+					<h1>Photos</h1>
+					<% location.photos.each do |photo| %>
+						<div class="image">
+							<img src="<%= photo.small %>" />
+						</div>
+					<% end %>
+				<% end %>
 			<% else %>
 				<%= link_to "<h1>Add Photos</h1>".html_safe, new_location_photos_path(location), :class => "rounded" %>
 			<% end %>

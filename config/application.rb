@@ -22,7 +22,7 @@ module Adventureblog
     # -- all .rb files in that directory are automatically loaded.
 
     # Custom directories with classes and modules you want to be autoloadable.
-    config.autoload_paths += %W(#{config.root}/lib/ #{config.root}/lib/class)
+    config.autoload_paths += %W(#{config.root}/lib/ #{config.root}/lib/class #{config.root}/lib/modules)
     core_ext_path = "#{config.root}/lib/core_ext/"
     Dir.foreach(core_ext_path) do |f|
      require "#{core_ext_path}#{f}" if f =~ /\.rb/

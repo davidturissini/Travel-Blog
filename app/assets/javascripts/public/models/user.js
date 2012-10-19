@@ -13,6 +13,9 @@ var User = Backbone.Model.extend({
  latLng: function () {
   return new google.maps.LatLng(user.get("latitude"), user.get("longitude"))
  },
+ staticPath:function () {
+  return "http://" + TA.config.static.domain + "/" + TA.config.static.user_path + this.get("slug") + "/";
+ },
  url: function (e) {
   e = e || {}
   if( this.isCurrentUser() ) {

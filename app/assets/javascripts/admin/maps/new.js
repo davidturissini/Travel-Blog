@@ -26,10 +26,9 @@ window.addEventListener("DOMContentLoaded", function () {
 	        },
 	    	googleMap = new google.maps.Map(mapElem, mapOptions);
 
-	    	map.saveTmp({
+	    	map.saveWithXML({
 	    		success:function (e) {
-	    			var geo = new google.maps.KmlLayer(e.url);
-	    			debugger
+	    			var geo = new google.maps.KmlLayer(map.staticUrl());
 	    			geo.setMap(googleMap);
 	    		}
 	    	})

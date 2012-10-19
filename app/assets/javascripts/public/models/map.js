@@ -7,28 +7,19 @@ var Map = Backbone.Model.extend({
 	    	window.URL = window.URL || window.webkitURL;
  			return window.URL.createObjectURL(this.file)
 		} else if ( !this.isNew() ) {
-			return "/user_static/" + this.user.get("slug") + "/maps/" + this.get("slug") + ".kml"
+			return this.user.staticPath() + "maps/" + this.get("slug") + ".kml"
 		}
 	},
-	saveTmp:function(callbacks) {
+	readFile:function (callbacks) {
 		if( !this.file ) { return }
 		callbacks = callbacks || {};
 		var map = this,
 		reader = new FileReader();
 
 		reader.onloadend = function (e) {
-			$.ajax({
-				url:map.location.url() + "/maps/save_tmp",
-				type:"POST",
-				data: {
-					map:e.target.result
-				},
-				success:function (e) {
-					if( callbacks.success ) {
-						callbacks.success(e);
-					}
-				}
-			})
+			if( callbacks.success ) {
+				callbacks.success(e.target.result);
+			}
 		}
 
 		reader.readAsText(this.file);
@@ -38,13 +29,41 @@ var Map = Backbone.Model.extend({
 	},
 	setLocation:function (location) {
 		this.location = location;
-		this.user = this.location.user;
+		this.setUser(this.location.user);
+	},
+	saveWithXML:function (callbacks) {
+		callbacks = callbacks || {};
+		var map = this;
+		this.readFile({
+			success:function (fileData) {
+				var attributes = map.attributes;
+				attributes.xml = fileData;
+				$.ajax({
+					url:map.url(),
+					type:"POST",
+					data:{map:attributes},
+					success:function (e) {
+						map.set(e, {silent:true});
+						if( callbacks.success ) {
+							callbacks.success(e);
+						}
+					}
+				})
+			}
+		})
 	},
 	url:function () {
 		if( this.isNew() ) {
-			return this.location.url() + "/maps/" + this.get("slug");
+			return this.location.url() + "/maps/create";
 		} else {
 			return this.location.url() + "/maps/" + this.get("slug");
 		}
 	}
 })
+
+Map.createFromDataAttribute = function (node, attributeName) {
+    attributeName = attributeName || "data-json";
+    var json = JSON.parse( node.getAttribute(attributeName) );
+
+    return new Map(json)
+}
