@@ -1,17 +1,23 @@
 <section id="location" data-json="<%= @location.to_json %>">
-	<%= link_to "Create a new map", new_map_path(@location) %>
+	<%= render "admin/global/create_new_link", 
+		:text => "Create New Map", 
+		:url => new_map_path(@location) %>
 	<section id="maps">
 		<% @location.maps.each do |map| %>
-			<figure>
-				<div class="map" data-json="<%= map.to_json %>"></div>
-				<% if map.title? || map.description %>
-					<figcaption>
-						<h1><%= map.title %></h1>
-						<p><%= map.description %></p>
-					</figcaption>
-				<% end %>
-				<%= link_to "Edit Map", edit_map_path(map) %>
-			</figure>
+			<article class="map" data-json="<%= map.to_json %>">
+				<h1><%= map.title %></h1>
+				<figure>
+					<div class="google-map"></div>
+					<% if map.description %>
+						<figcaption>
+							<%= map.description %>
+						</figcaption>
+					<% end %>
+				</figure>
+				<%= link_to "Edit Map", edit_map_path(map), :class => "edit-link" %>
+				<a class="remove">X</a>
+			</article>
 		<% end %>
 	</section>
+	<i></i>
 </section>

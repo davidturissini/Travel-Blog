@@ -22,6 +22,7 @@ class Admin::LocationsController < Admin::AdminController
 
 	 def edit
 	 	@location = current_location
+	 	@location_photos = @location.photos
 	 end
 
 	 def update

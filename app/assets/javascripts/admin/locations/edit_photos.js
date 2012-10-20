@@ -44,10 +44,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
   edit.render();
 
-
-
-  
-
   /* 
 
     INITIALIZE PHOTOS 

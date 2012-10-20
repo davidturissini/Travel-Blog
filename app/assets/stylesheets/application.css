@@ -165,8 +165,9 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .map-active footer.buttons { display:none; }
 
 /* ADMIN LOCATION INDEXES */
-.admin-maps-index #maps figure { float:left; }
-.admin-maps-index #maps figure .map { margin-right:40px; width:400px; height:200px; }
+.admin-maps-index #maps article { position:relative; float:left; margin-right:60px; width:400px; }
+.admin-maps-index #maps article:hover .remove { display:block; }
+.admin-maps-index #maps article .google-map { height:200px; }
 
 /* ADMIN LOCATION FORM */
 .admin-locations-edit #subnav,
@@ -186,13 +187,13 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 #location.form.map-active #map-edit-done { display:inline; }
 #location.form.map-active #edit-location { display:none; }
 
-#location.form section { position:relative; float:left; margin-bottom:30px; height:200px; width:200px; text-align:center; background:#ccc; }
+#location.form section { position:relative; float:left; margin-left:20px; margin-bottom:30px; height:200px; width:200px; text-align:center; background:#ccc; }
+#location.form section:first-child { margin-left:0; }
 #location.form section a { display:block; width:100%; height:100%; }
 #location.form section h1 { position:absolute; left:0; right:0; bottom:-30px; }
-#location.form section#photos { position:relative; margin-right:20px; overflow:hidden; }
+#location.form section#photos { position:relative; overflow:hidden; }
 #location.form section#photos .image { float:left; width:50px; height:50px; overflow:hidden; }
-#location.form section#geo { float:right; width:auto; }
-#location.form section#geo #map { width:480px; height:200px; }
+#location.form section#geo #map { height:200px; }
 
 /* LOCATION EDIT PHOTOS */
 .admin-locations-edit_photos #location-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; text-align:center; }
@@ -407,6 +408,18 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .modal-dialog .viewfinder #user-flickr-sets li:hover { -webkit-filter:grayscale(0%); }
 .modal-dialog .viewfinder #user-flickr-sets h3 { display:none; position:absolute; left:0; bottom:0; right:0; padding:5px; color:#fff; background:rgba(0, 0, 0, .7); }
 .modal-dialog .viewfinder #user-flickr-sets li:hover h3 { display:block; }
+
+/* CREATE NEW */
+a.create-new { display:inline-block; position:relative; margin-bottom:20px; padding:10px 10px 10px 40px; border-radius:21px; border:3px solid #ccc; color:#ccc; }
+a.create-new:hover { border-color:#333; color:#333; }
+a.create-new span { display:block; margin-left:10px; }
+a.create-new .icon { position:absolute; left:-18px; top:-9px; width:50px; height:50px; border-width:3px; border-style:inherit; border-radius:28px; background:#fff; }
+a.create-new i { position:absolute; left:10px; border-color:inherit; border-style:solid; }
+a.create-new i.horizontal { left:11px; top:22px; width:22px; height:0; border-bottom-width:1px; }
+a.create-new i.vertical { top:10px; left:23px; height:22px; width:0; border-left-width:1px; }
+
+/* EDIT LINK */
+.edit-link { color:#ccc; font-size:.8em; }
 
 /* SUCCESS/ERROR */
 .success { color:#090; font-weight:bold; }

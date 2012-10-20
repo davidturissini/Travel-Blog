@@ -29,8 +29,11 @@ class Admin::MapsController < Admin::AdminController
 		render :json => map
 	end
 
-	def delete
-
+	def destroy
+		@location = current_location
+		@map = @location.maps.find_by_slug(params[:map_id])
+		@map.destroy
+		render :json => @map
 	end
 
 	protected

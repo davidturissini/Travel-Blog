@@ -17,7 +17,7 @@
 			<% if location.photos.count > 0 %>
 				<%= link_to photos_edit_path(location), :class => "rounded" do %>
 					<h1>Photos</h1>
-					<% location.photos.each do |photo| %>
+					<% @location_photos.each do |photo| %>
 						<div class="image">
 							<img src="<%= photo.small %>" />
 						</div>
@@ -29,10 +29,13 @@
 		</section>
 		<section id="maps" class="rounded">
 			<% if location.maps.count > 0 %>
-				<%= link_to "<h1>Maps</h1>".html_safe, "#", :class => "rounded" %>
+				<%= link_to "<h1>Maps</h1>".html_safe, maps_path(location), :class => "rounded" %>
 			<% else %>
-				<%= link_to "<h1>Add a Map</h1>".html_safe, "#", :class => "rounded" %>
+				<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(location), :class => "rounded" %>
 			<% end %>
+		</section>
+		<section id="maps" class="rounded">
+			<h1>Blog posts</h1>
 		</section>
 	<% end %>
 	<section id="geo" class="rounded">
