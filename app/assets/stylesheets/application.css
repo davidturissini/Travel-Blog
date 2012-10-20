@@ -62,7 +62,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #site-footer a { color:#fff; }
 
 /* MAPS */
-#map { margin:0; padding:0; height:400px; }
 .map-active .map { box-shadow:0px 5px 10px #000; }
 
 #content { margin:0px auto; padding:20px; }
@@ -165,9 +164,19 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .map-active footer.buttons { display:none; }
 
 /* ADMIN LOCATION INDEXES */
+.admin-maps-index #page-title { margin-right:10px; }
 .admin-maps-index #maps article { position:relative; float:left; margin-right:60px; width:400px; }
 .admin-maps-index #maps article:hover .remove { display:block; }
+.admin-maps-index #maps article h1 { font-size:1.23em; margin-bottom:10px; }
 .admin-maps-index #maps article .google-map { height:200px; }
+
+/* MAPS NEW */
+.admin-maps-new #google-map { height:400px; }
+.admin-maps-new #map-input-button { width:100px; overflow:hidden; }
+
+/* MAPS EDIT */
+.admin-maps-edit #map-title { width:100%; font-size:1.425em; }
+.admin-maps-edit #google-map { margin:20px 0; height:400px; }
 
 /* ADMIN LOCATION FORM */
 .admin-locations-edit #subnav,
@@ -410,7 +419,7 @@ form .city:not(:empty):after, form .state:not(:empty):after { content: ", "; }
 .modal-dialog .viewfinder #user-flickr-sets li:hover h3 { display:block; }
 
 /* CREATE NEW */
-a.create-new { display:inline-block; position:relative; margin-bottom:20px; padding:10px 10px 10px 40px; border-radius:21px; border:3px solid #ccc; color:#ccc; }
+a.create-new { display:inline-block; position:relative; margin-left:15px; margin-bottom:20px; padding:10px 10px 10px 40px; border-radius:21px; border:3px solid #ccc; color:#ccc; }
 a.create-new:hover { border-color:#333; color:#333; }
 a.create-new span { display:block; margin-left:10px; }
 a.create-new .icon { position:absolute; left:-18px; top:-9px; width:50px; height:50px; border-width:3px; border-style:inherit; border-radius:28px; background:#fff; }
@@ -426,7 +435,7 @@ a.create-new i.vertical { top:10px; left:23px; height:22px; width:0; border-left
 .error { color:#f00; font-weight:bold; }
 
 /* REMOVE BUTTON */
-.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:0; padding-top:1px; width:16px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:12px; color:#333; text-transform:uppercase; }
+.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:4px; padding-top:1px; width:12px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:12px; color:#333; text-transform:uppercase; }
 
 /* LOADING */
 .loading { position:relative; }

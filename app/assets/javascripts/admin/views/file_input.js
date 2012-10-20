@@ -6,38 +6,9 @@ var FileInput = Backbone.View.extend({
   clear:function () {
     this.files.reset();
   },
-  generatePreviewId:function(photo) {
-    return "image-preview-" + photo.cid;
-  },
-  generatePreviewHTML:function ( photo ) {
-    var uploader = this,
-    elemId = uploader.generatePhotoPreviewId(photo);
-    div = document.createElement("div"),
-    canvas = document.createElement("canvas"),
-    remove = document.createElement("a")
-    remove.innerHTML = "X";
-
-    remove.className = "remove";
-
-    remove.addEventListener("click", function () {
-      uploader.files.remove(photo);
-    })
-
-
-    div.className = "image-upload";
-    div.id = elemId;
-    
-    div.appendChild(remove);
-
-    uploader.options.previewElem.appendChild(div);
-
-    return {
-      div:div,
-      canvas:canvas
-    }
-  },
   addFile:function (file) {
   	this.files.push(file);
+    this.trigger("file_added", {file:file})
   },
   addFiles:function (files) {
   	for(var i = 0; i < files.length; i += 1) {
@@ -66,7 +37,7 @@ var FileInput = Backbone.View.extend({
       event.stopPropagation();
       event.preventDefault();
       uploader.el.className = uploader.el.className.replace("dragenter", "");
-      uploader.addPhotos(event.dataTransfer.files);
+      uploader.addFiles(event.dataTransfer.files);
 
       }, false);
     })(this);

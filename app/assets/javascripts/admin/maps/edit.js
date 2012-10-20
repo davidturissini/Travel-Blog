@@ -6,14 +6,11 @@ window.addEventListener("DOMContentLoaded", function () {
 	location.setUser(TA.currentUser);
 	map.setLocation(location);
 
-	document.getElementById("map-title").addEventListener("keyup", (function () {
-        var timeout = null;
-        return function (e) {
-            map.set({title:e.currentTarget.value});
-            if( timeout ) { clearTimeout(timeout); };
-            timeout = setTimeout(function () {
-                map.save({});
-            }, 500);
-        }
-    })())
+    new AutoSaveTextField({
+        el:document.getElementById("map-title"),
+        model:map,
+        property:"title"
+    }).render();
+
+    map.drawGoogleMap(document.getElementById("google-map"));
 })

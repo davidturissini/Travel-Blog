@@ -9,6 +9,11 @@ var Loading = Backbone.View.extend({
 		this.loadingUI.innerHTML = "";
 		this.loadingUI.appendChild(html);
 	},
+	setMessage:function (text) {
+		var div = document.createElement("div");
+		div.innerHTML = text;
+		this.setLoadingView(div);
+	},
 	loading:function () {
 		this.el.className += " loading";
 		if( this.loadingUI.parentNode !== this.el ) {

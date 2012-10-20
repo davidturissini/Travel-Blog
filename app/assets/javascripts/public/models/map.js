@@ -31,7 +31,7 @@ var Map = Backbone.Model.extend({
 		this.location = location;
 		this.setUser(this.location.user);
 	},
-	saveWithXML:function (callbacks) {
+	stageXML:function (callbacks) {
 		callbacks = callbacks || {};
 		var map = this;
 		this.readFile({
@@ -39,7 +39,7 @@ var Map = Backbone.Model.extend({
 				var attributes = map.attributes;
 				attributes.xml = fileData;
 				$.ajax({
-					url:map.url(),
+					url:map.stageUrl(),
 					type:"POST",
 					data:{map:attributes},
 					success:function (e) {
@@ -51,6 +51,53 @@ var Map = Backbone.Model.extend({
 				})
 			}
 		})
+	},
+	drawGoogleMap:function (elem, options) {
+		options = options || {};
+	 	var mapOptions = {
+	        center: new google.maps.LatLng(0,0),
+	        zoom: 2,
+	        mapTypeId: google.maps.MapTypeId.HYBRID,
+	        scrollwheel: false
+    	}
+
+    	for(var x in options) {
+    		mapOptions[x] = options[x];
+    	}
+
+		this.setGoogleMap(new google.maps.Map(elem, mapOptions));
+
+		if( this.get("slug") ) {
+			var geo = new google.maps.KmlLayer( this.staticUrl() );
+    		geo.setMap(this.googleMap());
+		}
+	},
+	setGoogleMap:function (map) {
+		this._googleMap = map;
+	},
+	googleMap:function () {
+		return this._googleMap;
+	},
+	saveWithXML:function (callbacks) {
+		callbacks = callbacks || {};
+		var map = this;
+		this.readFile({
+			success:function (fileData) {
+				var oldUrlFunction = map.url;
+				map.set({xml:fileData}, {silent:true});
+				map.save({},{
+					success:function (e) {
+						map.unset("xml", {silent:true});
+						if( callbacks.success ) {
+							callbacks.success(e);
+						}
+					}
+				});
+			}
+		})
+	},
+	stageUrl:function() {
+		return this.location.url() + "/maps/stage/"
 	},
 	url:function () {
 		if( this.isNew() ) {

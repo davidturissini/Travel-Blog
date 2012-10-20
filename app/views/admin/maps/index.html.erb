@@ -1,7 +1,10 @@
 <section id="location" data-json="<%= @location.to_json %>">
-	<%= render "admin/global/create_new_link", 
-		:text => "Create New Map", 
-		:url => new_map_path(@location) %>
+	<header class="autoclear">
+		<h1 class="left" id="page-title">Maps for <%= @location.to_s %></h1>
+		<%= render "admin/global/create_new_link", 
+			:text => "Create New Map", 
+			:url => new_map_path(@location) %>
+	</header>
 	<section id="maps">
 		<% @location.maps.each do |map| %>
 			<article class="map" data-json="<%= map.to_json %>">

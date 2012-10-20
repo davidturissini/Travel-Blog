@@ -1,7 +1,11 @@
 <div id="location" data-json="<%= @location.to_json %>">
-	<section id="map-input">
-		<input type="file" id="map-input-button" />
-		<input type="button" id="map-upload" value="Upload" />
-	</section>
-	<div id="map"></div>
+	<form>
+		<%= render "admin/maps/fields", :map => @map %>
+		<div class="note">
+			Drag map file(kml or gpx) onto map or <input type="file" id="map-input-button" />
+		</div>
+		<footer class="buttons">
+			<input type="submit" id="map-save" class="button" value="Create" />
+		</footer>
+	</form>
 </div>

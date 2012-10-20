@@ -2,6 +2,7 @@ require 'net/scp'
 class Admin::MapsController < Admin::AdminController
 	def new
 		@location = current_location
+		@map = @location.maps.new
 	end
 
 	def index
@@ -22,11 +23,20 @@ class Admin::MapsController < Admin::AdminController
 	end
 
 	def create
-		map = current_location.maps.new
 		ActiveRecord::Base.transaction do
-			map.save_with_xml!(Nokogiri.parse(params[:map][:xml]))
+			if( params.has_key?(:xml) )
+				xml = params.delete(:xml)
+			end
+			map = current_location.maps.create(params[:map])
+			map.save_with_xml!(Nokogiri.parse(xml)) if xml
+			render :json => map
 		end
-		render :json => map
+	end
+
+	def stage
+		map = current_location.maps.new
+		url = map.stage_xml(Nokogiri.parse(params[:map][:xml]))
+		render :json => {:url => url}
 	end
 
 	def destroy

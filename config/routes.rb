@@ -22,6 +22,7 @@ Adventureblog::Application.routes.draw do
   match '/me/:location_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
   match '/me/:location_id/photos' => "admin/photos#index", :via => :get, :user_id => "me"
   match '/me/:location_id/maps' => "admin/maps#index", :via => :get, :user_id => "me", :as => "location_maps"
+  match '/me/:location_id/maps/stage' => "admin/maps#stage", :via => :post, :user_id => "me"
   match '/me/:location_id/maps/new' => "admin/maps#new", :user_id => "me", :as => "new_location_map"
   match '/me/:location_id/maps/create' => "admin/maps#create", :via => :post, :user_id => "me"
   match '/me/:location_id/maps/:map_id/edit' => "admin/maps#edit", :user_id => "me", :as => "edit_location_map"

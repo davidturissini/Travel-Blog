@@ -32,6 +32,12 @@ class User < ActiveRecord::Base
     save_file(file, { :path => "#{static_directory}maps/#{path}" })
   end
 
+  def stage_map! file, path
+    create_content_dir! "stage/maps"
+    save_file(file, { :path => "#{static_directory}stage/maps/#{path}" })
+    "http://#{CONFIG['static']['domain']}/#{static_directory}stage/maps/#{path}"
+  end
+
   def flickr_sets
     flickr.access_token = flickr_account.access_token
     FlickRaw.shared_secret = flickr_account.shared_secret
