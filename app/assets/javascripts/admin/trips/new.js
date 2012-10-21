@@ -16,8 +16,26 @@ window.addEventListener("DOMContentLoaded", function () {
 		trip.set({title:e.currentTarget.value});
 	})
 
+	trip.on("error", function (e, error) {
+		if( error.title ) {
+			showError("Please title your trip");
+		}
+	})
+
+	function showError(message) {
+		var error = document.createElement("p");
+		error.className = "error";
+		error.innerHTML = message;
+		document.getElementById("form-message").appendChild(error);
+	}
+
 	document.getElementById("trip-save").addEventListener("click", function (e) {
 		e.preventDefault();
+		if( trip.locations().length === 0 ) {
+			showError("Please select at least one location");
+			return;
+		}
+
 		trip.saveWithLocations({
 			success:function () {
 				window.location.href = trip.editUrl();

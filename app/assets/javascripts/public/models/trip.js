@@ -2,9 +2,15 @@ var Trip = Backbone.Model.extend({
 	initialize: function () {
 		this._locations = new LocationsCollection();
 	},
+	validate:function (attributes) {
+		if( !attributes.title ) {
+			return {title:true};
+		}
+	},
 	saveWithLocations:function (callbacks) {
 		callbacks = callbacks || {};
 		this.set({locations:this._locations.models});
+		if( !this.isValid() ) { return }
 		this.save({}, {
 			success:function(e){
 				if(callbacks.success) {
