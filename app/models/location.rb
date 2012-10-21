@@ -1,12 +1,11 @@
 class Location < ActiveRecord::Base
- belongs_to :user
+ belongs_to :trip
  belongs_to :country
+ has_one :user, :through => :trip
  has_many :journal_entries, :order => "day ASC"
  has_and_belongs_to_many :photos
  has_many :statuses, :dependent => :destroy
- belongs_to :photo
  validates :slug, :country_id, :presence => true
- has_many :maps, :dependent => :destroy
 
   def journal_entries_count
     journal_entries.count

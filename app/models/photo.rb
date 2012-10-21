@@ -1,6 +1,5 @@
 class Photo < ActiveRecord::Base
-	has_and_belongs_to_many :locations
-	has_one :user, :through => :locations
+	has_and_belongs_to_many :trips, :join_table => "trips_photos"
 
 	def url size = 500
 		"http://#{CONFIG['static']['domain']}#{static_photo_path}#{size}/#{slug}.jpg"
@@ -11,7 +10,7 @@ class Photo < ActiveRecord::Base
 	end
 
 	def user
-		@user || locations.first.user
+		@user || trips.first.user
 	end
 
 	def proportion

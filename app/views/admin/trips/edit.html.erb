@@ -1,0 +1,33 @@
+<article id="trip" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+	<h1 id="page-title"><%= @trip.title %></h1>
+	<section id="photos" class="rounded">
+		<% if @trip.photos.count > 0 %>
+			<%= link_to photos_edit_path(@trip), :class => "rounded" do %>
+				<h1>Photos</h1>
+				<% @location_photos.each do |photo| %>
+					<div class="image">
+						<img src="<%= photo.small %>" />
+					</div>
+				<% end %>
+			<% end %>
+		<% else %>
+			<%= link_to "<h1>Add Photos</h1>".html_safe, new_location_photos_path(@trip), :class => "rounded" %>
+		<% end %>
+	</section>
+	<section id="maps" class="rounded">
+		<% if @trip.maps.count > 0 %>
+			<%= link_to "<h1>Maps</h1>".html_safe, maps_path(@trip), :class => "rounded" %>
+		<% else %>
+			<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(@trip), :class => "rounded" %>
+		<% end %>
+	</section>
+	<section id="maps" class="rounded">
+		<h1>Blog posts</h1>
+	</section>
+	<section id="geo" class="rounded">
+		<figure id="trip-map" class="clear rounded"></figure>
+		<h1><a id="edit-location" href="#">Edit Location</a></h1>
+		<input type="button" id="map-edit-done" value="Done Editing Map" />
+	</section>
+	<a id="delete-location" class="remove">X</a>
+</article>

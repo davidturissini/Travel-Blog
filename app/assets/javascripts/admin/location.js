@@ -4,8 +4,5 @@ var Location = Location.extend({
 	},
 	newPhotosUrl:function () {
 		return this.user.url({includeFormat:false}) + "/" + this.get("slug") + "/photos/new";
-	},
-	mapsUrl:function () {
-		return this.url() + "/maps";
 	}
 })

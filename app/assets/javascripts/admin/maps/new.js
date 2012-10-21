@@ -1,7 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
 	if( !/admin\-maps\-new\s/.test(document.body.className) ) { return }
 
-	var location = Location.createFromDataAttribute(document.getElementById("location")),
+	var trip = Trip.createFromDataAttribute(document.getElementById("trip")),
 	map = new Map();
 	input = new FileInput({
 		el:document.getElementById("map-input"),
@@ -12,8 +12,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		el:document.body
 	}).render();
 
-	location.setUser(TA.currentUser);
-	map.setLocation(location);
+	trip.setUser(TA.currentUser);
+	map.setTrip(trip);
 
 	map.drawGoogleMap(document.getElementById("google-map"));
 
@@ -27,7 +27,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		loading.loading();
 		map.saveWithXML({
 			success:function (e) {
-				window.location.href = location.mapsUrl();
+				window.location.href = trip.mapsUrl();
 			}
 		})
 	})
@@ -37,7 +37,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		return function (event) {
 			if( geo && geo.setMap ) { geo.setMap(null); }
 			
-			map.setLocation(location);
+			map.setTrip(trip);
 			map.attachFile(event.file);
 
 			loading.setMessage("Parsing Map...")

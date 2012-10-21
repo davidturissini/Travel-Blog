@@ -11,7 +11,7 @@ module MapHelper
 	end
 
 	def edit_map_path map
-		edit_location_map_path(:location_id => map.location.slug, :map_id => map.slug)
+		edit_location_map_path(:location_id => map.trip.slug, :map_id => map.slug)
 	end
 
 	def maps_path location

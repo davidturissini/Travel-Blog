@@ -178,31 +178,22 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .admin-maps-edit #map-title { width:100%; font-size:1.425em; }
 .admin-maps-edit #google-map { margin:20px 0; height:400px; }
 
-/* ADMIN LOCATION FORM */
-.admin-locations-edit #subnav,
-.admin-locations-new #subnav{ display:none; }
-.admin-locations-edit #location #page-title { padding-top:0; }
-.admin-locations-edit .location-photo { position:relative; z-index:10; margin-right:10px; width:200px; }
-.admin-locations-edit .location-photo #change-location-photo { display:none; position:absolute; top:0; right:0; padding:5px; background:rgba(0,0,0,.8); color:#fff; font-size:.7em; }
-.admin-locations-edit .location-photo:hover #change-location-photo { display:block; }
+/* ADMIN TRIP NEW */
+.admin-trips-new #google-map { height:400px; }
 
-/* LOCATION FORM */
-#location.form header { position:relative; margin-bottom:30px; }
-#location.form header .remove { display:block; padding-left:4px; width:12px; }
-#location.form #location-title { margin-top:45px; width:700px; border:0; border-bottom:1px dashed #ccc; outline:0; }
-#location.form #location-geo { margin:5px 0; font-size:1.242em; }
-#location.form #edit-location { cursor:pointer; }
-#location.form #map-edit-done { display:none; margin-top:20px; font-size:3em; }
-#location.form.map-active #map-edit-done { display:inline; }
-#location.form.map-active #edit-location { display:none; }
 
-#location.form section { position:relative; float:left; margin-left:20px; margin-bottom:30px; height:200px; width:200px; text-align:center; background:#ccc; }
-#location.form section:first-child { margin-left:0; }
-#location.form section a { display:block; width:100%; height:100%; }
-#location.form section h1 { position:absolute; left:0; right:0; bottom:-30px; }
-#location.form section#photos { position:relative; overflow:hidden; }
-#location.form section#photos .image { float:left; width:50px; height:50px; overflow:hidden; }
-#location.form section#geo #map { height:200px; }
+/* ADMIN LOCATION NEW */
+.admin-locations-new #location-title { margin-bottom:20px; width:100%; font-size:1.342em; }
+.admin-locations-new #google-map { height:400px; }
+
+/* ADMIN LOCATION EDIT */
+.admin-trips-edit #trip section { position:relative; float:left; margin-left:20px; margin-bottom:30px; height:200px; width:200px; text-align:center; background:#ccc; }
+.admin-trips-edit #trip section:first-child { margin-left:0; }
+.admin-trips-edit #trip section a { display:block; width:100%; height:100%; }
+.admin-trips-edit #trip section h1 { position:absolute; left:0; right:0; bottom:-30px; }
+.admin-trips-edit #trip section#photos { position:relative; overflow:hidden; }
+.admin-trips-edit #trip section#photos .image { float:left; width:50px; height:50px; overflow:hidden; }
+.admin-trips-edit #trip section #trip-map { height:200px; }
 
 /* LOCATION EDIT PHOTOS */
 .admin-locations-edit_photos #location-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; text-align:center; }

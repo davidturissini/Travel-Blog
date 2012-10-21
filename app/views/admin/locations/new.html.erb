@@ -1,1 +1,11 @@
-<%= render "form", :location => @location %>
+<h1 id="page-title">Add new travel</h1>
+<article id="location">
+	<form>
+		<input type="text" id="location-title" placeholder="Title" />
+		<h2 id="location-geo"></h2>
+		<figure id="google-map"></figure>
+		<footer class="buttons">
+			<input type="submit" class="button" id="location-save" value="Save" />
+		</footer>
+	</form>
+</article>

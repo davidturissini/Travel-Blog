@@ -1,27 +1,15 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( 
-        !/admin\-locations\-edit\s/.test(document.body.className) &&
-        !/admin\-locations\-new\s/.test(document.body.className)
-     ) { return }
+	if( !/admin\-locations\-edit\s/.test(document.body.className) ) { return }
 
     var location = Location.createFromDataAttribute( document.getElementById("location") ),
     mapOptions = {
-            center: location.latLng(),
-            zoom: 4,
-            mapTypeId: google.maps.MapTypeId.HYBRID,
             disableDefaultUI:true,
             scrollwheel: false,
             maxZoom:4
-        },
-    map = new google.maps.Map(document.getElementById("map"), mapOptions),
-    mapMarker = new LocationMarker({
-        model:location,
-        map:map
-    });
-
-    mapMarker.drawMarker();
+        }
 
     location.setUser(TA.currentUser);
+    location.drawToMap(document.getElementById("map"), mapOptions);
 
     [].forEach.call(document.getElementsByClassName("location-photo"), function (elem) {
         new LocationPhotoView({
@@ -30,25 +18,20 @@ window.addEventListener("DOMContentLoaded", function () {
         }).render();
     })
 
-    document.getElementById("location-title").addEventListener("keyup", (function () {
-        var timeout = null;
-        return function (e) {
-            location.set({title:e.currentTarget.value});
-            if( timeout ) { clearTimeout(timeout) };
-            setTimeout(function () {
-                location.save({});
-            }, 500);
-        }
-    })())
+    new AutoSaveTextField({
+        model:location,
+        el:document.getElementById("location-title"),
+        property:"title"
+    });
 
     location.loadCountry({
         success:function () {
-            var locationMap = new LocationMap({
+            var locationMap = new LocationEditableMap({
                 el:document.getElementById("location"),
                 model:location,
                 countryCollection:TA.countries,
                 titleElem:document.getElementById("location-title"),
-                map:map,
+                map:location.googleMap(),
                 mapMarker:mapMarker,
                 originalMapOptions:mapOptions,
                 doneButton:document.getElementById("map-edit-done"),

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121019070758) do
+ActiveRecord::Schema.define(:version => 20121021002947) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20121019070758) do
     t.string   "kml_url"
     t.integer  "user_id"
     t.integer  "photo_id"
+    t.integer  "trip_id"
   end
 
   create_table "locations_photos", :id => false, :force => true do |t|
@@ -47,7 +48,6 @@ ActiveRecord::Schema.define(:version => 20121019070758) do
   end
 
   create_table "maps", :force => true do |t|
-    t.integer  "location_id"
     t.string   "slug"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -55,6 +55,7 @@ ActiveRecord::Schema.define(:version => 20121019070758) do
     t.date     "start_date"
     t.date     "end_date"
     t.date     "description"
+    t.integer  "trip_id"
   end
 
   create_table "photos", :force => true do |t|
@@ -78,6 +79,20 @@ ActiveRecord::Schema.define(:version => 20121019070758) do
     t.string   "text"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "trips", :force => true do |t|
+    t.string   "title"
+    t.text     "summary"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  create_table "trips_photos", :id => false, :force => true do |t|
+    t.integer "trip_id"
+    t.integer "photo_id"
   end
 
   create_table "users", :force => true do |t|

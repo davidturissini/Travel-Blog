@@ -7,7 +7,7 @@ var Map = Backbone.Model.extend({
 	    	window.URL = window.URL || window.webkitURL;
  			return window.URL.createObjectURL(this.file)
 		} else if ( !this.isNew() ) {
-			return this.user.staticPath() + "maps/" + this.get("slug") + ".kml"
+			return this.user().staticPath() + "maps/" + this.get("slug") + ".kml"
 		}
 	},
 	readFile:function (callbacks) {
@@ -25,11 +25,18 @@ var Map = Backbone.Model.extend({
 		reader.readAsText(this.file);
 	},
 	setUser:function (user) {
-		this.user = user;
+		this.set({user_id:user.id});
+		this._user = user;
 	},
-	setLocation:function (location) {
-		this.location = location;
-		this.setUser(this.location.user);
+	user:function () {
+		return this._user;
+	},
+	setTrip:function (trip) {
+		this._trip = trip;
+		this.setUser(this._trip.user());
+	},
+	trip:function () {
+		return this._trip;
 	},
 	stageXML:function (callbacks) {
 		callbacks = callbacks || {};
@@ -97,13 +104,13 @@ var Map = Backbone.Model.extend({
 		})
 	},
 	stageUrl:function() {
-		return this.location.url() + "/maps/stage/"
+		return this.user().url({includeFormat:false}) + "/maps/stage/"
 	},
 	url:function () {
 		if( this.isNew() ) {
-			return this.location.url() + "/maps/create";
+			return this.trip().url() + "/maps/create";
 		} else {
-			return this.location.url() + "/maps/" + this.get("slug");
+			return this.trip().url() + "/maps/" + this.get("slug");
 		}
 	}
 })

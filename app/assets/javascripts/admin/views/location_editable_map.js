@@ -1,4 +1,4 @@
-var LocationMap = Backbone.View.extend({
+var LocationEditableMap = Backbone.View.extend({
 	initialize: function () {
 		var form = this,
 		loc = form.model

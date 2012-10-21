@@ -4,6 +4,16 @@ var LocationMarker = Backbone.View.extend({
    locMarker = this
    
    this.googleMarker = new google.maps.Marker()
+   if( this.options.draggable ) {
+    this.googleMarker.setOptions({draggable:true})
+    google.maps.event.addListener(this.googleMarker, "dragend", function (e) {
+    loc.set({
+      latitude:e.latLng.lat(),
+      longitude:e.latLng.lng()
+    })
+   })
+   }
+   
    google.maps.event.addListener(this.googleMarker, "click", function () {
     if( locMarker.options.click ) { locMarker.options.click() }
    })
@@ -18,9 +28,9 @@ var LocationMarker = Backbone.View.extend({
  },
  drawMarker: function () {
   var locMarker = this
-  if( this.model.has("latitude") && this.model.has("longitude") ) {
+  if( this.model.hasLatLng() ) {
     markerHash = {
-     position: new google.maps.LatLng(this.model.get("latitude"), this.model.get("longitude")),
+     position: this.model.latLng(),
      map: this.options.map,
      title: this.model.get("title")
      }
@@ -50,5 +60,6 @@ var LocationMarker = Backbone.View.extend({
   var locMarker = this
    this.drawMarker()
    this.drawKML()
+   return this;
   }
  })

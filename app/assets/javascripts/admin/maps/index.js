@@ -4,11 +4,11 @@ window.addEventListener("DOMContentLoaded", function () {
 	var maps = document.getElementsByClassName("map");
 	[].forEach.call(maps, function (elem) {
 		var map = Map.createFromDataAttribute(elem),
-		location = Location.createFromDataAttribute(document.getElementById("location")),
+		trip = Trip.createFromDataAttribute(document.getElementById("trip")),
         mapElem = elem.getElementsByClassName("google-map").item(0);
 
-        location.setUser(TA.currentUser);
-        map.setLocation(location);
+        trip.setUser(TA.currentUser);
+        map.setTrip(trip);
 
         map.drawGoogleMap(mapElem, {
             center: new google.maps.LatLng(0,0),

@@ -11,14 +11,7 @@
 		</a>
 	    <nav class="dropdown" id="user-nav">
 	    	<ul>
-				<% current_user.locations.each do |location| %>
-					<li>
-						<%= link_to location_path(location), {:class=>"autoclear"} do %>
-							<h2><%= location.to_s %></h2>
-							<img src="<%= location.picture.url %>" />
-						<% end %>
-					</li>
-				<% end %>
+				
 			</ul>
 	    	<ul>
 	    		<li><%= link_to "My Account", me_path %></li>

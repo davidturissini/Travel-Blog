@@ -1,49 +1,51 @@
 <article id="location" class="form" data-json="<%= location.to_json %>">
-	<header class="autoclear">
-		<div class="location-photo left">
-			<img src="<%= @location.picture.url %>" width="200" class="rounded" />
-			<a href="#" class="rounded" id="change-location-photo">Change photo</a>
-		</div>
-		<h1 id="page-title"><input type="text" id="location-title" placeholder="Title" value="<%= location.title %>" /></h1>
-		<h2>
-			<% if !location.new_record? %>
-				in
-			<% end %>
-			<span id="location-geo"><%= location.geo_string %><span>
-		</h2>
-	</header>
-	<% if !location.new_record? %>
-		<section id="photos" class="rounded">
-			<% if location.photos.count > 0 %>
-				<%= link_to photos_edit_path(location), :class => "rounded" do %>
-					<h1>Photos</h1>
-					<% @location_photos.each do |photo| %>
-						<div class="image">
-							<img src="<%= photo.small %>" />
-						</div>
-					<% end %>
+	<form>
+		<header class="autoclear">
+			<div class="location-photo left">
+				<img src="<%= @location.picture.url %>" width="200" class="rounded" />
+				<a href="#" class="rounded" id="change-location-photo">Change photo</a>
+			</div>
+			<h1 id="page-title"><input type="text" id="location-title" placeholder="Title" value="<%= location.title %>" /></h1>
+			<h2>
+				<% if !location.new_record? %>
+					in
 				<% end %>
-			<% else %>
-				<%= link_to "<h1>Add Photos</h1>".html_safe, new_location_photos_path(location), :class => "rounded" %>
-			<% end %>
+				<span id="location-geo"><%= location.geo_string %><span>
+			</h2>
+		</header>
+		<% if !location.new_record? %>
+			<section id="photos" class="rounded">
+				<% if location.photos.count > 0 %>
+					<%= link_to photos_edit_path(location), :class => "rounded" do %>
+						<h1>Photos</h1>
+						<% @location_photos.each do |photo| %>
+							<div class="image">
+								<img src="<%= photo.small %>" />
+							</div>
+						<% end %>
+					<% end %>
+				<% else %>
+					<%= link_to "<h1>Add Photos</h1>".html_safe, new_location_photos_path(location), :class => "rounded" %>
+				<% end %>
+			</section>
+			<section id="maps" class="rounded">
+				<% if location.maps.count > 0 %>
+					<%= link_to "<h1>Maps</h1>".html_safe, maps_path(location), :class => "rounded" %>
+				<% else %>
+					<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(location), :class => "rounded" %>
+				<% end %>
+			</section>
+			<section id="maps" class="rounded">
+				<h1>Blog posts</h1>
+			</section>
+		<% end %>
+		<section id="geo" class="rounded">
+			<div id="map" class="clear rounded"></div>
+			<h1><a id="edit-location" href="#">Edit Location</a></h1>
+			<input type="button" id="map-edit-done" value="Done Editing Map" />
 		</section>
-		<section id="maps" class="rounded">
-			<% if location.maps.count > 0 %>
-				<%= link_to "<h1>Maps</h1>".html_safe, maps_path(location), :class => "rounded" %>
-			<% else %>
-				<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(location), :class => "rounded" %>
-			<% end %>
-		</section>
-		<section id="maps" class="rounded">
-			<h1>Blog posts</h1>
-		</section>
-	<% end %>
-	<section id="geo" class="rounded">
-		<div id="map" class="clear rounded"></div>
-		<h1><a id="edit-location" href="#">Edit Location</a></h1>
-		<input type="button" id="map-edit-done" value="Done Editing Map" />
-	</section>
-	<% if !location.new_record? %>
-		<a id="delete-location" class="remove">X</a>
-	<% end %>
+		<% if !location.new_record? %>
+			<a id="delete-location" class="remove">X</a>
+		<% end %>
+	</form>
 </article>

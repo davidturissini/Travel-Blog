@@ -1,6 +1,6 @@
 class Map < ActiveRecord::Base
-	belongs_to :location
-	has_one :user, :through => :location
+	belongs_to :trip
+	has_one :user, :through => :trip
 	include HasFiles
 
 	def save_with_xml! xmldoc

@@ -1,4 +1,7 @@
 var Location = Backbone.Model.extend({
+    editPath:function () {
+        return this.url() + "/edit";
+    },
     url: function () {
         var str = this.user.url({includeFormat:false});
         if( this.isNew() ) { 
