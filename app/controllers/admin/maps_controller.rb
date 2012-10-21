@@ -34,8 +34,7 @@ class Admin::MapsController < Admin::AdminController
 	end
 
 	def stage
-		map = current_trip.maps.new
-		url = map.stage_xml(Nokogiri.parse(params[:map][:xml]))
+		url = current_user.stage_map!(Nokogiri.parse(params[:map][:xml]))
 		render :json => {:url => url}
 	end
 

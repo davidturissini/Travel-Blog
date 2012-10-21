@@ -1,16 +1,16 @@
 <section id="hero" class="autoclear">
-	<% @welcome_locations.each_with_index do |location, index| %>
-		<article id="location-<%= index %>">
-			<%= link_to location_path(location), :class => "figure-link" do %>
+	<% @welcome_trips.each_with_index do |trip, index| %>
+		<article id="trip-<%= index %>">
+			<%= link_to trip_path(trip), :class => "figure-link" do %>
 				<figure>
-					<img src="<%= location.picture.large %>" />
+					<img src="<%= trip.picture.large %>" />
 					<figcaption>
-						<h1><%= location.title %></h1>
+						<h1><%= trip.title %></h1>
 					</figcaption>
 				</figure>
 			<% end %>
 			<span>by</span> 
-			<h2><%= link_to location.user.name, user_path(location.user.slug) %></h2>
+			<h2><%= link_to trip.user.name, user_path(trip.user.slug) %></h2>
 		</article>
 	<% end %>	
 </section>

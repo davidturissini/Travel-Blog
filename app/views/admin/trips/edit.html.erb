@@ -1,17 +1,25 @@
 <article id="trip" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<h1 id="page-title"><%= @trip.title %></h1>
+	<header class="autoclear">
+		<figure id="trip-photo" class="left">
+			<img src="<%= @trip.picture.url %>" width="200" class="rounded" id="trip-image" />
+			<figcaption>
+				<a href="#" class="rounded" id="change-trip-photo">Change photo</a>
+			</figcaption>
+		</figure>
+		<h1 id="page-title"><input type="text" id="trip-title" value="<%= @trip.title %>" /></h1>
+	</header>
 	<section id="photos" class="rounded">
 		<% if @trip.photos.count > 0 %>
 			<%= link_to photos_edit_path(@trip), :class => "rounded" do %>
 				<h1>Photos</h1>
-				<% @location_photos.each do |photo| %>
+				<% @trip_photos.each do |photo| %>
 					<div class="image">
 						<img src="<%= photo.small %>" />
 					</div>
 				<% end %>
 			<% end %>
 		<% else %>
-			<%= link_to "<h1>Add Photos</h1>".html_safe, new_location_photos_path(@trip), :class => "rounded" %>
+			<%= link_to "<h1>Add Photos</h1>".html_safe, trip_photos_new_path(@trip.slug), :class => "rounded" %>
 		<% end %>
 	</section>
 	<section id="maps" class="rounded">

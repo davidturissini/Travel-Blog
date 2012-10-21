@@ -6,9 +6,9 @@ class Admin::TemplateController < Admin::AdminController
 	end
 
 	protected
-	def initialize_location_photos
-		@location = current_user.locations.find_by_slug(params[:location_id])
-		@photos = @location.photos
+	def initialize_trip_photos
+		@trip = current_user.trips.find_by_slug(params[:trip_id])
+		@photos = @trip.photos
 	end
 
 	def initialize_location_map

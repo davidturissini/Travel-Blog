@@ -15,11 +15,6 @@ class Location < ActiveRecord::Base
     photos.count
   end
 
-  def to_s 
-    return title if title
-    return geo_string
-  end
-
   def geo_string
     s = ""
       if( !city.blank? && state )
@@ -35,15 +30,8 @@ class Location < ActiveRecord::Base
   end
 
   def picture
-    if photo.nil?
       return GoogleMapPhoto.new(self)
-    end
-    photo
   end
- 
- def self.random limit = 3
-  limit(limit).order("RAND()")
- end
 
  def country_name
   country.name if country

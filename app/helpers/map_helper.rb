@@ -7,14 +7,14 @@ module MapHelper
 	end
 
 	def new_map_path location
-		new_location_map_path(:location_id => location.slug)
+		new_trip_map_path(:location_id => location.slug)
 	end
 
 	def edit_map_path map
-		edit_location_map_path(:location_id => map.trip.slug, :map_id => map.slug)
+		edit_trip_map_path(:trip_id => map.trip.slug, :map_id => map.slug)
 	end
 
-	def maps_path location
-		location_maps_path(:location_id => location.slug)
+	def maps_path trip
+		trip_maps_path(:trip_id => trip.slug)
 	end
 end

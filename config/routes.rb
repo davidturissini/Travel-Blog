@@ -24,18 +24,18 @@ Adventureblog::Application.routes.draw do
   match '/me/locations/new' => "admin/locations#new", :user_id => "me", :via => "get", :as => "new_location"
   match '/me/:trip_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
   match '/me/:trip_id/photos' => "admin/photos#index", :via => :get, :user_id => "me"
-  match '/me/:trip_id/maps' => "admin/maps#index", :via => :get, :user_id => "me", :as => "location_maps"
+  match '/me/:trip_id/maps' => "admin/maps#index", :via => :get, :user_id => "me", :as => "trip_maps"
   match '/me/maps/stage' => "admin/maps#stage", :via => :post, :user_id => "me"
-  match '/me/:trip_id/maps/new' => "admin/maps#new", :user_id => "me", :as => "new_location_map"
+  match '/me/:trip_id/maps/new' => "admin/maps#new", :user_id => "me", :as => "new_trip_map"
   match '/me/:trip_id/maps/create' => "admin/maps#create", :via => :post, :user_id => "me"
-  match '/me/:trip_id/maps/:map_id/edit' => "admin/maps#edit", :user_id => "me", :as => "edit_location_map"
+  match '/me/:trip_id/maps/:map_id/edit' => "admin/maps#edit", :user_id => "me", :as => "edit_trip_map"
   match '/me/:trip_id/maps/:map_id' => "admin/maps#update", :via => :put, :user_id => "me"
   match '/me/:trip_id/maps/:map_id' => "admin/maps#destroy", :via => :delete, :user_id => "me"
-  match '/me/:trip_id/photos/edit' => "admin/locations#edit_photos", :user_id => "me", :as => "location_photos_edit"
-  match '/me/:trip_id/photos/new' => "admin/locations#new_photos", :user_id => "me", :as => "location_photos_new"
+  match '/me/:trip_id/photos/edit' => "admin/trips#edit_photos", :user_id => "me", :as => "trip_photos_edit"
+  match '/me/:trip_id/photos/new' => "admin/trips#new_photos", :user_id => "me", :as => "trip_photos_new"
   match '/me/:trip_id/photos/:slug' => "admin/photos#delete", :user_id => "me", :via => "delete"
   match '/me/:trip_id/photos/:slug' => "admin/photos#update", :user_id => "me"
-  match '/me/:trip_id/edit' => "admin/locations#edit", :user_id => "me"
+  match '/me/:trip_id/edit' => "admin/trips#edit", :user_id => "me"
   match "/:user_id/template/:path" => "admin/template#load"
   match '/:user_id/locations/create' => "admin/locations#create"
 
@@ -48,7 +48,7 @@ Adventureblog::Application.routes.draw do
 
 
   resources :users, {:path => ""} do 
-    resources :locations, {:path => ""} do
+    resources :trips, {:path => ""} do
       resources :journal_entries, :except => [:index, :show]
     end
   end

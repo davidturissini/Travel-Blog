@@ -2,9 +2,9 @@ window.addEventListener("DOMContentLoaded", function () {
 	if( !/admin\-maps\-edit\s/.test(document.body.className) ) { return }
 
 	var map = Map.createFromDataAttribute( document.getElementById("map") ),
-	location = Location.createFromDataAttribute( document.getElementById("map"), "data-location");
-	location.setUser(TA.currentUser);
-	map.setLocation(location);
+	trip = Trip.createFromDataAttribute( document.getElementById("map"), "data-trip");
+	trip.setUser(TA.currentUser);
+	map.setTrip(trip);
 
     new AutoSaveTextField({
         el:document.getElementById("map-title"),

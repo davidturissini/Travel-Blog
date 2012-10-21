@@ -1,13 +1,13 @@
 window.addEventListener("DOMContentLoaded", function () {
-  if( !/admin\-locations\-new_photos/.test(document.body.className) ) { return }
+  if( !/admin\-trips\-new_photos/.test(document.body.className) ) { return }
 
   /*
 
     INITIALIZE LOCATION
 
   */
-  var loc = Location.createFromDataAttribute( document.getElementById("location") );
-  loc.setUser(TA.currentUser);
+  var trip = Trip.createFromDataAttribute( document.getElementById("trip") );
+  trip.setUser(TA.currentUser);
 
   /*
 
@@ -15,7 +15,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   */
   var photoUploader = new PhotoUploader({
-      model:loc,
+      model:trip,
       el:document.getElementById("photo-upload"),
       input:document.querySelector("#photo-upload input"),
       previewElem:document.getElementById("photo-container"),
@@ -25,7 +25,7 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     photoUploader.on("photos_uploaded", function (e) {
-      window.location.href = loc.editPhotosUrl();
+      window.location.href = trip.editPhotosUrl();
     });
 
     photoUploader.render();
@@ -39,7 +39,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
   var flickrSetsLink = document.getElementById("photo-upload-flickr"),
   flickrDialog = new FlickrDialog();
-  flickrDialog.setTitle("Import photos from Flickr for " + loc.toString());
+  flickrDialog.setTitle("Import photos from Flickr");
 
   flickrDialog.on("photoset_click", function (event) {
         TA.currentUser.flickrset_photos(event.photoset.id, {

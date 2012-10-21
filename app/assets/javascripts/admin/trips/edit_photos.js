@@ -1,21 +1,21 @@
 window.addEventListener("DOMContentLoaded", function () {
-  if( !/admin\-locations\-edit_photos/.test(document.body.className) ) { return }
+  if( !/admin\-trips\-edit_photos/.test(document.body.className) ) { return }
 
   /*
 
     INITIALIZE LOCATION
 
   */
-  var loc = Location.createFromDataAttribute( document.getElementById("location") ),
-  locationPhotosJSON = JSON.parse( document.getElementById("location-photos").getAttribute("data-json") ),
+  var trip = Trip.createFromDataAttribute( document.getElementById("trip") ),
+  locationPhotosJSON = JSON.parse( document.getElementById("trip-photos").getAttribute("data-json") ),
   locationPhotos = new PhotosCollection(locationPhotosJSON);
 
-  loc.setUser(TA.currentUser);
+  trip.setUser(TA.currentUser);
 
   /* INTIALIZE PHOTO EDIT */
 
   var edit = new PhotoManager({
-    el:document.getElementById("location-photos"),
+    el:document.getElementById("trip-photos"),
     collection:locationPhotos
   })
 
@@ -51,7 +51,7 @@ window.addEventListener("DOMContentLoaded", function () {
   */
 
   locationPhotos.each(function (photo) {
-    photo.setLocation(loc);
+    photo.setTrip(trip);
     var form = new PhotoForm({
       model:photo,
       el:document.getElementById("photo-" + photo.id)

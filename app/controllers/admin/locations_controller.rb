@@ -12,28 +12,6 @@ class Admin::LocationsController < Admin::AdminController
 	 	@location = Location.new
 	 end
 
-	 def new_photos
-	 	@location = current_location
-	 end
-
-	 def edit_photos
-	 	@location = current_location
-	 end
-
-	 def edit
-	 	@location = current_location
-	 	@location_photos = @location.photos
-	 end
-
-	 def update
-	   @location = current_location
-	   @location.update_attributes!(params[:location])
-	   respond_to do |format|
-	    format.html { redirect_to request.referrer }
-	    format.json { render :json => @location }
-	   end
-	 end
-
 	 def create
 		@location = Location.new( params[:location] )
 		p_slug = params[:location][:slug]

@@ -12,20 +12,20 @@ class Admin::PhotosController < Admin::AdminController
 	end
 
 	def index
-		location = current_user.locations.find_by_slug(params[:location_id])
-		render :json => location.photos.to_json
+		trip = current_user.trips.find_by_slug(params[:trip_id])
+		render :json => trip.photos.to_json
 	end
 
 	def delete
-		location = current_user.locations.find_by_slug(params[:location_id])
-		photo = location.photos.find_by_slug(params[:slug])
+		trip = current_user.trips.find_by_slug(params[:trip_id])
+		photo = trip.photos.find_by_slug(params[:slug])
 		photo.destroy
 		render :json => photo
 	end
 
 	def update
-		location = current_user.locations.find_by_slug(params[:location_id])
-		photo = location.photos.find_by_slug(params[:slug])
+		trip = current_user.trips.find_by_slug(params[:trip_id])
+		photo = trip.photos.find_by_slug(params[:slug])
 		photo.title = params[:title]
 		photo.description = params[:description]
 		photo.save!
@@ -36,10 +36,10 @@ class Admin::PhotosController < Admin::AdminController
 	
 
 	def save_photo raw, photo_hash = {}
-		location = current_user.locations.find_by_slug(params[:location_id])
+		trip = current_user.trips.find_by_slug(params[:trip_id])
 
 		ActiveRecord::Base.transaction do
-			photo = location.photos.create(photo_hash)
+			photo = trip.photos.create(photo_hash)
 			photo.save_with_raw!(raw)
 		end
 	end

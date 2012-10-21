@@ -1,9 +1,9 @@
-var LocationPhotoDialog = ModalDialog.extend({
+var TripPhotoDialog = ModalDialog.extend({
 	bindImageClicks:function () {
 		var view = this;
 		[].forEach.call(this.view.getElementsByClassName("photo"), function (elem) {
 			var photo = Photo.createFromDataAttribute(elem);
-			photo.setUser(view.model.user);
+			photo.setUser(view.model.user());
 			elem.addEventListener("click", function () {
 				view.trigger("photo_click", {photo:photo});
 			})
@@ -13,9 +13,9 @@ var LocationPhotoDialog = ModalDialog.extend({
 		var dialog = this,
 		template = new AdminTemplate({
 			user:TA.currentUser,
-			id:"location_photos",
+			id:"trip_photos",
 			params:{
-				location_id:dialog.model.get("slug")
+				trip_id:dialog.model.get("slug")
 			}
 		})
 		dialog.setTitle("Select photo for " + dialog.model.toString());

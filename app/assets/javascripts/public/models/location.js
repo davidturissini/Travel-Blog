@@ -11,12 +11,6 @@ var Location = Backbone.Model.extend({
         }
         return str;
     },
-    toString:function () {
-        if( this.get("title") ) {
-            return this.get("title");
-        }
-        return this.geoString();
-    },
     latLng:function () {
         return new google.maps.LatLng(this.get("latitude") || 40.7142, this.get("longitude") || -74.0064)
     },
@@ -55,28 +49,6 @@ var Location = Backbone.Model.extend({
                 }
                 if( callbacks.success ) {
                     callbacks.success(country);
-                }
-            }
-        })
-    },
-    photo:function () {
-        return this._photo;
-    },
-    setPhoto:function ( photo ) {
-        this._photo = photo;
-        this.set({photo_id:photo.id});
-    },
-    photos:function (options) {
-        var location = this;
-        options = options || {};
-        this._photos = this._photos || new LocationPhotosCollection({location:this});
-        this._photos.fetch({
-            success:function (photos) {
-                photos.each(function (photo) {
-                    photo.setUser(location.user);
-                })
-                if( options.success ) {
-                    options.success(photos);
                 }
             }
         })

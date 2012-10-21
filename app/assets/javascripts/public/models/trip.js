@@ -13,8 +13,33 @@ var Trip = Backbone.Model.extend({
 			}
 		})
 	},
+	setPhoto:function (photo) {
+		this._photo = photo;
+        this.set({photo_id:photo.id});
+	},
+	photo:function () {
+		return this._photo;
+	},
+	photos:function (options) {
+        var trip = this;
+        options = options || {};
+        this._photos = this._photos || new TripPhotosCollection({trip:this});
+        this._photos.fetch({
+            success:function (photos) {
+                photos.each(function (photo) {
+                    photo.setUser(trip.user);
+                })
+                if( options.success ) {
+                    options.success(photos);
+                }
+            }
+        })
+    },
 	setLocations:function(locations) {
 		this._locations = locations;
+	},
+	editPhotosUrl:function () {
+		return this.url() + "/photos/edit";
 	},
 	editUrl:function () {
 		return this.user().url({includeFormat:false}) + "/" + this.get("slug");

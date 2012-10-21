@@ -1,1 +1,26 @@
-<%= render "admin/users/me" %>
+<section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
+    <header id="user-header">
+        <div class="user-picture">
+			<%= image @user.photo.url, :class => "rounded" %>
+			<a class="user-button user-image-button rounded">Change Picture</a>
+		</div>
+        <h1>Hello, <%= @user.name %></h1>
+    </header>
+     <%= render "admin/global/create_new_link", 
+            :text => "Add a trip", 
+            :url => new_trip_path %>
+
+    <section id="user-trips">
+        <% current_user.trips.each do |trip| %>
+        	<article class="trip">
+            	<h1><%= trip.title %></h1>
+                <img src="<%= trip.picture.url %>" />
+            </article>
+        <% end %>
+    </section>
+    
+</section>
+
+<% content_for :scripts_footer do %>
+  <%= javascript_include_tag "admin/admin" %>
+<% end %>

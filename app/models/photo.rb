@@ -40,8 +40,8 @@ class Photo < ActiveRecord::Base
 		tmp_filename = "tmp/user_images/#{filename}.tmp"
 		path = "#{Rails.root}/#{filename}"
 
-		location = locations.first
-		user = location.user
+		trip = trips.limit(1).first
+		user = trip.user
 
 		photos_dir = user.create_content_dir!("photos/originals/")
 
@@ -57,7 +57,7 @@ class Photo < ActiveRecord::Base
 
 	private
 	def generate_thumbnails raw_image
-		user = locations.first.user
+		user = trips.limit(1).first.user
 		thumb_sizes.each do |size|
 			thumb_dir = user.create_content_dir!("photos/#{size}")
 			thumbnail = raw_image.resize_to_fit(size, size)

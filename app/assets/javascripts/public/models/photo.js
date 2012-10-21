@@ -48,13 +48,13 @@ var Photo = Backbone.Model.extend({
 		this._raw = raw;
 	},
 	url:function () {
-		return this.location().url() + "/photos/" + this.get("slug");
+		return this.trip().url() + "/photos/" + this.get("slug");
 	},
-	setLocation:function (location) {
-		this._location = location;
+	setTrip:function (trip) {
+		this._trip = trip;
 	},
-	location:function () {
-		return this._location;
+	trip:function () {
+		return this._trip;
 	},
 	getBinary:function ( callbacks ) {
 		callbacks = callbacks || {}

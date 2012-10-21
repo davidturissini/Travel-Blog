@@ -33,7 +33,10 @@ class User < ActiveRecord::Base
     save_file(file, { :path => "#{static_directory}maps/#{path}" })
   end
 
-  def stage_map! file, path
+  def stage_map! xmldoc
+    _slug = Digest::SHA1.hexdigest(xmldoc.to_xml)
+    file = StringIO.new(xmldoc.to_xml)
+    path = "#{_slug}.kml"
     create_content_dir! "stage/maps"
     save_file(file, { :path => "#{static_directory}stage/maps/#{path}" })
     "http://#{CONFIG['static']['domain']}/#{static_directory}stage/maps/#{path}"

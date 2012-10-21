@@ -1,9 +1,9 @@
-<section id="location" data-json="<%= @location.to_json %>">
+<section id="trip" data-json="<%= @trip.to_json %>">
 	<h1 id="page-title">Manage photos</h1>
-	<%= link_to "Add photos", new_location_photos_path(@location) %>
+	<%= link_to "Add photos", new_trip_photos_path(@trip) %>
 	<p id="server-messages"></p>
-	<section id="location-photos" data-json="<%= @location.photos.to_json %>">
-		<% @location.photos.each do |photo| %>
+	<section id="trip-photos" data-json="<%= @trip.photos.to_json %>">
+		<% @trip.photos.each do |photo| %>
 			<figure class="photo" id="photo-<%= photo.id %>">
 				<div class="image-wrapper">
 					<a class="remove">X</a>
@@ -15,9 +15,9 @@
 				</figcaption>
 			</figure>
 		<% end %>
-		<% if @location.photos.count > 0 %>
+		<% if @trip.photos.count > 0 %>
 			<footer class="buttons">
-				<input type="button" class="save" value="Save photos for <%= @location.to_s %>" />
+				<input type="button" class="save" value="Save photos for <%= @trip.title %>" />
 			</footer>
 		<% end %>
 	</section>

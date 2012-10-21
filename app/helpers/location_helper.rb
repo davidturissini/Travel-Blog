@@ -1,12 +1,4 @@
 module LocationHelper
- def edit_location_path loc
-  edit_user_location_path(loc.user.slug, loc.slug)
- end
-
- def location_path loc
-  user_location_path(loc.user.slug, loc.slug)
- end
-
  def location_link loc, options = {}
   path = location_path loc
   link_to loc.title, path, options.merge({ :class => "location #{loc.location_type.title.downcase}" })
@@ -32,17 +24,5 @@ module LocationHelper
  	s = ""
  	s = "#{location.title} in " if location.title
  	s += location.geo_string
- end
-
- def photos_edit_path location
- 	location_photos_edit_path(:location_id => location.slug)
- end
-
- def new_location_photos_path location
- 	location_photos_new_path(:location_id => location.slug)
- end
-
- def admin_location_path location
- 	admin_location_detail_path(location.slug)
  end
 end
