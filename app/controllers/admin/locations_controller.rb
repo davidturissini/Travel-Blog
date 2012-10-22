@@ -2,23 +2,34 @@ class Admin::LocationsController < Admin::AdminController
 	def destroy
 	   @location = current_location
 	   @location.destroy
-	   respond_to do |format|
-	    format.html { redirect_to :controller => "location_types", :action => "show" }
-	    format.json { render :json => @location }
-	   end
+	   render :json => @location
 	 end
 
 	 def new
-	 	@location = Location.new
+	 	@trip = current_trip
+	 	@location = @trip.locations.new
+	 end
+
+	 def index
+	 	@trip = current_user.trips.find_by_slug(params[:trip_id])
+	 	@locations = @trip.locations
+	 end
+
+	 def edit
+	 	@trip = current_user.trips.joins(:locations).find_by_slug(params[:trip_id])
+	 	@location = @trip.locations.find_by_slug(params[:location_id])
+	 end
+
+	 def update
+	 	location = current_location
+	 	location.update_attributes!(params[:location])
+	 	location.save!
+	 	render :json => location
 	 end
 
 	 def create
-		@location = Location.new( params[:location] )
-		p_slug = params[:location][:slug]
-		p_slug = params[:location][:title] if p_slug.nil?
-		p_slug = @location.to_s if p_slug.nil?
-		@location.slug = String.slugify( p_slug )
-		@location.user = current_user
+		@location = current_trip.locations.new( params[:location] )
+		@location.set_slug!(String.slugify( @location.smart_title ), current_trip.locations)
 		@location.save!
 		respond_to do |format| 
 			format.html { redirect_to request.referrer }
@@ -27,7 +38,10 @@ class Admin::LocationsController < Admin::AdminController
 	 end
 
 	 protected
+	 def current_trip
+	 	current_user.trips.find_by_slug(params[:trip_id])
+	 end
 	 def current_location
-	 	current_user.locations.find_by_slug(params[:location_id])
+	 	current_trip.locations.find_by_slug(params[:location_id])
 	 end
 end

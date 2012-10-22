@@ -88,6 +88,7 @@ var LocationMap = Backbone.View.extend({
         }).render();
 	},
 	startEdit:function () {
+		this.googleMapMarker().makeInteractive();
 		this._bindMapClicks();
 	},
 	doneEdit:function () {
@@ -95,5 +96,6 @@ var LocationMap = Backbone.View.extend({
 	},
 	render: function () {
 		this.drawMap();
+		return this;
 	}
 })

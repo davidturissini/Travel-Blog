@@ -5,7 +5,8 @@ class Location < ActiveRecord::Base
  has_many :journal_entries, :order => "day ASC"
  has_and_belongs_to_many :photos
  has_many :statuses, :dependent => :destroy
- validates :slug, :country_id, :presence => true
+ validates :slug, :latitude, :longitude, :country_id, :presence => true
+ include HasSlug
 
   def journal_entries_count
     journal_entries.count
@@ -14,6 +15,11 @@ class Location < ActiveRecord::Base
   def photos_count
     photos.count
   end
+
+  def smart_title
+    return title if title
+    geo_string
+  end 
 
   def geo_string
     s = ""

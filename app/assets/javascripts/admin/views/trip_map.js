@@ -1,16 +1,4 @@
-var TripMap = Backbone.View.extend({
-	initialize: function () {
-		var form = this,
-		loc = form.model
-
-		this.locationHash = {}
-		this.options.countryCollection = this.options.countryCollection || TA.countries;
-		this._bounds = new google.maps.LatLngBounds();
-	},
-	showLocationString:function(string) {
-		if( !this.options.geoElem ) { return }
-		this.options.geoElem.innerHTML = string;
-	},
+var TripMap = TripMap.extend({
 	_bindMapClicks: function () {
 		var form = this,
 		loc = form.model,
@@ -31,13 +19,14 @@ var TripMap = Backbone.View.extend({
 								longitude: mapEvent.latLng.lng()
 							})
 							location.setCountry( country );
-							new LocationMarker({
+							var marker = new LocationMarker({
 					            model:location,
 					            map:form.googleMap(),
 					            draggable:true
 					        }).render();
 
 					        form.model.locations().add(location);
+					        form.makeMarkerInteractive(marker);
 						}
 					})
 				}
@@ -46,53 +35,23 @@ var TripMap = Backbone.View.extend({
 		});
 
 	},
-
-	drawMapMarker: function () {
-		this.markerClone.render();
-	},
-	googleMapMarker:function () {
-        return this._googleMapMarker;
-    },
-    googleMap:function () {
-        return this._googleMap;
-    },
-	drawMap:function (options) {
-		options = options || {};
-        var mapOptions = {
-            center: new google.maps.LatLng(0,0),
-            zoom: 4,
-            mapTypeId: google.maps.MapTypeId.HYBRID,
-            scrollwheel: false
-        }
-
-        for(var x in options) {
-            mapOptions[x] = options[x];
-        }
-
-        this._googleMap = new google.maps.Map(this.el, mapOptions);
-        this.__drawLocations();
-	},
-	__drawLocations:function () {
+	makeMarkerInteractive:function (marker) {
 		var view = this;
-		view.model.locations().each(function (loc) {
-			var marker = new LocationMarker({
-				model:loc,
-				map:view.googleMap()
-			}).render();
-			view.bounds().union(new google.maps.LatLngBounds(loc.latLng(), loc.latLng()))
-		})
-		view.googleMap().fitBounds(this._bounds);
-	},
-	bounds:function () {
-		return this._bounds;
+		marker.makeInteractive();
+
+        marker.on("click", function (e) {
+        	e.location = marker.model;
+        	view.trigger("location_click", e)
+        })
 	},
 	startEdit:function () {
+		var view = this;
 		this._bindMapClicks();
+		_.each(this.markers, function (marker) {
+			view.makeMarkerInteractive(marker);
+		})
 	},
 	doneEdit:function () {
 
-	},
-	render: function () {
-		this.drawMap();
 	}
 })

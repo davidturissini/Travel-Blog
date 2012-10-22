@@ -1,1 +1,8 @@
-<%= render "form", :location => @location %>
+<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Edit #{@location.smart_title}" %>
+<article id="location" class="form" data-json="<%= @location.to_json %>" data-trip="<%= @location.trip.to_json %>">
+	<h1><input type="text" id="location-title" class="edit-title" value="<%= @location.title %>" /></h1>
+	<h2 id="location-geo"><%= @location.geo_string %></h2>
+	<form>
+		<figure id="location-map" class="map"></figure>
+	</form>
+</article>

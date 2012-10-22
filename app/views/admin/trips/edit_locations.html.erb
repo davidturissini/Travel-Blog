@@ -1,0 +1,5 @@
+<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Edit locations for #{@trip.title}" %>
+<section id="trip" data-json="<%= @trip.to_json %>" data-locations="<%= @locations.to_json %>">
+	<p class="note">Click on the map to add a new location. Click and drag a marker to change a location. Click a marker to edit or delete a location.</p>
+	<figure id="trip-map" class="map"></figure>
+</section>

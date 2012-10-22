@@ -11,7 +11,9 @@
 		</a>
 	    <nav class="dropdown" id="user-nav">
 	    	<ul>
-				
+				<% current_user.trips.each do |trip| %>
+					<li><%= trip.title %></li>
+				<% end %>
 			</ul>
 	    	<ul>
 	    		<li><%= link_to "My Account", me_path %></li>

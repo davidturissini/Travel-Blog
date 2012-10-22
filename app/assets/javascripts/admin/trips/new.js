@@ -1,13 +1,39 @@
 window.addEventListener("DOMContentLoaded", function () {
 	if( !/admin\-trips\-new\s/.test(document.body.className) ) { return }
 
-	var trip = new Trip();
+	var trip = new Trip(),
+	feedback = new UserFeedback({
+		el:document.getElementById("form-message")
+	}).render();
 	trip.setUser(TA.currentUser);
 
 	var tripMap = new TripMap({
 		model:trip,
 		el:document.getElementById("google-map")
 	});
+
+	tripMap.on("location_click", function (e) {
+		var location = e.location;
+
+
+		if( !location.infowindow ) {
+			location.infowindow = new LocationInfowindow({
+				model:location,
+				map:tripMap.googleMap()
+			}).render();
+
+			location.infowindow.on("html_load", function (e) {
+				var html = e.html,
+				titleElem = html.getElementsByClassName("location-title").item(0);
+				titleElem.addEventListener("keyup", function (e) {
+					location.set({title:e.currentTarget.value});
+				})
+			})
+		}
+
+
+		location.infowindow.toggle();
+	})
 
 	tripMap.render();
 	tripMap.startEdit();
@@ -18,21 +44,14 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	trip.on("error", function (e, error) {
 		if( error.title ) {
-			showError("Please title your trip");
+			feedback.showError("Please title your trip");
 		}
 	})
-
-	function showError(message) {
-		var error = document.createElement("p");
-		error.className = "error";
-		error.innerHTML = message;
-		document.getElementById("form-message").appendChild(error);
-	}
 
 	document.getElementById("trip-save").addEventListener("click", function (e) {
 		e.preventDefault();
 		if( trip.locations().length === 0 ) {
-			showError("Please select at least one location");
+			feedback.showError("Please select at least one location");
 			return;
 		}
 

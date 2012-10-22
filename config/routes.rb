@@ -21,11 +21,17 @@ Adventureblog::Application.routes.draw do
   match '/me/:trip_id' => "admin/trips#update", :user_id => "me", :via => "put"
   match '/me/:trip_id' => "admin/trips#destroy", :user_id => "me", :via => "delete"
 
-  match '/me/locations/new' => "admin/locations#new", :user_id => "me", :via => "get", :as => "new_location"
   match '/me/:trip_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
   match '/me/:trip_id/photos' => "admin/photos#index", :via => :get, :user_id => "me"
   match '/me/:trip_id/maps' => "admin/maps#index", :via => :get, :user_id => "me", :as => "trip_maps"
   match '/me/maps/stage' => "admin/maps#stage", :via => :post, :user_id => "me"
+  match '/me/:trip_id/locations' => "admin/locations#index", :user_id => "me", :as => "admin_locations"
+  match '/me/:trip_id/locations/edit' => "admin/trips#edit_locations", :user_id => "me", :as => "edit_trip_locations"
+  match '/me/:trip_id/locations/new' => "admin/locations#new", :user_id => "me", :via => "get", :as => "new_location"
+  match '/me/:trip_id/locations/create' => "admin/locations#create", :user_id => "me", :via => "post", :as => "create_location"
+  match '/me/:trip_id/locations/:location_id' => "admin/locations#edit", :via => "get", :user_id => "me", :as => "admin_edit_location"
+  match '/me/:trip_id/locations/:location_id' => "admin/locations#update", :via => "put", :user_id => "me", :as => "admin_edit_location"
+  match '/me/:trip_id/locations/:location_id' => "admin/locations#destroy", :via => "delete", :user_id => "me", :as => "admin_edit_location"
   match '/me/:trip_id/maps/new' => "admin/maps#new", :user_id => "me", :as => "new_trip_map"
   match '/me/:trip_id/maps/create' => "admin/maps#create", :via => :post, :user_id => "me"
   match '/me/:trip_id/maps/:map_id/edit' => "admin/maps#edit", :user_id => "me", :as => "edit_trip_map"
@@ -37,7 +43,6 @@ Adventureblog::Application.routes.draw do
   match '/me/:trip_id/photos/:slug' => "admin/photos#update", :user_id => "me"
   match '/me/:trip_id/edit' => "admin/trips#edit", :user_id => "me"
   match "/:user_id/template/:path" => "admin/template#load"
-  match '/:user_id/locations/create' => "admin/locations#create"
 
   match '/about' => "static#about"
 

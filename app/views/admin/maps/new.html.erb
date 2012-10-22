@@ -1,3 +1,9 @@
+<nav class="breadcrumb">
+	<ul>
+		<li><%= link_to @trip.title, admin_trip_path(@trip) %></li>
+		<li>New Map</li>
+	</ul>
+</nav>
 <div id="trip" data-json="<%= @trip.to_json %>">
 	<form>
 		<%= render "admin/maps/fields", :map => @map %>

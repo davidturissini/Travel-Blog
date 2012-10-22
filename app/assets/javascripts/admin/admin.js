@@ -5,7 +5,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	var userLocationButtons = document.getElementsByClassName("user-location-button"), 
 	userImageButtons = document.getElementsByClassName("user-image-button"),
 	userImages = document.getElementsByClassName("user-image"),
-	countryList = new CountryCollection(),
+	countryList = TA.countries,
 	i;
 
 

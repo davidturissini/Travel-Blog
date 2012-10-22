@@ -8,7 +8,8 @@ class Trip < ActiveRecord::Base
 
 	def picture
 		return photo if !photo.nil?
-		return locations.limit(1).first.picture
+		first_location = locations.limit(1).first
+		return first_location.picture if first_location
 	end
  
 	def self.random limit = 3

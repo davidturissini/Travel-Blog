@@ -16,6 +16,6 @@ module TripsHelper
 	end
 
 	def admin_trip_path trip
-		admin_location_detail_path(trip.slug)
+		admin_trip_edit_path(trip.slug)
 	end
 end

@@ -3,6 +3,17 @@ class Admin::TripsController < Admin::AdminController
 
 	end
 
+	def destroy
+		@trip = current_trip
+		@trip.destroy
+		render :json => @trip
+	end
+
+	def edit_locations
+		@trip = current_trip
+		@locations = @trip.locations
+	end
+
 	def edit
 		@trip = current_user.trips.find_by_slug(params[:trip_id])
 		puts current_user.trips.inspect + "AAAAA"

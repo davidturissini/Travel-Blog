@@ -6,8 +6,8 @@ module MapHelper
  		"http://maps.google.com/staticmap?center=#{lat},#{lng}&type=sat&zoom=#{zoom}&size=#{width}x#{height}"
 	end
 
-	def new_map_path location
-		new_trip_map_path(:location_id => location.slug)
+	def new_map_path trip
+		new_trip_map_path(:trip_id => trip.slug)
 	end
 
 	def edit_map_path map

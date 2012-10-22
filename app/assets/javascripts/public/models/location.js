@@ -1,13 +1,10 @@
 var Location = Backbone.Model.extend({
-    editPath:function () {
-        return this.url() + "/edit";
-    },
     url: function () {
-        var str = this.user.url({includeFormat:false});
+        var str = this.trip().url();
         if( this.isNew() ) { 
             str += "/locations/create";
         } else {
-            str += "/" + this.get("slug"); 
+            str += "/locations/" + this.get("slug"); 
         }
         return str;
     },
@@ -21,6 +18,9 @@ var Location = Backbone.Model.extend({
         } else {
             return this.attributes 
         }
+    },
+    smartTitle:function () {
+        return this.geoString({includeTitle:true});
     },
     geoString:function ( options ) {
         options = options || {}
@@ -58,8 +58,12 @@ var Location = Backbone.Model.extend({
         this.country = country;
         this.set({country_id:country.id}, options);
     },
-    setUser: function (user) {
-        this.user = user
+    setTrip:function (trip) {
+        this._trip = trip;
+        this.set({trip_id:trip.id});
+    },
+    trip:function () {
+        return this._trip;
     },
     setLocationType: function (locType) {
         this.locationType = locType

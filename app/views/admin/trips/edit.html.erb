@@ -1,12 +1,17 @@
 <article id="trip" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
 	<header class="autoclear">
 		<figure id="trip-photo" class="left">
-			<img src="<%= @trip.picture.url %>" width="200" class="rounded" id="trip-image" />
-			<figcaption>
-				<a href="#" class="rounded" id="change-trip-photo">Change photo</a>
-			</figcaption>
+			<% if @trip.picture %>
+				<img src="<%= @trip.picture.url %>" width="200" class="rounded" id="trip-image" />
+			<% end %>
+			<% if @trip.photos.length > 0 %>
+				<figcaption>
+					<a href="#" class="rounded" id="change-trip-photo">Change photo</a>
+				</figcaption>
+			<% end %>
 		</figure>
 		<h1 id="page-title"><input type="text" id="trip-title" value="<%= @trip.title %>" /></h1>
+		<a id="trip-delete" class="remove">X</a>
 	</header>
 	<section id="photos" class="rounded">
 		<% if @trip.photos.count > 0 %>
@@ -34,8 +39,7 @@
 	</section>
 	<section id="geo" class="rounded">
 		<figure id="trip-map" class="clear rounded"></figure>
-		<h1><a id="edit-location" href="#">Edit Location</a></h1>
-		<input type="button" id="map-edit-done" value="Done Editing Map" />
+		<h1><%= link_to "Locations", edit_trip_locations_path(:trip_id => @trip.slug) %></h1>
 	</section>
 	<a id="delete-location" class="remove">X</a>
 </article>

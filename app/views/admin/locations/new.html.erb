@@ -1,9 +1,10 @@
-<h1 id="page-title">Add new travel</h1>
-<article id="location">
+<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Add Location" %>
+<article id="location" data-trip="<%= @trip.to_json %>">
 	<form>
-		<input type="text" id="location-title" placeholder="Title" />
+		<div id="messages"></div>
+		<input type="text" class="edit-title" id="location-title" placeholder="Title" />
 		<h2 id="location-geo"></h2>
-		<figure id="google-map"></figure>
+		<figure id="google-map" class="map"></figure>
 		<footer class="buttons">
 			<input type="submit" class="button" id="location-save" value="Save" />
 		</footer>

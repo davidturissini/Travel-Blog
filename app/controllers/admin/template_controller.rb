@@ -6,15 +6,19 @@ class Admin::TemplateController < Admin::AdminController
 	end
 
 	protected
+	def initialize_location_infowindow
+		if params[:location_id]
+			@location = Location.find(params[:location_id]) 
+		else
+			@location = Location.new
+		end
+	end
+
 	def initialize_trip_photos
 		@trip = current_user.trips.find_by_slug(params[:trip_id])
 		@photos = @trip.photos
 	end
-
-	def initialize_location_map
-		@location = current_user.locations.find_by_slug(params[:location_id])
-	end
-
+	
 	def initialize_flickr_photos
 		@user_flickr_sets = current_user.flickr_sets
 	end

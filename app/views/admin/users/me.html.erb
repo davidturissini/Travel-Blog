@@ -9,18 +9,17 @@
      <%= render "admin/global/create_new_link", 
             :text => "Add a trip", 
             :url => new_trip_path %>
-
     <section id="user-trips">
         <% current_user.trips.each do |trip| %>
-        	<article class="trip">
-            	<h1><%= trip.title %></h1>
-                <img src="<%= trip.picture.url %>" />
+        	<article class="trip" data-json="<%= trip.to_json %>">
+                <%= link_to admin_trip_path(trip) do %>
+                	<h1><%= trip.title %></h1>
+                    <% if trip.picture %>
+                        <img src="<%= trip.picture.url %>" width="200" />
+                    <% end %>
+                    <a class="remove">X</a>
+                <% end %>
             </article>
         <% end %>
     </section>
-    
 </section>
-
-<% content_for :scripts_footer do %>
-  <%= javascript_include_tag "admin/admin" %>
-<% end %>

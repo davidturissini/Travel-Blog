@@ -5,11 +5,23 @@ window.addEventListener("DOMContentLoaded", function () {
 	locationsCollection = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations");
 	trip.setUser(TA.currentUser);
 	trip.setLocations( locationsCollection );
+
+    document.getElementById("trip-delete").addEventListener("click", function () {
+        if( confirm("Delete " + trip.get("title") + "? This cannot be undone.") ) {
+            trip.destroy({
+                success:function () {
+                    window.location.href = TA.currentUser.url({includeFormat:false});
+                }
+            })
+        }
+    })
  	
  	new TripMap({
  		model:trip,
  		el:document.getElementById("trip-map")
- 	}).render();
+ 	}).mergeMapOptions({
+        disableDefaultUI:true
+    }).render();
 
     new AutoSaveTextField({
         model:trip,
@@ -17,22 +29,25 @@ window.addEventListener("DOMContentLoaded", function () {
         property:"title"
     }).render();
 
-    document.getElementById("change-trip-photo").addEventListener("click", function () {
-        var dialog = new TripPhotoDialog({
-            model:trip
-        });
+    var tripPhotoLink = document.getElementById("change-trip-photo");
+    if( tripPhotoLink ) {
+        tripPhotoLink.addEventListener("click", function () {
+            var dialog = new TripPhotoDialog({
+                model:trip
+            });
 
-        dialog.on("photo_click", function (e) {
-            trip.setPhoto(e.photo);
-            trip.save({}, {
-                success:function () {
-                    dialog.close();
-                }
+            dialog.on("photo_click", function (e) {
+                trip.setPhoto(e.photo);
+                trip.save({}, {
+                    success:function () {
+                        dialog.close();
+                    }
+                })
             })
-        })
 
-        dialog.render();
-    });
+            dialog.render();
+        });
+    }
 
     trip.on("change",function (e, changed) {
         if( changed.changes.photo_id ) {

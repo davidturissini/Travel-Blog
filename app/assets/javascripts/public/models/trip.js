@@ -42,7 +42,11 @@ var Trip = Backbone.Model.extend({
         })
     },
 	setLocations:function(locations) {
+		var trip = this;
 		this._locations = locations;
+		this._locations.each(function (loc) {
+			loc.setTrip(trip);
+		});
 	},
 	editPhotosUrl:function () {
 		return this.url() + "/photos/edit";
@@ -63,9 +67,6 @@ var Trip = Backbone.Model.extend({
 	setUser:function (user) {
 		this.set({user_id:user});
 		this._user = user;
-	},
-	setLocations:function (locations) {
-		this._locations = locations;
 	},
 	locations:function () {
 		return this._locations;
