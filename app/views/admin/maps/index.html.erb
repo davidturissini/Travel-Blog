@@ -1,3 +1,7 @@
+<%= render "admin/global/breadcrumb", 
+	:trip => @trip,
+	:page => "Maps" 
+	%>
 <section id="trip" data-json="<%= @trip.to_json %>">
 	<header class="autoclear">
 		<h1 class="left" id="page-title">Maps for <%= @trip.title %></h1>

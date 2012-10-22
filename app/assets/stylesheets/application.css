@@ -191,7 +191,7 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .admin-trips-edit #trip section h1 { position:absolute; left:0; right:0; bottom:-30px; }
 .admin-trips-edit #trip section#photos { margin-left:0; position:relative; }
 .admin-trips-edit #trip section#photos .image { float:left; width:50px; height:50px; overflow:hidden; }
-.admin-trips-edit #trip section #trip-map { height:200px; }
+.admin-trips-edit #trip section .map { height:200px; }
 
 /* TRIP EDIT PHOTOS */
 .admin-trips-edit_locations .location-infowindow .edit-title { display:block; margin-right:20px; width:360px; }
@@ -275,11 +275,11 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
 .user-welcome .remove { cursor:pointer; }
 
-.user-welcome #user-trips .trip { display:inline-block; }
-.user-welcome #user-trips .trip { text-align:center; }
+.user-welcome #user-trips .trip { position:relative; display:inline-block; text-align:center; }
+.user-welcome #user-trips .trip:hover .remove { display:block; }
 .user-welcome #user-trips .trip h1 { margin-bottom:10px; }
-.user-welcome #user-trips .trip a { display:block; position:relative; margin-bottom:10px; padding:5px; width:215px; color:#000; }
-.user-welcome #user-trips .trip a:hover { color:#fff; background:#069; }
+.user-welcome #user-trips .trip .trip-link { display:block; position:relative; margin-bottom:10px; padding:5px; width:215px; color:#000; }
+.user-welcome #user-trips .trip .trip-link:hover { color:#fff; background:#069; }
 .user-welcome #user-trips .trip img { border:1px solid #ccc; }
 
 /* USER FORM */

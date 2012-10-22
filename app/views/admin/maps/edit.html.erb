@@ -1,3 +1,10 @@
+<%= render "admin/global/breadcrumb", 
+	:trip => @trip, 
+	:crumbs => [
+		{ :title => "Maps", :url => maps_path(@trip) }
+		],
+	:page => "#{@map.title? ? @map.title : "map"}" 
+	%>
 <section id="map" data-trip="<%= @trip.to_json %>" data-json="<%= @map.to_json %>">
 	<form>
 		<%= render "admin/maps/fields", :map => @map %>

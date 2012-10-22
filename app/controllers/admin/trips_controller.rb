@@ -15,8 +15,7 @@ class Admin::TripsController < Admin::AdminController
 	end
 
 	def edit
-		@trip = current_user.trips.find_by_slug(params[:trip_id])
-		puts current_user.trips.inspect + "AAAAA"
+		@trip = current_user.trips.includes(:maps, :locations, :photos).find_by_slug(params[:trip_id])
 		render404 if !@trip
 		@trip_photos = @trip.photos
 	end

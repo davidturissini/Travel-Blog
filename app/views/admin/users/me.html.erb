@@ -12,7 +12,7 @@
     <section id="user-trips">
         <% current_user.trips.each do |trip| %>
         	<article class="trip" data-json="<%= trip.to_json %>">
-                <%= link_to admin_trip_path(trip) do %>
+                <%= link_to admin_trip_path(trip), :class => "trip-link" do %>
                 	<h1><%= trip.title %></h1>
                     <% if trip.picture %>
                         <img src="<%= trip.picture.url %>" width="200" />

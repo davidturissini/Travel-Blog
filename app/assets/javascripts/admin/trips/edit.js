@@ -2,7 +2,8 @@ window.addEventListener("DOMContentLoaded", function () {
 	if( !/admin\-trips\-edit\s/.test(document.body.className) ) { return }
 
 	var trip = Trip.createFromDataAttribute(document.getElementById("trip")),
-	locationsCollection = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations");
+	locationsCollection = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations"),
+    maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps");
 	trip.setUser(TA.currentUser);
 	trip.setLocations( locationsCollection );
 
@@ -15,6 +16,7 @@ window.addEventListener("DOMContentLoaded", function () {
             })
         }
     })
+
  	
  	new TripMap({
  		model:trip,

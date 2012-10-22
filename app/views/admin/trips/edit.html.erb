@@ -1,4 +1,4 @@
-<article id="trip" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+<article id="trip" data-maps="<%= @trip.maps.to_json %>" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
 	<header class="autoclear">
 		<figure id="trip-photo" class="left">
 			<% if @trip.picture %>
@@ -29,6 +29,7 @@
 	</section>
 	<section id="maps" class="rounded">
 		<% if @trip.maps.count > 0 %>
+			<div id="trip-maps" class="map"></div>
 			<%= link_to "<h1>Maps</h1>".html_safe, maps_path(@trip), :class => "rounded" %>
 		<% else %>
 			<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(@trip), :class => "rounded" %>
@@ -38,7 +39,7 @@
 		<h1>Blog posts</h1>
 	</section>
 	<section id="geo" class="rounded">
-		<figure id="trip-map" class="clear rounded"></figure>
+		<figure id="trip-map" class="map clear rounded"></figure>
 		<h1><%= link_to "Locations", edit_trip_locations_path(:trip_id => @trip.slug) %></h1>
 	</section>
 	<a id="delete-location" class="remove">X</a>

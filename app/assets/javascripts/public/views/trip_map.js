@@ -46,15 +46,21 @@ var TripMap = Backbone.View.extend({
 	__drawLocations:function () {
 		var view = this;
 		view.markers = [];
-		view.model.locations().each(function (loc) {
-			var marker = new LocationMarker({
-				model:loc,
-				map:view.googleMap()
-			}).render();
-			view.bounds().union(new google.maps.LatLngBounds(loc.latLng(), loc.latLng()))
-			view.markers.push(marker);
-		})
-		view.googleMap().fitBounds(this._bounds);
+			view.model.locations().each(function (loc) {
+				var marker = new LocationMarker({
+					model:loc,
+					map:view.googleMap()
+				}).render();
+				view.bounds().union(new google.maps.LatLngBounds(loc.latLng(), loc.latLng()))
+				view.markers.push(marker);
+			})
+
+		if( view.model.locations().length > 1 ) {
+			view.googleMap().fitBounds(this._bounds);
+		} else {
+			view.googleMap().setCenter( view.model.locations().first().latLng() );
+			view.googleMap().setZoom(10);
+		}
 	},
 	bounds:function () {
 		return this._bounds;
