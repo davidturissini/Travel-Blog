@@ -1,7 +1,7 @@
 <div id="trip-photos-dialog">
 	<ul>
 		<% @photos.each do |photo| %>
-			<li class="photo" data-json="<%= photo.to_json %>"><img src="<%= photo.url %>" width="200" /></li>
+			<li class="photo rounded" data-json="<%= photo.to_json %>"><img src="<%= photo.url %>" width="200" /></li>
 		<% end %>
 	</ul>
 </div>

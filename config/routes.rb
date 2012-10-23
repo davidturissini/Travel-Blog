@@ -22,7 +22,6 @@ Adventureblog::Application.routes.draw do
   match '/me/:trip_id' => "admin/trips#destroy", :user_id => "me", :via => "delete"
 
   match '/me/:trip_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
-  match '/me/:trip_id/photos' => "admin/photos#index", :via => :get, :user_id => "me"
   match '/me/:trip_id/maps' => "admin/maps#index", :via => :get, :user_id => "me", :as => "trip_maps"
   match '/me/maps/stage' => "admin/maps#stage", :via => :post, :user_id => "me"
   match '/me/:trip_id/locations' => "admin/locations#index", :user_id => "me", :as => "admin_locations"
@@ -37,7 +36,7 @@ Adventureblog::Application.routes.draw do
   match '/me/:trip_id/maps/:map_id/edit' => "admin/maps#edit", :user_id => "me", :as => "edit_trip_map"
   match '/me/:trip_id/maps/:map_id' => "admin/maps#update", :via => :put, :user_id => "me"
   match '/me/:trip_id/maps/:map_id' => "admin/maps#destroy", :via => :delete, :user_id => "me"
-  match '/me/:trip_id/photos/edit' => "admin/trips#edit_photos", :user_id => "me", :as => "trip_photos_edit"
+  match '/me/:trip_id/photos' => "admin/trips#edit_photos", :user_id => "me", :as => "trip_photos_edit"
   match '/me/:trip_id/photos/new' => "admin/trips#new_photos", :user_id => "me", :as => "trip_photos_new"
   match '/me/:trip_id/photos/:slug' => "admin/photos#delete", :user_id => "me", :via => "delete"
   match '/me/:trip_id/photos/:slug' => "admin/photos#update", :user_id => "me"

@@ -1,15 +1,13 @@
-<nav class="breadcrumb">
-	<ul>
-		<li><%= link_to @trip.title, admin_trip_path(@trip) %></li>
-		<li>New Map</li>
-	</ul>
-</nav>
+<%= render "admin/global/breadcrumb",
+	:trip => @map.trip,
+	:crumbs => [
+		{ :title => "Maps", :url => maps_path(@map.trip) }
+		], 
+	:page => "New"
+%>
 <div id="trip" data-json="<%= @trip.to_json %>">
 	<form>
 		<%= render "admin/maps/fields", :map => @map %>
-		<div class="note">
-			Drag map file(kml or gpx) onto map or <input type="file" id="map-input-button" />
-		</div>
 		<footer class="buttons">
 			<input type="submit" id="map-save" class="button" value="Create" />
 		</footer>

@@ -3,7 +3,9 @@
 		<article id="trip-<%= index %>">
 			<%= link_to trip_path(trip), :class => "figure-link" do %>
 				<figure>
-					<img src="<%= trip.picture.large %>" />
+					<% if trip.picture %>
+						<img src="<%= trip.picture.large %>" />
+					<% end %>
 					<figcaption>
 						<h1><%= trip.title %></h1>
 					</figcaption>

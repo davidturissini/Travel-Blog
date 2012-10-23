@@ -1,24 +1,36 @@
+<header id="content-header">
+	<%= render "admin/global/breadcrumb",
+		:trip => @trip,
+		:page => "Photos"
+	%>
+	<%= render "admin/global/create_new_link",
+		:text => "Add photos",
+		:url => new_trip_photos_path(@trip)
+	%>
+</header>
 <section id="trip" data-json="<%= @trip.to_json %>">
-	<h1 id="page-title">Manage photos</h1>
-	<%= link_to "Add photos", new_trip_photos_path(@trip) %>
-	<p id="server-messages"></p>
-	<section id="trip-photos" data-json="<%= @trip.photos.to_json %>">
+	<section id="trip-photos">
 		<% @trip.photos.each do |photo| %>
-			<figure class="photo" id="photo-<%= photo.id %>">
-				<div class="image-wrapper">
-					<a class="remove">X</a>
-					<img src="<%= photo.url %>" width="200" w />
-				</div>
-				<figcaption>
-					<input type="text" value="<%= photo.title %>" placeholder="Title" class="title" />
-					<textarea placeholder="Description" class="description"><%= photo.description %></textarea>
-				</figcaption>
+			<figure class="photo rounded" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
+				<form class="inline-form">
+					<textarea placeholder="Enter Title" class="autosize photo-title"><%= photo.title %></textarea>
+					<div class="image-wrapper">
+						<a class="remove">X</a>
+						<img src="<%= photo.url %>" width="200" w />
+					</div>
+					<figcaption>
+						<textarea placeholder="Enter Description" class="autosize photo-description"><%= photo.description %></textarea>
+					</figcaption>
+				</form>
 			</figure>
 		<% end %>
-		<% if @trip.photos.count > 0 %>
-			<footer class="buttons">
-				<input type="button" class="save" value="Save photos for <%= @trip.title %>" />
-			</footer>
-		<% end %>
 	</section>
+	<% if @trip.photos.count > 3 %>
+		<div class="right autoclear">
+			<%= render "admin/global/create_new_link",
+				:text => "Add photos",
+				:url => new_trip_photos_path(@trip)
+			%>
+		</div>
+	<% end %>
 </section>

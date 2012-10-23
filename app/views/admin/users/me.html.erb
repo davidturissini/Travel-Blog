@@ -1,14 +1,14 @@
 <section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
-    <header id="user-header">
+    <header id="user-header" class="autoclear">
         <div class="user-picture">
-			<%= image @user.photo.url, :class => "rounded" %>
+			<%= image @user.photo.url, :class => "rounded user-image", :width => 80 %>
 			<a class="user-button user-image-button rounded">Change Picture</a>
 		</div>
-        <h1>Hello, <%= @user.name %></h1>
-    </header>
-     <%= render "admin/global/create_new_link", 
+        <h1 id="page-title">Hello, <%= @user.name %></h1>
+        <%= render "admin/global/create_new_link", 
             :text => "Add a trip", 
             :url => new_trip_path %>
+    </header>
     <section id="user-trips">
         <% current_user.trips.each do |trip| %>
         	<article class="trip" data-json="<%= trip.to_json %>">

@@ -1,4 +1,10 @@
+<%= render "admin/global/breadcrumb",
+	:trip => @trip,
+	:crumbs => [
+		{ :title => "Photos", :url => photos_edit_path(@trip) }
+		],
+	:page => "New"
+%>
 <section id="trip" data-json="<%= @trip.to_json %>">
-	<h1 id="page-title">Add photos</h1>
 	<%= render "admin/global/photo_uploader", :obj => @trip %>
 </section>

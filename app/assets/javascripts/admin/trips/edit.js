@@ -57,5 +57,22 @@ window.addEventListener("DOMContentLoaded", function () {
             image.setAttribute("src", trip.photo().source());
         }
     })
+
+
+    var photoElem = document.getElementById("photos"),
+    images = photoElem.getElementsByClassName("image");
+    [].forEach.call(images, function (image, index) {
+        var left = photoElem.offsetWidth / 2 - image.offsetWidth / 2,
+        top = photoElem.offsetHeight / 2 - image.offsetHeight / 2,
+        degrees = (index === images.length - 1 ? 0 : (Math.random() - .5) * 45);
+
+        left += (Math.random() - .5) * (photoElem.offsetWidth / 3);
+        top += (Math.random() - .5) * (photoElem.offsetWidth / 3);
+
+        image.style.left = left + "px";
+        image.style.top = top + "px";
+        image.style.webkitTransform = "rotate(" + degrees + "deg)";
+        image.style.opacity = 1;
+    })
     
 })

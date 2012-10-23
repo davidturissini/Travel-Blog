@@ -1,6 +1,6 @@
 <article id="trip" data-maps="<%= @trip.maps.to_json %>" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
 	<header class="autoclear">
-		<figure id="trip-photo" class="left">
+		<figure id="trip-photo">
 			<% if @trip.picture %>
 				<img src="<%= @trip.picture.url %>" width="200" class="rounded" id="trip-image" />
 			<% end %>
@@ -18,19 +18,28 @@
 			<%= link_to photos_edit_path(@trip), :class => "rounded" do %>
 				<h1>Photos</h1>
 				<% @trip_photos.each do |photo| %>
-					<div class="image">
+					<div class="image rounded">
 						<img src="<%= photo.small %>" />
 					</div>
 				<% end %>
 			<% end %>
 		<% else %>
-			<%= link_to "<h1>Add Photos</h1>".html_safe, trip_photos_new_path(@trip.slug), :class => "rounded" %>
+			<%= link_to trip_photos_new_path(@trip.slug) do %>
+				<h1>Add Photos</h1>
+				<% 10.times do |t| %>
+					<div class="image rounded empty">
+						
+					</div>
+				<% end %>
+			<% end %>
 		<% end %>
 	</section>
 	<section id="maps" class="rounded">
 		<% if @trip.maps.count > 0 %>
-			<div id="trip-maps" class="map"></div>
-			<%= link_to "<h1>Maps</h1>".html_safe, maps_path(@trip), :class => "rounded" %>
+			<%= link_to maps_path(@trip), :class => "rounded" do %>
+				<h1>Maps</h1>
+				<div id="trip-maps" class="map"></div>
+			<% end %>
 		<% else %>
 			<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(@trip), :class => "rounded" %>
 		<% end %>

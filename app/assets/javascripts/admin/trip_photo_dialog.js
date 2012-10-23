@@ -18,7 +18,7 @@ var TripPhotoDialog = ModalDialog.extend({
 				trip_id:dialog.model.get("slug")
 			}
 		})
-		dialog.setTitle("Select photo for " + dialog.model.toString());
+		dialog.setTitle("Select photo for " + dialog.model.get("title"));
 		template.load({
 			success:function (html) {
 				dialog.setView(html);

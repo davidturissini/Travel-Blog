@@ -18,7 +18,7 @@ br.clear { height:0; line-height:0 }
 .rounded { border-radius:5px; }
 .rounded-large { border-radius:10px; }
 
-.note { margin:0 0 10px 0; color:#ccc; font-size:.8247em; }
+.note { margin:0 0 10px 0; color:#b8b8b8; font-size:.8247em; }
 
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
@@ -158,12 +158,26 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .map-active footer.buttons { display:none; }
 .edit-title { margin-bottom:20px; width:100%; font-size:1.425em; }
 
+textarea.autosize { overflow:hidden; }
+
+/* INLINE FORM */
+.inline-form textarea { resize:none; border:0; background:transparent; color:#666; padding:5px; }
+.inline-form textarea:hover { outline:1px dashed #ccc; }
+.inline-form textarea:focus { outline:1px dashed #b1b1b1; }
+
 /* ADMIN LOCATION INDEXES */
 .admin-maps-index #page-title { margin-right:10px; }
-.admin-maps-index #maps article { position:relative; float:left; margin-right:60px; width:400px; }
+.admin-maps-index #maps { margin:20px 0; }
+.admin-maps-index #maps .map { height:auto; }
+.admin-maps-index #maps article { position:relative; float:left; margin-right:60px; margin-bottom:20px; padding:10px; width:380px; border:1px solid #b1b1b1; color:#333; text-align:right; }
+.admin-maps-index #maps article:nth-child(3n) { clear:left; }
 .admin-maps-index #maps article:hover .remove { display:block; }
-.admin-maps-index #maps article h1 { font-size:1.23em; margin-bottom:10px; }
+.admin-maps-index #maps article h1 { font-size:1.23em; margin-bottom:10px; text-align:left; }
 .admin-maps-index #maps article .google-map { height:200px; }
+.admin-maps-index #maps article textarea { width:370px; }
+
+.admin-maps-index #maps article input { padding:5px 0; }
+.admin-maps-index #maps article textarea { margin-top:5px; }
 
 /* MAPS NEW */
 .admin-maps-new #google-map { height:400px; }
@@ -178,30 +192,35 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .admin-trips-new #google-map { height:400px; }
 
 /* ADMIN TRIP EDIT */
-.admin-trips-edit #trip header { position:relative; margin-bottom:20px; }
-.admin-trips-edit #trip header #trip-photo { position:relative; float:left; margin:0 20px 0 0; line-height:0; }
+.admin-trips-edit #trip header { position:relative; margin-bottom:40px; }
+.admin-trips-edit #trip header h1 { display:inline; }
+.admin-trips-edit #trip header #trip-photo { display:inline-block; position:relative; z-index:10; margin:0 20px 0 0; line-height:0; }
 .admin-trips-edit #trip header #trip-photo figcaption { display:none; }
 .admin-trips-edit #trip header #trip-photo figcaption a { position:absolute; left: 0px; right: 0px; bottom:0px; padding: 5px; color: #fff; background: rgba(0, 0, 0, .8); font-size: 10px; line-height:1; cursor:pointer; }
 .admin-trips-edit #trip header #trip-photo:hover figcaption { display:block; }
-.admin-trips-edit #trip header #trip-photo img { width: 120px; }
-.admin-trips-edit #trip header #trip-title { margin-top:20px; width:745px; border:0; border-bottom:1px dotted #ccc; outline:0; }
+.admin-trips-edit #trip header #trip-photo img { display:inline; width:120px; vertical-align:middle; }
+.admin-trips-edit #trip header #trip-title { display:inline; width:745px; border:0; border-bottom:1px dotted #ccc; outline:0; }
 .admin-trips-edit #trip header .remove { display:block; }
-.admin-trips-edit #trip section { position:relative; float:left; margin-left:20px; margin-bottom:30px; height:200px; width:200px; text-align:center; background:#ccc; }
-.admin-trips-edit #trip section a { display:block; width:100%; height:100%; }
-.admin-trips-edit #trip section h1 { position:absolute; left:0; right:0; bottom:-30px; }
-.admin-trips-edit #trip section#photos { margin-left:0; position:relative; }
-.admin-trips-edit #trip section#photos .image { float:left; width:50px; height:50px; overflow:hidden; }
+.admin-trips-edit #trip section { position:relative; float:left; margin-left:20px; margin-top:30px; height:200px; width:200px; text-align:center; background:#ccc; }
+.admin-trips-edit #trip section a { display:block; width:100%; height:100%; color:#b8b8b8; }
+.admin-trips-edit #trip section h1 { position:absolute; left:0; right:0; top:-30px; font-size:1.4243em; }
+.admin-trips-edit #trip section#photos { margin-left:0; position:relative; background:transparent; }
+.admin-trips-edit #trip section#photos .image { position:absolute; padding:5px; border:1px solid #ccc; background:#fff; opacity:0;
+	-webkit-transition:opacity 500ms;
+}
+.admin-trips-edit #trip section:hover a { color:#333; }
+.admin-trips-edit #trip section#photos:hover .image { border-color:#333;}
+.admin-trips-edit #trip section#photos .image.empty { width:125px; height:50px; }
 .admin-trips-edit #trip section .map { height:200px; }
 
 /* TRIP EDIT PHOTOS */
 .admin-trips-edit_locations .location-infowindow .edit-title { display:block; margin-right:20px; width:360px; }
 
 /* TRIP EDIT PHOTOS */
-.admin-trips-edit_photos #trip-photos figure { position:relative; display:inline-block; margin:0 0 10px 0; padding:10px 10px 10px 10px; max-width:200px; width:200px; height:200px; text-align:center; }
-.admin-trips-edit_photos #trip-photos figure .image-wrapper { display:inline-block; position:relative; margin:0 auto; }
+.admin-trips-edit_photos #trip-photos figure { position:relative; display:inline-block; margin:0 20px 20px 0; padding:10px 10px 10px 10px; width:260px; text-align:center; border:1px solid #e1e1e1; color:#333; }
+.admin-trips-edit_photos #trip-photos figure .image-wrapper { display:inline-block; margin:0 auto; }
 .admin-trips-edit_photos #trip-photos figure .image-wrapper img { display:block; margin:0 auto 10px; max-height:70%; max-width:100%; width:auto; }
-.admin-trips-edit_photos #trip-photos figure input { width:100%; margin-bottom:5px; }
-.admin-trips-edit_photos #trip-photos figure textarea { position:relative; z-index:10; width:100%; height:2.4em; }
+.admin-trips-edit_photos #trip-photos figure textarea { position:relative; z-index:10; width:250px; border:0; }
 .admin-trips-edit_photos #trip-photos figure:hover .remove { display:block; }
 .admin-trips-edit_photos #trip-photos .loading-ui div { margin:0 auto; width:180px; color:#fff; }
 .admin-trips-edit_photos #trip-photos .loading-ui div h4 { margin-bottom:10px; }
@@ -221,7 +240,7 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 
 /* PHOTO UPLOADER */
 #photo-upload { position:relative; margin-top:20px; }
-#photo-upload header { margin-bottom:20px; text-align:center; color:#ccc; }
+#photo-upload header { margin-bottom:20px; text-align:center; color:#b8b8b8; }
 #photo-upload header h1 { font-size:1.234em; }
 #photo-upload header span { display:block; margin:5px 0; }
 #photo-upload header #native-photos { float:left; margin-top:15px; margin-left:330px; }
@@ -230,6 +249,7 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 
 #photo-upload header figure { width:100px; font-size:.835em; }
 #photo-upload #user-flickr-controller { margin-top:10px; }
+#photo-upload #third-party-photos a { color:#b8b8b8;}
 #photo-upload #user-flickr-controller li { margin:0 5px; }
 #photo-upload .buttons { display:none; }
 #photo-upload.has-photos .buttons { display:block; }
@@ -269,8 +289,10 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .welcome-user #user form input[type=submit] { margin:10px 0; font-size:1.5em; }
 
 /* USER ADMIN PAGE */
-.user-welcome #user-header h1 { font-size:32px; }
-.user-welcome #user-header .user-picture { float:left; margin-right:10px; vertical-align:middle; }
+.user-welcome #user-header h1 { display:inline; font-size:1.232em; }
+.user-welcome #user-header .create-new { left:20px; top:-3px; }
+.user-welcome #user-header .user-picture { display:inline-block; margin-right:10px; }
+.user-welcome #user-header .user-picture img { display:inline; vertical-align:middle; }
 .user-welcome #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
 .user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
 .user-welcome .remove { cursor:pointer; }
@@ -282,11 +304,6 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .user-welcome #user-trips .trip .trip-link:hover { color:#fff; background:#069; }
 .user-welcome #user-trips .trip img { border:1px solid #ccc; }
 
-/* USER FORM */
-#user-form label { display:inline-block; margin-right:10px; }
-#user-form input[type=text] { display:block; width:500px; }
-#user-form .map { height:400px; }
-#user-form .user-photo img { float: left; padding-right:10px; }
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }
 
@@ -294,9 +311,10 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .user-button { border-bottom:1px transparent; color:#333; }
 .user-button:hover { border-bottom:1px dotted; cursor:pointer; }
 
-.user-picture { position:relative; }
+.user-picture { position:relative; z-index:10; }
 .user-picture:hover .user-button { display:block; }
-.user-picture .user-button { display:none; position:absolute; right:0px; top:0px; padding:5px; background:rgba(255, 255, 255, .7); }
+.user-picture .user-button { display:none; position:absolute; left:0; right:0; bottom:0; padding:5px; color:#fff; background:rgba(0, 0, 0, .8); font-size:10px; line-height:1; cursor:pointer; }
+.user-picture .user-button:hover { border:0; }
 
 #user-photo-modal { width:600px; }
 #user-photo-modal .user-image { text-align:center; }
@@ -332,7 +350,7 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .breadcrumb { margin-bottom:20px; padding:0 0 10px 0; }
 .breadcrumb li { display:inline; }
 .breadcrumb li:first-child:before { content:""; padding:0; }
-.breadcrumb li:before { content:">>"; padding:0 10px; font-size:.843em; }
+.breadcrumb li:before { content:"»"; padding:0 5px; font-size:.843em; }
 .breadcrumb li a { font-weight:bold; }
 
 /* ADMIN TABS */
@@ -345,7 +363,9 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 
 /* TRIP PHOTO DIALOG */
 #trip-photos-dialog { height:400px; overflow-y:scroll; }
-#trip-photos-dialog .photo { display:inline-block; width:200px; height:200px; }
+#trip-photos-dialog .photo { display:inline-block; margin-right:20px; margin-bottom:20px; padding:10px; width:200px; border:1px solid #ccc; cursor:pointer; }
+#trip-photos-dialog .photo:hover { background:#b8b8b8; }
+#trip-photos-dialog .photo img { display:block; }
 
 /* LOCATION MAP */
 .modal-dialog .viewfinder .location-map .title { padding:5px; width:665px; font-size:1.362em; }
@@ -363,16 +383,20 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 .modal-dialog .viewfinder #user-flickr-sets li:hover h3 { display:block; }
 
 /* CREATE NEW */
-a.create-new { display:inline-block; position:relative; margin-left:15px; margin-bottom:20px; padding:10px 10px 10px 40px; border-radius:21px; border:3px solid #ccc; color:#ccc; }
+a.create-new { display:inline-block; position:relative; margin-left:1.0714em; margin-bottom:1.4285em; padding:.6143em .6143em .6143em 2.8571em; border-radius:1.5em; border:3px solid #ccc; color:#ccc; font-size:10px; }
 a.create-new:hover { border-color:#333; color:#333; }
-a.create-new span { display:block; margin-left:10px; }
-a.create-new .icon { position:absolute; left:-18px; top:-9px; width:50px; height:50px; border-width:3px; border-style:inherit; border-radius:28px; background:#fff; }
-a.create-new i { position:absolute; left:10px; border-color:inherit; border-style:solid; }
-a.create-new i.horizontal { left:11px; top:22px; width:22px; height:0; border-bottom-width:1px; }
-a.create-new i.vertical { top:10px; left:23px; height:22px; width:0; border-left-width:1px; }
+a.create-new span { display:block; margin-left:.7143em; }
+a.create-new .icon { position:absolute; left:-1.2857em; top:-.7429em; width:3.5714em; height:3.5714em; border-width:3px; border-style:inherit; border-radius:2em; background:#fff; }
+a.create-new i { position:absolute; left:.7142em; border-color:inherit; border-style:solid; }
+a.create-new i.horizontal { left:.7857em; top:1.5714em; width:1.5714em; height:0; border-bottom-width:1px; }
+a.create-new i.vertical { top:.6429em; left:1.6429em; height:1.5714em; width:0; border-left-width:1px; }
+
+/* HEADER CREATE NEW */
+#content-header a.create-new { float:right; margin-top:-50px; }
 
 /* EDIT LINK */
-.edit-link { color:#ccc; font-size:.8em; }
+a.edit-link { color:#b8b8b8; font-size:.8em; }
+a.edit-link:hover { text-decoration:underline; }
 
 /* messages */
 #messages { margin:0 0 20px 0; }
@@ -382,7 +406,7 @@ a.create-new i.vertical { top:10px; left:23px; height:22px; width:0; border-left
 .error { color:#f00; font-weight:bold; }
 
 /* REMOVE BUTTON */
-.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:4px; padding-top:1px; width:12px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:12px; color:#333; text-transform:uppercase; }
+.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:4px; padding-top:1px; width:12px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:12px; color:#333; text-align:left; text-transform:uppercase; }
 
 /* LOADING */
 .loading { position:relative; }
