@@ -1,0 +1,18 @@
+<header id="content-header">
+	<%= render "admin/global/breadcrumb", 
+		:trip => @trip,
+		:crumbs => [
+			{ :title => "Journal", :url => admin_journals_path(@trip.slug) }
+			],
+		:page => "Edit #{@journal.title}" 
+		%>
+</header>
+<article id="journal" data-json="<%= @journal.to_json %>" data-trip="<%= @trip.to_json %>">
+	<form class="journal-form">
+		<%= render "form", :journal => @journal %>
+	</form>
+</article>
+
+<% content_for :scripts_footer do %>
+	<script src="/tiny_mce/tiny_mce.js"></script>
+<% end %>

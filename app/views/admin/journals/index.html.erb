@@ -1,0 +1,12 @@
+<header id="content-header">
+	<%= render "admin/global/breadcrumb", 
+		:trip => @trip, 
+		:page => "Journal" 
+		%>
+	<%= render "admin/global/create_new_link", 
+		:text => "Write New Journal Entry", 
+		:url => new_journal_path(@trip.slug) %>
+</header>
+<section id="journals">
+
+</section>

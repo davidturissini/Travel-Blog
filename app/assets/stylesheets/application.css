@@ -265,10 +265,7 @@ textarea.autosize { overflow:hidden; }
 #photo-upload #user-flickr-controller .flickr-tab li { display:inline-block; }
 
 /* JOURNAL ENTRY FORM */
-
-#journal-entry-fields .journal-entry-title { display:block; width:100%; font-size:22px; }
-#journal-entry-fields .journal-entry-body { display:block; margin:20px 0; width:100%; min-height:300px; }
-#journal-entry-fields .journal-entry-day { display:block; margin-bottom:20px; width:100%; font-size:22px; }
+.journal-form #journal-body { width:100%; height:400px; }
 
 /* SCROLLER */
 .scroller { position:relative; }

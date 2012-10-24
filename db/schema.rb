@@ -10,20 +10,22 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121021002947) do
+ActiveRecord::Schema.define(:version => 20121024051323) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
     t.string "code"
   end
 
-  create_table "journal_entries", :force => true do |t|
+  create_table "journals", :force => true do |t|
     t.string   "title"
     t.text     "body"
-    t.integer  "location_id"
-    t.date     "day"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "trip_id"
+    t.string   "slug"
   end
 
   create_table "locations", :force => true do |t|
@@ -36,8 +38,6 @@ ActiveRecord::Schema.define(:version => 20121021002947) do
     t.string   "city"
     t.integer  "country_id"
     t.string   "state"
-    t.string   "kml_url"
-    t.integer  "user_id"
     t.integer  "photo_id"
     t.integer  "trip_id"
   end
@@ -88,6 +88,7 @@ ActiveRecord::Schema.define(:version => 20121021002947) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.integer  "photo_id"
   end
 
   create_table "trips_photos", :id => false, :force => true do |t|
