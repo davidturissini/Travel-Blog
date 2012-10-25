@@ -6,6 +6,8 @@ class Trip < ActiveRecord::Base
 	belongs_to :photo
 	validates :slug, :presence => true
 	has_many :journals
+	include HasSlug
+ 	include HasDates
 
 	def picture
 		return photo if !photo.nil?

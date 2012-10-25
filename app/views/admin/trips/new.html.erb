@@ -3,6 +3,7 @@
 	<form>
 		<section id="form-message"></section>
 		<input type="text" id="trip-title" placeholder="Title" />
+		<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
 		<figure id="google-map"></figure>
 		<footer class="buttons">
 			<input type="submit" class="button" id="trip-save" value="Save" />

@@ -1,6 +1,6 @@
 class Admin::TripsController < Admin::AdminController
 	def new
-
+		@trip = current_user.trips.new
 	end
 
 	def destroy
@@ -23,8 +23,10 @@ class Admin::TripsController < Admin::AdminController
 	def create
 		ActiveRecord::Base.transaction do
 			trip_hash = params[:trip]
-			trip_hash[:slug] = String.slugify(trip_hash['title'])
 			trip = current_user.trips.create(params[:trip])
+			trip.set_dates(params[:trip])
+			trip.set_slug!(String.slugify(trip_hash['title']), current_user.trips)
+			trip.save!
 			if( params.has_key?(:locations) )
 				save_trip_locations trip, params[:locations]
 			end
@@ -36,7 +38,12 @@ class Admin::TripsController < Admin::AdminController
 	def update
 		@trip = current_trip
 		params[:trip].delete(:user_id)
+
 		@trip.update_attributes!(params[:trip])
+		@trip.set_dates(params[:trip])
+		@trip.save
+		
+
 		respond_to do |format|
 			format.html { redirect_to request.referrer }
 			format.json { render :json => @trip }

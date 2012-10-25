@@ -15,8 +15,14 @@ window.addEventListener("DOMContentLoaded", function () {
                 }
             })
         }
-    })
+    });
 
+    var dateField = new DateField({
+        el:document.getElementById("trip-dates"),
+        model:trip
+    });
+
+    dateField.render();
  	
  	new TripMap({
  		model:trip,
@@ -55,6 +61,10 @@ window.addEventListener("DOMContentLoaded", function () {
         if( changed.changes.photo_id ) {
             var image = document.getElementById("trip-image");
             image.setAttribute("src", trip.photo().source());
+        }
+
+        if( changed.changes.start_date || changed.changes.end_date ) {
+            trip.save({});
         }
     })
 

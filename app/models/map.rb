@@ -2,6 +2,7 @@ class Map < ActiveRecord::Base
 	belongs_to :trip
 	has_one :user, :through => :trip
 	include HasFiles
+	include HasSlug
 
 	def save_with_xml! xmldoc
 		self.slug = Digest::SHA1.hexdigest(xmldoc.to_xml)

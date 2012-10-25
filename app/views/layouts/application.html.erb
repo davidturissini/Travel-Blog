@@ -9,7 +9,7 @@
   <script src="http://yui.yahooapis.com/2.9.0/build/cookie/cookie-min.js"></script>
   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
   <%= render "global/og_tags" %>
-  <%= stylesheet_link_tag "yui-reset", "application" %>
+  <%= stylesheet_link_tag "yui-reset", "kalendae", "application" %>
   <%= csrf_meta_tags %>
  </head>
  <body class="<%= params[:controller].gsub("/", "-") %>-<%= params[:action] %> ">

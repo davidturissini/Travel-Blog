@@ -7,12 +7,8 @@
 		:page => "Edit #{@journal.title}" 
 		%>
 </header>
-<article id="journal" data-json="<%= @journal.to_json %>" data-trip="<%= @trip.to_json %>">
+<article id="journal" data-json="<%= @journal.to_json(:except => :body) %>" data-trip="<%= @trip.to_json %>">
 	<form class="journal-form">
 		<%= render "form", :journal => @journal %>
 	</form>
 </article>
-
-<% content_for :scripts_footer do %>
-	<script src="/tiny_mce/tiny_mce.js"></script>
-<% end %>

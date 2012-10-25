@@ -3,4 +3,5 @@ class Journal < ActiveRecord::Base
  has_one :user, :through => :trip
  validates :slug, :trip_id, :presence => true
  include HasSlug
+ include HasDates
 end

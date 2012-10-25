@@ -1,5 +1,6 @@
 class Photo < ActiveRecord::Base
 	has_and_belongs_to_many :trips, :join_table => "trips_photos"
+	include HasSlug
 
 	def url size = 500
 		"http://#{CONFIG['static']['domain']}#{static_photo_path}#{size}/#{slug}.jpg"

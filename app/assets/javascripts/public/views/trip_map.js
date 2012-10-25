@@ -8,7 +8,7 @@ var TripMap = Backbone.View.extend({
 		this._bounds = new google.maps.LatLngBounds();
 
 		this.setMapOptions({
-            center: new google.maps.LatLng(0,0),
+            center: new google.maps.LatLng(40.7142, -74.0064),
             zoom: 4,
             mapTypeId: google.maps.MapTypeId.HYBRID,
             scrollwheel: false
@@ -57,7 +57,7 @@ var TripMap = Backbone.View.extend({
 
 		if( view.model.locations().length > 1 ) {
 			view.googleMap().fitBounds(this._bounds);
-		} else {
+		} else if (view.model.locations().length > 0 ) {
 			view.googleMap().setCenter( view.model.locations().first().latLng() );
 			view.googleMap().setZoom(10);
 		}

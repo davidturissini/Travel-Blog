@@ -7,6 +7,13 @@ window.addEventListener("DOMContentLoaded", function () {
 	}).render();
 	trip.setUser(TA.currentUser);
 
+	var dateField = new DateField({
+		el:document.getElementById("trip-dates"),
+		model:trip
+	});
+
+	dateField.render();
+
 	var tripMap = new TripMap({
 		model:trip,
 		el:document.getElementById("google-map")

@@ -7,6 +7,7 @@ class Location < ActiveRecord::Base
  has_many :statuses, :dependent => :destroy
  validates :slug, :latitude, :longitude, :country_id, :presence => true
  include HasSlug
+ include HasDates
 
   def journal_entries_count
     journal_entries.count

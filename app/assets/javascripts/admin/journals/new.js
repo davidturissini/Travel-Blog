@@ -20,7 +20,14 @@ window.addEventListener("DOMContentLoaded", function () {
 				window.location.href = journal.url();
 			}
 		});
-	})
+	});
+
+	var dateField = new DateField({
+		el:document.getElementById("journal-dates"),
+		model:journal
+	});
+
+	dateField.render();
 
 	form.render();
 

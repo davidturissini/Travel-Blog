@@ -1,0 +1,7 @@
+<section id="dates" class="edit-dates<%= " end-date-active" if obj.has_date_range? %>">
+	<label>Date</label>
+	<div class="date-field start" id="<%= type %>-start_date">
+		<span><%= obj.date_string %></span>
+		<input type="text" />
+	</div>
+</section>

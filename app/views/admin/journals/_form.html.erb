@@ -1,2 +1,4 @@
 <input type="text" class="edit-title" id="journal-title" value="<%= journal.title %>" placeholder="Enter title" />
-<textarea id="journal-body"><%= journal.body.html_safe %></textarea>
+
+<%= render "admin/global/date_fields", :obj => journal, :type => "journal" %>
+<textarea id="journal-body"><%= journal.body ? journal.body.html_safe : "" %></textarea>

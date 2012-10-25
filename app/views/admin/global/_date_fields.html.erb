@@ -1,0 +1,15 @@
+<section id="<%= type %>-dates" class="edit-dates">
+	<label>Date</label>
+	<div class="date-field start">
+		<span><%= obj.date_string %></span>
+		<input type="text" />
+	</div>
+</section>
+
+<% content_for :scripts_footer do %>
+	<script src="/tiny_mce/tiny_mce.js"></script>
+	<script src="/kalendae/kalendae.min.js"></script>
+	<script>
+		window.moment = Kalendae.moment;
+	</script>
+<% end %>
