@@ -1,9 +1,8 @@
-<section id="<%= type %>-dates" class="edit-dates">
-	<label>Date</label>
-	<div class="date-field start">
-		<span><%= obj.date_string %></span>
-		<input type="text" />
-	</div>
+<section id="<%= type %>-dates" class="field has-date date-field">
+	<label>Enter Dates</label>
+	<span><%= obj.date_string %></span>
+	<input type="text" />
+	<a class="reset">(reset)</a>
 </section>
 
 <% content_for :scripts_footer do %>

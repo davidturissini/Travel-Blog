@@ -9,17 +9,17 @@
 	%>
 </header>
 <section id="trip" data-json="<%= @trip.to_json %>">
-	<section id="trip-photos">
+	<section id="trip-photos" class="content-grid autoclear">
 		<% @trip.photos.each do |photo| %>
-			<figure class="photo rounded" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
+			<figure class="photo rounded content" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
 				<form class="inline-form">
-					<textarea placeholder="Enter Title" class="autosize photo-title"><%= photo.title %></textarea>
+					<textarea placeholder="Enter Title" class="field autosize photo-title"><%= photo.title %></textarea>
 					<div class="image-wrapper">
-						<a class="remove">X</a>
+						<a class="remove"></a>
 						<img src="<%= photo.url %>" width="200" w />
 					</div>
 					<figcaption>
-						<textarea placeholder="Enter Description" class="autosize photo-description"><%= photo.description %></textarea>
+						<textarea placeholder="Enter Description" class="field autosize photo-description"><%= photo.description %></textarea>
 					</figcaption>
 				</form>
 			</figure>

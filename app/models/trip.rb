@@ -18,4 +18,8 @@ class Trip < ActiveRecord::Base
 	def self.random limit = 3
 		limit(limit).order("RAND()")
 	end
+
+	def newest_journal
+	    journals.order("created_at DESC").limit(1).first
+	end
 end

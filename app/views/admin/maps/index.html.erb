@@ -1,5 +1,5 @@
 <div id="trip" data-json="<%= @trip.to_json %>">
-	<header id="content-header">
+	<header id="content-header" class="autoclear">
 		<%= render "admin/global/breadcrumb", 
 			:trip => @trip,
 			:page => "Maps" 
@@ -8,19 +8,20 @@
 			:text => "Create New Map", 
 			:url => new_map_path(@trip) %>
 	</header>
-	<section id="maps" class="autoclear">
+	<section id="maps" class="autoclear content-grid">
 		<% @trip.maps.each do |map| %>
-			<article class="map rounded" data-json="<%= map.to_json %>">
+			<article class="map rounded content" data-json="<%= map.to_json %>">
 				<form class="inline-form">
-					<h1><textarea class="autosize map-title" placeholder="Enter Title"><%= map.title %></textarea></h1>
+					<h1><textarea class="content-title field autosize map-title" placeholder="Enter Title"><%= map.title %></textarea></h1>
+					<%= render "admin/global/date_fields", :obj => map, :type => "map" %>
 					<figure>
 						<div class="google-map"></div>
 						<%= link_to "Edit Map", edit_map_path(map), :class => "edit-link" %>
 						<figcaption>
-							<textarea class="autosize map-description" placeholder="Enter Description"><%= map.description %></textarea>
+							<textarea class="field autosize map-description" placeholder="Enter Description"><%= map.description %></textarea>
 						</figcaption>
 					</figure>
-					<a class="remove">X</a>
+					<a class="remove"></a>
 				</form>
 			</article>
 		<% end %>

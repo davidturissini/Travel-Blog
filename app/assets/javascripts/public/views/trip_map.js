@@ -3,9 +3,10 @@ var TripMap = Backbone.View.extend({
 		var form = this,
 		loc = form.model
 
+		this._bounds = new google.maps.LatLngBounds();
+
 		this.locationHash = {}
 		this.options.countryCollection = this.options.countryCollection || TA.countries;
-		this._bounds = new google.maps.LatLngBounds();
 
 		this.setMapOptions({
             center: new google.maps.LatLng(40.7142, -74.0064),
@@ -41,9 +42,27 @@ var TripMap = Backbone.View.extend({
     },
 	drawMap:function () {
         this._googleMap = new google.maps.Map(this.el, this.mapOptions());
-        this.__drawLocations();
 	},
-	__drawLocations:function () {
+	drawMaps:function () {
+		var view = this,
+		numLoaded = 0;
+		view.model.maps().each(function (map) {
+			var kml = new google.maps.KmlLayer(map.staticUrl(), {
+				preserveViewport: true
+			});
+			google.maps.event.addListener(kml, "defaultviewport_changed", function () {
+				view.bounds().union(kml.getDefaultViewport());
+				numLoaded += 1;
+				if(numLoaded === view.model.maps().length) {
+					view.googleMap().fitBounds(view.bounds());
+				}
+			});
+			kml.setMap(view.googleMap());
+		});
+
+		return this;
+	},
+	drawLocations:function () {
 		var view = this;
 		view.markers = [];
 			view.model.locations().each(function (loc) {
@@ -56,16 +75,19 @@ var TripMap = Backbone.View.extend({
 			})
 
 		if( view.model.locations().length > 1 ) {
-			view.googleMap().fitBounds(this._bounds);
+			view.googleMap().fitBounds(view.bounds());
 		} else if (view.model.locations().length > 0 ) {
 			view.googleMap().setCenter( view.model.locations().first().latLng() );
 			view.googleMap().setZoom(10);
 		}
+
+		return this;
 	},
 	bounds:function () {
 		return this._bounds;
 	},
 	render: function() {
 		this.drawMap();
+		return this;
 	}
 })

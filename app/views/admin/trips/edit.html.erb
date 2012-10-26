@@ -1,4 +1,4 @@
-<article id="trip" data-maps="<%= @trip.maps.to_json %>" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+<article id="trip" class="autoclear" data-maps="<%= @trip.maps.to_json %>" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
 	<header class="autoclear">
 		<figure id="trip-photo">
 			<% if @trip.picture %>
@@ -12,14 +12,26 @@
 		</figure>
 		<h1 id="page-title"><input type="text" id="trip-title" value="<%= @trip.title %>" /></h1>
 		<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
-		<a id="trip-delete" class="remove">X</a>
+		<a id="trip-delete" class="remove"></a>
 	</header>
+	<section id="journal" class="rounded">
+		<%= link_to admin_journals_path(:trip_id => @trip.slug) do %>
+			<h1>Journal</h1>
+			<% if @trip.journals.count > 0 %>
+				<article>
+					<h2><%= @trip.newest_journal.title %></h2>
+					<div><%= truncate_html(@trip.newest_journal.body, :length => 350) %></div>
+				</article>
+				<i class="mask"></i>
+			<% end %>
+		<% end %>
+	</section>
 	<section id="photos" class="rounded">
 		<% if @trip.photos.count > 0 %>
 			<%= link_to photos_edit_path(@trip), :class => "rounded" do %>
 				<h1>Photos</h1>
 				<% @trip_photos.each do |photo| %>
-					<div class="image rounded">
+					<div class="centered image rounded">
 						<img src="<%= photo.small %>" />
 					</div>
 				<% end %>
@@ -28,9 +40,7 @@
 			<%= link_to trip_photos_new_path(@trip.slug) do %>
 				<h1>Add Photos</h1>
 				<% 10.times do |t| %>
-					<div class="image rounded empty">
-						
-					</div>
+					<div class="centered image rounded empty"></div>
 				<% end %>
 			<% end %>
 		<% end %>
@@ -45,12 +55,11 @@
 			<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(@trip), :class => "rounded" %>
 		<% end %>
 	</section>
-	<section id="maps" class="rounded">
-		<h1>Blog posts</h1>
-	</section>
 	<section id="geo" class="rounded">
-		<figure id="trip-map" class="map clear rounded"></figure>
-		<h1><%= link_to "Locations", edit_trip_locations_path(:trip_id => @trip.slug) %></h1>
+		<%= link_to edit_trip_locations_path(:trip_id => @trip.slug) do %>
+			<h1>Locations</h1>
+			<figure id="trip-map" class="map clear"></figure>
+		<% end %>
 	</section>
 	<a id="delete-location" class="remove">X</a>
 </article>

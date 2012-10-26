@@ -21,6 +21,11 @@ window.addEventListener("DOMContentLoaded", function () {
 		map.set({title:e.currentTarget.value});
 	})
 
+	new DateField({
+        el:document.getElementById("map-dates"),
+        model:map
+    }).render();
+
 	document.getElementById("map-save").addEventListener("click", function (e) {
 		e.preventDefault();
 		loading.setMessage("Saving map...");

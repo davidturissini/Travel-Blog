@@ -40,6 +40,7 @@ class Admin::PhotosController < Admin::AdminController
 
 		ActiveRecord::Base.transaction do
 			photo = trip.photos.create(photo_hash)
+			photo.set_slug!(Digest::SHA1.hexdigest(raw), trip.photos)
 			photo.save_with_raw!(raw)
 		end
 	end

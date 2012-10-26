@@ -7,7 +7,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		trip = Trip.createFromDataAttribute(document.getElementById("trip")),
         mapElem = elem.getElementsByClassName("google-map").item(0),
         titleEl = elem.getElementsByClassName("map-title").item(0),
-        descriptionEl = elem.getElementsByClassName("map-description").item(0);
+        descriptionEl = elem.getElementsByClassName("map-description").item(0),
+        dateEl = elem.getElementsByClassName("date-field").item(0);
 
         trip.setUser(TA.currentUser);
         map.setTrip(trip);
@@ -31,6 +32,13 @@ window.addEventListener("DOMContentLoaded", function () {
             el:descriptionEl,
             property:"description"
         }).render();
+
+        new DateField({
+            el:dateEl,
+            model:map,
+            autoUpdate:true
+        }).render();
+
 
         map.drawGoogleMap(mapElem, {
             center: new google.maps.LatLng(0,0),

@@ -6,6 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
     maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps");
 	trip.setUser(TA.currentUser);
 	trip.setLocations( locationsCollection );
+    trip.setMaps(maps);
 
     document.getElementById("trip-delete").addEventListener("click", function () {
         if( confirm("Delete " + trip.get("title") + "? This cannot be undone.") ) {
@@ -28,8 +29,17 @@ window.addEventListener("DOMContentLoaded", function () {
  		model:trip,
  		el:document.getElementById("trip-map")
  	}).mergeMapOptions({
-        disableDefaultUI:true
-    }).render();
+        disableDefaultUI:true,
+        draggable:false
+    }).render().drawLocations();
+
+    new TripMap({
+        model:trip,
+        el:document.getElementById("trip-maps")
+    }).mergeMapOptions({
+        disableDefaultUI:true,
+        draggable:false
+    }).render().drawMaps();
 
     new AutoSaveTextField({
         model:trip,
@@ -69,20 +79,37 @@ window.addEventListener("DOMContentLoaded", function () {
     })
 
 
-    var photoElem = document.getElementById("photos"),
-    images = photoElem.getElementsByClassName("image");
+    var images = document.getElementsByClassName("centered");
     [].forEach.call(images, function (image, index) {
-        var left = photoElem.offsetWidth / 2 - image.offsetWidth / 2,
-        top = photoElem.offsetHeight / 2 - image.offsetHeight / 2,
-        degrees = (index === images.length - 1 ? 0 : (Math.random() - .5) * 45);
+        var jsImage = new Image(),
+        imageHTML = image.getElementsByTagName("img").item(0);
 
-        left += (Math.random() - .5) * (photoElem.offsetWidth / 3);
-        top += (Math.random() - .5) * (photoElem.offsetWidth / 3);
+        function doRotate(){
+            var parent = image.parentNode,
+            left = parent.offsetWidth / 2 - image.offsetWidth / 2,
+            top = parent.offsetHeight / 2 - image.offsetHeight / 2,
+            degrees = (image.previousElementSibling.tagName.toLowerCase() === image.tagName.toLowerCase() ? 0 : (Math.random() - .5) * 45);
 
-        image.style.left = left + "px";
-        image.style.top = top + "px";
-        image.style.webkitTransform = "rotate(" + degrees + "deg)";
-        image.style.opacity = 1;
+            left += (Math.random() - .5) * (parent.offsetWidth / 3);
+            top += (Math.random() - .5) * (parent.offsetHeight / 3);
+
+            image.style.left = left + "px";
+            image.style.top = top + "px";
+            image.style.webkitTransform = "rotate(" + degrees + "deg)";
+            image.style.mozTransform = "rotate(" + degrees + "deg)";
+            image.style.opacity = 1;
+        }
+
+        if( !imageHTML ) {
+            doRotate();
+            return;
+        }
+
+        jsImage.onload = function () {
+            doRotate();
+        }
+
+        jsImage.src = image.getElementsByTagName("img").item(0).getAttribute("src");
     })
     
 })

@@ -35,9 +35,7 @@ class Photo < ActiveRecord::Base
 	end
 
 	def save_with_raw! raw
-		_slug = Digest::SHA1.hexdigest("#{id}")
-		self.slug = _slug
-		filename = "#{_slug}"
+		filename = slug
 		tmp_filename = "tmp/user_images/#{filename}.tmp"
 		path = "#{Rails.root}/#{filename}"
 

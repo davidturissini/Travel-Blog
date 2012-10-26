@@ -17,6 +17,8 @@ class Admin::MapsController < Admin::AdminController
 
 	def update
 		@trip = current_trip
+		params[:map].delete(:slug)
+		params[:map].delete(:user_id)
 		@map = @trip.maps.find_by_slug(params[:map_id])
 		@map.update_attributes!(params[:map])
 		render :json => @map

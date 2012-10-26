@@ -24,7 +24,6 @@ class Admin::TripsController < Admin::AdminController
 		ActiveRecord::Base.transaction do
 			trip_hash = params[:trip]
 			trip = current_user.trips.create(params[:trip])
-			trip.set_dates(params[:trip])
 			trip.set_slug!(String.slugify(trip_hash['title']), current_user.trips)
 			trip.save!
 			if( params.has_key?(:locations) )
@@ -38,11 +37,10 @@ class Admin::TripsController < Admin::AdminController
 	def update
 		@trip = current_trip
 		params[:trip].delete(:user_id)
+		params[:trip].delete(:slug)
 
 		@trip.update_attributes!(params[:trip])
-		@trip.set_dates(params[:trip])
-		@trip.save
-		
+		@trip.save!
 
 		respond_to do |format|
 			format.html { redirect_to request.referrer }

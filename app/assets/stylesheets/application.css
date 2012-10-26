@@ -84,23 +84,28 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .welcome-index #promo h1 { margin:40px 0; font-size:2.3em; }
 
 .welcome-index #hero article#trip-0 {
-	-webkit-transform:rotate(-4deg);
+	-moz-transform:		rotate(-4deg);
+	-webkit-transform:	rotate(-4deg);
 }
 
 .welcome-index #hero article#trip-1 { z-index:10; 
-	-webkit-transform:rotate(1deg);
+	-moz-transform:		rotate(1deg);
+	-webkit-transform:	rotate(1deg);
 }
 
 .welcome-index #hero article#trip-2 {
-	-webkit-transform:rotate(-2deg);
+	-moz-transform:		rotate(-2deg);
+	-webkit-transform:	rotate(-2deg);
 }
 
 .welcome-index #hero article#trip-3 {
-	-webkit-transform:rotate(2deg);
+	-moz-transform:		rotate(2deg);
+	-webkit-transform:	rotate(2deg);
 }
 
 .welcome-index #hero article#trip-4 {
-	-webkit-transform:rotate(-5deg);
+	-moz-transform:		rotate(-5deg);
+	-webkit-transform:	rotate(-5deg);
 }
 
 /* LOCATION DETAIL PAGE */
@@ -161,30 +166,39 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 textarea.autosize { overflow:hidden; }
 
 /* INLINE FORM */
-.inline-form textarea { resize:none; border:0; background:transparent; color:#666; padding:5px; }
-.inline-form textarea:hover { outline:1px dashed #ccc; }
-.inline-form textarea:focus { outline:1px dashed #b1b1b1; }
+.inline-form textarea { padding:5px; resize:none; border:0; background:transparent; }
+.inline-form .field.date-field { outline:none; }
+.inline-form .field:hover { outline:1px dashed #ccc; }
+.inline-form .field:focus { outline:1px dashed #b1b1b1; }
+
+/* CONTENT GRIDS */
+.content-grid { margin:20px 0; }
+.content-grid .content { position:relative; float:left; margin-right:50px; margin-bottom:20px; padding:10px; width:380px; border:1px solid #b1b1b1; color:#333;
+	box-shadow:-1px 1px 15px #666;
+}
+.content-grid .content:nth-child(3n) { clear:left; }
+.content-grid .content:hover .remove { display:block; }
+.content-grid .content h1 { font-size:1.53em; margin-bottom:10px; text-align:left; }
+.content-grid .content textarea { margin-top:5px; width:370px; color:#333; }
+.content-grid .content input { padding:5px 0; }
 
 /* DATE FIELD */
-.edit-dates { display:inline-block; margin:0 0 10px 0; font-size:.8463em; color:#b1b1b1; line-height:1.253em; }
-.edit-dates .date-field { display:inline-block; position:relative; margin:0 10px 0 0; padding:5px; outline:1px dashed #b1b1b1; cursor:pointer; }
-.edit-dates .date-field:hover { outline:1px dashed #333; }
-.edit-dates .date-field input { visibility:hidden; position:absolute; left:0; z-index:1; height:0; width:0; border:0; }
-.edit-dates .date-field span { display:inline-block; position:relative; z-index:10; min-width:100px; }
+.date-field { position:relative; margin:0 0 10px 0; padding:5px; outline:2px dashed #b1b1b1; cursor:pointer; font-size:.8463em; line-height:1.253em; }
+.date-field input { visibility:hidden; position:absolute; left:0; bottom:0; z-index:1; height:0; width:0; border:0; }
+.date-field span { display:inline-block; min-width:100px; background:#fff; }
+.date-field .reset { display:none; margin-left:10px; font-size:.8463em; color:#b1b1b1; }
+.date-field label { color:#b1b1b1; }
+.date-field.has-date:hover .reset { display:inline; }
+.date-field.has-date label { display:none; }
 
-/* ADMIN LOCATION INDEXES */
-.admin-maps-index #page-title { margin-right:10px; }
-.admin-maps-index #maps { margin:20px 0; }
+/* ADMIN JOURLANS INDEX */
+.admin-journals-index #journals { margin:20px 0; }
+.admin-journals-index #journals article { position:relative; float:left; margin-right:60px; margin-bottom:20px; padding:10px; width:380px; border:1px solid #b1b1b1; color:#333; }
+
+/* ADMIN MAPS INDEX */
 .admin-maps-index #maps .map { height:auto; }
-.admin-maps-index #maps article { position:relative; float:left; margin-right:60px; margin-bottom:20px; padding:10px; width:380px; border:1px solid #b1b1b1; color:#333; text-align:right; }
-.admin-maps-index #maps article:nth-child(3n) { clear:left; }
-.admin-maps-index #maps article:hover .remove { display:block; }
-.admin-maps-index #maps article h1 { font-size:1.23em; margin-bottom:10px; text-align:left; }
 .admin-maps-index #maps article .google-map { height:200px; }
-.admin-maps-index #maps article textarea { width:370px; }
-
-.admin-maps-index #maps article input { padding:5px 0; }
-.admin-maps-index #maps article textarea { margin-top:5px; }
+.admin-maps-index #maps article .edit-link { float:right; }
 
 /* MAPS NEW */
 .admin-maps-new #google-map { height:400px; }
@@ -199,26 +213,30 @@ textarea.autosize { overflow:hidden; }
 .admin-trips-new #google-map { height:400px; }
 
 /* ADMIN TRIP EDIT */
-.admin-trips-edit #trip header { position:relative; margin-bottom:40px; }
+.admin-trips-edit #trip { margin-bottom:40px; color:#333; }
+.admin-trips-edit #trip header { position:relative; margin:40px 0; }
 .admin-trips-edit #trip header h1 { display:inline; }
 .admin-trips-edit #trip header #trip-photo { float:left; position:relative; z-index:10; margin:0 20px 0 0; line-height:0; }
 .admin-trips-edit #trip header #trip-photo figcaption { display:none; }
-.admin-trips-edit #trip header #trip-photo figcaption a { position:absolute; left: 0px; right: 0px; bottom:0px; padding: 5px; color: #fff; background: rgba(0, 0, 0, .8); font-size: 10px; line-height:1; cursor:pointer; }
+.admin-trips-edit #trip header #trip-photo figcaption a { position:absolute; left:0px; right:0px; bottom:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: 10px; line-height:1; cursor:pointer; }
 .admin-trips-edit #trip header #trip-photo:hover figcaption { display:block; }
 .admin-trips-edit #trip header #trip-photo img { display:inline; width:120px; vertical-align:middle; }
-.admin-trips-edit #trip header #trip-title { float:left; margin:20px 0 0px -5px; padding:5px; width:745px; border:0; outline:0; font-size:1.5em; }
+.admin-trips-edit #trip header #trip-title { float:left; margin:10px 0 0px -5px; padding:5px; width:745px; border:0; outline:0; font-size:1.5em; }
 .admin-trips-edit #trip header #trip-title:hover,
 .admin-trips-edit #trip header #trip-title:focus { outline:1px dotted #ccc; }
 .admin-trips-edit #trip header .remove { display:block; }
-.admin-trips-edit #trip header #trip-dates { font-size:1.125em; margin-left:-5px; color:#333; }
-.admin-trips-edit #trip header #trip-dates div { outline:0; }
-.admin-trips-edit #trip header #trip-dates div:hover { outline:1px dotted #ccc; }
-.admin-trips-edit #trip header #trip-dates label { display:none; }
-.admin-trips-edit #trip section.rounded { position:relative; float:left; margin-left:20px; margin-top:30px; height:200px; width:200px; text-align:center; background:#ccc; }
+.admin-trips-edit #trip header #trip-dates { float:left; font-size:1.125em; margin-left:-5px; outline:0; }
+.admin-trips-edit #trip header #trip-dates:hover { outline:1px dotted #ccc; }
+.admin-trips-edit #trip section.rounded { position:relative; float:left; margin-left:40px; margin-top:50px; height:200px; width:200px; text-align:center; }
 .admin-trips-edit #trip section.rounded a { display:block; width:100%; height:100%; color:#b8b8b8; }
-.admin-trips-edit #trip section.rounded h1 { position:absolute; left:0; right:0; top:-30px; font-size:1.4243em; }
-.admin-trips-edit #trip section#photos { margin-left:0; position:relative; background:transparent; }
-.admin-trips-edit #trip section#photos .image { position:absolute; padding:5px; border:1px solid #ccc; background:#fff; opacity:0;
+.admin-trips-edit #trip section.rounded h1 { position:absolute; left:0; right:0; top:-40px; font-size:1.4243em; }
+.admin-trips-edit #trip section#journal .mask { position:absolute; left:0; right:0; bottom:0; top:0;
+	background:-webkit-linear-gradient(bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 50%);
+}
+.admin-trips-edit #trip section#journal article { position:relative; padding:5px; font-size:.8574em; text-align:left; }
+.admin-trips-edit #trip section#journal article h2 { font-size:1.4em; }
+.admin-trips-edit #trip section#photos { margin-left:0; }
+.admin-trips-edit #trip section .centered { position:absolute; padding:5px; border:1px solid #ccc; background:#fff; opacity:0;
 	-webkit-transition:opacity 500ms;
 }
 .admin-trips-edit #trip section:hover a { color:#333; }
@@ -230,13 +248,11 @@ textarea.autosize { overflow:hidden; }
 .admin-trips-edit_locations .location-infowindow .edit-title { display:block; margin-right:20px; width:360px; }
 
 /* TRIP EDIT PHOTOS */
-.admin-trips-edit_photos #trip-photos figure { position:relative; display:inline-block; margin:0 20px 20px 0; padding:10px 10px 10px 10px; width:260px; text-align:center; border:1px solid #e1e1e1; color:#333; }
+.admin-trips-edit_photos #trip-photos figure { margin:0 20px 20px 0; width:260px; }
+.admin-trips-edit_photos #trip-photos figure:nth-child(3n) { clear:none; }
 .admin-trips-edit_photos #trip-photos figure .image-wrapper { display:inline-block; margin:0 auto; }
 .admin-trips-edit_photos #trip-photos figure .image-wrapper img { display:block; margin:0 auto 10px; max-height:70%; max-width:100%; width:auto; }
-.admin-trips-edit_photos #trip-photos figure textarea { position:relative; z-index:10; width:250px; border:0; }
-.admin-trips-edit_photos #trip-photos figure:hover .remove { display:block; }
-.admin-trips-edit_photos #trip-photos .loading-ui div { margin:0 auto; width:180px; color:#fff; }
-.admin-trips-edit_photos #trip-photos .loading-ui div h4 { margin-bottom:10px; }
+.admin-trips-edit_photos #trip-photos figure textarea { width:250px; }
 
 /* NEW LOCATION FORM */
 .admin-locations-new .edit-title { margin-bottom:0; }
@@ -416,7 +432,11 @@ a.edit-link:hover { text-decoration:underline; }
 .error { color:#f00; font-weight:bold; }
 
 /* REMOVE BUTTON */
-.remove { display:none; position:absolute; right:-8px; top:-8px; padding-left:4px; padding-top:1px; width:12px; height:14px; border:2px solid #333; border-radius:12px; background:#fff; cursor:pointer; font-size:12px; color:#333; text-align:left; text-transform:uppercase; }
+.remove { display:none; position:absolute; right:-8px; top:-8px; padding:.15em .25em .25em .25em; width:13px; height:13px; border:2px solid #b1b1b1; border-radius:12px; color:#b1b1b1; background:#fff; cursor:pointer;
+	box-shadow:-.5px 1px 4px #000;
+}
+.remove:after { content:"\2716"; margin-left:.0714em; font-size:14px; color:inherit; }
+.remove:hover { color:#333; border-color:#333; }
 
 /* LOADING */
 .loading { position:relative; }

@@ -73,6 +73,16 @@ var Trip = Backbone.Model.extend({
 	},
 	mapsUrl:function () {
 		return this.url() + "/maps";
+	},
+	setMaps:function (maps) {
+		var trip = this;
+		maps.each(function (map) {
+			map.setUser(trip.user());
+		})
+		this._maps = maps;
+	},
+	maps:function () {
+		return this._maps;
 	}
 })
 

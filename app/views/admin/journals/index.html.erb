@@ -7,6 +7,13 @@
 		:text => "Write New Journal Entry", 
 		:url => new_journal_path(@trip.slug) %>
 </header>
-<section id="journals">
-
+<section id="journals" class="content-grid" data-trip="<%= @trip.to_json %>">
+	<% @journals.each do |journal| %>
+		<article class="inline-form journal rounded content" data-json="<%= journal.to_json %>">
+			<h1><textarea class="content-title field journal-title"><%= journal.title %></textarea></h1>
+			<%= render "admin/global/date_fields", :obj => journal, :type => "journal" %>
+			<section class="body"><%= truncate_html(journal.body).html_safe %></section>
+			<%= link_to "Edit", edit_journal_path(:trip_id => @trip.slug, :journal_id => journal.slug), :class => "edit-link" %>
+		</article>
+	<% end %>
 </section>
