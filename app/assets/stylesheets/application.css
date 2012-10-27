@@ -321,21 +321,21 @@ textarea.autosize { overflow:hidden; }
 .welcome-user #user form input[type=submit] { margin:10px 0; font-size:1.5em; }
 
 /* USER ADMIN PAGE */
-.user-welcome #user-header h1 { display:inline; font-size:1.232em; }
-.user-welcome #user-header .create-new { left:20px; top:-3px; }
-.user-welcome #user-header .user-picture { display:inline-block; margin-right:10px; }
-.user-welcome #user-header .user-picture img { display:inline; vertical-align:middle; }
-.user-welcome #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
-.user-welcome #user-header { margin-bottom:20px; padding-bottom:20px; }
-.user-welcome .remove { cursor:pointer; }
+.admin-user-show #user-header h1 { display:inline; font-size:1.232em; }
+.admin-user-show #user-header .create-new { left:20px; top:-3px; }
+.admin-user-show #user-header .user-picture { display:inline-block; margin-right:10px; }
+.admin-user-show #user-header .user-picture img { display:inline; vertical-align:middle; }
+.admin-user-show #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
+.admin-user-show #user-header { margin-bottom:20px; padding-bottom:20px; }
+.admin-user-show .remove { cursor:pointer; }
 
-.user-welcome #user-trips .trip { position:relative; }
-.user-welcome #user-trips .trip:hover .remove { display:block; }
-.user-welcome #user-trips .trip h1 { margin-bottom:10px; }
-.user-welcome #user-trips .trip .trip-link { display:block; position:absolute; z-index:1; left:0; right:0; top:0; bottom:0; color:#000; }
-.user-welcome #user-trips .trip .trip-title,
-.user-welcome #user-trips .trip .trip-date { position:relative; z-index:10; }
-.user-welcome #user-trips .trip img { border:1px solid #ccc; }
+.admin-user-show #user-trips .trip { position:relative; }
+.admin-user-show #user-trips .trip:hover .remove { display:block; }
+.admin-user-show #user-trips .trip h1 { margin-bottom:10px; }
+.admin-user-show #user-trips .trip .trip-link { display:block; position:absolute; z-index:1; left:0; right:0; top:0; bottom:0; color:#000; }
+.admin-user-show #user-trips .trip .trip-title,
+.admin-user-show #user-trips .trip .trip-date { position:relative; z-index:10; }
+.admin-user-show #user-trips .trip img { border:1px solid #ccc; }
 
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }

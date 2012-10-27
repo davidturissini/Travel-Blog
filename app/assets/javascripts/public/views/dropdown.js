@@ -49,7 +49,9 @@ var DropDown = Backbone.View.extend({
   },
   render: function () {
     var view = this;
-    this.options.control.addEventListener("click", view.toggle);
+    if( this.options.control ) {
+      this.options.control.addEventListener("click", view.toggle);
+    }
     return view;
   }
 })

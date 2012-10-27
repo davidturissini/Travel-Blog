@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( !/welcome\-index\s/.test(document.body.className) ) { return }
+	if( !/admin\-user\-show\s/.test(document.body.className) ) { return }
 
 	[].forEach.call(document.getElementsByClassName("trip"), function (elem) {
 		var trip = Trip.createFromDataAttribute(elem),
