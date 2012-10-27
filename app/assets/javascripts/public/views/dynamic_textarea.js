@@ -6,15 +6,26 @@ var DynamicTextarea = Backbone.View.extend({
 		})
 	},
 	resize:function () {
-		this.el.style.height = "auto";
-		if( this.el.scrollHeight <= this.el.offsetHeight ) { return }
-		this.el.style.height = this.el.scrollHeight + "px";
+		if( this.el.offsetHeight >= this.el.scrollHeight ) {
+			var style = getComputedStyle(this.el),
+			vertPadding = parseInt(style.paddingTop) + parseInt(style.paddingBottom);
+
+			this.el.style.height = this.el.offsetHeight - vertPadding - 1 + "px";
+			this.resize();
+		} else if ( this.el.offsetHeight < this.el.scrollHeight ) {
+			this.el.style.height = this.el.scrollHeight - vertPadding - 1 + "px";
+		}
 	},
 	render:function () {
+		var view = this;
 		if( !/autosize/.test(this.el.className) ) {
 			this.el.className += " autosize";
 		}
-		this.resize();
+		this.el.addEventListener("keyup", function () {
+			view.resize();
+		});
+		view.resize();
+
 		this.__bindEvents();
 	}
 })

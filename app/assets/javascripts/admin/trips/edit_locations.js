@@ -48,6 +48,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	})
 
 	tripMap.render();
+	tripMap.drawLocations();
 	tripMap.startEdit();
 
 	locations.on("add", function (model) {

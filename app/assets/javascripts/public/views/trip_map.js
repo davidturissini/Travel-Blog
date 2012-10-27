@@ -46,6 +46,7 @@ var TripMap = Backbone.View.extend({
 	drawMaps:function () {
 		var view = this,
 		numLoaded = 0;
+		if( !view.model.maps() ) { return }
 		view.model.maps().each(function (map) {
 			var kml = new google.maps.KmlLayer(map.staticUrl(), {
 				preserveViewport: true

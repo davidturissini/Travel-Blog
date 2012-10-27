@@ -4,6 +4,7 @@ class Map < ActiveRecord::Base
 	include HasFiles
 	include HasSlug
 	include HasDates
+	include HasTitle
 
 	def save_with_xml! xmldoc
 		self.set_slug!(Digest::SHA1.hexdigest(xmldoc.to_xml), trip.maps)

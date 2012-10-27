@@ -16,6 +16,7 @@ gem 'sanitize'
 gem 'flickraw'
 gem 'rmagick'
 gem 'net-scp'
+gem 'truncate_html'
 
 # Gems used only for assets and not required
 # in production environments by default.

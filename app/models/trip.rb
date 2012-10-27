@@ -8,6 +8,7 @@ class Trip < ActiveRecord::Base
 	has_many :journals
 	include HasSlug
  	include HasDates
+ 	include HasTitle
 
 	def picture
 		return photo if !photo.nil?

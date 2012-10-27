@@ -15,14 +15,19 @@
 		<a id="trip-delete" class="remove"></a>
 	</header>
 	<section id="journal" class="rounded">
-		<%= link_to admin_journals_path(:trip_id => @trip.slug) do %>
-			<h1>Journal</h1>
-			<% if @trip.journals.count > 0 %>
+		<% if @trip.journals.count > 0 %>
+			<%= link_to admin_journals_path(:trip_id => @trip.slug) do %>
+				<h1>Journal</h1>
 				<article>
 					<h2><%= @trip.newest_journal.title %></h2>
 					<div><%= truncate_html(@trip.newest_journal.body, :length => 350) %></div>
+					<i class="mask"></i>
 				</article>
-				<i class="mask"></i>
+			<% end %>
+		<% else %>
+			<%= link_to new_journal_path(@trip.slug) do %>
+				<h1>Journal</h1>
+				<h2>Create journal</h2>
 			<% end %>
 		<% end %>
 	</section>
@@ -38,9 +43,10 @@
 			<% end %>
 		<% else %>
 			<%= link_to trip_photos_new_path(@trip.slug) do %>
-				<h1>Add Photos</h1>
-				<% 10.times do |t| %>
-					<div class="centered image rounded empty"></div>
+				<h1>Photos</h1>
+				<h2>Upload photos</h2>
+				<% 3.times do |t| %>
+					<div class="image rounded empty"></div>
 				<% end %>
 			<% end %>
 		<% end %>
@@ -52,7 +58,10 @@
 				<div id="trip-maps" class="map"></div>
 			<% end %>
 		<% else %>
-			<%= link_to "<h1>Add a Map</h1>".html_safe, new_map_path(@trip), :class => "rounded" %>
+			<%= link_to new_map_path(@trip), :class => "rounded" do %>
+				<h1>Maps</h1>
+				<h2>Create a map</h2>
+			<% end %>
 		<% end %>
 	</section>
 	<section id="geo" class="rounded">

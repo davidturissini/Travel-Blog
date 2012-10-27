@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     var dateField = new DateField({
-        el:document.getElementById("trip-dates"),
+        el:document.getElementsByClassName("trip-date").item(0),
         model:trip
     });
 

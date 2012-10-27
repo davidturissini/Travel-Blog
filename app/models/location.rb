@@ -8,6 +8,7 @@ class Location < ActiveRecord::Base
  validates :slug, :latitude, :longitude, :country_id, :presence => true
  include HasSlug
  include HasDates
+ include HasTitle
 
   def journal_entries_count
     journal_entries.count

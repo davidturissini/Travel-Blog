@@ -49,7 +49,7 @@ var Trip = Backbone.Model.extend({
 		});
 	},
 	editPhotosUrl:function () {
-		return this.url() + "/photos/edit";
+		return this.url() + "/photos";
 	},
 	editUrl:function () {
 		return this.user().url({includeFormat:false}) + "/" + this.get("slug");

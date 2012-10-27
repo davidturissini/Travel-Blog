@@ -9,7 +9,7 @@
 	%>
 </header>
 <section id="trip" data-json="<%= @trip.to_json %>">
-	<section id="trip-photos" class="content-grid autoclear">
+	<section id="trip-photos" class="content-grid autoclear two-col">
 		<% @trip.photos.each do |photo| %>
 			<figure class="photo rounded content" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
 				<form class="inline-form">

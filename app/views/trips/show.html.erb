@@ -1,19 +1,15 @@
-<article id="location" data-json="<%= @location.to_json %>">
+<article id="trip" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
 	<header class="autoclear">
-		<%= image_tag @location.user.photo.large, :class => "rounded-large left", :width => 80 %>
+		<%= image_tag @trip.user.photo.large, :class => "rounded-large left", :width => 80 %>
 		<h1>
-			<%= link_to user_path(@location.user.slug) do %>
-				<%= @location.user.name %>'s<% end %> trip to
-			<% if @location.title %>
-				<%= location_string(@location) %>
-			<% else %>
-				<%= @location.geo_string %>
-			<% end %>
+			<%= link_to user_path(@trip.user.slug) do %>
+				<%= @trip.user.name %>'s<% end %> trip to
+				<%= @trip.locations.first.geo_string %>
 		</h1>
 	</header>
-	<%= render "locations/photos", :photos => @location.photos, :location => @location %>
+	<%= render "trips/photos", :photos => @trip.photos, :location => @trip %>
 	<section id="posts">
-		<% @location.journal_entries.each do |entry| %>
+		<% @trip.journals.each do |entry| %>
 			<section class="post">
 				<h1><%= entry.title %></h1>	
 				<div><%= entry.body.html_safe %></div>
@@ -29,19 +25,20 @@
 
 	window.addEventListener("DOMContentLoaded", function () {
 
-		var loc = Location.createFromDataAttribute( document.getElementById("location") ),
-		map = new google.maps.Map(document.getElementById("map"), {
-			disableDefaultUI: true,
-			zoom: 4,
-			center: new google.maps.LatLng(loc.get("latitude"), loc.get("longitude")),
-			mapTypeId: google.maps.MapTypeId.HYBRID
-			}),
-		gallery = null
+		var trip = Trip.createFromDataAttribute( document.getElementById("trip") ),
+		user = User.createFromDataAttribute(document.getElementById("trip"), "data-user"),
+		locations = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations"),
+		maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps"),
+		gallery = null;
 
-		new LocationMarker({
-		model:loc,
-		map:map,
-		}).render();
+		trip.setUser(user);
+		trip.setLocations(locations);
+		trip.setMaps(maps);
+
+		new TripMap({
+			el:document.getElementById("map"),
+			model:trip
+		}).render().drawLocations().drawMaps();
 
 		if( !document.getElementById("photos") ) { return }
 		var locationPhotos = document.getElementById("photos").querySelectorAll("figure"),

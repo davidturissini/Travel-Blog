@@ -9,16 +9,18 @@
             :text => "Add a trip", 
             :url => new_trip_path %>
     </header>
-    <section id="user-trips">
+    <section id="user-trips" class="content-grid two-col">
         <% current_user.trips.each do |trip| %>
-        	<article class="trip" data-json="<%= trip.to_json %>">
-                <%= link_to admin_trip_path(trip), :class => "trip-link" do %>
-                	<h1><%= trip.title %></h1>
+        	<article class="trip content" data-json="<%= trip.to_json %>">
+                <form class="inline-form">
+                	<h1><textarea class="field trip-title"><%= trip.title %></textarea></h1>
+                    <%= render "admin/global/date_fields", :obj => trip, :type => "trip" %>
                     <% if trip.picture %>
-                        <img src="<%= trip.picture.url %>" width="200" />
+                        <img src="<%= trip.picture.url %>" />
                     <% end %>
                     <a class="remove"></a>
-                <% end %>
+                    <%= link_to "", admin_trip_path(trip), :class => "trip-link" %>
+                </form>
             </article>
         <% end %>
     </section>

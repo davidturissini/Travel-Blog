@@ -8,7 +8,7 @@
 			:text => "Create New Map", 
 			:url => new_map_path(@trip) %>
 	</header>
-	<section id="maps" class="autoclear content-grid">
+	<section id="maps" class="autoclear content-grid two-col">
 		<% @trip.maps.each do |map| %>
 			<article class="map rounded content" data-json="<%= map.to_json %>">
 				<form class="inline-form">
