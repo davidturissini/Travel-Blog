@@ -1,4 +1,4 @@
-<section id="user" class="user-welcome" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
+<section id="user" class="admin-user-show" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
     <header id="user-header" class="autoclear">
         <div class="user-picture">
 			<%= image @user.photo.url, :class => "rounded user-image", :width => 80 %>

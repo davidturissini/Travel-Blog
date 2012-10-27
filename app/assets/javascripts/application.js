@@ -17,6 +17,7 @@
 window.TA.countries = new CountryCollection();
 
 window.addEventListener("DOMContentLoaded", function () {
+	if( !document.querySelector("#user-info .dropdown") ) { return }
 	if( TA.currentUser && !TA.currentUser.isAnonymous() ) {
 		new DropDown({
 			el:document.querySelector("#user-info .dropdown"),
