@@ -4,7 +4,7 @@ class Admin::PhotosController < Admin::AdminController
 	def create
 		photo = params[:photo]
 		if( photo.has_key?(:binary) )
-			create_from_binary(photo)
+			save_photo(photo)
 		elsif( photo.has_key?(:url) )
 			create_from_url(photo)
 		end
@@ -35,28 +35,19 @@ class Admin::PhotosController < Admin::AdminController
 	private
 	
 
-	def save_photo raw, photo_hash = {}
+	def save_photo photo_hash
 		trip = current_user.trips.find_by_slug(params[:trip_id])
-
+		binary_file = photo_hash.delete(:binary)
 		ActiveRecord::Base.transaction do
 			photo = trip.photos.create(photo_hash)
-			photo.set_slug!(Digest::SHA1.hexdigest(raw), trip.photos)
-			photo.save_with_raw!(raw)
+			photo.set_slug!(Digest::SHA1.hexdigest(binary_file.read), trip.photos)
+			photo.save_with_raw!(binary_file)
 		end
 	end
 
-	def create_from_binary photo
-		split = photo[:binary].split(",") #"data:image/jpeg;base64,
-		filetype = split[0].scan(/data:image\/[a-z]\;base64/)
-		decoded = Base64.decode64(split[1])
-
-		save_photo(decoded)
-		
-	end
-
-	def create_from_url photo
-		url = photo.delete(:url)
-		raw = open(url).read
-		save_photo raw, photo
+	def create_from_url photo_hash
+		url = photo_hash.delete(:url)
+		photo_hash[:binary] = open(url).read
+		save_photo photo_hash
 	end
 end
