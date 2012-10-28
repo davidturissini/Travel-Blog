@@ -40,24 +40,25 @@ var Map = Backbone.Model.extend({
 	},
 	stageXML:function (callbacks) {
 		callbacks = callbacks || {};
-		var map = this;
-		this.readFile({
-			success:function (fileData) {
-				var attributes = map.attributes;
-				attributes.xml = fileData;
-				$.ajax({
-					url:map.stageUrl(),
-					type:"POST",
-					data:{map:attributes},
-					success:function (e) {
-						map.set(e, {silent:true});
-						if( callbacks.success ) {
-							callbacks.success(e);
-						}
-					}
-				})
-			}
-		})
+		var map = this,
+		formData = new FormData();
+		formData.append("map[xml]", this.file);
+
+		for(var x in map.attributes) {
+			formData.append("map[" + x + "]", map.attributes[x]);
+		}
+
+		var xhr = new XMLHttpRequest();
+        xhr.open('POST', map.stageUrl());
+        xhr.onload = function (e) {
+          if (xhr.status === 200) {
+            if( callbacks.success ) {
+					callbacks.success(JSON.parse( e.currentTarget.responseText ));
+				}
+          	}
+        };
+
+        xhr.send(formData);
 	},
 	drawGoogleMap:function (elem, options) {
 		options = options || {};

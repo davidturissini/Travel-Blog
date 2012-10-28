@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	input = new FileInput({
 		el:document.getElementById("map-input"),
 		input:document.getElementById("map-input-button"),
-		dropTarget:document.getElementById("google-map")
+		dropTarget:document
 	}).render(),
 	loading = new Loading({
 		el:document.body
@@ -22,7 +22,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	})
 
 	new DateField({
-        el:document.getElementById("map-dates"),
+        el:document.getElementsByClassName("map-date").item(0),
         model:map
     }).render();
 
