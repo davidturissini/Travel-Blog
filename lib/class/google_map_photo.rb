@@ -8,11 +8,10 @@ class GoogleMapPhoto
 	end
 
 	def large
-		build_image_string 200, 200
+		build_image_string 400, 600, 10
 	end
-
-	private
-	def build_image_string width = 100, height = 100, zoom = 5
+	
+	def build_image_string width = 200, height = 200, zoom = 5
  		"http://maps.google.com/staticmap?center=#{@location.latitude},#{@location.longitude}&type=sat&zoom=#{zoom}&size=#{width}x#{height}"
 	end
 end

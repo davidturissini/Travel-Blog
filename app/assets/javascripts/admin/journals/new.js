@@ -23,7 +23,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	});
 
 	var dateField = new DateField({
-		el:document.getElementById("journal-dates"),
+		el:document.getElementsByClassName("journal-date").item(0),
 		model:journal
 	});
 

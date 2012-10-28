@@ -7,36 +7,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		titleEl = elem.getElementsByClassName("trip-title").item(0),
 		dateEl = elem.getElementsByClassName("trip-date").item(0);
 
-
 		trip.setUser(TA.currentUser);
-
-		new DynamicTextarea({
-			el:titleEl
-		}).render();
-
-		new AutoSaveTextField({
-			el:titleEl,
-			model:trip,
-			property:"title"
-		}).render();
-
-		new DateField({
-			el:dateEl,
-			model:trip,
-			autoUpdate:true
-		}).render();
-
-
-
-		remove.addEventListener("click", function (e) {
-			if( confirm("Delete " + trip.get("title") + "? This cannot be undone") ) {
-				trip.destroy({
-					success:function () {
-						elem.parentNode.removeChild(elem);
-					}
-				})
-			}
-		})
 
 
 	})

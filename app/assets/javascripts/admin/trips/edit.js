@@ -88,16 +88,18 @@ window.addEventListener("DOMContentLoaded", function () {
             var parent = image.parentNode,
             left = parent.offsetWidth / 2 - image.offsetWidth / 2,
             top = parent.offsetHeight / 2 - image.offsetHeight / 2,
-            degrees = (image.previousElementSibling.tagName.toLowerCase() === image.tagName.toLowerCase() ? 0 : (Math.random() - .5) * 45);
+            degrees = (Math.random() - .5) * 45;
 
-            left += (Math.random() - .5) * (parent.offsetWidth / 3);
-            top += (Math.random() - .5) * (parent.offsetHeight / 3);
+            left += (Math.random() - .5) * (parent.offsetWidth);
+            top += (Math.random() - .5) * (parent.offsetHeight);
 
             image.style.left = left + "px";
             image.style.top = top + "px";
             image.style.webkitTransform = "rotate(" + degrees + "deg)";
             image.style.mozTransform = "rotate(" + degrees + "deg)";
-            image.style.opacity = 1;
+            setTimeout(function () {
+                image.style.opacity = 1;
+            }, 100 * index);
         }
 
         if( !imageHTML ) {
@@ -111,5 +113,30 @@ window.addEventListener("DOMContentLoaded", function () {
 
         jsImage.src = image.getElementsByTagName("img").item(0).getAttribute("src");
     })
+
+    var formEl = document.getElementById("trip-form"),
+    header = document.getElementById("trip-header"),
+    img = document.getElementById("trip-photo").getElementsByTagName("img").item(0);
+
+    img.onload = function () {
+        var tripLinks = document.getElementById("trip-links"),
+        offset = (header.offsetHeight - formEl.offsetHeight) / 2;
+        if( offset <= 0 ) {
+            tripLinks.style.paddingTop = document.getElementById("trip-photo").offsetTop + "px";
+        } else {
+            formEl.style.marginTop = offset + "px";
+        }
+        header.style.opacity = 1;
+    }
+
+    new DynamicTextarea({
+        el:document.getElementById("trip-title")
+    }).render();
+
+    var oldSrc = img.getAttribute("src");
+    img.setAttribute("src", "");
+    img.setAttribute("src", oldSrc);
+   
+
     
 })
