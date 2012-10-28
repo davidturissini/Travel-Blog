@@ -19,9 +19,7 @@ class WelcomeController < ApplicationController
  private
  def user_home
  	@user = current_user
- 	respond_to do |format|
- 		format.html { render "admin/users/me" }
- 	end
+ 	redirect_to "/me"
  end
 
  def anonymous_welcome_screen
