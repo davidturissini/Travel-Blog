@@ -22,7 +22,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	})
 
 	new DateField({
-        el:document.getElementById("map-dates"),
+        el:document.getElementsByClassName("map-date").item(0),
         model:map
     }).render();
 

@@ -1,6 +1,8 @@
 
 /* ...
 *= require "yui-reset.css"
+*= require_self
+*= require "kalendae.css"
 */
 
 body { color:#333; font-size:14px; font-family:Helvetica; }
@@ -463,6 +465,5 @@ body.loading > .loading-ui { position:fixed; left:0; right:0; top:0; bottom:0; }
 .modal-dialog .map { margin:0px; padding:0px; width:680px; height:400px; }
 
 /* ...
-*= require_tree kalandae.css
 */
 

@@ -3,7 +3,7 @@ module HasFiles
 		if( Rails.env.development? )
 			return save_file_remote file, options
 		else
-			return save_file_local file, options = {}
+			return save_file_local file, options
 		end
 	end
 
@@ -11,9 +11,7 @@ module HasFiles
 		if( Rails.env.development? )
 			create_remote_dir_if_not_exists dir
 		else
-		 	if( !File.directory?(dir) )
-		      Dir.mkdir(dir)
-		    end
+			system("mkdir -p /#{CONFIG['static']['server_path']}#{dir}")
 		end
 	end
 
@@ -22,6 +20,13 @@ module HasFiles
 	def create_remote_dir_if_not_exists dir
 		Net::SSH.start(CONFIG['static']['domain'], CONFIG['static']['username'], :password => CONFIG['static']['password']) do |ssh|
 			ssh.exec!("mkdir -p #{CONFIG['static']['server_path']}#{dir}")
+		end
+	end
+
+	def save_file_local file, options
+		full_path = "#{CONFIG['static']['server_path']}/#{options[:path]}"
+		File.open(full_path, "w") do |f|
+			f.write(file.read)
 		end
 	end
 
