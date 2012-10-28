@@ -35,7 +35,7 @@ class Photo < ActiveRecord::Base
 		url(800)
 	end
 
-	def save_with_raw! raw
+	def save_with_raw! raw_file
 		filename = slug
 		tmp_filename = "tmp/user_images/#{filename}.tmp"
 		path = "#{Rails.root}/#{filename}"
@@ -45,7 +45,7 @@ class Photo < ActiveRecord::Base
 
 		photos_dir = user.create_content_dir!("photos/originals/")
 
-		image = Magick::Image.from_blob(raw).first
+		image = Magick::Image.read(raw_file.tempfile.path).first
 		user.save_photo! StringIO.open(image.to_blob), "originals/#{filename}.jpg"
 		
 		generate_thumbnails image

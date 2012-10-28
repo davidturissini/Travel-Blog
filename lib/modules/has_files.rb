@@ -1,3 +1,5 @@
+require 'net/ssh'
+require 'net/scp'
 module HasFiles
 	def save_file file, options = {}
 		if( Rails.env.development? )

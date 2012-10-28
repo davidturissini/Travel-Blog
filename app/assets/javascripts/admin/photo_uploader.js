@@ -59,32 +59,34 @@ var PhotoUploader = Backbone.View.extend({
           loader.loading();
 
           function doUpload( options ) {
-            var hash = {photo:{}};
+            var hash = new FormData();
+
             if( options.data ) {
-              hash.photo.binary = options.data;
+              hash.append('photo[binary]', options.photo.getRaw());
             } else if (options.url) {
               hash.photo.url = options.url;
             }
-
+            hash.append("photo[title]", "ASDAS");
             if( options.photo.get("title") ) {
-              hash.photo.title = options.photo.get("title");
+              hash.append("photo[title]", options.photo.get("title"));
             }
 
             if( options.photo.get("description") ) {
-              hash.photo.description = options.photo.get("description");
+              hash.append("photo[title]", options.photo.get("description"));
             }
 
-            $.ajax({
-                url:uploader.model.url() + "/photos",
-                data:hash,
-                type:"POST",
-                complete:function (e) {
-                  options.complete(e);
-                },
-                success:function (e) {
-                  options.success(e);
-                }
-              })
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', uploader.model.url() + "/photos");
+            xhr.onload = function (e) {
+              options.complete(e);
+              if (xhr.status === 200) {
+                options.success(e);
+              } else {
+                console.log('Something went terribly wrong...');
+              }
+            };
+
+            xhr.send(hash);
           }
 
           function upload (index) {
