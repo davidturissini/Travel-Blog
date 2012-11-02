@@ -115,19 +115,26 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 	-webkit-transform:	rotate(-5deg);
 }
 
+/* MAP DETAIL PAGE */
+
 /* TRIP DETAIL PAGE */
 .trips-show #content { width:920px; }
 .trips-show #trip { position:relative; margin:0 auto 20px; padding-bottom:20px; }
-.trips-show #trip header { margin-bottom:20px; }
-.trips-show #trip header h1 { position:relative; margin-bottom:10px; padding-top:10px; font-size:1.67em; }
-.trips-show #trip header img { float:left; margin-right:20px; width:80px; }
-.trips-show #trip header ul li { display:inline-block; margin-right:10px; }
-.trips-show #trip header ul li a  { display:block; width:100px; height:100px; text-align:center; background:#ccc; }
-.trips-show #trip #map { position:relative; z-index:5;  margin:20px 0px; height:300px; }
+.trips-show #trip header { margin:20px auto 0; width:600px; text-align:center; margin-bottom:70px; padding-bottom:30px; border-bottom:1px solid #b8b8b8;}
+.trips-show #trip header .trip-title { text-align:center; font-size:4em; }
+.trips-show #trip header h2 { font-size:1.324em; text-align:center; }
+.trips-show #trip header img { box-shadow:0 0 10px #000; }
+.trips-show #trip header .user-link { display:block; margin-top:20px; }
+.trips-show #trip header .user-link img { margin-left:.5em; vertical-align:middle; }
+.trips-show #trip aside { text-align:center; }
+.trips-show #trip aside figure { display:inline-block; margin:30px 0 50px 30px; width:440px; }
+.trips-show #trip aside figure h1 { margin-top:20px; font-size:1.324em; }
+.trips-show #trip aside figure .map { height:250px; width:440px; box-shadow:0 0 15px #000; }
+.trips-show #trip aside figure:first-child { margin-left:0; }
+.trips-show #trip aside.no-map figure { width:100%; margin-bottom:20px; }
+.trips-show #trip aside.no-map figure .map { width:auto; }
 
-.trips-show #admin { display:none; }
-
-.trips-show #trip #photos { position:relative; z-index:1; margin:30px auto; height:400px; opacity:0; }
+.trips-show #trip #photos { position:relative; z-index:1; margin:10px auto 40px; height:350px; opacity:0; }
 .trips-show #trip #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
 .trips-show #trip #photos figure.hero { z-index:1000; }
 .trips-show #trip #photos figure figcaption { display:none; }
@@ -155,9 +162,10 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .trips-show #trip #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
 .trips-show #trip #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
 
-.trips-show #trip #posts { margin:0 auto; width:600px; }
-.trips-show #trip #posts h1 { font-size:18px; text-align:left; }
-.trips-show #trip #posts p { margin-bottom:20px; }
+.trips-show #trip #posts { padding-top:20px; border-top:1px solid #b1b1b1; }
+.trips-show #trip #posts .user-image { margin:0 20px 20px 0; }
+.trips-show #trip #posts h1 { margin-bottom:30px; font-size:2em; text-align:left; }
+.trips-show #trip #posts p { margin-bottom:20px; line-height:1.5em; }
 .trips-show #trip #posts iframe { display:block; margin:20px auto; }
 .trips-show #trip #posts .post { margin-bottom:20px; }
 
@@ -205,6 +213,7 @@ textarea.autosize { overflow:hidden; }
 .content-grid.two-col .content:nth-child(2n) { float:right; clear:right; margin-right:25px; }
 
 .date-field { position:relative; margin:0 0 10px 0; padding:5px; outline:2px dashed #b1b1b1; cursor:pointer; font-size:.8463em; line-height:1.253em; }
+.date-field.no-outline { outline:0; }
 .date-field input { visibility:hidden; position:absolute; left:0; bottom:0; z-index:1; height:0; width:0; border:0; }
 .date-field span { display:inline-block; min-width:100px; background:#fff; }
 .date-field .reset { display:none; margin-left:10px; font-size:.8463em; color:#b1b1b1; }
@@ -347,6 +356,22 @@ textarea.autosize { overflow:hidden; }
 .admin-user-show #user-trips .trip .trip-title,
 .admin-user-show #user-trips .trip .trip-date { position:relative; z-index:10; }
 .admin-user-show #user-trips .trip img { border:1px solid #ccc; }
+
+/* USER HEADER */
+header#user-header { margin-bottom:30px; padding-bottom:20px; text-align:center; }
+header#user-header h1 { font-size:2.354em; }
+header#user-header img { box-shadow:0 0 10px #000; }
+
+/* USER SHOW PAGE */
+.users-show #content #trips { clear:left; margin-bottom:20px; text-align:center; }
+.users-show #content #trips .year { border-top:1px solid #b1b1b1; }
+.users-show #content #trips .year:first-child { border-top:0; }
+.users-show #content #trips .year .year-title { margin-bottom:20px; padding-bottom:5px; border-bottom:1px solid #b1b1b1; font-size:1.4em; text-align:left }
+.users-show #content #trips .year .trip { margin-top:100px; }
+.users-show #content #trips .year .trip:nth-of-type(1) { margin-top:0; }
+.users-show #content #trips .year .trip a { display:block; }
+.users-show #content #trips .year .trip h1 { margin-bottom:20px; font-size:1.623em; }
+.users-show #content #trips .year .trip img { box-shadow:0 0 10px #000; }
 
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }

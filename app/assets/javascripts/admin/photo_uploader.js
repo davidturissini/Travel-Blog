@@ -151,8 +151,7 @@ var PhotoUploader = Backbone.View.extend({
         elemId = uploader.generatePhotoPreviewId(photo);
         div = document.createElement("div"),
         canvas = document.createElement("canvas"),
-        remove = document.createElement("a")
-        remove.innerHTML = "X";
+        remove = document.createElement("a");
 
         remove.className = "remove";
 
@@ -173,10 +172,30 @@ var PhotoUploader = Backbone.View.extend({
           canvas:canvas
         }
       },
+      allowedExtensions:function () {
+        return ["jpg", "jpeg", "png", "gif"];
+      },
+      validateFile:function (file) {
+        var types = this.allowedExtensions(),
+        fileNameSplit = file.name.split("."),
+        extension = fileNameSplit[fileNameSplit.length - 1];
+        if( !extension ) { debugger; return false }
+
+        for(var x in types) {
+          var regexp = new RegExp(types[x]);
+          if( regexp.test(extension.toLowerCase()) ) {
+            return true;
+          }
+        }
+
+        return false;
+      },
       addPhotos:function (photos) {
         for(var i = 0; i < photos.length; i += 1) {
-          var model = new Photo(photos[i]);
-          this.addPhoto(model);
+          if( this.validateFile(photos[i]) ) {
+            var model = new Photo(photos[i]);
+            this.addPhoto(model);
+          }
         }
       },
       addPhoto:function (photo) {
@@ -202,10 +221,10 @@ var PhotoUploader = Backbone.View.extend({
             uploader.el.className = uploader.el.className.replace("dragenter", "");
           });
           uploader.options.dropTarget.addEventListener("drop", function (event) {
-          event.stopPropagation();
-          event.preventDefault();
-          uploader.el.className = uploader.el.className.replace("dragenter", "");
-          uploader.addPhotos(event.dataTransfer.files);
+            event.stopPropagation();
+            event.preventDefault();
+            uploader.el.className = uploader.el.className.replace("dragenter", "");
+            uploader.addPhotos(event.dataTransfer.files);
 
           }, false);
         })(this);

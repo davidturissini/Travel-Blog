@@ -13,6 +13,7 @@
 //= require_tree ./public/views/
 //= require_tree './public/collections'
 //= require 'public/views'
+//= require_tree ./public/controllers/
 
 window.TA.countries = new CountryCollection();
 

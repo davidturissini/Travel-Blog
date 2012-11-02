@@ -6,7 +6,8 @@ window.addEventListener("DOMContentLoaded", function () {
 	[].forEach.call(document.getElementsByClassName("journal"), function (journalElem) {
 		var journal = Journal.createFromDataAttribute(journalElem),
 		dateEl = journalElem.getElementsByClassName("date-field").item(0),
-		titleEl = journalElem.getElementsByClassName("journal-title").item(0);
+		titleEl = journalElem.getElementsByClassName("journal-title").item(0),
+		removeEl = journalElem.getElementsByClassName("remove").item(0);
 
 		journal.setTrip(trip);
 
@@ -25,6 +26,16 @@ window.addEventListener("DOMContentLoaded", function () {
 			model:journal,
 			autoUpdate:true
 		}).render();
+
+		removeEl.addEventListener("click", function () {
+			if( confirm("Delete " + journal.get("title") + "? This cannot be undone") ) {
+				journal.destroy({
+					success:function () {
+						journalElem.parentNode.removeChild(journalElem);
+					}
+				})
+			}
+		})
 
 	});
 	

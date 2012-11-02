@@ -1,10 +1,35 @@
 var FileInput = Backbone.View.extend({
   initialize:function () {
     var uploader = this;
+    this._allowedExtensions = [];
     this.files = [];
   },
   clear:function () {
     this.files.reset();
+  },
+  setAllowedExtensions:function (extensions) {
+    this._allowedExtensions = extensions;
+  },
+  allowedExtensions:function () {
+    return this._allowedExtensions;
+  },
+  validateFile:function (file) {
+    var types = this.allowedExtensions();
+    if( types.length === 0 ) { return true }
+
+    var fileNameSplit = file.name.split("."),
+    extension = fileNameSplit[fileNameSplit.length - 1];
+    if( !extension ) { return false }
+
+
+    for(var x in types) {
+      var regexp = new RegExp(types[x]);
+      if( regexp.test(extension) ) {
+        return true;
+      }
+    }
+
+    return false;
   },
   addFile:function (file) {
   	this.files.push(file);
@@ -12,7 +37,9 @@ var FileInput = Backbone.View.extend({
   },
   addFiles:function (files) {
   	for(var i = 0; i < files.length; i += 1) {
-  		this.addFile(files[i]);
+      if( this.validateFile(files[i]) ) {
+  		  this.addFile(files[i]);
+      }
   	}
   },
   __setupInput:function () {
@@ -34,11 +61,10 @@ var FileInput = Backbone.View.extend({
         uploader.el.className = uploader.el.className.replace("dragenter", "");
       });
       uploader.options.dropTarget.addEventListener("drop", function (event) {
-      event.stopPropagation();
-      event.preventDefault();
-      uploader.el.className = uploader.el.className.replace("dragenter", "");
-      uploader.addFiles(event.dataTransfer.files);
-
+        event.stopPropagation();
+        event.preventDefault();
+        uploader.el.className = uploader.el.className.replace("dragenter", "");
+        uploader.addFiles(event.dataTransfer.files);
       }, false);
     })(this);
   },

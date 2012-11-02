@@ -10,17 +10,34 @@ class Trip < ActiveRecord::Base
  	include HasDates
  	include HasTitle
 
+ 	def self.random limit = 3
+		limit(limit).order("RAND()")
+	end
+
+	def maps?
+		maps.length > 0
+	end
+
+ 	def self.by_year
+ 		years = {}
+ 		scoped.each do |trip|
+ 			years[trip.year] = [] if !years[trip.year]
+ 			years[trip.year].push(trip)
+ 		end
+ 		years
+ 	end
+
 	def picture
 		return photo if !photo.nil?
 		first_location = locations.limit(1).first
 		return first_location.picture if first_location
 	end
- 
-	def self.random limit = 3
-		limit(limit).order("RAND()")
-	end
 
 	def newest_journal
 	    journals.order("created_at DESC").limit(1).first
+	end
+
+	def year
+		start_date.strftime("%Y")
 	end
 end
