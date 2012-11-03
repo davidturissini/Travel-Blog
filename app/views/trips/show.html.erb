@@ -1,48 +1,58 @@
-<article id="trip" class="autoclear" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<header>
-		<hgroup>
-			<h1 class="trip-title" id="page-title"><%= @trip.title %></h1>
-			<h2><%= @trip.date_string %></h2>
-		</hgroup>
-		<%= link_to user_path(@trip.user.slug), :class => "user-link" do %>
-			Visited by <%= @trip.user.name %><img src="<%= @user.photo.small %>" width="40" class="rounded user-image" />
-		<% end %>
-	</header>
-	<%= render "trips/photos", :photos => @trip.photos, :location => @trip %>
-	<aside<%= ' class="no-map" '.html_safe if !@trip.maps? %>>
-		<figure>
-			<%= link_to user_trip_locations_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) do %>
-				<div id="trip-locations" class="map"></div>
-				<figcaption>
-					<h1>
-						<ul>
-							<% @trip.locations.each do |location, idx| %>
-								<li><%= location.geo_string %></li>
-							<% end %>
-						</ul>
-					</h1>
-				</figcaption>
+
+<div class="grid-20-75">
+	<div class="column first">
+		<header id="user-header">
+			<%= link_to user_path(@trip.user.slug) do %>
+				<img src="<%= @user.photo.large %>" class="rounded user-image" />
+				<h1><%= @user.name %></h1>
 			<% end %>
-		</figure>
-		<% if @trip.maps? %>
-			<figure>
-				<%= link_to user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) do %>
-					<div id="trip-maps" class="map"></div>
-					<figcaption>
-						<h1><%= @trip.user.name %>'s Maps from <%= @trip.title %></h1>
-					</figcaption>
+		</header>
+	</div>
+	<div class="column last">
+		<article id="trip" class="autoclear grid-20-75" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+			<header>
+				<hgroup>
+					<h1 class="trip-title" id="page-title"><%= @trip.title %></h1>
+					<h2><%= @trip.date_string %></h2>
+				</hgroup>
+			</header>
+			<%= render "trips/photos", :photos => @trip.photos, :location => @trip %>
+			<aside<%= ' class="no-map" '.html_safe if !@trip.maps? %>>
+				<figure>
+					<%= link_to user_trip_locations_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) do %>
+						<div id="trip-locations" class="map"></div>
+						<figcaption>
+							<h1>
+								<ul>
+									<% @trip.locations.each do |location, idx| %>
+										<li><%= location.geo_string %></li>
+									<% end %>
+								</ul>
+							</h1>
+						</figcaption>
+					<% end %>
+				</figure>
+				<% if @trip.maps? %>
+					<figure>
+						<%= link_to user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) do %>
+							<div id="trip-maps" class="map"></div>
+							<figcaption>
+								<h1><%= @trip.user.name %>'s Maps from <%= @trip.title %></h1>
+							</figcaption>
+						<% end %>
+					</figure>
 				<% end %>
-			</figure>
-		<% end %>
-	</aside>
-	<% if @trip.journals.count > 0 %>
-		<section id="posts">
-			<% @trip.journals.each_with_index do |entry, idx| %>
-				<section class="post">
-					<h1><%= entry.title %></h1>	
-					<div><%= entry.body.html_safe %></div>
+			</aside>
+			<% if @trip.journals.count > 0 %>
+				<section id="posts">
+					<% @trip.journals.each_with_index do |entry, idx| %>
+						<section class="post">
+							<h1><%= entry.title %></h1>	
+							<div><%= entry.body.html_safe %></div>
+						</section>
+					<% end %>
 				</section>
 			<% end %>
-		</section>
-	<% end %>
-</article>
+		</article>
+	</div>
+</div>

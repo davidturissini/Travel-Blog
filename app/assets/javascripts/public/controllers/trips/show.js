@@ -6,7 +6,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	locations = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations"),
 	maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps"),
 	gallery = null,
-	mapOptions = {zoom:8,draggable:false,disableDefaultUI:true},
+	mapOptions = {zoom:10,draggable:false,disableDefaultUI:true},
 	tripMapsEl = document.getElementById("trip-maps");
 
 	trip.setUser(user);

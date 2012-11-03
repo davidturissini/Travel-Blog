@@ -1,22 +1,30 @@
-<section id="user" data-json="<%= @user.to_json %>">
-	<header id="user-header" class="autoclear">
-		<img src="<%= @user.photo.url %>" class="rounded" />
-		<h1><%= @user.name %>'s Travels</h1>
+<section id="user" class="grid-20-75" data-json="<%= @user.to_json %>" data-trips="<%= @user.trips.to_json %>">
+	<div class="column first">
+		<header id="user-header">
+			<img src="<%= @user.photo.large %>" class="rounded" />
+			<h1><%= @user.name %></h1>
+		</header>
 		<p><%= @user.description %></p>
-	</header>
-	<section id="trips">
-		<% @user_trips.each_pair do |year, trips| %>
-			<section class="year">
-				<h1 class="year-title"><%= year %></h1>
-				<% trips.each do |trip| %>
-					<article class="trip">
-						<%= link_to trip_path(trip) do %>
-							<h1><%= trip.title %></h1>
-							<img src="<%= trip.picture.url %>" class="rounded" />
-						<% end %>
-					</article>
-				<% end %>
-			</section>
-		<% end %>
-	</section>
+		<p><%= link_to "#{@user.trips.count} Trips", user_trips_path(:user_id => @user.slug) %></p>
+		<p><%= @user.locations.count %> Places</p>
+		<p><%= @user.countries_count %> Countries</p>
+	</div>
+	<div class="column last">
+		<figure id="map" class="map shadow"></figure>
+		<section id="trips">
+			<% @user_trips.each_pair do |year, trips| %>
+				<section class="year">
+					<h1 class="year-title"><%= year %></h1>
+					<% trips.each do |trip| %>
+						<article class="trip" data-json="<%= trip.to_json %>" data-locations="<%= trip.locations.to_json %>" data-maps="<%= trip.maps.to_json %>">
+							<%= link_to trip_path(trip) do %>
+								<h1><%= trip.title %></h1>
+								<img src="<%= trip.picture.url %>" class="rounded" />
+							<% end %>
+						</article>
+					<% end %>
+				</section>
+			<% end %>
+		</section>
+	</div>
 </section>

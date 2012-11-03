@@ -27,10 +27,11 @@ br.clear { height:0; line-height:0 }
 
 .note { margin:0 0 10px 0; color:#b8b8b8; font-size:.8247em; }
 
+.shadow { box-shadow:0 0 10px #000; }
+
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 #container { margin:0 auto; width:960px; background:#fff; }
-.trips-show #container { width:auto; }
 
 #site-header { padding:10px; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
@@ -118,23 +119,20 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 /* MAP DETAIL PAGE */
 
 /* TRIP DETAIL PAGE */
-.trips-show #content { width:920px; }
 .trips-show #trip { position:relative; margin:0 auto 20px; padding-bottom:20px; }
-.trips-show #trip header { margin:20px auto 0; width:600px; text-align:center; margin-bottom:70px; padding-bottom:30px; border-bottom:1px solid #b8b8b8;}
+.trips-show #trip header { margin:20px auto 0; text-align:center; padding-bottom:30px; }
 .trips-show #trip header .trip-title { text-align:center; font-size:4em; }
 .trips-show #trip header h2 { font-size:1.324em; text-align:center; }
 .trips-show #trip header img { box-shadow:0 0 10px #000; }
-.trips-show #trip header .user-link { display:block; margin-top:20px; }
-.trips-show #trip header .user-link img { margin-left:.5em; vertical-align:middle; }
 .trips-show #trip aside { text-align:center; }
-.trips-show #trip aside figure { display:inline-block; margin:30px 0 50px 30px; width:440px; }
+.trips-show #trip aside figure { display:inline-block; margin:30px 0 50px 30px; width:300px; }
 .trips-show #trip aside figure h1 { margin-top:20px; font-size:1.324em; }
-.trips-show #trip aside figure .map { height:250px; width:440px; box-shadow:0 0 15px #000; }
+.trips-show #trip aside figure .map { height:250px; width:300px; box-shadow:0 0 15px #000; }
 .trips-show #trip aside figure:first-child { margin-left:0; }
 .trips-show #trip aside.no-map figure { width:100%; margin-bottom:20px; }
 .trips-show #trip aside.no-map figure .map { width:auto; }
 
-.trips-show #trip #photos { position:relative; z-index:1; margin:10px auto 40px; height:350px; opacity:0; }
+.trips-show #trip #photos { position:relative; z-index:1; margin:0 auto 40px; height:350px; opacity:0; }
 .trips-show #trip #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
 .trips-show #trip #photos figure.hero { z-index:1000; }
 .trips-show #trip #photos figure figcaption { display:none; }
@@ -186,6 +184,10 @@ textarea.autosize { overflow:hidden; }
 .inline-form .field.date-field { outline:none; }
 .inline-form:hover .field { outline:1px dashed #ccc; }
 .inline-form .field:focus { outline:1px dashed #b1b1b1; }
+
+/* GENERIC GRIDS */
+.grid-20-75 .column.first { width:20%; float:left; }
+.grid-20-75 .column.last { width:75%; float:right; }
 
 /* CONTENT GRIDS */
 .content-grid { margin:20px 0; }
@@ -341,6 +343,7 @@ textarea.autosize { overflow:hidden; }
 .welcome-user #user form input[type=text] { display:block; width:100%; font-size:1.3em; }
 .welcome-user #user form input[type=submit] { margin:10px 0; font-size:1.5em; }
 
+
 /* USER ADMIN PAGE */
 .admin-user-show #user-header h1 { display:inline; font-size:1.232em; }
 .admin-user-show #user-header .create-new { left:20px; top:-3px; }
@@ -363,7 +366,7 @@ header#user-header h1 { font-size:2.354em; }
 header#user-header img { box-shadow:0 0 10px #000; }
 
 /* USER SHOW PAGE */
-.users-show #content #trips { clear:left; margin-bottom:20px; text-align:center; }
+.users-show #content #trips { margin:20px 0; text-align:center; }
 .users-show #content #trips .year { border-top:1px solid #b1b1b1; }
 .users-show #content #trips .year:first-child { border-top:0; }
 .users-show #content #trips .year .year-title { margin-bottom:20px; padding-bottom:5px; border-bottom:1px solid #b1b1b1; font-size:1.4em; text-align:left }

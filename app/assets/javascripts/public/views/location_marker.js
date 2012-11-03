@@ -7,7 +7,13 @@ var LocationMarker = Backbone.View.extend({
    
    google.maps.event.addListener(this.googleMarker, "click", function () {
     if( locMarker.options.click ) { locMarker.options.click() }
+      locMarker.trigger("click", {marker:locMarker});
    })
+
+   google.maps.event.addListener(this.googleMarker, "mouseover", function () {
+      locMarker.trigger("mouseover", {marker:locMarker});
+   })
+
    loc.on("change", function (e, options) {
     if( options.changes.longitude || options.changes.latitude ) {
      locMarker.render() 

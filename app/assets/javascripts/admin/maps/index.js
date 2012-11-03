@@ -8,7 +8,10 @@ window.addEventListener("DOMContentLoaded", function () {
         mapElem = elem.getElementsByClassName("google-map").item(0),
         titleEl = elem.getElementsByClassName("map-title").item(0),
         descriptionEl = elem.getElementsByClassName("map-description").item(0),
-        dateEl = elem.getElementsByClassName("date-field").item(0);
+        dateEl = elem.getElementsByClassName("date-field").item(0),
+        googleMap = new GoogleMap({
+            el:mapElem
+        });
 
         trip.setUser(TA.currentUser);
         map.setTrip(trip);
@@ -39,14 +42,7 @@ window.addEventListener("DOMContentLoaded", function () {
             autoUpdate:true
         }).render();
 
-
-        map.drawGoogleMap(mapElem, {
-            center: new google.maps.LatLng(0,0),
-            zoom: 4,
-            mapTypeId: google.maps.MapTypeId.HYBRID,
-            disableDefaultUI:true,
-            scrollwheel: false
-        })
+        googleMap.render().maps().add(map);
 
         var removeElem = elem.getElementsByClassName("remove").item(0);
         removeElem.addEventListener("click", function () {
