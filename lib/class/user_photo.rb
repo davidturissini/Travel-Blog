@@ -32,10 +32,18 @@ class UserGravatarPhoto < UserPhoto
 	def large
 		return "#{@user.photo_url.strip}?s=200"
 	end
+
+	def small
+		return "#{@user.photo_url.strip}?s=50"
+	end
 end
 
 class UserFacebookPhoto < UserPhoto
 	@user
+	def small
+		return "#{@user.photo_url.strip}?type=square"
+	end
+
 	def initialize user
 		@user = user
 	end

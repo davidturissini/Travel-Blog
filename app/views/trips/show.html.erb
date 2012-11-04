@@ -1,107 +1,58 @@
-<article id="trip" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<header class="autoclear">
-		<%= image_tag @trip.user.photo.large, :class => "rounded-large left", :width => 80 %>
-		<h1>
+
+<div class="grid-20-75">
+	<div class="column first">
+		<header id="user-header">
 			<%= link_to user_path(@trip.user.slug) do %>
-				<%= @trip.user.name %>'s<% end %> trip to
-				<%= @trip.locations.first.geo_string %>
-		</h1>
-	</header>
-	<%= render "trips/photos", :photos => @trip.photos, :location => @trip %>
-	<section id="posts">
-		<% @trip.journals.each do |entry| %>
-			<section class="post">
-				<h1><%= entry.title %></h1>	
-				<div><%= entry.body.html_safe %></div>
-			</section>
-		<% end %>
-	</section>
-	<figure id="map"></figure>
-	<br class="clear" />
-</article>
-
-<% content_for :scripts_footer do %>
-	<script>
-
-	window.addEventListener("DOMContentLoaded", function () {
-
-		var trip = Trip.createFromDataAttribute( document.getElementById("trip") ),
-		user = User.createFromDataAttribute(document.getElementById("trip"), "data-user"),
-		locations = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations"),
-		maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps"),
-		gallery = null;
-
-		trip.setUser(user);
-		trip.setLocations(locations);
-		trip.setMaps(maps);
-
-		new TripMap({
-			el:document.getElementById("map"),
-			model:trip
-		}).render().drawLocations().drawMaps();
-
-		if( !document.getElementById("photos") ) { return }
-		var locationPhotos = document.getElementById("photos").querySelectorAll("figure"),
-		hero = document.getElementById("photos").querySelector(".hero") || locationPhotos[0];
-		hero.className += " hero";
-
-		if( locationPhotos.length === 0 ) { return }
-		var heroIndex = (function () {
-			var index = 0;
-			[].forEach.call(locationPhotos, function (photo, i) {
-				if( photo == hero ) {
-					index = i
-				}
-			})
-
-			return index;
-		})();
-
-
-		var shuffleHash = {
-			el:document.getElementById("photos"),
-			hero:hero,
-			elements:Array.prototype.slice.call(locationPhotos, 0, 30),
-			heroClick: function () {
-				if( !gallery ) {
-					gallery = new Gallery({
-							el:shuffleHash.el,
-							photos:locationPhotos,
-							selectedIndex:heroIndex,
-							onClose:function () {
-								gallery = null
-								
-							}
-						}).render()
-				}
-			},
-			elementClick: function (event, options) {
-				if( !gallery ) {
-					gallery = new Gallery({
-							el:shuffleHash.el,
-							photos:locationPhotos,
-							selectedIndex:options.index,
-							onClose:function () {
-								gallery = null
-								
-							}
-						}).render()
-				}
-			},
-			elementShouldPosition: function (options) {
-				var photo = options.element.querySelector("img")
-				if( photo.width != 0 ) {
-					options.callback()
-				} else {
-					photo.onload = function () {
-						options.callback()
-					}
-				}
-			}
-		}
-
-		new ShuffledElements(shuffleHash).render()
-
-		})
-	</script>
-<% end %>
+				<img src="<%= @user.photo.large %>" class="rounded user-image" />
+				<h1><%= @user.name %></h1>
+			<% end %>
+		</header>
+	</div>
+	<div class="column last">
+		<article id="trip" class="autoclear grid-20-75" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+			<header>
+				<hgroup>
+					<h1 class="trip-title" id="page-title"><%= @trip.title %></h1>
+					<h2><%= @trip.date_string %></h2>
+				</hgroup>
+			</header>
+			<%= render "trips/photos", :photos => @trip.photos, :location => @trip %>
+			<aside<%= ' class="no-map" '.html_safe if !@trip.maps? %>>
+				<figure>
+					<%= link_to user_trip_locations_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) do %>
+						<div id="trip-locations" class="map"></div>
+						<figcaption>
+							<h1>
+								<ul>
+									<% @trip.locations.each do |location, idx| %>
+										<li><%= location.geo_string %></li>
+									<% end %>
+								</ul>
+							</h1>
+						</figcaption>
+					<% end %>
+				</figure>
+				<% if @trip.maps? %>
+					<figure>
+						<%= link_to user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) do %>
+							<div id="trip-maps" class="map"></div>
+							<figcaption>
+								<h1><%= @trip.user.name %>'s Maps from <%= @trip.title %></h1>
+							</figcaption>
+						<% end %>
+					</figure>
+				<% end %>
+			</aside>
+			<% if @trip.journals.count > 0 %>
+				<section id="posts">
+					<% @trip.journals.each_with_index do |entry, idx| %>
+						<section class="post">
+							<h1><%= entry.title %></h1>	
+							<div><%= entry.body.html_safe %></div>
+						</section>
+					<% end %>
+				</section>
+			<% end %>
+		</article>
+	</div>
+</div>

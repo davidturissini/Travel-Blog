@@ -1,74 +1,21 @@
 <article id="trip" class="autoclear" data-maps="<%= @trip.maps.to_json %>" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<header class="autoclear">
-		<figure id="trip-photo">
-			<% if @trip.picture %>
-				<img src="<%= @trip.picture.url %>" width="200" class="rounded" id="trip-image" />
-			<% end %>
-			<% if @trip.photos.length > 0 %>
-				<figcaption>
-					<a href="#" class="rounded" id="change-trip-photo">Change photo</a>
-				</figcaption>
-			<% end %>
-		</figure>
-		<h1 id="page-title"><input type="text" id="trip-title" value="<%= @trip.title %>" /></h1>
-		<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
-		<a id="trip-delete" class="remove"></a>
+	<header id="trip-header" class="content-grid left">
+		<form id="trip-form" class="autoclear inline-form">
+			<h1 id="page-title"><textarea id="trip-title" class="field"><%= @trip.title %></textarea></h1>
+			<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
+			<figure id="trip-photo" class="content rounded">
+				<% if @trip.picture %>
+					<img src="<%= @trip.picture.large %>" id="trip-image" />
+				<% end %>
+				<% if @trip.photos.length > 0 %>
+					<figcaption>
+						<a href="#" id="change-trip-photo">Change photo</a>
+					</figcaption>
+				<% end %>
+			</figure>
+			<a id="trip-delete" class="remove"></a>
+		</form>
 	</header>
-	<section id="journal" class="rounded">
-		<% if @trip.journals.count > 0 %>
-			<%= link_to admin_journals_path(:trip_id => @trip.slug) do %>
-				<h1>Journal</h1>
-				<article>
-					<h2><%= @trip.newest_journal.title %></h2>
-					<div><%= truncate_html(@trip.newest_journal.body, :length => 350) %></div>
-					<i class="mask"></i>
-				</article>
-			<% end %>
-		<% else %>
-			<%= link_to new_journal_path(@trip.slug) do %>
-				<h1>Journal</h1>
-				<h2>Create journal</h2>
-			<% end %>
-		<% end %>
-	</section>
-	<section id="photos" class="rounded">
-		<% if @trip.photos.count > 0 %>
-			<%= link_to photos_edit_path(@trip), :class => "rounded" do %>
-				<h1>Photos</h1>
-				<% @trip_photos.each do |photo| %>
-					<div class="centered image rounded">
-						<img src="<%= photo.small %>" />
-					</div>
-				<% end %>
-			<% end %>
-		<% else %>
-			<%= link_to trip_photos_new_path(@trip.slug) do %>
-				<h1>Photos</h1>
-				<h2>Upload photos</h2>
-				<% 3.times do |t| %>
-					<div class="image rounded empty"></div>
-				<% end %>
-			<% end %>
-		<% end %>
-	</section>
-	<section id="maps" class="rounded">
-		<% if @trip.maps.count > 0 %>
-			<%= link_to maps_path(@trip), :class => "rounded" do %>
-				<h1>Maps</h1>
-				<div id="trip-maps" class="map"></div>
-			<% end %>
-		<% else %>
-			<%= link_to new_map_path(@trip), :class => "rounded" do %>
-				<h1>Maps</h1>
-				<h2>Create a map</h2>
-			<% end %>
-		<% end %>
-	</section>
-	<section id="geo" class="rounded">
-		<%= link_to edit_trip_locations_path(:trip_id => @trip.slug) do %>
-			<h1>Locations</h1>
-			<figure id="trip-map" class="map clear"></figure>
-		<% end %>
-	</section>
+	<%= render "admin/trips/footer", :trip => @trip, :trip_photos => @trip_photos %>
 	<a id="delete-location" class="remove">X</a>
 </article>

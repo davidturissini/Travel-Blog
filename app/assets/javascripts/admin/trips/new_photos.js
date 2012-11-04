@@ -19,7 +19,7 @@ window.addEventListener("DOMContentLoaded", function () {
       el:document.getElementById("photo-upload"),
       input:document.querySelector("#photo-upload input"),
       previewElem:document.getElementById("photo-container"),
-      dropTarget:document.getElementById("photo-container"),
+      dropTarget:document,
       uploadButton:document.getElementById("save-photos"),
       clearButton:document.getElementById("clear-photos")
     });

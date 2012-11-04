@@ -30,101 +30,63 @@ var PhotoUploader = Backbone.View.extend({
         image.id = image.src;
         this.addPhotos([image]);
       },
-      uploadFiles:(function () {
-        var uploaded = [];
-        return function () {
-          var uploader = this,
-          loader = new Loading({
-            el:document.body
-          }).render(),
-          loadingView = document.createElement("div"),
-          h5 = document.createElement("h5"),
-          progress = document.createElement("progress")
+      uploadFiles:function () {
+        var uploader = this,
+        uploaded = [],
+        loader = new Loading({
+          el:document.body
+        }).render(),
+        loadingView = document.createElement("div"),
+        h5 = document.createElement("h5"),
+        progress = document.createElement("progress")
 
-          if( uploader.options.uploadButton ) {
-            uploader.options.uploadButton.setAttribute("disabled", "disabled");
-            uploader.options.clearButton.setAttribute("disabled", "disabled");
-          }
+        if( uploader.options.uploadButton ) {
+          uploader.options.uploadButton.setAttribute("disabled", "disabled");
+          uploader.options.clearButton.setAttribute("disabled", "disabled");
+        }
 
-          uploader.trigger("upload_start");
+        uploader.trigger("upload_start");
 
-          progress.setAttribute("value", 0);
-          progress.setAttribute("max", uploader.files.length);
+        progress.setAttribute("value", 0);
+        progress.setAttribute("max", uploader.files.length);
 
-          h5.innerHTML = "Uploaded 0 of " + uploader.files.length;  
-          loadingView.appendChild(h5);
-          loadingView.appendChild(progress);
+        h5.innerHTML = "Uploaded 0 of " + uploader.files.length;  
+        loadingView.appendChild(h5);
+        loadingView.appendChild(progress);
 
-          loader.setLoadingView(loadingView);
-          loader.loading();
+        loader.setLoadingView(loadingView);
+        loader.loading();
 
-          function doUpload( options ) {
+        this.files.each(function (photo) {
             var hash = new FormData();
 
-            if( options.data ) {
-              hash.append('photo[binary]', options.photo.getRaw());
-            } else if (options.url) {
-              hash.photo.url = options.url;
-            }
-            hash.append("photo[title]", "ASDAS");
-            if( options.photo.get("title") ) {
-              hash.append("photo[title]", options.photo.get("title"));
+            if( photo.getRaw() ) {
+              hash.append('photo[binary]', photo.getRaw());
             }
 
-            if( options.photo.get("description") ) {
-              hash.append("photo[title]", options.photo.get("description"));
+            if( photo.get("title") ) {
+              hash.append("photo[title]", photo.get("title"));
+            }
+
+            if( photo.get("description") ) {
+              hash.append("photo[title]", photo.get("description"));
             }
 
             var xhr = new XMLHttpRequest();
             xhr.open('POST', uploader.model.url() + "/photos");
             xhr.onload = function (e) {
-              options.complete(e);
-              if (xhr.status === 200) {
-                options.success(e);
-              } else {
-                console.log('Something went terribly wrong...');
+              uploaded.push(photo);
+              h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
+              progress.setAttribute("value", uploaded.length);
+              if( uploaded.length == uploader.files.length ) {
+                uploader.trigger("photos_uploaded", {photos:uploader.files})
               }
             };
 
             xhr.send(hash);
-          }
-
-          function upload (index) {
-            var photo = uploader.files.at(index);
-            if( !photo ) { return }
-
-            photo.getBinary({
-              success:function (binary) {
-                var hash = {
-                  photo:photo,
-                  complete:function () {
-                    upload( index + 1 )
-                  },
-                  success:function (e) {
-                    uploaded.push(photo);
-                    h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
-                    progress.setAttribute("value", uploaded.length);
-                    if( uploaded.length == uploader.files.length ) {
-                      uploader.trigger("photos_uploaded", {photos:uploader.files})
-                    }
-                  }
-                }
-
-
-                if( binary === false ) {
-                  hash.url = photo.src();
-                } else {
-                  hash.data = binary;
-                }
-
-                doUpload(hash);
-
-            }})
-          }
-          upload(0)
-        }
-
-      })(),
+          
+        })
+      },
       removePreview:function(photo) {
         var elem = this.options.previewElem.querySelector("#" + this.generatePhotoPreviewId(photo));
         elem.parentNode.removeChild(elem);
@@ -189,8 +151,7 @@ var PhotoUploader = Backbone.View.extend({
         elemId = uploader.generatePhotoPreviewId(photo);
         div = document.createElement("div"),
         canvas = document.createElement("canvas"),
-        remove = document.createElement("a")
-        remove.innerHTML = "X";
+        remove = document.createElement("a");
 
         remove.className = "remove";
 
@@ -211,10 +172,30 @@ var PhotoUploader = Backbone.View.extend({
           canvas:canvas
         }
       },
+      allowedExtensions:function () {
+        return ["jpg", "jpeg", "png", "gif"];
+      },
+      validateFile:function (file) {
+        var types = this.allowedExtensions(),
+        fileNameSplit = file.name.split("."),
+        extension = fileNameSplit[fileNameSplit.length - 1];
+        if( !extension ) { debugger; return false }
+
+        for(var x in types) {
+          var regexp = new RegExp(types[x]);
+          if( regexp.test(extension.toLowerCase()) ) {
+            return true;
+          }
+        }
+
+        return false;
+      },
       addPhotos:function (photos) {
         for(var i = 0; i < photos.length; i += 1) {
-          var model = new Photo(photos[i]);
-          this.addPhoto(model);
+          if( this.validateFile(photos[i]) ) {
+            var model = new Photo(photos[i]);
+            this.addPhoto(model);
+          }
         }
       },
       addPhoto:function (photo) {
@@ -240,10 +221,10 @@ var PhotoUploader = Backbone.View.extend({
             uploader.el.className = uploader.el.className.replace("dragenter", "");
           });
           uploader.options.dropTarget.addEventListener("drop", function (event) {
-          event.stopPropagation();
-          event.preventDefault();
-          uploader.el.className = uploader.el.className.replace("dragenter", "");
-          uploader.addPhotos(event.dataTransfer.files);
+            event.stopPropagation();
+            event.preventDefault();
+            uploader.el.className = uploader.el.className.replace("dragenter", "");
+            uploader.addPhotos(event.dataTransfer.files);
 
           }, false);
         })(this);

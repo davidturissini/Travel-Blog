@@ -12,6 +12,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		el:document.body
 	}).render();
 
+	input.setAllowedExtensions(["kml"]);
+
 	trip.setUser(TA.currentUser);
 	map.setTrip(trip);
 

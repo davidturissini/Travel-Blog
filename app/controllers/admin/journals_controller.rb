@@ -30,6 +30,7 @@ class Admin::JournalsController < Admin::AdminController
 		@trip = current_trip
 		@journal = @trip.journals.find_by_slug(params[:journal_id])
 		@journal.destroy
+		render :json => @journal
 	end
 
 	def edit

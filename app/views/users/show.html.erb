@@ -1,33 +1,30 @@
-<section id="user" data-json="<%= @user.to_json %>">
-	<header>
-		<img src="<%= @user.photo.large %>" class="left rounded" />
-		<hgroup>
+<section id="user" class="grid-20-75" data-json="<%= @user.to_json %>" data-trips="<%= @user.trips.to_json %>">
+	<div class="column first">
+		<header id="user-header">
+			<img src="<%= @user.photo.large %>" class="rounded" />
 			<h1><%= @user.name %></h1>
-		</hgroup>
+		</header>
 		<p><%= @user.description %></p>
-	</header>
-	<section id="user-stats" class="left clear-left"> 
-		<% if @user.location? %>
-			<section id="user-geo">
-				<h1>
-					<%= "#{@user.city}, " if !@user.city.blank? %><%= @user.country_name %>
-				</h1>
-				<img src="<%= static_map_url @user.latitude, @user.longitude, :width => 90, :height => 90 %>" />
-			</section>
-		<% end %>
-		<ul>
-			<li><%= @user.locations.count %> Locations</li>
-			<li><%= @user.countries_count %> Countries</li>
-			<li><%= @user.photos_count %> Pictures</li>
-		</ul>
-	</section>
-	<section id="user-travel">
-		<ul>
-            <% @user.statuses.order("created_at DESC").each do |status| %>
-                <li>
-                    <%= render "statuses/status", :status => status %>
-                </li>
-            <% end %>
-        </ul>
-	</section>
+		<p><%= link_to "#{@user.trips.count} Trips", user_trips_path(:user_id => @user.slug) %></p>
+		<p><%= @user.locations.count %> Places</p>
+		<p><%= @user.countries_count %> Countries</p>
+	</div>
+	<div class="column last">
+		<figure id="map" class="map shadow"></figure>
+		<section id="trips">
+			<% @user_trips.each_pair do |year, trips| %>
+				<section class="year">
+					<h1 class="year-title"><%= year %></h1>
+					<% trips.each do |trip| %>
+						<article class="trip" data-json="<%= trip.to_json %>" data-locations="<%= trip.locations.to_json %>" data-maps="<%= trip.maps.to_json %>">
+							<%= link_to trip_path(trip) do %>
+								<h1><%= trip.title %></h1>
+								<img src="<%= trip.picture.url %>" class="rounded" />
+							<% end %>
+						</article>
+					<% end %>
+				</section>
+			<% end %>
+		</section>
+	</div>
 </section>

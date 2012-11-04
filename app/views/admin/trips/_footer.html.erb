@@ -1,0 +1,48 @@
+<aside id="trip-links" class="content-grid autoclear">
+	<section id="journal" class="content rounded">
+		<% if trip.journals.count > 0 %>
+			<h1>Journal</h1>
+			<article>
+				<%= truncate_html(trip.newest_journal.body, :length => 350) %>
+				<i class="mask"></i>
+			</article>
+			<%= link_to "", admin_journals_path(:trip_id => trip.slug), :class => "content-link" %>
+		<% else %>
+			<h1>Journal</h1>
+			<h2>Create journal</h2>
+			<%= link_to "", new_journal_path(trip.slug), :class => "content-link" %>
+		<% end %>
+	</section>
+	<section id="photos" class="content rounded">
+		<h1>Photos</h1>
+		<% if trip.photos.count > 0 %>
+			<div class="overflow">
+				<% trip_photos.each do |photo| %>
+					<div class="centered image rounded">
+						<img src="<%= photo.small %>" />
+					</div>
+				<% end %>
+			</div>
+			<%= link_to "", photos_edit_path(trip), :class => "content-link" %>
+		<% else %>
+			<h2>Upload photos</h2>
+			<%= link_to "", trip_photos_new_path(trip.slug), :class => "content-link" %>
+		<% end %>
+	</section>
+	<section id="maps" class="content rounded">
+		<h1>Maps</h1>
+		<% if trip.maps.count > 0 %>
+			<div id="trip-maps" class="map"></div>
+			<%= link_to "", maps_path(trip), :class => "content-link" %>
+		<% else %>
+			
+			<h2>Create a map</h2>
+			<%= link_to "", new_map_path(trip), :class => "content-link" %>
+		<% end %>
+	</section>
+	<section id="geo" class="content rounded">
+		<h1>Locations</h1>
+		<figure id="trip-map" class="map clear"></figure>
+		<%= link_to "", edit_trip_locations_path(:trip_id => trip.slug), :class => "content-link" %>
+	</section>
+</aside>

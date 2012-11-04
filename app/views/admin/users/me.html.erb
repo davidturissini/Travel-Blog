@@ -4,7 +4,7 @@
 			<%= image @user.photo.url, :class => "rounded user-image", :width => 80 %>
 			<a class="user-button user-image-button rounded">Change Picture</a>
 		</div>
-        <h1 id="page-title">Hello, <%= @user.name %></h1>
+        <h1 id="page-title"><%= link_to "Hello, #{@user.name}", user_path(@user.slug) %></h1>
         <%= render "admin/global/create_new_link", 
             :text => "Add a trip", 
             :url => new_trip_path %>
@@ -12,15 +12,14 @@
     <section id="user-trips" class="content-grid two-col">
         <% current_user.trips.each do |trip| %>
         	<article class="trip content" data-json="<%= trip.to_json %>">
-                <form class="inline-form">
-                	<h1><textarea class="field trip-title"><%= trip.title %></textarea></h1>
-                    <%= render "admin/global/date_fields", :obj => trip, :type => "trip" %>
-                    <% if trip.picture %>
-                        <img src="<%= trip.picture.url %>" />
-                    <% end %>
-                    <a class="remove"></a>
-                    <%= link_to "", admin_trip_path(trip), :class => "trip-link" %>
-                </form>
+            	<h1><%= trip.title %></h1>
+                <section class="date-field no-outline">
+                    <%= trip.date_string %>
+                </section>
+                <% if trip.picture %>
+                    <img src="<%= trip.picture.large %>" />
+                <% end %>
+                <%= link_to "", admin_trip_path(trip), :class => "content-link trip-link" %>
             </article>
         <% end %>
     </section>

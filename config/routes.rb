@@ -41,6 +41,7 @@ Adventureblog::Application.routes.draw do
   match '/me/:trip_id/journal/new' => "admin/journals#new", :via => :get, :user_id => "me", :as => "new_journal"
   match '/me/:trip_id/journal/:journal_id' => "admin/journals#edit", :via => :get, :user_id => "me", :as => "edit_journal"
   match '/me/:trip_id/journal/:journal_id' => "admin/journals#update", :via => :put, :user_id => "me", :as => "update_journal"
+  match '/me/:trip_id/journal/:journal_id' => "admin/journals#destroy", :via => :delete, :user_id => "me", :as => "update_journal"
   match '/me/:trip_id/photos' => "admin/trips#edit_photos", :user_id => "me", :as => "trip_photos_edit"
   match '/me/:trip_id/photos/new' => "admin/trips#new_photos", :user_id => "me", :as => "trip_photos_new"
   match '/me/:trip_id/photos/:slug' => "admin/photos#delete", :user_id => "me", :via => "delete"
@@ -57,6 +58,9 @@ Adventureblog::Application.routes.draw do
 
 
   resources :users, {:path => ""} do 
-    resources :trips, {:path => ""}
+    resources :trips, {:path => ""} do
+      resources :maps
+      resources :locations
+    end
   end
 end

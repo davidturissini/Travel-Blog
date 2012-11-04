@@ -3,8 +3,15 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	var map = Map.createFromDataAttribute( document.getElementById("map") ),
 	trip = Trip.createFromDataAttribute( document.getElementById("map"), "data-trip");
-	trip.setUser(TA.currentUser);
-	map.setTrip(trip);
+	trip.setUser(TA.currentUser),
+    tripMap = new TripMap({
+        model:trip,
+        el:document.getElementById("google-map")
+    });
+
+    trip.setMaps(new Backbone.Collection([map]));
+
+    tripMap.render().drawMaps();
 
     new AutoSaveTextField({
         el:document.getElementById("map-title"),
@@ -12,5 +19,4 @@ window.addEventListener("DOMContentLoaded", function () {
         property:"title"
     }).render();
 
-    map.drawGoogleMap(document.getElementById("google-map"));
 })

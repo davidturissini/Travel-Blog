@@ -79,16 +79,11 @@ var ShuffledElements = Backbone.View.extend({
 		photosContainer = this.el,
 		bounds = shuffle.__getHeroBounds(),
 		leftMultiplier = Math.cos(index),
-		horizontalBounds = ((window.innerWidth - 200) / 2),
+		horizontalBounds = this.el.offsetWidth,
 		top = (Math.random() * (photosContainer.offsetHeight - photo.offsetHeight)),
-		left = bounds.center + (Math.cos(index) * 300) - (photo.offsetWidth / 2),
-		rotate = Math.sin(index) * 10
+		left = bounds.center + (Math.cos(index) * (horizontalBounds / 2.5)) - (photo.offsetWidth / 2),
+		rotate = Math.sin(index) * 10;
 
-		if( Math.cos(index) <= 0 ) {
-			left -= 100
-		} else {
-			left += 100
-		}
 	
 		photo.style.left = left + "px";
 		photo.style.top = top + "px";

@@ -3,7 +3,7 @@ require 'digest/md5'
 class UsersController < ApplicationController
  def show
   @user = User.find_by_slug(params[:user_id]) 
-  @user_locations = @user.locations
+  @user_trips = @user.trips.by_year
   render_show
  end
 
