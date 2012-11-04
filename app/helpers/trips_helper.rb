@@ -1,6 +1,6 @@
 module TripsHelper
-	def edit_trip_path loc
-		edit_user_trip_path(trip.user.slug, tip.slug)
+	def edit_trip_path trip
+		edit_user_trip_path("me", trip.slug)
 	end
 
 	def trip_path trip

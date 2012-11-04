@@ -1,5 +1,6 @@
 class Admin::TripsController < Admin::AdminController
 	def new
+		@user = current_user
 		@trip = current_user.trips.new
 	end
 
@@ -10,11 +11,13 @@ class Admin::TripsController < Admin::AdminController
 	end
 
 	def edit_locations
+		@user = current_user
 		@trip = current_trip
 		@locations = @trip.locations
 	end
 
 	def edit
+		@user = current_user
 		@trip = current_user.trips.includes(:maps, :locations, :photos).find_by_slug(params[:trip_id])
 		render404 if !@trip
 		@trip_photos = @trip.photos
@@ -53,6 +56,7 @@ class Admin::TripsController < Admin::AdminController
 	 end
 
 	 def edit_photos
+	 	@user = current_user
 	 	@trip = current_trip
 	 end
 

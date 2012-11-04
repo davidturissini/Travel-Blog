@@ -1,7 +1,8 @@
+<h1 id="page-title">Edit Trip</h1>
 <article id="trip" class="autoclear" data-maps="<%= @trip.maps.to_json %>" data-json="<%= @trip.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<header id="trip-header" class="content-grid left">
+	<header id="trip-header" class="content-grid">
 		<form id="trip-form" class="autoclear inline-form">
-			<h1 id="page-title"><textarea id="trip-title" class="field"><%= @trip.title %></textarea></h1>
+			<h1><textarea id="trip-title" class="field"><%= @trip.title %></textarea></h1>
 			<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
 			<figure id="trip-photo" class="content rounded">
 				<% if @trip.picture %>

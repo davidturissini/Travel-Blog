@@ -28,10 +28,11 @@ br.clear { height:0; line-height:0 }
 .note { margin:0 0 10px 0; color:#b8b8b8; font-size:.8247em; }
 
 .shadow { box-shadow:0 0 10px #000; }
+a:hover .shadow { box-shadow:0 0 10px #069; }
 
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
-#container { margin:0 auto; width:960px; background:#fff; }
+#container { background:#fff; }
 
 #site-header { padding:10px; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
@@ -75,9 +76,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .map { height:400px; }
 .map-active .map { box-shadow:0px 5px 10px #000; }
 
-#content { margin:0px auto; padding:20px; }
-
-#page-title { position:relative; margin-bottom:10px; padding-top:10px; font-size:1.67em; }
+#page-title { position:relative; margin-bottom:10px; text-align:center; font-size:4em; }
 
 /* WELCOME PAGE */
 .welcome-index #hero { margin:30px auto 0; text-align:center; vertical-align:middle; }
@@ -120,20 +119,18 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 /* TRIP DETAIL PAGE */
 .trips-show #trip { position:relative; margin:0 auto 20px; padding-bottom:20px; }
+.trips-show #trip .map { height:250px; }
 .trips-show #trip header { margin:20px auto 0; text-align:center; padding-bottom:30px; }
 .trips-show #trip header .trip-title { text-align:center; font-size:4em; }
-.trips-show #trip header h2 { font-size:1.324em; text-align:center; }
+.trips-show #trip header h2 { font-size:1em; text-align:center; }
 .trips-show #trip header img { box-shadow:0 0 10px #000; }
-.trips-show #trip aside { text-align:center; }
-.trips-show #trip aside figure { display:inline-block; margin:30px 0 50px 30px; width:300px; }
-.trips-show #trip aside figure h1 { margin-top:20px; font-size:1.324em; }
-.trips-show #trip aside figure .map { height:250px; width:300px; box-shadow:0 0 15px #000; }
-.trips-show #trip aside figure:first-child { margin-left:0; }
-.trips-show #trip aside.no-map figure { width:100%; margin-bottom:20px; }
-.trips-show #trip aside.no-map figure .map { width:auto; }
+.trips-show #trip figure { margin:0 0 30px; }
+.trips-show #trip figure h1 { margin-bottom:20px; font-size:1.324em; text-align:center; }
+.trips-show #trip figure.locations { font-size:1.2em; }
+.trips-show #trip figure.maps .map { height:100px; }
 
-.trips-show #trip #photos { position:relative; z-index:1; margin:0 auto 40px; height:350px; opacity:0; }
-.trips-show #trip #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; box-shadow:0px 2px 25px #000; background:#fff; }
+.trips-show #trip #photos { position:relative; z-index:1; margin:80px auto 40px; height:350px; opacity:0; }
+.trips-show #trip #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; background:#fff; }
 .trips-show #trip #photos figure.hero { z-index:1000; }
 .trips-show #trip #photos figure figcaption { display:none; }
 .trips-show #trip #photos figure img { display:block; max-width:100px; }
@@ -180,25 +177,23 @@ textarea.autosize { overflow:hidden; }
 
 /* INLINE FORM */
 .inline-form textarea { padding:3px; resize:none; border:0; background:#fff; height:auto; }
-.inline-form .field { background:#fff; }
-.inline-form .field.date-field { outline:none; }
-.inline-form:hover .field { outline:1px dashed #ccc; }
+.inline-form .field { background:#fff; outline:1px dashed #ccc; }
 .inline-form .field:focus { outline:1px dashed #b1b1b1; }
 
 /* GENERIC GRIDS */
-.grid-20-75 .column.first { width:20%; float:left; }
-.grid-20-75 .column.last { width:75%; float:right; }
+.grid-20-75 .column.first { float:left; margin-left:40px; width:184px; }
+.grid-20-75 .column.last { margin:0 0 0 224px; padding:40px; min-height:370px; border-left:1px solid #ccc; }
 
 /* CONTENT GRIDS */
 .content-grid { margin:20px 0; }
-.content-grid .content { position:relative; margin-bottom:20px; padding:10px; width:380px; border:1px solid #b1b1b1; color:#333;
+.content-grid .content { position:relative; margin-bottom:20px; padding:10px; width:350px; border:1px solid #b1b1b1; color:#333;
 	box-shadow:-1px 1px 15px #666;
 }
 .content-grid .content:hover .remove { display:block; }
 .content-grid .content h1 { font-size:1.53em; margin-bottom:10px; text-align:left; }
-.content-grid .content textarea { margin-top:5px; width:370px; color:#333; }
+.content-grid .content textarea { margin-top:5px; width:350px; color:#333; }
 .content-grid .content input { padding:5px 0; }
-.content-grid .content img { display:block; max-width:100%; }
+.content-grid .content img { display:block; margin:0 auto; max-width:100%; }
 .content-grid .content .content-link { display:block; position:absolute; z-index:1; left:0; right:0; top:0; bottom:0; color:#000; }
 .content-grid .content .content-link:hover { 
 	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDApIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuMjI5KSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNnMSkiIC8+PC9zdmc+);
@@ -211,8 +206,8 @@ textarea.autosize { overflow:hidden; }
 
 }
 
-.content-grid.two-col .content { float:left; clear:left; margin-left:25px; }
-.content-grid.two-col .content:nth-child(2n) { float:right; clear:right; margin-right:25px; }
+.content-grid.two-col .content { float:right; margin-right:52px; }
+.content-grid.two-col .content:nth-child(2n) { float:left; }
 
 .date-field { position:relative; margin:0 0 10px 0; padding:5px; outline:2px dashed #b1b1b1; cursor:pointer; font-size:.8463em; line-height:1.253em; }
 .date-field.no-outline { outline:0; }
@@ -220,7 +215,7 @@ textarea.autosize { overflow:hidden; }
 .date-field span { display:inline-block; min-width:100px; background:#fff; }
 .date-field .reset { display:none; margin-left:10px; font-size:.8463em; color:#b1b1b1; }
 .date-field label { color:#b1b1b1; }
-.date-field.has-date:hover .reset { display:inline; }
+.date-field.has-date:hover .reset { display:inline; line-height:1; }
 .date-field.has-date label { display:none; }
 
 /* ADMIN JOURLANS INDEX */
@@ -231,6 +226,8 @@ textarea.autosize { overflow:hidden; }
 .admin-maps-index #maps .map { height:auto; }
 .admin-maps-index #maps article .google-map { height:200px; }
 .admin-maps-index #maps article .edit-link { float:right; }
+
+textarea.autosize { overflow:hidden; }
 
 /* MAPS NEW */
 .admin-maps-new #google-map { height:400px; }
@@ -246,14 +243,15 @@ textarea.autosize { overflow:hidden; }
 
 /* ADMIN TRIP EDIT */
 .admin-trips-edit #trip { margin-bottom:40px; color:#333; }
-.admin-trips-edit #trip header { position:relative; margin:0 40px 0 0; width:400px; min-height:570px; opacity:0;
+.admin-trips-edit #trip header { position:relative; margin:0;
 	-webkit-transition:opacity 1000ms;
 }
 .admin-trips-edit #trip header h1 { display:inline; }
-.admin-trips-edit #trip header textarea#trip-title { width:395px; font-size:1.5em; }
-.admin-trips-edit #trip header #trip-photo { position:relative; z-index:10; margin:30px 0 0; }
+.admin-trips-edit #trip header textarea#trip-title { width:100%; font-size:1.5em; }
+.admin-trips-edit #trip header #trip-photo { position:relative; z-index:10; margin:50px auto; width:auto; text-align:center; }
 .admin-trips-edit #trip header #trip-photo figcaption { display:none; }
-.admin-trips-edit #trip header #trip-photo figcaption a { position:absolute; left:0px; right:0px; top:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: 10px; line-height:1; cursor:pointer; }
+.admin-trips-edit #trip header #trip-photo figcaption a { position:absolute; left:0px; right:0px; top:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: 1.2em; line-height:1; cursor:pointer; }
+.admin-trips-edit #trip header .date-field { margin-top:5px; width:100%; padding-right:0; }
 .admin-trips-edit #trip header:hover #trip-photo figcaption { display:block; }
 
 .admin-trips-edit #trip section.rounded { position:relative; float:left; margin-left:20px; margin-right:40px; margin-top:50px; height:200px; width:176px; text-align:center; }
@@ -280,6 +278,7 @@ textarea.autosize { overflow:hidden; }
 .admin-trips-edit_locations .location-infowindow .edit-title { display:block; margin-right:20px; width:360px; }
 
 /* TRIP EDIT PHOTOS */
+.admin-trips-edit_photos #content-header a.create-new { margin-right:50px; }
 .admin-trips-edit_photos #trip-photos figure .image-wrapper { display:inline-block; margin:0 auto; }
 .admin-trips-edit_photos #trip-photos figure .image-wrapper img { display:block; margin:0 auto 10px; max-width:100%; width:auto; }
 
@@ -361,23 +360,54 @@ textarea.autosize { overflow:hidden; }
 .admin-user-show #user-trips .trip img { border:1px solid #ccc; }
 
 /* USER HEADER */
-header#user-header { margin-bottom:30px; padding-bottom:20px; text-align:center; }
-header#user-header h1 { font-size:2.354em; }
-header#user-header img { box-shadow:0 0 10px #000; }
+header#user-header { margin-top:40px; text-align:center; }
+header#user-header h1 { margin-top:5px; font-size:1.3em; }
+header#user-header a { color:#333; }
+header#user-header a:hover { color:#069; }
+header#user-header img { width:100px; }
+
+/* USER NAV */
+nav#user-nav { margin:50px 0; }
+nav#user-nav .admin { margin-top:50px; }
+nav#user-nav li a { display:block; padding:5px 10px; background:#333; color:#fff; 
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDApIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuMTU4KSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNnMSkiIC8+PC9zdmc+);
+	background-image: -webkit-gradient(linear, center top, center bottom, color-stop(0%, rgba(255, 255, 255, 0)), color-stop(100%, rgba(0, 0, 0, 0.158)));
+	background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.158) 100%);
+	background-image: -moz-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.158) 100%);
+	background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.158) 100%);
+	background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.158) 100%);
+	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.158) 100%);
+}
+
+nav#user-nav li:first-child { border-top:0; }
+
+/* NAV OVERRIDES */
+#user-nav a:hover,
+.countries-index #user-nav .countries a,
+.locations-index #user-nav .locations a,
+.maps-index #user-nav .maps a,
+.users-show #user-nav .trips a { background:#e8e8e8; color:#333; }
+
+/* LOCATION INFOWINDOWS */
+.location-infowindow h1 { margin-bottom:10px; font-size:1.3em; }
+.location-infowindow a { display:block; color:#333; }
+.location-infowindow img { display:inline-block; margin-right:10px; }
+.location-infowindow div { display:inline-block; vertical-align:top; }
 
 /* USER SHOW PAGE */
-.users-show #content #trips { margin:20px 0; text-align:center; }
-.users-show #content #trips .year { border-top:1px solid #b1b1b1; }
-.users-show #content #trips .year:first-child { border-top:0; }
-.users-show #content #trips .year .year-title { margin-bottom:20px; padding-bottom:5px; border-bottom:1px solid #b1b1b1; font-size:1.4em; text-align:left }
-.users-show #content #trips .year .trip { margin-top:100px; }
-.users-show #content #trips .year .trip:nth-of-type(1) { margin-top:0; }
-.users-show #content #trips .year .trip a { display:block; }
-.users-show #content #trips .year .trip h1 { margin-bottom:20px; font-size:1.623em; }
-.users-show #content #trips .year .trip img { box-shadow:0 0 10px #000; }
+.users-show #trips { display:none; }
 
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }
+
+/* MAPS INDEX PAGE */
+.maps-index .map { height:600px; }
+
+/* COUNTRIES INDEX PAGE */
+.countries-index .last .countries { margin-top:40px; }
+.countries-index .last .countries .country a { display:block; padding:10px 0; font-size:1.2em; }
+.countries-index .last .countries .country h1 { font-size:1.4em; }
+.countries-index .last .countries .country .trips-count { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid #b1b1b1; }
 
 /* USER GLOBAL BUTTONS */
 .user-button { border-bottom:1px transparent; color:#333; }

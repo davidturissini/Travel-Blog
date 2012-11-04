@@ -9,6 +9,10 @@ window.addEventListener("DOMContentLoaded", function () {
 		el:mapEl
 	});
 
+	map.mergeMapOptions({
+		disableDefaultUI:true
+	});
+
 	map.render();
 	user.setTrips(trips);
 	
@@ -33,5 +37,12 @@ window.addEventListener("DOMContentLoaded", function () {
 	map.drawLocations();
 	map.on("location_mouseover", function (e) {
 		var marker = e.marker;
+		marker.model.setUser(marker.model.trip().user());
+		var infoWindow = new LocationInfowindow({
+			model:marker.model,
+			map:map.googleMap()
+		});
+
+		infoWindow.show();
 	})
 });

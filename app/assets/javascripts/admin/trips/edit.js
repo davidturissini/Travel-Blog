@@ -115,28 +115,10 @@ window.addEventListener("DOMContentLoaded", function () {
     })
 
     var formEl = document.getElementById("trip-form"),
-    header = document.getElementById("trip-header"),
-    img = document.getElementById("trip-photo").getElementsByTagName("img").item(0);
-
-    img.onload = function () {
-        var tripLinks = document.getElementById("trip-links"),
-        offset = (header.offsetHeight - formEl.offsetHeight) / 2;
-        if( offset <= 0 ) {
-            tripLinks.style.paddingTop = document.getElementById("trip-photo").offsetTop + "px";
-        } else {
-            formEl.style.marginTop = offset + "px";
-        }
-        header.style.opacity = 1;
-    }
+    header = document.getElementById("trip-header");
 
     new DynamicTextarea({
         el:document.getElementById("trip-title")
     }).render();
-
-    var oldSrc = img.getAttribute("src");
-    img.setAttribute("src", "");
-    img.setAttribute("src", oldSrc);
-   
-
     
 })

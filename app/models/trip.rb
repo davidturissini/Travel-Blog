@@ -18,6 +18,18 @@ class Trip < ActiveRecord::Base
 		maps.length > 0
 	end
 
+	def self.by_country
+ 		countries = {}
+ 		scoped.includes(:locations => [:country]).each do |trip|
+ 			trip.locations.each do |location|
+ 				country_name = location.country.name
+ 				countries[country_name] = [] if !countries[country_name]
+ 				countries[country_name].push(trip) if !countries[country_name].include?(trip)
+ 			end
+ 		end
+ 		countries
+ 	end
+
  	def self.by_year
  		years = {}
  		scoped.each do |trip|

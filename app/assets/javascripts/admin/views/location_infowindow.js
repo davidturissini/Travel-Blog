@@ -1,13 +1,4 @@
-var LocationInfowindow = Backbone.View.extend({
-	_html:null,
-	_infowindow:null,
-	initialize:function () {
-		this._isVisible = false;
-	},
-	infoWindow:function () {
-		this._infowindow = this._infowindow || new google.maps.InfoWindow();
-		return this._infowindow;
-	},
+var LocationInfoWindow = LocationInfoWindow.extend({
 	load:function (callbacks) {
 		callbacks = callbacks || {};
 		var view = this;
@@ -36,52 +27,14 @@ var LocationInfowindow = Backbone.View.extend({
 			}
 		})
 	},
-	bindElements:function () {
-		var view = this,
-		title = this._html.getElementsByClassName("location-title").item(0);
-		title.addEventListener("keyup", function (e) {
-			view.model.set({title:e.currentTarget.value});
-		})
-		this.bindDelete();
-		
-	},
 	bindDelete:function () {
 		var view = this,
-		del = this._html.getElementsByClassName("location-delete").item(0);
+		del = _html.getElementsByClassName("location-delete").item(0);
 		del.addEventListener("click", function (e) {
 			e.preventDefault();
 			if( confirm("Delete " + view.model.smartTitle() + "? This cannot be undone.") ) {
 				view.model.destroy()
 			}
 		})
-	},
-	show:function () {
-		var view = this;
-		this._isVisible = true;
-		view.load({
-			success:function (html) {
-				view.infoWindow().setPosition(view.model.latLng());
-				view.infoWindow().setContent(html);
-				view.infoWindow().open(view.options.map);
-			}
-		})
-	},
-	toggle:function () {
-		if( this._isVisible ) {
-			this.hide();
-		} else {
-			this.show(); 
-		}
-	},
-	hide:function () {
-		this.infoWindow().setMap(null);
-		this._isVisible = false;
-	},
-	render:function () {
-		var view = this;
-		this.model.on("destroy", function () {
-			view.infoWindow().setMap(null);
-		})
-		return this;
 	}
 })

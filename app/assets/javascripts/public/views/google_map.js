@@ -1,11 +1,9 @@
 var GoogleMap = Backbone.View.extend((function () {
 
-	var _googleMap, _markers = [],
-	_bounds = new google.maps.LatLngBounds(),
-	_locations = new LocationsCollection(),
-	_maps = new MapsCollection();
+	var _markers = [];
 
 	return {
+
 		initialize:function () {
 			var view = this;
 
@@ -16,11 +14,11 @@ var GoogleMap = Backbone.View.extend((function () {
 	            scrollwheel: false
 	        });
 
-	        _locations.on("add", function (location) {
+	        this._locations.on("add", function (location) {
 	        	view.drawLocation(location);
 	        });
 
-	        _maps.on("add", function (map) {
+	        this._maps.on("add", function (map) {
 	        	view.drawMap(map);
 	        })
 		},
@@ -32,22 +30,26 @@ var GoogleMap = Backbone.View.extend((function () {
 	    },
 	    addLocations:function (locations, options) {
 	    	options = options || {};
+	    	var view = this;
 	    	locations.each(function (location) {
-	    		_locations.add(location, options);
+	    		view._locations.add(location, options);
 	    	})
 	    },
 		setMaps:function (maps) {
-			_maps = maps;
+			this._maps = maps;
 		},
 	    setLocations:function (locations) {
-	    	_locations = locations;
+	    	this._locations = locations;
 	    },
+	    _locations: new LocationsCollection(),
+		_maps: new MapsCollection(),
 	    maps:function () {
-	    	return _maps;
+	    	return this._maps;
 	    },
 	    addMaps:function (maps) {
+	    	var view = this;
 	    	maps.each(function (map) {
-	    		_maps.add(map);
+	    		view._maps.add(map);
 	    	})
 	    },
 	    drawMap:function (map) {
@@ -57,8 +59,8 @@ var GoogleMap = Backbone.View.extend((function () {
 				preserveViewport: true
 			});
 			google.maps.event.addListener(kml, "defaultviewport_changed", function () {
-				var _bounds = view.bounds().union(kml.getDefaultViewport());
-				view.googleMap().fitBounds(_bounds);
+				view.unionBounds(kml.getDefaultViewport());
+				view.googleMap().fitBounds(view.bounds());
 			});
 			
 			kml.setMap(this.googleMap());
@@ -70,12 +72,11 @@ var GoogleMap = Backbone.View.extend((function () {
 				map:this.googleMap()
 			}).render();
 
-    		if( _locations.length > 1 ) {
-				var bounds = new google.maps.LatLngBounds(loc.latLng()),
-				_bounds = view.bounds().union(bounds);
-				view.googleMap().fitBounds(_bounds);
-			} else if ( _locations.length === 1 ) {
-				view.googleMap().setCenter( _locations.first().latLng() );
+    		if( view._locations.length > 1 ) {
+				view.unionBounds(new google.maps.LatLngBounds(loc.latLng()));
+				view.googleMap().fitBounds(view.bounds());
+			} else if ( view._locations.length === 1 ) {
+				view.googleMap().setCenter( view._locations.first().latLng() );
 				view.googleMap().setZoom(10);
 			}
 
@@ -91,7 +92,7 @@ var GoogleMap = Backbone.View.extend((function () {
 	    },
 	    drawMaps:function (maps) {
 			var view = this;
-			maps = maps || _maps;
+			maps = maps || this._maps;
 
 			maps.each(function (map) {
 				view.drawMap(map);
@@ -102,7 +103,7 @@ var GoogleMap = Backbone.View.extend((function () {
 		drawLocations:function () {
 			var view = this;
 			view.markers = [];
-			_locations.each(function (loc) {
+			view._locations.each(function (loc) {
 				view.drawLocation(loc);
 			})
 
@@ -114,14 +115,19 @@ var GoogleMap = Backbone.View.extend((function () {
 	    	}
 	    	return this;
 	    },
+	    _googleMap:null,
 		googleMap:function () {
-			return _googleMap;
+			return this._googleMap;
 		},
 		drawGoogleMap:function () {
-	        _googleMap = new google.maps.Map(this.el, this.mapOptions());
+	        this._googleMap = new google.maps.Map(this.el, this.mapOptions());
 		},
+		_bounds: new google.maps.LatLngBounds(),
 		bounds: function () {
-			return _bounds;
+			return this._bounds;
+		},
+		unionBounds:function (bounds) {
+			this._bounds = this.bounds().union(bounds);
 		},
 		render: function () {
 			this.drawGoogleMap();

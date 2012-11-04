@@ -1,0 +1,8 @@
+<% @locations.each do |location| %>
+	<article>
+		<h1><%= location.title %></h1>
+		<h2><%= location.geo_string %></h2>
+		<h3><%= location.date_string %></h3>
+		<img src="<%= static_map_url(location.latitude, location.longitude) %>" />
+	</article>
+<% end %>

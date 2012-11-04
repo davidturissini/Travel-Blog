@@ -58,6 +58,10 @@ Adventureblog::Application.routes.draw do
 
 
   resources :users, {:path => ""} do 
+    resources :countries
+    resources :locations
+    resources :photos
+    resources :maps
     resources :trips, {:path => ""} do
       resources :maps
       resources :locations

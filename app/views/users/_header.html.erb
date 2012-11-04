@@ -1,0 +1,6 @@
+<header id="user-header">
+	<%= link_to user_path(user.slug) do %>
+		<img src="<%= user.photo.large %>" class="shadow rounded user-image" />
+		<h1 id="user" data-json="<%= user.to_json %>"><%= user.name %></h1>
+	<% end %>
+</header>

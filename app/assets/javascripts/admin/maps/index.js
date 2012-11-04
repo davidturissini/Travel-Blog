@@ -42,7 +42,8 @@ window.addEventListener("DOMContentLoaded", function () {
             autoUpdate:true
         }).render();
 
-        googleMap.render().maps().add(map);
+        googleMap.render();
+        googleMap.drawMap(map);
 
         var removeElem = elem.getElementsByClassName("remove").item(0);
         removeElem.addEventListener("click", function () {

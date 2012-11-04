@@ -1,7 +1,6 @@
 class MapsController < ApplicationController
 	def index
-		user = User.find_by_slug(params[:user_id])
-		@trip = user.trips.find_by_slug(params[:trip_id])
-		@maps = @trip.maps
+		@user = User.find_by_slug(params[:user_id])
+		@maps = @user.maps
 	end
 end

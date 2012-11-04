@@ -10,10 +10,10 @@ var DynamicTextarea = Backbone.View.extend({
 			var style = getComputedStyle(this.el),
 			vertPadding = parseInt(style.paddingTop) + parseInt(style.paddingBottom);
 
-			this.el.style.height = this.el.offsetHeight - vertPadding - 1 + "px";
+			this.el.style.height = this.el.offsetHeight - vertPadding - 10 + "px";
 			this.resize();
 		} else if ( this.el.offsetHeight < this.el.scrollHeight ) {
-			this.el.style.height = this.el.scrollHeight - vertPadding - 1 + "px";
+			this.el.style.height = this.el.scrollHeight - vertPadding - 10 + "px";
 		}
 	},
 	render:function () {

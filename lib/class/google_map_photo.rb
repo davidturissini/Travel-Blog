@@ -3,6 +3,10 @@ class GoogleMapPhoto
 		@location = location
 	end
 
+	def small
+		build_image_string 100, 100, 10
+	end
+
 	def url
 		build_image_string
 	end

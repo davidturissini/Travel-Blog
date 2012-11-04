@@ -1,0 +1,12 @@
+<div class="location-infowindow">
+	<article class="trip">
+		<%= link_to user_trip_path(:user_id => @location.trip.user.slug, :id => @location.trip.slug) do %>
+			<img src="<%= @location.trip.picture.small %>" class="rounded shadow" />
+			<div>
+				<h1><%= @location.trip.title %></h1>
+				<h2><%= @location.geo_string %></h2>
+				<h3><%= @location.date_string %></h3>
+			</div>
+		<% end %>
+	</article>
+</div>

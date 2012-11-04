@@ -62,12 +62,14 @@ var Location = Backbone.Model.extend({
         this._trip = trip;
         this.set({trip_id:trip.id});
     },
+    user:function () {
+        return this._user;
+    },
+    setUser:function (user) {
+        this._user = user;
+    },
     trip:function () {
         return this._trip;
-    },
-    setLocationType: function (locType) {
-        this.locationType = locType
-        this.setUser(locType.user)
     },
     hasLatLng: function () {
         return this.has("latitude") && this.has("longitude")

@@ -1,0 +1,26 @@
+<nav id="user-nav">
+	<ul>
+		<li class="trips">
+			<%= link_to "#{pluralize(user.trips.count, 'Trip')}", user_trips_path(:user_id => user.slug) %>
+		</li>
+		<li class="locations">
+			<%= link_to pluralize(user.locations.count, 'Place'), user_locations_path(:user_id => user.slug) %>
+		</li>
+		<li class="countries">
+			<%= link_to pluralize(user.countries_count, 'Country'), user_countries_path(:user_id => user.slug) %>
+		</li>
+		<li class="maps">
+			<%= link_to pluralize(user.maps.count, 'Map'), user_maps_path(:user_id => user.slug) %>
+		</li>
+	</ul>
+	<% if !current_user.anonymous? %>
+		<ul class="admin">
+			<li>
+				<%= link_to "Add new trip", new_trip_path %>
+			</li>
+			<li>
+				<%= link_to "Edit trips", "/" %>
+			</li>
+		</ul>
+	<% end %>
+</nav>

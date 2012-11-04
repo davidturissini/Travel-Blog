@@ -1,30 +1,25 @@
-<section id="user" class="grid-20-75" data-json="<%= @user.to_json %>" data-trips="<%= @user.trips.to_json %>">
-	<div class="column first">
-		<header id="user-header">
-			<img src="<%= @user.photo.large %>" class="rounded" />
-			<h1><%= @user.name %></h1>
-		</header>
-		<p><%= @user.description %></p>
-		<p><%= link_to "#{@user.trips.count} Trips", user_trips_path(:user_id => @user.slug) %></p>
-		<p><%= @user.locations.count %> Places</p>
-		<p><%= @user.countries_count %> Countries</p>
-	</div>
-	<div class="column last">
-		<figure id="map" class="map shadow"></figure>
-		<section id="trips">
-			<% @user_trips.each_pair do |year, trips| %>
-				<section class="year">
-					<h1 class="year-title"><%= year %></h1>
-					<% trips.each do |trip| %>
-						<article class="trip" data-json="<%= trip.to_json %>" data-locations="<%= trip.locations.to_json %>" data-maps="<%= trip.maps.to_json %>">
-							<%= link_to trip_path(trip) do %>
-								<h1><%= trip.title %></h1>
-								<img src="<%= trip.picture.url %>" class="rounded" />
-							<% end %>
-						</article>
+<h1 id="page-title"><%= @user.name %>'s Map</h1>
+<% if current_user === @user %>
+	<%= render "admin/global/create_new_link", 
+        :text => "Add a trip", 
+        :url => new_trip_path %>
+<% end %>
+<figure id="map" class="map shadow"></figure>
+<section id="trips">
+	<% @user_trips.each_pair do |year, trips| %>
+		<section class="year">
+			<h1 class="year-title"><%= year %></h1>
+			<% trips.each do |trip| %>
+				<article class="trip" data-json="<%= trip.to_json %>" data-locations="<%= trip.locations.to_json %>" data-maps="<%= trip.maps.to_json %>">
+					<%= link_to trip_path(trip) do %>
+						<h1><%= trip.title %></h1>
+						<img src="<%= trip.picture.url %>" class="shadow rounded" />
+						<% if current_user.owns?(trip) %>
+							<%= link_to "Edit", edit_trip_path(trip), :class => "edit-link" %>
+						<% end %>
 					<% end %>
-				</section>
+				</article>
 			<% end %>
 		</section>
-	</div>
+	<% end %>
 </section>
