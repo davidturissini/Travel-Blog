@@ -137,7 +137,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .trips-show #trip #photos figure.hero { z-index:1000; }
 .trips-show #trip #photos figure figcaption { display:none; }
 .trips-show #trip #photos figure img { display:block; max-width:100px; }
-.trips-show #trip #photos figure:hover { z-index:101; background:#069; cursor:pointer; }
+.trips-show #trip #photos figure:hover { z-index:100\1; background:#069; cursor:pointer; }
 .trips-show #trip #photos figure { display:none; }
 .trips-show #trip #photos figure.shuffled { display:block; }
 .trips-show #trip #photos figure.hero img, 
