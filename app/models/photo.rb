@@ -1,3 +1,5 @@
+require 'RMagick'
+
 class Photo < ActiveRecord::Base
 	has_and_belongs_to_many :trips, :join_table => "trips_photos"
 	include HasSlug
