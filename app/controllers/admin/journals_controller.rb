@@ -5,6 +5,7 @@ class Admin::JournalsController < Admin::AdminController
 	end
 
 	def new
+		@user = current_user
 		@trip = current_trip
 		@journal = @trip.journals.new
 	end

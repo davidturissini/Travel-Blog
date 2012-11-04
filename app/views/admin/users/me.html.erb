@@ -1,14 +1,4 @@
 <section id="user" class="admin-user-show" data-json="<%= @user.to_json %>" data-realms="<%= @user.realm_accounts.to_json %>">
-    <header id="user-header" class="autoclear">
-        <div class="user-picture">
-			<%= image @user.photo.url, :class => "rounded user-image", :width => 80 %>
-			<a class="user-button user-image-button rounded">Change Picture</a>
-		</div>
-        <h1 id="page-title"><%= link_to "Hello, #{@user.name}", user_path(@user.slug) %></h1>
-        <%= render "admin/global/create_new_link", 
-            :text => "Add a trip", 
-            :url => new_trip_path %>
-    </header>
     <section id="user-trips" class="content-grid two-col">
         <% current_user.trips.each do |trip| %>
         	<article class="trip content" data-json="<%= trip.to_json %>">

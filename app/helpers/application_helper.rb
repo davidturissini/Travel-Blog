@@ -22,6 +22,10 @@ module ApplicationHelper
  	end
  end
 
+ def welcome_screen?
+ 	params[:controller] == "welcome" && current_user.anonymous?
+ end
+
  def flickr_photoset_url set_params
  	"http://farm#{set_params["farm"]}.staticflickr.com/#{set_params["server"]}/#{set_params['primary']}_#{set_params['secret']}_q.jpg"
  end

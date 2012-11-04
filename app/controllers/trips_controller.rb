@@ -1,6 +1,6 @@
 class TripsController < ApplicationController
 	def show
-		@user = current_user
+		@user = User.find_by_slug(params[:user_id])
 		@trip = @user.trips.find_by_slug(params[:id])
 		@page_title = "#{@trip.title}"
 		@og_image = @trip.picture.url

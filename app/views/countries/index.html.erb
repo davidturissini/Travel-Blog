@@ -1,16 +1,13 @@
-<h1 id="page-title">Trips by Country</h1>
 <section class="countries">
 	<% @countries.each_pair do |country, trips| %>
 		<section class="country">
 			<h1><%= country %></h1>
 			<h2 class="trips-count"><%= pluralize(trips.length, 'Trip') %></h2>
-			<% trips.each do |trip| %>
-				<article class="trip">
-					<%= link_to user_trip_path(:user_id => trip.user.slug, :id => trip.slug) do %>
-						<h2><%= trip.title %></h2>
-					<% end %>
-				</article>
-			<% end %>
+			<div class="content-grid two-col autoclear">
+				<% trips.each do |trip| %>
+					<%= render "global/trip_grid", :trip => trip %>
+				<% end %>
+			</div>
 		</section>
 	<% end %>
 </section>

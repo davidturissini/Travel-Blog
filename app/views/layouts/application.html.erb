@@ -20,13 +20,17 @@
 		</header>
 		<%= render_admin_ribbon %>
 		<div id="container" class="grid-20-75 autoclear">
-			<div class="column first">
-				<%= render "users/header", :user => @user %>
-				<%= render "users/nav", :user => @user %>
-			</div>
-			<div class="column last">
+			<% if welcome_screen? %>
 				<%= yield %>
-			</div>
+			<% else %>
+				<div class="column first">
+					<%= render "users/header", :user => @user %>
+					<%= render "users/nav", :user => @user %>
+				</div>
+				<div class="column last">
+					<%= yield %>
+				</div>
+			<% end %>
 			<%= yield :below_content %>
 		</div>
 		<footer id="site-footer">

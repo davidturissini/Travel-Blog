@@ -1,5 +1,5 @@
-<aside id="trip-links" class="content-grid autoclear">
-	<section id="journal" class="content rounded">
+<aside id="admin-trip-links" class="content-grid">
+	<section id="trip-journal" class="content rounded">
 		<% if trip.journals.count > 0 %>
 			<h1>Journal</h1>
 			<article>
@@ -13,7 +13,7 @@
 			<%= link_to "", new_journal_path(trip.slug), :class => "content-link" %>
 		<% end %>
 	</section>
-	<section id="photos" class="content rounded">
+	<section id="trip-photos" class="content rounded">
 		<h1>Photos</h1>
 		<% if trip.photos.count > 0 %>
 			<div class="overflow">
@@ -29,7 +29,7 @@
 			<%= link_to "", trip_photos_new_path(trip.slug), :class => "content-link" %>
 		<% end %>
 	</section>
-	<section id="maps" class="content rounded">
+	<section id="trip-map" class="content rounded">
 		<h1>Maps</h1>
 		<% if trip.maps.count > 0 %>
 			<div id="trip-maps" class="map"></div>
@@ -40,7 +40,7 @@
 			<%= link_to "", new_map_path(trip), :class => "content-link" %>
 		<% end %>
 	</section>
-	<section id="geo" class="content rounded">
+	<section id="trip-geo" class="content rounded">
 		<h1>Locations</h1>
 		<figure id="trip-map" class="map clear"></figure>
 		<%= link_to "", edit_trip_locations_path(:trip_id => trip.slug), :class => "content-link" %>

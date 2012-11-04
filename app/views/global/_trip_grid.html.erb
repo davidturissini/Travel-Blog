@@ -1,0 +1,10 @@
+<article class="trip content" data-json="<%= trip.to_json %>" data-locations="<%= trip.locations.to_json %>" data-maps="<%= trip.maps.to_json %>">
+    <h1><%= trip.title %></h1>
+    <section class="date-field no-outline">
+        <%= trip.date_string %>
+    </section>
+    <% if trip.picture %>
+        <img src="<%= trip.picture.large %>" />
+    <% end %>
+    <%= link_to "", trip_path(trip), :class => "content-link trip-link" %>
+</article>

@@ -21,6 +21,11 @@
 	     	</ul>
 	    </nav>
 	</section>
-
+<% else %>
+	<section id="user-info" class="autoclear">
+		<%= link_to login_path("facebook") do %>
+			<%= image_tag "facebook-connect.png" %>
+		<% end %>
+	</section>
 <% end %>
 

@@ -1,3 +1,4 @@
+<%= render "admin/trips/footer", :trip => @trip, :trip_photos => @trip.photos %>
 <article id="trip" class="autoclear grid-20-75" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
 	<header>
 		<hgroup>
