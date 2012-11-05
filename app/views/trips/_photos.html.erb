@@ -15,14 +15,4 @@
 			<% end %>
 		</ul>
 	</section>
-	<% if current_user === trip.user %> 
-			<%= render "admin/global/create_new_link",
-				:text => "Add photos",
-				:url => new_trip_photos_path(trip)
-			%>
-			<%= render "admin/global/create_new_link",
-				:text => "Edit photos",
-				:url =>  photos_edit_path(trip)
-			%>
-		<% end %>
 <% end %>

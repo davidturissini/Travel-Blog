@@ -52,12 +52,13 @@ class Admin::TripsController < Admin::AdminController
 	end
 
 	 def new_photos
+	 	@user = current_user
 	 	@trip = current_trip
 	 end
 
 	 def edit_photos
 	 	@user = current_user
-	 	@trip = current_trip
+	 	@trip = @user.trips.find_by_slug(params[:trip_id])
 	 end
 
 	protected

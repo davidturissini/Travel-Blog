@@ -1,6 +1,7 @@
 require 'net/scp'
 class Admin::MapsController < Admin::AdminController
 	def new
+		@user = current_user
 		@trip = current_trip
 		@map = @trip.maps.new
 	end
