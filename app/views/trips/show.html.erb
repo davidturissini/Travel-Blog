@@ -1,4 +1,5 @@
 <article id="trip" class="<%= "inline-form " if current_user.owns?(@trip) %>autoclear grid-20-75" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+	<%= render "trips/photos", :photos => @trip.photos, :trip => @trip %>
 	<header>
 		<hgroup>
 			<h1 class="trip-title" id="page-title">
@@ -8,7 +9,14 @@
 					<textarea id="trip-title" class="field"><%= @trip.title %></textarea>
 				<% end %>	
 			</h1>
-			<h2><%= @trip.date_string %></h2>
+			<% if current_user.owns?(@trip) %>
+				<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
+			<% else %>
+				<h2><%= @trip.date_string %></h2>
+			<% end %>
+			<% if current_user.owns?(@trip) %>
+				<a id="trip-delete" class="remove"></a>
+			<% end %>
 		</hgroup>
 	</header>
 	<% if current_user === @trip.user %>
@@ -41,7 +49,6 @@
 			<% end %>
 		</figure>
 	<% end %>
-	<%= render "trips/photos", :photos => @trip.photos, :trip => @trip %>
 	<% if @trip.journals.count > 0 %>
 		<section id="posts">
 			<% @trip.journals.each_with_index do |entry, idx| %>

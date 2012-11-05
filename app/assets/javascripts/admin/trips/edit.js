@@ -1,6 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( !/admin\-trips\-edit\s/.test(document.body.className) ) { return }
-
+	if( !/\strips\-show\s/.test(document.body.className) ) { return }
 	var trip = Trip.createFromDataAttribute(document.getElementById("trip")),
 	locationsCollection = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations"),
     maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps");
@@ -27,7 +26,7 @@ window.addEventListener("DOMContentLoaded", function () {
  	
  	new TripMap({
  		model:trip,
- 		el:document.getElementById("trip-map")
+ 		el:document.getElementById("trip-locations-map")
  	}).mergeMapOptions({
         disableDefaultUI:true,
         draggable:false
@@ -35,7 +34,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
     new TripMap({
         model:trip,
-        el:document.getElementById("trip-maps")
+        el:document.getElementById("admin-trip-maps")
     }).mergeMapOptions({
         disableDefaultUI:true,
         draggable:false

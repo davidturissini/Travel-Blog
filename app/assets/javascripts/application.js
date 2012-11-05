@@ -9,6 +9,7 @@
 //= require 'public/underscore'
 //= require 'public/backbone'
 //= require 'public/template'
+//= require './public/kalendae.min.js'
 //= require_tree ./public/models/
 //= require_tree './public/collections'
 //= require_tree ./public/views/
