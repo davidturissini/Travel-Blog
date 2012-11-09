@@ -1,0 +1,10 @@
+<div class="photo-dialog">
+	<figure>
+		<img src="<%= @photo.url %>" />
+		<% if @photo.title %>
+			<figcaption>
+				<%= @photo.title %>
+			</figcaption>
+		<% end %>
+	</figure>
+</div>

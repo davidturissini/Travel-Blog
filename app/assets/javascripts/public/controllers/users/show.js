@@ -44,5 +44,9 @@ window.addEventListener("DOMContentLoaded", function () {
 		});
 
 		infoWindow.show();
-	})
+	});
+
+	map.on("location_click", function (evt) {
+		window.location.href = evt.marker.model.trip().url();
+	});
 });

@@ -7,27 +7,18 @@ window.addEventListener("DOMContentLoaded", function () {
 	maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps"),
 	gallery = null,
 	mapOptions = {zoom:10,draggable:false,disableDefaultUI:true},
-	tripMapsEl = document.getElementById("trip-maps");
+	tripMapsEl = document.getElementById("trip-map");
 
 	trip.setUser(user);
 	trip.setLocations(locations);
 	trip.setMaps(maps);
 
-	var tripMap = new TripMap({
-		el:document.getElementById("trip-locations"),
+	var maps = new TripMap({
+		el:tripMapsEl,
 		model:trip
 	});
-	tripMap.mergeMapOptions(mapOptions);
-	tripMap.render().drawLocations();
-
-	if( tripMapsEl ) {
-		var maps = new TripMap({
-			el:tripMapsEl,
-			model:trip
-		});
-		maps.mergeMapOptions(mapOptions);
-		maps.render().drawMaps();
-	}
+	maps.mergeMapOptions(mapOptions);
+	maps.render().drawMaps().drawLocations();
 
 	if( !document.getElementById("photos") ) { return }
 	var locationPhotos = document.getElementById("photos").querySelectorAll("figure"),

@@ -1,0 +1,27 @@
+<section id="photos">
+	<section id="trip-photos" data-json="<%= @trip.to_json %>" class="autoclear three-col">
+		<% @photos.each do |photo| %>
+			<figure class="photo rounded content" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
+				<% if current_user.owns?(photo) %>
+					<form class="inline-form">
+						<textarea placeholder="Enter Title" class="field autosize photo-title"><%= photo.title %></textarea>
+						<div class="image-wrapper">
+							<a class="remove"></a>
+							<img src="<%= photo.url %>" width="200" />
+						</div>
+						<figcaption>
+							<textarea placeholder="Enter Description" class="field autosize photo-description"><%= photo.description %></textarea>
+						</figcaption>
+					</form>
+				<% else %>
+					<img src="<%= photo.url %>" width="200" />
+					<% if photo.title %>
+						<figcaption>
+							<h1><%= photo.title %></h1>
+						</figcaption>
+					<% end %>
+				<% end %>
+			</figure>
+		<% end %>
+	</section>
+</section>

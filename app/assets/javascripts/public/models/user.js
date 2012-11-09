@@ -31,12 +31,7 @@ var User = Backbone.Model.extend((function () {
 			return "http://" + TA.config.static.domain + "/" + TA.config.static.user_path + this.get("slug") + "/";
 		},
 		url: function (e) {
-			e = e || {}
-			if( this.isCurrentUser() ) {
-				var url = "/me"
-				return url;
-			}
-			return "/" + this.get("slug")
+			return "/" + this.get("slug");
 		} ,
 		isCurrentUser:function () {
 			if( !TA.currentUser ) { return false }

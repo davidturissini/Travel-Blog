@@ -63,8 +63,10 @@ Adventureblog::Application.routes.draw do
     resources :photos
     resources :maps
     resources :trips, {:path => ""} do
-      resources :maps
-      resources :locations
+      resources :maps, :only => [:show, :index]
+      resources :locations, :only => [:show, :index]
+      resources :journals, :only => [:show, :index]
+      resources :photos, :only => [:show, :index]
     end
   end
 end

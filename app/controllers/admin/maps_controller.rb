@@ -7,6 +7,7 @@ class Admin::MapsController < Admin::AdminController
 	end
 
 	def index
+		@user = current_user
 		@trip = current_trip
 		@maps = @trip.maps
 	end

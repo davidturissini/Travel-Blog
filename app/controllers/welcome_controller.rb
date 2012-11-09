@@ -19,7 +19,7 @@ class WelcomeController < ApplicationController
  private
  def user_home
  	@user = current_user
- 	redirect_to "/me"
+ 	redirect_to user_path(:id => @user.slug)
  end
 
  def anonymous_welcome_screen

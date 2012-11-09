@@ -3,7 +3,6 @@ var GoogleMap = Backbone.View.extend((function () {
 	var _markers = [];
 
 	return {
-
 		initialize:function () {
 			var view = this;
 

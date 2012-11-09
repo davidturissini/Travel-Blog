@@ -81,10 +81,9 @@ var ModalDialog = Backbone.View.extend({
   },
   appendCloseButton:function () {
     var dialog = this;
-    if( dialog.el.querySelector(".close") !== null ) { return }
+    if( dialog.el.querySelector(".remove") !== null ) { return }
     var close = document.createElement("a");
-    close.className = "close";
-    close.innerHTML = "x";
+    close.className = "remove";
     close.addEventListener("click", function () {
       dialog.close();
     });

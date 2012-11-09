@@ -1,5 +1,6 @@
 class Admin::JournalsController < Admin::AdminController
 	def index
+		@user = current_user
 		@trip = current_trip
 		@journals = @trip.journals
 	end
