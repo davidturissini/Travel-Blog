@@ -43,9 +43,6 @@ Adventureblog::Application.routes.draw do
   match '/me/:trip_id/journal/:journal_id' => "admin/journals#update", :via => :put, :user_id => "me", :as => "update_journal"
   match '/me/:trip_id/journal/:journal_id' => "admin/journals#destroy", :via => :delete, :user_id => "me", :as => "update_journal"
   match '/me/:trip_id/photos' => "admin/trips#edit_photos", :user_id => "me", :as => "trip_photos_edit"
-  match '/me/:trip_id/photos/new' => "admin/trips#new_photos", :user_id => "me", :as => "trip_photos_new"
-  match '/me/:trip_id/photos/:slug' => "admin/photos#delete", :user_id => "me", :via => "delete"
-  match '/me/:trip_id/photos/:slug' => "admin/photos#update", :user_id => "me"
   match '/me/:trip_id/edit' => "admin/trips#edit", :user_id => "me"
   match "/:user_id/template/:path" => "admin/template#load"
 
@@ -54,19 +51,21 @@ Adventureblog::Application.routes.draw do
   resources :countries, :only => [:index]
 
   match '/:user_id' => "users#show"
-  match '/:user_id/new' => "location_types#new"
 
-
-  resources :users, {:path => ""} do 
+  resources :users, :path => "" do 
     resources :countries
     resources :locations
     resources :photos
     resources :maps
-    resources :trips, {:path => ""} do
+    resources :trips, :only => [:show, :index], :path => "" do
+      resources :maps, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/maps"
       resources :maps, :only => [:show, :index]
       resources :locations, :only => [:show, :index]
+      resources :journals, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/journals"
       resources :journals, :only => [:show, :index]
+      resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos"
       resources :photos, :only => [:show, :index]
     end
+    resources :trips, :path => "", :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/trips"
   end
 end

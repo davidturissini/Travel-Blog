@@ -76,7 +76,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .map { height:400px; }
 .map-active .map { box-shadow:0px 5px 10px #000; }
 
-#page-title { position:relative; margin-bottom:10px; text-align:center; font-size:4em; }
+#page-title { position:relative; text-align:left; font-size:2em; }
 
 /* WELCOME PAGE */
 .welcome-index #hero { margin:30px auto 0; text-align:center; vertical-align:middle; }
@@ -123,7 +123,12 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .trips-show #trip header { margin:20px auto 0; text-align:center; padding-bottom:30px; }
 .trips-show #trip header .trip-title { text-align:center; font-size:4em; }
 .trips-show #trip header h2 { font-size:1em; text-align:center; }
-.trips-show #trip header img { box-shadow:0 0 10px #000; }
+.trips-show #trip header #trip-photo { position:relative; display:inline-block; z-index:10; margin:20px auto; width:auto; text-align:center; }
+.trips-show #trip header #trip-photo img { max-height:290px; }
+.trips-show #trip header #trip-photo figcaption { display:none; }
+.trips-show #trip header #trip-photo figcaption a { position:absolute; left:0px; right:0px; bottom:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: 1.2em; line-height:1; cursor:pointer; }
+.trips-show #trip header #trip-photo:hover figcaption { display:block; }
+.trips-show #trip header figcaption { display:none; }
 .trips-show #trip figure { margin:0 0 30px; }
 .trips-show #trip figure h1 { margin-bottom:20px; font-size:1.324em; text-align:center; }
 .trips-show #trip figure.locations { font-size:1.2em; }
@@ -178,27 +183,30 @@ textarea.autosize { overflow:hidden; }
 
 /* INLINE FORM */
 .inline-form textarea { padding:3px; resize:none; border:0; background:#fff; height:auto; }
-.inline-form .field { background:#fff; outline:1px dashed #ccc; }
+.inline-form .field { width:100%; background:#fff; outline:1px dashed #ccc; }
 .inline-form .field:focus { outline:1px dashed #b1b1b1; }
 
 /* GENERIC GRIDS */
 .grid-20-75 .column.first { float:left; margin-left:40px; width:184px; }
-.grid-20-75 .column.last { overflow:hidden; margin:0 0 0 224px; padding:40px; min-height:370px; border-left:1px solid #ccc; }
-
+.grid-20-75 .column.last { overflow:hidden; margin:0 0 0 224px; min-height:500px; border-left:1px solid #ccc; }
+.grid-20-75 .pad { padding:40px; }
+.grid-20-75 .pad-down { padding:0 40px 40px; }
 /* CONTENT GRIDS */
-.content-grid { margin:20px 0; }
-.content-grid .content { position:relative; margin-bottom:20px; padding:2%; width:45%; border:1px solid #b1b1b1; color:#333;
-	box-shadow:-1px 1px 15px #666;
+.content-grid { background:#000; }
+.content-grid .content { display:inline-block; position:relative; width:19%; height:150px; color:#333; opacity:.7; overflow:hidden; text-align:center;
+	-webkit-transition:opacity 500ms;
 }
-@media all and (max-width: 900px) {
-	.content-grid .content { width:95%; }
-	.content-grid .content img { max-height:500px; }
-}
+.content-grid .content.highlighted { position:relative; opacity:1; }
+.content-grid .content:hover { opacity:1; }
+.content-grid .content.highlighted h1,
+.content-grid .content :hover h1 { bottom:0; }
 .content-grid .content:hover .remove { display:block; }
-.content-grid .content h1 { font-size:1.53em; margin-bottom:10px; text-align:left; }
+.content-grid .content h1:not(:empty) { display:block; position:absolute; left:0; right:0; bottom:-100%; padding:5px; text-align:left; font-size:12px; line-height:1; color:#fff; background:rgba(0, 0, 0, .8);
+	-webkit-transition:bottom 500ms;
+}
 .content-grid .content textarea { margin-top:5px; width:99%; color:#333; }
 .content-grid .content input { padding:5px 0; }
-.content-grid .content img { display:block; margin:0 auto; max-width:100%; }
+.content-grid .content img { min-height:100%; min-width:100%; }
 .content-grid .content .content-link { display:block; position:absolute; z-index:1; left:0; right:0; top:0; bottom:0; color:#000; }
 .content-grid .content .content-link:hover { 
 	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxsaW5lYXJHcmFkaWVudCBpZD0iZzEiIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIiB4MT0iMCUiIHkxPSIwJSIgeDI9IjAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSJyZ2JhKDI1NSwgMjU1LCAyNTUsIDApIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDAuMjI5KSIvPjwvbGluZWFyR3JhZGllbnQ+PHJlY3QgeD0iMCIgeT0iMCIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNnMSkiIC8+PC9zdmc+);
@@ -208,13 +216,13 @@ textarea.autosize { overflow:hidden; }
 	background-image: -ms-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.229) 100%);
 	background-image: -o-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.229) 100%);
 	background-image: linear-gradient(to bottom, rgba(255, 255, 255, 0) 0%, rgba(0, 0, 0, 0.229) 100%);
-
 }
+.content-grid .content:hover h1 { bottom:0; }
 
-.content-grid.two-col .content { float:right; }
-.content-grid.two-col .content:nth-child(2n) { float:left; }
+.content-grid .row { padding:40px; background:#fff; border-top:3px solid #000; border-bottom:3px solid #000; }
+.content-grid .row:first-child { border-top:0; }
 
-.content-grid.three-col .content { display:inline-block; width:28%; vertical-align:middle; }
+.content-grid .breadcrumb { padding:0; }
 
 .date-field { position:relative; margin:0 0 10px 0; padding:5px; outline:2px dashed #b1b1b1; cursor:pointer; font-size:.8463em; line-height:1.253em; }
 .date-field.no-outline { outline:0; }
@@ -226,6 +234,12 @@ textarea.autosize { overflow:hidden; }
 .date-field label { color:#b1b1b1; }
 .date-field.has-date:hover .reset { line-height:1; opacity:1; }
 .date-field.has-date label { display:none; }
+
+/* JOURNAL */
+.journal a { color:inherit; }
+.journal a:hover { color:#069; }
+.journal .journal-title { margin-bottom:10px; font-size:1.4em; }
+.journal .journal-body p { margin-bottom:20px; line-height:1.5; }
 
 /* ADMIN JOURLANS INDEX */
 .admin-journals-index #journals { margin:20px 0; }
@@ -249,8 +263,8 @@ textarea.autosize { overflow:hidden; }
 /* ADMIN TRIP LINKS */
 #trip-links { margin:0; padding-bottom:30px; text-align:center; }
 #trip-links .map { height:100% !important; }
-#trip-links section { display:inline-block; position:relative; margin-left:1%; margin-right:2%; margin-bottom:0; height:100px; width:20%; padding:0; text-align:center; vertical-align:middle; }
-#trip-links section a { display:block; width:100%; height:100%; color:#b8b8b8; }
+#trip-links section { display:inline-block; position:relative; margin-left:1%; margin-right:2%; margin-bottom:0; height:200px; width:20%; padding:0; text-align:center; vertical-align:middle; }
+#trip-links section a { display:block; position:absolute; top:0; right:0; bottom:0; left:0; color:#b8b8b8; }
 #trip-links section h1 { position:absolute; left:0; right:0; bottom:-40px; font-size:1em; text-align:center; }
 #trip-links section#trip-journal .mask { position:absolute; left:0; right:0; bottom:0; top:0;
 	background:-webkit-linear-gradient(bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 50%);
@@ -268,6 +282,10 @@ textarea.autosize { overflow:hidden; }
 @media all and (max-width: 980px) {
 	#trip-links section { margin-bottom:50px; width:100%; }
 }
+
+/* PHOTOS INDEX */
+.photos-index .column.last { background:#000; }
+.photos-index .column.last .photo { cursor:pointer; }
 
 /* ADMIN TRIP NEW */
 .admin-trips-new #trip-title { margin-bottom:20px; width:100%; font-size:1.342em; }
@@ -308,11 +326,11 @@ textarea.autosize { overflow:hidden; }
 .admin-locations-index #trip-locations article img { display:block; margin:10px auto 0; border:1px solid #ccc; }
 
 /* PHOTO UPLOADER */
-#photo-upload { position:relative; margin-top:20px; }
+#photo-upload { position:relative; }
 #photo-upload header { margin-bottom:20px; text-align:center; color:#b8b8b8; }
 #photo-upload header h1 { font-size:1.234em; }
 #photo-upload header span { display:block; margin:5px 0; }
-#photo-upload header #native-photos { float:left; margin-top:15px; margin-left:330px; }
+#photo-upload header #native-photos { float:left; margin-left:280px; }
 #photo-upload header #third-party-photos { float:right; margin-right:300px; }
 #photo-upload header input { width:88px; }
 
@@ -407,7 +425,7 @@ nav#user-nav li:first-child { border-top:0; }
 .location-infowindow div { display:inline-block; vertical-align:top; }
 
 /* USERS SHOW PAGE */
-.users-show #trips .year { margin:40px 0; padding-top:20px; border-top:1px solid #b1b1b1; }
+.users-show #trips { margin:0; }
 .users-show #trips .year .year-title { font-size:1.4em; }
 
 #user-form .user-geo label { display:block; }
@@ -417,10 +435,7 @@ nav#user-nav li:first-child { border-top:0; }
 .maps-index .map { height:600px; }
 
 /* COUNTRIES INDEX PAGE */
-.countries-index .last .countries { margin-bottom:40px; }
-.countries-index .last .countries .country a { display:block; padding:10px 0; font-size:1.2em; }
-.countries-index .last .countries .country h1 { font-size:1.4em; }
-.countries-index .last .countries .country .trips-count { margin-bottom:20px; padding-bottom:20px; border-bottom:1px solid #b1b1b1; }
+.countries-index .last .countries .country header h1 { font-size:1.4em; }
 
 /* USER GLOBAL BUTTONS */
 .user-button { border-bottom:1px transparent; color:#333; }
@@ -462,10 +477,10 @@ nav#user-nav li:first-child { border-top:0; }
 .tabs.open .close { display:block; }
 
 /* BREADCRUMB */
-.breadcrumb { margin-bottom:20px; padding:0 0 10px 0; }
-.breadcrumb li { display:inline; }
+.breadcrumb { padding:20px 40px; border-bottom:1px solid #ccc; font-size:1.6em; background:#fff; }
+.breadcrumb li { display:inline; line-height:1.2em; }
 .breadcrumb li:first-child:before { content:""; padding:0; }
-.breadcrumb li:before { content:"»"; padding:0 5px; font-size:.843em; }
+.breadcrumb li:before { content:"»"; padding:0 5px; font-size:.843em; vertical-align:top; }
 .breadcrumb li a { font-weight:bold; }
 
 /* ADMIN TABS */
@@ -497,17 +512,6 @@ nav#user-nav li:first-child { border-top:0; }
 .modal-dialog .viewfinder #user-flickr-sets h3 { display:none; position:absolute; left:0; bottom:0; right:0; padding:5px; color:#fff; background:rgba(0, 0, 0, .7); }
 .modal-dialog .viewfinder #user-flickr-sets li:hover h3 { display:block; }
 
-/* photos index */
-.photos-index .grid-20-75 .column.last { padding:0; background:#000; }
-.photos-index .grid-20-75 .column.last .photo { position:relative; display:inline-block; margin-bottom:5px; width:24%; max-height:150px; line-height:.5em; font-size:200px; overflow:hidden; vertical-align:middle; text-align:center; opacity:.6; cursor:pointer;
-	-webkit-transition:opacity 500ms;
-}
-.photos-index .grid-20-75 .column.last .photo:hover { opacity:1; }
-.photos-index .grid-20-75 .column.last .photo figcaption { display:none; position:absolute; left:0; right:0; bottom:0; padding:5px; text-align:left; font-size:12px; line-height:1; color:#fff; background:rgba(0, 0, 0, .8); }
-.photos-index .grid-20-75 .column.last .photo img { width:100%; vertical-align:middle; }
-.photos-index .grid-20-75 .column.last .photo.highlighted { position:relative; box-shadow:0 0 20px #666; opacity:1; }
-
-.photos-index .grid-20-75 .column.last .photo:hover figcaption { display:block; }
 
 /* CREATE NEW */
 a.create-new { display:inline-block; position:relative; margin-left:1.0714em; margin-bottom:1.4285em; padding:.6143em .6143em .6143em 2.8571em; border-radius:1.5em; border:3px solid #ccc; color:#ccc; font-size:10px; }
@@ -550,7 +554,9 @@ body.loading > .loading-ui { position:fixed; left:0; right:0; top:0; bottom:0; }
 	-webkit-transition:opacity linear 500ms;
 }
 .modal-dialog.visible { opacity: 1; }
-.modal-dialog .viewfinder { position:relative; padding:20px; max-width:750px; background:#fff; box-shadow: 0px 0px 70px #000; }
+.modal-dialog .viewfinder { position:relative; padding:20px; max-width:80%; background:#fff; box-shadow: 0px 0px 70px #000; }
 .modal-dialog .viewfinder h1 { margin-right:30px; padding-bottom:20px; font-size:22px; }
 .modal-dialog .remove { display:block; }
 .modal-dialog .map { margin:0px; padding:0px; width:680px; height:400px; }
+
+.photo-dialog img { max-height:70%; max-width:100%; }

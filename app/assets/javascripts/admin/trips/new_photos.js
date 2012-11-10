@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
-  if( !/admin\-trips\-new_photos/.test(document.body.className) ) { return }
+  if( !/admin\-photos\-new/.test(document.body.className) ) { return }
 
   /*
 
@@ -29,7 +29,6 @@ window.addEventListener("DOMContentLoaded", function () {
     });
 
     photoUploader.render();
-
 
   /* 
 

@@ -22,7 +22,6 @@ window.addEventListener("DOMContentLoaded", function () {
 	tripMap.on("location_click", function (e) {
 		var location = e.location;
 
-
 		if( !location.infowindow ) {
 			location.infowindow = new LocationInfowindow({
 				model:location,

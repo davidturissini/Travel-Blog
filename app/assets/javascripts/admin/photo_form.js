@@ -2,7 +2,7 @@ var PhotoForm = Backbone.View.extend({
 	__bindRemoveButton:function () {
 		var form = this,
 		photo = this.model,
-		button = this.el.getElementsByClassName("remove").item(0);
+		button = this.el.getElementsByClassName("delete").item(0);
 		button.addEventListener("click", function (e) {
 			if( confirm("Delete photo?") ) {
 				form.el.parentNode.removeChild(form.el);

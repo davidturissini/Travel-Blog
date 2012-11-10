@@ -1,17 +1,19 @@
-<header id="content-header">
-	<%= render "admin/global/breadcrumb", 
-		:trip => @trip,
-		:crumbs => [
-			{ :title => "Journal", :url => admin_journals_path(@trip.slug) }
-			],
-		:page => "New Entry" 
-		%>
-</header>
-<article id="journal" data-trip="<%= @trip.to_json %>">
-	<form class="journal-form">
-		<%= render "form", :journal => @journal %>
-		<footer class="buttons">
-			<input type="submit" id="journal-save" value="Save" />
-		</footer>
-	</form>
-</article>
+<div class="pad">
+	<header id="content-header">
+		<%= render "admin/global/breadcrumb", 
+			:trip => @trip,
+			:crumbs => [
+				{ :title => "Journal", :url => admin_journals_path(@trip.slug) }
+				],
+			:page => "New Entry" 
+			%>
+	</header>
+	<article id="journal" data-trip="<%= @trip.to_json %>">
+		<form class="journal-form">
+			<%= render "form", :journal => @journal %>
+			<footer class="buttons">
+				<input type="submit" id="journal-save" value="Save" />
+			</footer>
+		</form>
+	</article>
+</div>

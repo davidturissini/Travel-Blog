@@ -11,14 +11,20 @@ class Admin::PhotosController < Admin::AdminController
 		render :json => photo
 	end
 
+	def new
+		@user = current_user
+		@trip = current_user.trips.find_by_slug(params[:trip_id])
+		@location = @trip.locations.new
+	end
+
 	def index
 		trip = current_user.trips.find_by_slug(params[:trip_id])
 		render :json => trip.photos.to_json
 	end
 
-	def delete
+	def destroy
 		trip = current_user.trips.find_by_slug(params[:trip_id])
-		photo = trip.photos.find_by_slug(params[:slug])
+		photo = trip.photos.find_by_slug(params[:id])
 		photo.destroy
 		render :json => photo
 	end

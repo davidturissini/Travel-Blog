@@ -1,0 +1,15 @@
+<header>
+	<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Journal" %>
+</header>
+<section class="pad-down">
+	<% @journals.each do |journal| %>
+		<article class="journal">
+			<%= link_to user_trip_journal_path(:user_id => journal.user.slug, :trip_id => journal.trip.slug, :id => journal.slug) do %>
+				<% if journal.title %>
+					<h1 class="journal-title"><%= journal.title %></h1>
+				<% end %>
+				<div class="journal-body"><%= journal.body.html_safe %></div>
+			<% end %>
+		</article>
+	<% end %>
+</section>

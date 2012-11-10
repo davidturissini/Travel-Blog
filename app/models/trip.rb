@@ -32,9 +32,10 @@ class Trip < ActiveRecord::Base
 
  	def self.by_year
  		years = {}
- 		scoped.each do |trip|
- 			years[trip.year] = [] if !years[trip.year]
- 			years[trip.year].push(trip)
+ 		scoped.order("start_date DESC").each do |trip|
+ 			year = trip.year.nil? ? "" : trip.year
+ 			years[year] = [] if !years[year]
+ 			years[year].push(trip)
  		end
  		years
  	end
@@ -50,6 +51,7 @@ class Trip < ActiveRecord::Base
 	end
 
 	def year
+		return nil if !has_dates?
 		start_date.strftime("%Y")
 	end
 end

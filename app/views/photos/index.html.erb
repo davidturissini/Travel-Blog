@@ -1,26 +1,19 @@
 <section id="photos">
-	<section id="trip-photos" data-json="<%= @trip.to_json %>" class="autoclear three-col">
+	<header class="row">
+		<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Photos" %>
+		<% if @trip.user == current_user %>
+			<%= render "admin/global/create_new_link",
+				:text => "Add photos",
+				:url => new_user_trip_photo_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) %>
+		<% end %>
+	</header>
+	<section id="trip-photos" data-json="<%= @trip.to_json %>" class="autoclear content-grid three-col">
 		<% @photos.each do |photo| %>
 			<figure class="photo rounded content" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
-				<% if current_user.owns?(photo) %>
-					<form class="inline-form">
-						<textarea placeholder="Enter Title" class="field autosize photo-title"><%= photo.title %></textarea>
-						<div class="image-wrapper">
-							<a class="remove"></a>
-							<img src="<%= photo.url %>" width="200" />
-						</div>
-						<figcaption>
-							<textarea placeholder="Enter Description" class="field autosize photo-description"><%= photo.description %></textarea>
-						</figcaption>
-					</form>
-				<% else %>
-					<img src="<%= photo.url %>" width="200" />
-					<% if photo.title %>
-						<figcaption>
-							<h1><%= photo.title %></h1>
-						</figcaption>
-					<% end %>
-				<% end %>
+				<img src="<%= photo.url %>" width="200" />
+				<figcaption>
+					<h1><%= photo.title %></h1>
+				</figcaption>
 			</figure>
 		<% end %>
 	</section>

@@ -5,6 +5,6 @@
 		],
 	:page => "New"
 %>
-<section id="trip" data-json="<%= @trip.to_json %>">
+<section id="trip" class="pad" data-json="<%= @trip.to_json %>">
 	<%= render "admin/global/photo_uploader", :obj => @trip %>
 </section>

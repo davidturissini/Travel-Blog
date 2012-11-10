@@ -5,11 +5,6 @@ class Admin::LocationsController < Admin::AdminController
 	   render :json => @location
 	 end
 
-	 def new
-	 	@trip = current_trip
-	 	@location = @trip.locations.new
-	 end
-
 	 def index
 	 	@trip = current_user.trips.find_by_slug(params[:trip_id])
 	 	@locations = @trip.locations

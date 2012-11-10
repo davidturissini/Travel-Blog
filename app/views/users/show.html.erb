@@ -1,11 +1,12 @@
-<figure id="map" class="map shadow"></figure>
 <section id="trips">
-	<% @user_trips.each_pair do |year, trips| %>
-		<section class="year">
-			<h1 class="year-title"><%= year %></h1>
-			<h2 class="trips-count"><%= pluralize(trips.length, 'Trip') %></h2>
-			<div class="content-grid two-col autoclear">
-				<% trips.each do |trip| %>
+	<% @user_trips.keys.sort.reverse.each do |year| %>
+		<section class="year content-grid two-col">
+			<header class="row">
+				<h1 class="year-title"><%= year %></h1>
+				<h2 class="trips-count"><%= pluralize(@user_trips[year].length, 'Trip') %></h2>
+			</header>
+			<div class="autoclear">
+				<% @user_trips[year].each do |trip| %>
 					<%= render "global/trip_grid", :trip => trip %>
 				<% end %>
 			</div>

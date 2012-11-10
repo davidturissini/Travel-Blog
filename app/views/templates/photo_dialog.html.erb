@@ -1,10 +1,24 @@
 <div class="photo-dialog">
 	<figure>
-		<img src="<%= @photo.url %>" />
-		<% if @photo.title %>
-			<figcaption>
-				<%= @photo.title %>
-			</figcaption>
+		<% if current_user.owns?(@photo) %>
+			<form class="inline-form">
+				<textarea placeholder="Enter Title" class="field autosize photo-title"><%= @photo.title %></textarea>
+				<div class="image-wrapper">
+					<img src="<%= @photo.large %>" />
+				</div>
+				<figcaption>
+					<textarea placeholder="Enter Description" class="field autosize photo-description"><%= @photo.description %></textarea>
+
+					<a class="edit-link delete">Delete photo</a>
+				</figcaption>
+			</form>
+		<% else %>
+			<img src="<%= @photo.url %>" />
+			<% if @photo.title %>
+				<figcaption>
+					<%= @photo.title %>
+				</figcaption>
+			<% end %>
 		<% end %>
 	</figure>
 </div>

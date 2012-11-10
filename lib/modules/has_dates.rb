@@ -1,4 +1,7 @@
 module HasDates
+	def has_dates?
+		return !(start_date.nil? && start_date.nil?)
+	end
 	def has_date_range?
 		!end_date.nil?
 	end

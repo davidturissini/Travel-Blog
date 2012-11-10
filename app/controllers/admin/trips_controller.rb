@@ -58,12 +58,12 @@ class Admin::TripsController < Admin::AdminController
 
 	 def edit_photos
 	 	@user = current_user
-	 	@trip = @user.trips.find_by_slug(params[:trip_id])
+	 	@trip = @user.trips.find_by_slug(params[:id])
 	 end
 
 	protected
 	def current_trip
-		current_user.trips.find_by_slug(params[:trip_id])
+		current_user.trips.find_by_slug(params[:id])
 	end
 
 	def save_trip_locations trip, locations_hash

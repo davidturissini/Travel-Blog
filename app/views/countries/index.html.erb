@@ -1,9 +1,11 @@
-<section class="countries">
+<section class="countries content-grid">
 	<% @countries.each_pair do |country, trips| %>
 		<section class="country">
-			<h1><%= country %></h1>
-			<h2 class="trips-count"><%= pluralize(trips.length, 'Trip') %></h2>
-			<div class="content-grid two-col autoclear">
+			<header class="row">
+				<h1><%= country %></h1>
+				<h2 class="trips-count"><%= pluralize(trips.length, 'Trip') %></h2>
+			</header>
+			<div class="autoclear">
 				<% trips.each do |trip| %>
 					<%= render "global/trip_grid", :trip => trip %>
 				<% end %>

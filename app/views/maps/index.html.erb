@@ -1,3 +1,8 @@
+<header>
+	<% if @trip %>
+		<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Map" %>
+	<% end %>
+</header>
 <section>
-	<figure data-user="<%= @user.to_json %>" data-json="<%= @maps.to_json %>" data-trip="<%= @trip.to_json %>" id="map" class="map shadow"></figure>
+	<figure data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-json="<%= @maps.to_json %>" data-trip="<%= @trip.to_json %>" id="map" class="map shadow"></figure>
 </section>
