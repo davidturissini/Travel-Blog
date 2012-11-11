@@ -1,6 +1,11 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   helper_method :current_user, :locations_nav
+  rescue_from ActiveRecord::RecordNotFound, :with => :not_found
+
+  def not_found
+    render :text => "asd"
+  end
 
   def current_user
    if cookies[:user] && cookies[:user] != ""
