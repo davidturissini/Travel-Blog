@@ -19,13 +19,15 @@ class Admin::UsersController < Admin::AdminController
 
 	def update
 		params[:user_id] = current_user.slug
-		params[:user][:slug].delete
-		slug = params[:user_id]
+		slug = params[:user].delete(:slug)
 		[:id, :token, :salt].each do |prop|
 			params[:user].delete(prop)
 		end
-		current_user.update_attributes!(params[:user])
-		current_user.set_slug(String.slugify(slug)) if !current_user.slug
+		
+		current_user.update_attributes(params[:user])
+		current_user.set_slug!(String.slugify(slug), User.where("id > 0")) if current_user.incomplete?
+		current_user.save!
+		
 		set_user_cookie(current_user)
 		respond_to do |format|
 			format.html { redirect_to :action => :me }

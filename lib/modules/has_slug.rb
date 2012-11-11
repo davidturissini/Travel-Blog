@@ -6,7 +6,7 @@ module HasSlug
 		else
 			_s = get_unique_slug _slug, collection
 		end
-		self.slug = _s
+		self.update_attribute(:slug, _s)
 	end
 
 	protected

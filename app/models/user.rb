@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   validates :slug, :presence => true, :on => :update
   has_many :photos, :through => :locations
   include HasFiles
+  include HasSlug
 
   def static_directory
     "#{CONFIG['static']['user_path']}#{slug}/"
@@ -112,7 +113,8 @@ class User < ActiveRecord::Base
   end
   
   def owns? content
-   content.user == self
+    return false if content.nil? || !content.user
+    content.user == self
   end
    
   def login!

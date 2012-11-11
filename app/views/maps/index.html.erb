@@ -10,5 +10,7 @@
 			Drag map file(kml or gpx) onto map or <input type="file" id="map-input-button" />
 		</p>
 	<% end %>
-	<figure data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-json="<%= @maps.to_json %>" data-maps="<%= (@trip.maps || []).to_json %>" data-trip="<%= @trip.to_json %>" id="map" class="map shadow"></figure>
+	<% if @trip %>
+		<figure	data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-json="<%= @maps.to_json %>" data-maps="<%= (@trip.maps || []).to_json %>" data-trip="<%= @trip.to_json %>" id="map" class="map shadow"></figure>
+	<% end %>
 </section>
