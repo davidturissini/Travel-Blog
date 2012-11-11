@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026030106) do
+ActiveRecord::Schema.define(:version => 20121111071427) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -58,6 +58,8 @@ ActiveRecord::Schema.define(:version => 20121026030106) do
     t.date     "end_date"
     t.text     "description"
     t.integer  "trip_id"
+    t.float    "start_lat"
+    t.float    "start_lng"
   end
 
   create_table "photos", :force => true do |t|

@@ -1,6 +1,6 @@
 var GoogleMap = Backbone.View.extend((function () {
 
-	var _markers = [];
+	
 
 	return {
 		initialize:function () {
@@ -21,6 +21,7 @@ var GoogleMap = Backbone.View.extend((function () {
 	        	view.drawMap(map);
 	        })
 		},
+		markers:[],
 	    setMapOptions:function (options) {
 	    	this._mapOptions = options;
 	    },
@@ -55,14 +56,26 @@ var GoogleMap = Backbone.View.extend((function () {
 	    	var view = this,
 	    	numLoaded = 0,
 	    	kml = new google.maps.KmlLayer(map.staticUrl(), {
-				preserveViewport: true
+				preserveViewport:true,
+				suppressInfoWindows:true
 			});
+
+
+			google.maps.event.addListener(kml, "click", function () {
+				view.trigger("kml_click", {kml:kml, map:map});
+			})
+
 			google.maps.event.addListener(kml, "defaultviewport_changed", function () {
 				view.unionBounds(kml.getDefaultViewport());
 				view.googleMap().fitBounds(view.bounds());
+				view.trigger("kml_loaded", {kml:kml, map:map})
 			});
 			
 			kml.setMap(this.googleMap());
+
+			map.on("destroy", function () {
+				kml.setMap(null);
+			})
 	    },
 	    drawLocation:function (loc) {
 	    	var view = this,
@@ -87,7 +100,7 @@ var GoogleMap = Backbone.View.extend((function () {
 				view.trigger("location_mouseover", evt);
 			})
 
-			_markers.push(marker);
+			this.markers.push(marker);
 	    },
 	    drawMaps:function (maps) {
 			var view = this;

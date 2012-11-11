@@ -14,6 +14,10 @@ class GoogleMapPhoto
 	def large
 		build_image_string 400, 400, 10
 	end
+
+	def square size = 200
+		build_image_string size, size
+	end
 	
 	def build_image_string width = 200, height = 200, zoom = 5
  		"http://maps.google.com/staticmap?center=#{@location.latitude},#{@location.longitude}&type=sat&zoom=#{zoom}&size=#{width}x#{height}"

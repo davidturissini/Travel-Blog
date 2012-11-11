@@ -23,7 +23,7 @@ Adventureblog::Application.routes.draw do
 
   match '/me/:trip_id/photos' => "admin/photos#create", :via => :post, :user_id => "me"
   match '/me/:trip_id/maps' => "admin/maps#index", :via => :get, :user_id => "me", :as => "trip_maps"
-  match '/me/maps/stage' => "admin/maps#stage", :via => :post, :user_id => "me"
+  
   match '/me/:trip_id/locations' => "admin/locations#index", :user_id => "me", :as => "admin_locations"
   match '/me/:trip_id/locations/edit' => "admin/trips#edit_locations", :user_id => "me", :as => "edit_trip_locations"
   match '/me/:trip_id/locations/new' => "admin/locations#new", :user_id => "me", :via => "get", :as => "new_location"
@@ -66,6 +66,7 @@ Adventureblog::Application.routes.draw do
       resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos"
       resources :photos, :only => [:show, :index]
     end
-    resources :trips, :path => "", :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/trips"
+    resources :trips, :path => "", :only => [:edit, :update, :destroy, :create], :controller => "admin/trips"
+    resources :trips, :path => "/trips", :only => [:new], :controller => "admin/trips"
   end
 end

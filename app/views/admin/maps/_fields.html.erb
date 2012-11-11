@@ -1,6 +1,5 @@
-<input type="text" id="map-title" class="edit-title" value="<%= @map.title %>" placeholder="Title" />
-<%= render "admin/global/date_fields", :obj => @map, :type => "map" %>
-<p class="note">
-	Drag map file(kml or gpx) onto map or <input type="file" id="map-input-button" />
-</p>
-<figure id="google-map"></figure>
+<form class="inline-form">
+	<textarea id="map-title" class="field" data-property="title" placeholder="Title"><%= map.title %></textarea>
+	<%= render "admin/global/date_fields", :obj => map, :type => "map" %>
+	<a class="delete edit-link">Delete</a>
+</form>

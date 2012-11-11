@@ -5,7 +5,7 @@
 				<% if @trip.picture %>
 					<img src="<%= @trip.picture.large %>" class="rounded shadow" id="trip-image" />
 				<% end %>
-				<% if @trip.photos.length > 0 %>
+				<% if @trip.photos.length > 0 && current_user.owns?(@trip) %>
 					<figcaption>
 						<a href="#" class="rounded shadow" id="change-trip-photo">Change photo</a>
 					</figcaption>

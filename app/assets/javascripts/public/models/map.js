@@ -25,7 +25,6 @@ var Map = Backbone.Model.extend({
 		reader.readAsText(this.file);
 	},
 	setUser:function (user) {
-		this.set({user_id:user.id});
 		this._user = user;
 	},
 	user:function () {
@@ -38,7 +37,7 @@ var Map = Backbone.Model.extend({
 	trip:function () {
 		return this._trip;
 	},
-	stageXML:function (callbacks) {
+	createWithXML:function (callbacks) {
 		callbacks = callbacks || {};
 		var map = this,
 		formData = new FormData();
@@ -49,11 +48,13 @@ var Map = Backbone.Model.extend({
 		}
 
 		var xhr = new XMLHttpRequest();
-        xhr.open('POST', map.stageUrl());
+        xhr.open('POST', map.url());
         xhr.onload = function (e) {
           if (xhr.status === 200) {
             if( callbacks.success ) {
-					callbacks.success(JSON.parse( e.currentTarget.responseText ));
+            	var json = JSON.parse( e.currentTarget.responseText );
+            	map.set(json);
+				callbacks.success(json);
 				}
           	}
         };
@@ -86,30 +87,9 @@ var Map = Backbone.Model.extend({
 	googleMap:function () {
 		return this._googleMap;
 	},
-	saveWithXML:function (callbacks) {
-		callbacks = callbacks || {};
-		var map = this;
-		this.readFile({
-			success:function (fileData) {
-				var oldUrlFunction = map.url;
-				map.set({xml:fileData}, {silent:true});
-				map.save({},{
-					success:function (e) {
-						map.unset("xml", {silent:true});
-						if( callbacks.success ) {
-							callbacks.success(e);
-						}
-					}
-				});
-			}
-		})
-	},
-	stageUrl:function() {
-		return this.user().url({includeFormat:false}) + "/maps/stage/"
-	},
 	url:function () {
 		if( this.isNew() ) {
-			return this.trip().url() + "/maps/create";
+			return this.trip().url() + "/maps/";
 		} else {
 			return this.trip().url() + "/maps/" + this.get("slug");
 		}

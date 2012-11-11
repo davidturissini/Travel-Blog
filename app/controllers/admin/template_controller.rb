@@ -6,6 +6,12 @@ class Admin::TemplateController < Admin::AdminController
 	end
 
 	protected
+	def initialize_map_form
+		@user = User.find_by_slug(params[:user_id])
+		@trip = @user.trips.find_by_slug(params[:trip_id])
+		@map = @trip.maps.find_by_slug(params[:map_id])
+	end
+
 	def initialize_location_infowindow
 		if params[:location_id]
 			@location = Location.find(params[:location_id]) 

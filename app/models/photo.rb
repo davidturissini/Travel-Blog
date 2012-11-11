@@ -5,8 +5,9 @@ class Photo < ActiveRecord::Base
 	include HasSlug
 	include HasTitle
 
-	def url size = 500
-		"http://#{CONFIG['static']['domain']}#{static_photo_path}#{size}/#{slug}.jpg"
+	def url size = 500, folder = nil
+		folder = folder || "#{size}"
+		"http://#{CONFIG['static']['domain']}#{static_photo_path}#{folder}/#{slug}.jpg"
 	end
 
 	def static_photo_path
@@ -23,6 +24,10 @@ class Photo < ActiveRecord::Base
 
 	def proportional_height width
 		height * (1/proportion)
+	end
+
+	def square size = 200
+		url size, "#{size}_#{size}"
 	end
 
 	def thumbnail
@@ -65,6 +70,16 @@ class Photo < ActiveRecord::Base
 			thumbnail = raw_image.resize_to_fit(size, size)
 			user.save_photo! StringIO.open(thumbnail.to_blob), "#{size}/#{slug}.jpg"
 		end
+
+		thumb_squares.each do |size|
+			thumb_dir = user.create_content_dir!("photos/#{size}_#{size}")
+			thumbnail = raw_image.thumbnail(size, size)
+			user.save_photo! StringIO.open(thumbnail.to_blob), "#{size}_#{size}/#{slug}.jpg"
+		end
+	end
+
+	def thumb_squares
+		[200, 400, 600]
 	end
 
 	def thumb_sizes

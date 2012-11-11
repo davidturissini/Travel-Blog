@@ -1,7 +1,7 @@
 <section id="photos">
 	<header class="row">
 		<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Photos" %>
-		<% if @trip.user == current_user %>
+		<% if current_user.owns?(@trip) %>
 			<%= render "admin/global/create_new_link",
 				:text => "Add photos",
 				:url => new_user_trip_photo_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) %>
@@ -10,7 +10,7 @@
 	<section id="trip-photos" data-json="<%= @trip.to_json %>" class="autoclear content-grid three-col">
 		<% @photos.each do |photo| %>
 			<figure class="photo rounded content" id="photo-<%= photo.id %>" data-json="<%= photo.to_json %>">
-				<img src="<%= photo.url %>" width="200" />
+				<img src="<%= photo.square(400) %>" width="200" />
 				<figcaption>
 					<h1><%= photo.title %></h1>
 				</figcaption>

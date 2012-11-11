@@ -65,13 +65,16 @@ window.addEventListener("DOMContentLoaded", function () {
 				})
 			}
 
+			dialog.loading("Loading photo");
+
 			template.load({
 				success:function (html) {
-					dialog.setView(html);
+					
 
 					var img = new Image();
 					img.onload = function () {
-						dialog.render();
+						dialog.setView(html);
+						dialog.autocenter();
 						stopHighlight();
 
 						if( user.isCurrentUser() ) {

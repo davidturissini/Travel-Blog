@@ -23,6 +23,23 @@ var ModalDialog = Backbone.View.extend({
     })
 
   },
+  loading:function (message) {
+    var loading = new Loading({
+      el:document.createElement("div")
+    });
+
+    loading.render()
+
+    if( message ) {
+      loading.setMessage(message);
+    }
+    
+    this.setView(loading.el);
+    loading.addLoadingClass();
+    this.render();
+    loading.loading();
+
+  },
   setView: function (elem) {
     this.view = elem;
     this.content.innerHTML = "";
@@ -47,7 +64,6 @@ var ModalDialog = Backbone.View.extend({
   show: function () {
     this.append();
     this.autocenter();
-    document.body.style.overflow = "hidden";
     this.el.className += " visible";
   },
   __verticalCenter: function () {
@@ -73,7 +89,7 @@ var ModalDialog = Backbone.View.extend({
   setTitle: function (title) {
     var dialog = this;
     this.title = title;
-    if( this.el.querySelector(".modal-title") === null ) {
+    if( this.el.getElementsByClassName("modal-title").length === 0 ) {
       dialog.viewFinder.appendChild( this.titleElem );
     }
     this.titleElem.innerHTML = "";

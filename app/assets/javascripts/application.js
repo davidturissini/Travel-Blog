@@ -8,8 +8,8 @@
 //= require 'public/user_photos'
 //= require 'public/underscore'
 //= require 'public/backbone'
-//= require 'public/template'
 //= require './public/kalendae.min.js'
+//= require 'public/template'
 //= require_tree ./public/models/
 //= require_tree './public/collections'
 //= require_tree ./public/views/

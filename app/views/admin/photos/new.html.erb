@@ -1,7 +1,7 @@
 <%= render "admin/global/breadcrumb",
 	:trip => @trip,
 	:crumbs => [
-		{ :title => "Photos", :url => photos_edit_path(@trip) }
+		{ :title => "Photos", :url => user_trip_photos_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) }
 		],
 	:page => "New"
 %>

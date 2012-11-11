@@ -10,7 +10,7 @@
 	<% if !current_user.anonymous? %>
 		<ul class="admin">
 			<li>
-				<%= link_to "Add new trip", new_trip_path %>
+				<%= link_to "Add new trip", new_user_trip_path(:user_id => user.slug) %>
 			</li>
 			<li>
 				<%= link_to "Edit trips", "/" %>
