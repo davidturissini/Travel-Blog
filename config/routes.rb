@@ -50,8 +50,9 @@ Adventureblog::Application.routes.draw do
 
   resources :countries, :only => [:index]
 
-  match '/:user_id' => "users#show"
 
+  resources :users, :path => "", :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/users"
+  match '/:user_id' => "users#show"
   resources :users, :path => "" do 
     resources :countries
     resources :locations
