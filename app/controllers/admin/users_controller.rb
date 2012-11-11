@@ -24,6 +24,7 @@ class Admin::UsersController < Admin::AdminController
 			params[:user].delete(prop)
 		end
 		current_user.update_attributes!(params[:user])
+                current_user.set_slug(params[:user][:slug]) if !current_user.slug
 		set_user_cookie(current_user)
 		respond_to do |format|
 			format.html { redirect_to :action => :me }

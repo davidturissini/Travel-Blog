@@ -23,7 +23,7 @@ module ApplicationHelper
  end
 
  def welcome_screen?
- 	params[:controller] == "welcome" && current_user.anonymous?
+ 	params[:controller] == "welcome" || current_user.anonymous?
  end
 
  def flickr_photoset_url set_params
