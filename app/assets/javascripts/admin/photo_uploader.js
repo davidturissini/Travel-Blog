@@ -57,8 +57,9 @@ var PhotoUploader = Backbone.View.extend({
         loader.setLoadingView(loadingView);
         loader.loading();
 
-        this.files.each(function (photo) {
-            var hash = new FormData();
+        function uploadPhoto (index) {
+            var photo = uploader.files.at(index),
+            hash = new FormData();
 
             if( photo.getRaw() ) {
               hash.append('photo[binary]', photo.getRaw());
@@ -80,12 +81,16 @@ var PhotoUploader = Backbone.View.extend({
               progress.setAttribute("value", uploaded.length);
               if( uploaded.length == uploader.files.length ) {
                 uploader.trigger("photos_uploaded", {photos:uploader.files})
+              } else {
+                uploadPhoto(index + 1);
               }
             };
 
             xhr.send(hash);
           
-        })
+        }
+
+        uploadPhoto(0);
       },
       removePreview:function(photo) {
         var elem = this.options.previewElem.querySelector("#" + this.generatePhotoPreviewId(photo));
