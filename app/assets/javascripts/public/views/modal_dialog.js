@@ -75,6 +75,7 @@ var ModalDialog = Backbone.View.extend({
   },
   autocenter: function () {
     this.viewFinder.style.float = "left";
+    this.viewFinder.style.width = "auto";
     var style = getComputedStyle( this.viewFinder ),
     width = this.viewFinder.offsetWidth - parseInt(style.paddingLeft) - parseInt(style.paddingRight);
     this.viewFinder.style.float = "none";

@@ -69,8 +69,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
 			template.load({
 				success:function (html) {
-					
-
 					var img = new Image();
 					img.onload = function () {
 						dialog.setView(html);
