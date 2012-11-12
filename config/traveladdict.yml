@@ -1,0 +1,6 @@
+static:
+  domain: teststatic.traveladdict.me
+  server_path: teststatic.traveladdict.me/
+  user_path: static/users/
+  username: traveladdict_test
+  password: E26A3E05C8EF45DD8B166056B8BCBA
