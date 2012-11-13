@@ -14,7 +14,6 @@ Adventureblog::Application.routes.draw do
   match '/me/edit' => "admin/users#edit_me", :as => "edit_me", :user_id => "me"
   match '/me/statuses/' => "admin/statuses#create", :user_id => "me", :via => :post
   match '/me/statuses/:status_id' => "admin/statuses#destroy", :user_id => "me", :via => :delete
-  match '/me/flickr_photoset_photos/:photoset_id' => "admin/users#photoset_photos", :user_id => "me"
   match '/me/trips' => "admin/trips#create", :user_id => "me", :via => "post"
   match '/me/trips/new' => "admin/trips#new", :user_id => "me", :via => "get", :as => "new_trip"
   match '/me/:trip_id' => "admin/trips#edit", :user_id => "me", :via => "get", :as => "admin_trip_edit"
@@ -54,6 +53,7 @@ Adventureblog::Application.routes.draw do
   resources :users, :path => "", :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/users"
   match '/:user_id' => "users#show"
   resources :users, :path => "" do 
+    match '/flickr_photoset_photos/:photoset_id' => "admin/users#photoset_photos"
     resources :countries
     resources :locations
     resources :photos
