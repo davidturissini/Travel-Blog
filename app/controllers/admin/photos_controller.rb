@@ -44,6 +44,7 @@ class Admin::PhotosController < Admin::AdminController
 	def save_photo photo_hash
 		trip = current_user.trips.find_by_slug(params[:trip_id])
 		binary_file = photo_hash.delete(:binary)
+		binary_file = binary_file.tempfile if !binary_file.is_a?(Tempfile)
 		ActiveRecord::Base.transaction do
 			photo = trip.photos.create(photo_hash)
 			photo.set_slug!(Digest::SHA1.hexdigest(binary_file.read), trip.photos)
@@ -53,7 +54,7 @@ class Admin::PhotosController < Admin::AdminController
 
 	def create_from_url photo_hash
 		url = photo_hash.delete(:url)
-		photo_hash[:binary] = open(url).read
+		photo_hash[:binary] = open(url)
 		save_photo photo_hash
 	end
 end

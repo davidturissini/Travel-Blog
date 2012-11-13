@@ -61,7 +61,9 @@ var PhotoUploader = Backbone.View.extend({
             var photo = uploader.files.at(index),
             hash = new FormData();
 
-            if( photo.getRaw() ) {
+            if( photo.getRaw() instanceof Element ) {
+              hash.append('photo[url]', photo.getRaw().getAttribute("src"));
+            } else {
               hash.append('photo[binary]', photo.getRaw());
             }
 

@@ -52,7 +52,7 @@ class Photo < ActiveRecord::Base
 
 		photos_dir = user.create_content_dir!("photos/originals/")
 
-		image = Magick::Image.read(raw_file.tempfile.path).first
+		image = Magick::Image.read(raw_file.path).first
 		user.save_photo! StringIO.open(image.to_blob), "originals/#{filename}.jpg"
 		
 		generate_thumbnails image
