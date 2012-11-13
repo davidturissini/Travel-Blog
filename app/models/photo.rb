@@ -73,7 +73,7 @@ class Photo < ActiveRecord::Base
 
 		thumb_squares.each do |size|
 			thumb_dir = user.create_content_dir!("photos/#{size}_#{size}")
-			thumbnail = raw_image.thumbnail(size, size)
+			thumbnail = raw_image.crop_resized(size, size)
 			user.save_photo! StringIO.open(thumbnail.to_blob), "#{size}_#{size}/#{slug}.jpg"
 		end
 	end
