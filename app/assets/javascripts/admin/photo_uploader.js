@@ -61,11 +61,7 @@ var PhotoUploader = Backbone.View.extend({
             var photo = uploader.files.at(index),
             hash = new FormData();
 
-            if( photo.getRaw() instanceof Element ) {
-              hash.append('photo[url]', photo.getRaw().getAttribute("src"));
-            } else {
-              hash.append('photo[binary]', photo.getRaw());
-            }
+           
 
             if( photo.get("title") ) {
               hash.append("photo[title]", photo.get("title"));
@@ -75,20 +71,40 @@ var PhotoUploader = Backbone.View.extend({
               hash.append("photo[title]", photo.get("description"));
             }
 
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', uploader.model.url() + "/photos");
-            xhr.onload = function (e) {
-              uploaded.push(photo);
-              h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
-              progress.setAttribute("value", uploaded.length);
-              if( uploaded.length == uploader.files.length ) {
-                uploader.trigger("photos_uploaded", {photos:uploader.files})
-              } else {
-                uploadPhoto(index + 1);
-              }
-            };
+            function go() {
 
-            xhr.send(hash);
+
+              var xhr = new XMLHttpRequest();
+              xhr.open('POST', uploader.model.url() + "/photos");
+              xhr.onload = function (e) {
+                uploaded.push(photo);
+                h5.innerHTML = "Uploaded " + uploaded.length + " of " + uploader.files.length;  
+                progress.setAttribute("value", uploaded.length);
+                if( uploaded.length == uploader.files.length ) {
+                  uploader.trigger("photos_uploaded", {photos:uploader.files})
+                } else {
+                  uploadPhoto(index + 1);
+                }
+              };
+
+              xhr.send(hash);
+            }
+
+             if( photo.getRaw() instanceof Element ) {
+              hash.append('photo[url]', photo.getRaw().getAttribute("src"));
+              go();
+            } else {
+              var reader = new FileReader();
+              
+              reader.onload = function () {
+                hash.append('photo[binary]', photo.getRaw());
+                go();
+              }
+
+              reader.readAsBinaryString(photo.getRaw());
+              
+            }
+            
           
         }
 
