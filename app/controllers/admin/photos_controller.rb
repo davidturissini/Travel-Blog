@@ -47,6 +47,7 @@ class Admin::PhotosController < Admin::AdminController
 		binary_file = binary_file.tempfile if !binary_file.is_a?(Tempfile)
 		ActiveRecord::Base.transaction do
 			photo = trip.photos.create(photo_hash)
+			photo.user_id = current_user.id
 			photo.set_slug!(Digest::SHA1.hexdigest(binary_file.read), trip.photos)
 			photo.save_with_raw!(binary_file)
 		end

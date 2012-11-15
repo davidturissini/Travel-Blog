@@ -8,8 +8,7 @@ class TemplateController < ApplicationController
 	protected
 	def initialize_photo_dialog
 		@user = User.find_by_slug(params[:user_id])
-		@trip = @user.trips.find_by_slug(params[:trip_id])
-		@photo = @trip.photos.find_by_slug(params[:photo_id])
+		@photo = @user.photos.find_by_slug(params[:photo_id])
 	end
 
 	def initialize_location_infowindow

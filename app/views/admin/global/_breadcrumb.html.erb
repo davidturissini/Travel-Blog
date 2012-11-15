@@ -1,6 +1,8 @@
 <nav class="breadcrumb">
 	<ul>
-		<li><%= link_to trip.title, trip_path(trip) %></li>
+		<% if !trip.nil? %>
+			<li><%= link_to trip.title, trip_path(trip) %></li>
+		<% end %>
 		<% if defined?(crumbs) %>
 			<% crumbs.each do |crumb| %>
 				<li><%= link_to crumb[:title], crumb[:url] %></li>

@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   has_many :countries, :through => :locations
   has_many :realm_accounts
   validates :slug, :presence => true, :on => :update
-  has_many :photos, :through => :locations
+  has_many :photos
   include HasFiles
   include HasSlug
 
