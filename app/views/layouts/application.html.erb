@@ -23,13 +23,8 @@
 			<% if welcome_screen? %>
 				<%= yield %>
 			<% else %>
-				<div class="column first">
-					<%= render "users/header", :user => @user %>
-					<%= render "users/nav", :user => @user %>
-				</div>
-				<div class="column last">
-					<%= yield %>
-				</div>
+				<%= render "users/header", :user => @user %>
+				<%= yield %>
 			<% end %>
 			<%= yield :below_content %>
 		</div>

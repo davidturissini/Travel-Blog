@@ -3,18 +3,11 @@
 		<li class="trips">
 			<%= link_to "Travels", user_trips_path(:user_id => user.slug) %>
 		</li>
+		<li class="photos">
+			<%= link_to "Photos", user_photos_path(:user_id => user.slug) %>
+		</li>
 		<li class="maps">
 			<%= link_to "Map", user_maps_path(:user_id => user.slug) %>
 		</li>
 	</ul>
-	<% if !current_user.anonymous? %>
-		<ul class="admin">
-			<li>
-				<%= link_to "Add new trip", new_user_trip_path(:user_id => user.slug) %>
-			</li>
-			<li>
-				<%= link_to "Edit trips", "/" %>
-			</li>
-		</ul>
-	<% end %>
 </nav>
