@@ -382,24 +382,16 @@ textarea.autosize { overflow:hidden; }
 .welcome-user #user form input[type=submit] { margin:10px 0; font-size:1.5em; }
 
 
-/* USER ADMIN PAGE */
-.admin-user-show #user-header h1 { display:inline; }
-.admin-user-show #user-header .create-new { left:20px; top:-3px; }
-.admin-user-show #user-header .user-picture { display:inline-block; margin-right:10px; }
-.admin-user-show #user-header .user-picture img { display:inline; vertical-align:middle; }
-.admin-user-show #user-header section { margin:0px; padding:0px; border:0px; background:transparent; }
-.admin-user-show #user-header { margin-bottom:20px; padding-bottom:20px; }
-.admin-user-show .remove { cursor:pointer; }
-
-.admin-user-show #user-trips .trip { position:relative; }
-.admin-user-show #user-trips .trip:hover .remove { display:block; }
-.admin-user-show #user-trips .trip h1 { margin-bottom:10px; }
-.admin-user-show #user-trips .trip .trip-title,
-.admin-user-show #user-trips .trip .trip-date { position:relative; z-index:10; }
-.admin-user-show #user-trips .trip img { border:1px solid #ccc; }
-
 /* USER HEADER */
-header#user-header { padding:40px; border-bottom:1px solid #b1b1b1; text-align:left; }
+header#user-header { padding:20px 40px; border-bottom:3px solid #333; text-align:left; 
+	background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxyYWRpYWxHcmFkaWVudCBpZD0iZyI+PHN0b3Agb2Zmc2V0PSIwIiBzdG9wLWNvbG9yPSJyZ2JhKDUxLCA1MSwgNTEsIDApIi8+PHN0b3Agb2Zmc2V0PSIxIiBzdG9wLWNvbG9yPSJyZ2IoNTEsIDUxLCA1MSkiLz48L3JhZGlhbEdyYWRpZW50PjxyZWN0IHg9IjAlIiB5PSIwJSIgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0icmdiKDUxLCA1MSwgNTEpIiAvPjxyZWN0IHg9Ii0xNzEuNDIlIiB5PSItNDEuNDIlIiB3aWR0aD0iNTQyLjg0JSIgaGVpZ2h0PSIyODIuODQlIiBmaWxsPSJ1cmwoI2cpIiAvPjwvc3ZnPg==);
+	background-image: -webkit-gradient(radial, 100% 100%, 0, 100% 100%, 727, color-stop(0%, rgba(51, 51, 51, 0)), color-stop(100%, rgb(51, 51, 51)));
+	background-image: -webkit-radial-gradient(right bottom, 271.42% 141.42%, rgba(51, 51, 51, 0) 0%, rgb(51, 51, 51) 100%);
+	background-image: -moz-radial-gradient(right bottom, 271.42% 141.42%, rgba(51, 51, 51, 0) 0%, rgb(51, 51, 51) 100%);
+	background-image: -ms-radial-gradient(right bottom, 271.42% 141.42%, rgba(51, 51, 51, 0) 0%, rgb(51, 51, 51) 100%);
+	background-image: -o-radial-gradient(right bottom, 271.42% 141.42%, rgba(51, 51, 51, 0) 0%, rgb(51, 51, 51) 100%);
+	background-image: radial-gradient(271.42% 141.42% at right bottom, rgba(51, 51, 51, 0) 0%, rgb(51, 51, 51) 100%);
+}
 header#user-header h1 { display:inline-block; margin-top:5px; font-size:1.3em; }
 header#user-header a { color:#333; }
 header#user-header a:hover { color:#069; }

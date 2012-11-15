@@ -48,9 +48,10 @@ var Photo = Backbone.Model.extend({
 		this._raw = raw;
 	},
 	url:function () {
-		return this.trip().url() + "/photos/" + this.get("slug");
+		return this.user().url() + "/photos/" + this.get("slug");
 	},
 	setTrip:function (trip) {
+		this.setUser(trip.user());
 		this._trip = trip;
 	},
 	trip:function () {

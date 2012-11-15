@@ -30,8 +30,7 @@ class Admin::PhotosController < Admin::AdminController
 	end
 
 	def update
-		trip = current_user.trips.find_by_slug(params[:trip_id])
-		photo = trip.photos.find_by_slug(params[:slug])
+		photo = current_user.photos.find_by_slug(params[:slug])
 		photo.title = params[:title]
 		photo.description = params[:description]
 		photo.save!
@@ -48,7 +47,7 @@ class Admin::PhotosController < Admin::AdminController
 		ActiveRecord::Base.transaction do
 			photo = trip.photos.create(photo_hash)
 			photo.user_id = current_user.id
-			photo.set_slug!(Digest::SHA1.hexdigest(binary_file.read), trip.photos)
+			photo.set_slug!(Digest::SHA1.hexdigest(binary_file.read), current_user.photos)
 			photo.save_with_raw!(binary_file)
 		end
 	end

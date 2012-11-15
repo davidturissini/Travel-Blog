@@ -1,13 +1,13 @@
 <nav id="user-nav">
 	<ul>
 		<li class="trips">
-			<%= link_to "Travels", user_trips_path(:user_id => user.slug) %>
+			<%= link_to "Travels", user_trips_path(:user_id => user.slug), :class => "rounded" %>
 		</li>
 		<li class="photos">
-			<%= link_to "Photos", user_photos_path(:user_id => user.slug) %>
+			<%= link_to "Photos", user_photos_path(:user_id => user.slug), :class => "rounded" %>
 		</li>
 		<li class="maps">
-			<%= link_to "Map", user_maps_path(:user_id => user.slug) %>
+			<%= link_to "Map", user_maps_path(:user_id => user.slug), :class => "rounded" %>
 		</li>
 	</ul>
 </nav>

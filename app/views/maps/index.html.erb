@@ -1,8 +1,6 @@
-<% if @trip %>
-	<header>
-		<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Map" %>
-	</header>
-<% end %>
+<header class="pad">
+	<h1 id="page-title">Map</h1>
+</header>
 
 <section>
 	<% if current_user.owns?(@trip) %>
@@ -10,7 +8,5 @@
 			Drag map file(kml or gpx) onto map or <input type="file" id="map-input-button" />
 		</p>
 	<% end %>
-	<% if @trip %>
-		<figure	data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-json="<%= @maps.to_json %>" data-maps="<%= (@trip.maps || []).to_json %>" data-trip="<%= @trip.to_json %>" id="map" class="map shadow"></figure>
-	<% end %>
+		<figure	data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-json="<%= @maps.to_json %>" id="map" class="map shadow"></figure>
 </section>
