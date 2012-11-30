@@ -61,7 +61,7 @@ class User < ActiveRecord::Base
   end
 
   def random_locations limit = 5
-    locations.limit(limit).order("RAND()")
+    locations.limit(limit).order("RANDOM()")
   end
 
   def location?

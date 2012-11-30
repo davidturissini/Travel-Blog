@@ -11,7 +11,7 @@ class Trip < ActiveRecord::Base
  	include HasTitle
 
  	def self.random limit = 3
-		limit(limit).order("RAND()")
+		limit(limit).order("RANDOM()")
 	end
 
 	def maps?
