@@ -17,6 +17,7 @@ gem 'rmagick'
 gem 'net-scp'
 gem 'truncate_html'
 gem 'pg'
+gem 'heroku'
 
 # Gems used only for assets and not required
 # in production environments by default.
