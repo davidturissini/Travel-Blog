@@ -3,6 +3,7 @@ require File.expand_path('../boot', __FILE__)
 CONFIG = YAML.load(File.read(File.expand_path('../traveladdict.yml', __FILE__)))
 
 require 'rails/all'
+require "sprockets/railtie"
 
 if defined?(Bundler)
     
