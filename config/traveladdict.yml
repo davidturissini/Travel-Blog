@@ -5,7 +5,7 @@ static:
   username: traveladdict_test
   password: E26A3E05C8EF45DD8B166056B8BCBA
 s3:
-  bucket: "traveladdict-test"
+  bucket: "traveladdict"
   access_key_id: "AKIAIBIK5QDPRB6A322Q"
   secret_access_key: "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"
 flickr:
