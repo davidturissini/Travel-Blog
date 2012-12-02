@@ -9,3 +9,4 @@ config/environment.rb
 ./Gemfile.lock
 config/omniauth_config.yml
 config/traveladdict.yml
+config/database.yml
