@@ -18,6 +18,8 @@ module Adventureblog
     FlickRaw.api_key = CONFIG["flickr"]["key"]
     FlickRaw.shared_secret = CONFIG["flickr"]["secret"]
 
+        Paperclip::Attachment.default_options[:storage] = :s3
+
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
