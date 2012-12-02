@@ -1,6 +1,7 @@
 class Map < ActiveRecord::Base
 	belongs_to :trip
 	has_one :user, :through => :trip
+	validates :start_lng, :start_lat, :presence => true
 	attr_accessible :map
 	has_attached_file :map
 	include HasFiles

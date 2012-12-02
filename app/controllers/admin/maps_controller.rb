@@ -28,17 +28,19 @@ class Admin::MapsController < Admin::AdminController
 
 	def create
 		ActiveRecord::Base.transaction do
-			if( params[:map].has_key?(:xml) )
-				xml = params[:map].delete(:xml)
+			map_hash = params[:map].clone
+			if( map_hash.has_key?(:xml) )
+				xml = map_hash.delete(:xml)
 				doc = Nokogiri.parse(xml.tempfile.read)
 				coords_elem = doc.css("coordinates")[0]
 				coords = coords_elem.inner_html.split(" ")[0].gsub("\n", "")
 				lat_lng = coords.split(",")
-
-				params[:map][:start_lat] = lat_lng[1] 
-				params[:map][:start_lng] = lat_lng[0]
+				map_hash[:start_lat] = lat_lng[1].to_f 
+				map_hash[:start_lng] = lat_lng[0].to_f
 			end
-			map = current_trip.maps.create(params[:map])
+			map = current_trip.maps.create(map_hash)
+			map.start_lat = map_hash[:start_lat]
+			map.start_lng = map_hash[:start_lng]
 			map.save_with_xml!(doc) if doc
 			render :json => map
 		end
