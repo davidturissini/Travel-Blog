@@ -1,6 +1,8 @@
 class Map < ActiveRecord::Base
 	belongs_to :trip
 	has_one :user, :through => :trip
+	attr_accessible :map
+	has_attached_file :map
 	include HasFiles
 	include HasSlug
 	include HasDates
@@ -8,7 +10,13 @@ class Map < ActiveRecord::Base
 
 	def save_with_xml! xmldoc
 		self.set_slug!(Digest::SHA1.hexdigest(xmldoc.to_xml), trip.maps)
-		user.save_map!(StringIO.new(xmldoc.to_xml), "#{self.slug}.kml")
+
+		file = Tempfile.new(["map", "kml"])
+
+		file.write xmldoc.to_xml
+
+		file.rewind
+		self.map = file
 		self.save!
 	end
 end

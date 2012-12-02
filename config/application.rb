@@ -8,15 +8,16 @@ require "sprockets/railtie"
 if defined?(Bundler)
     
   # If you precompile assets before deploying to production, use this line
-  #Bundler.require *Rails.groups(:assets => %w(development test))
+  Bundler.require *Rails.groups(:assets => %w(development test))
   # If you want your assets lazily compiled in production, use this line
-  Bundler.require(:default, :assets, Rails.env)
+  # Bundler.require(:default, :assets, Rails.env)
 end
 
 module Adventureblog
   class Application < Rails::Application
-    FlickRaw.api_key="951c0814caade8b4fc2b381778269126"
-    FlickRaw.shared_secret="9f84c972d99de24d"
+    FlickRaw.api_key = CONFIG["flickr"]["key"]
+    FlickRaw.shared_secret = CONFIG["flickr"]["secret"]
+
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

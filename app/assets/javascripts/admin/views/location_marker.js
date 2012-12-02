@@ -24,6 +24,11 @@ var LocationMarker = LocationMarker.extend({
 								latitude: mapEvent.latLng.lat(),
 								longitude: mapEvent.latLng.lng()
 							})
+							marker.trigger("dragend", {
+								mapEvent:mapEvent,
+								politicalData:result.data,
+								marker:marker
+							});
 						}
 					})
 				}

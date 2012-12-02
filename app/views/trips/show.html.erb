@@ -1,32 +1,3 @@
 <article id="trip" class="<%= "inline-form " if current_user.owns?(@trip) %>autoclear grid-20-75" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<header>
-		<hgroup>
-			<figure id="trip-photo" class="content">
-				<% if @trip.picture %>
-					<img src="<%= @trip.picture.large %>" class="rounded shadow" id="trip-image" />
-				<% end %>
-				<% if @trip.photos.length > 0 && current_user.owns?(@trip) %>
-					<figcaption>
-						<a href="#" class="rounded shadow" id="change-trip-photo">Change photo</a>
-					</figcaption>
-				<% end %>
-			</figure>
-			<h1 class="trip-title" id="page-title">
-				<% if !current_user.owns?(@trip) %>
-					<%= @trip.title %>
-				<% else %>
-					<textarea id="trip-title" class="field"><%= @trip.title %></textarea>
-				<% end %>	
-			</h1>
-			<% if current_user.owns?(@trip) %>
-				<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
-			<% else %>
-				<h2><%= @trip.date_string %></h2>
-			<% end %>
-			<% if current_user.owns?(@trip) %>
-				<a id="trip-delete" class="remove"></a>
-			<% end %>
-		</hgroup>
-	</header>
 	<%= render "admin/trips/footer", :trip => @trip, :trip_photos => @photos %>
 </article>

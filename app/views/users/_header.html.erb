@@ -4,4 +4,30 @@
 		<h1 id="user" data-json="<%= user.to_json %>"><%= user.name %></h1>
 	<% end %>
 	<%= render "users/nav", :user => @user %>
+	<article id="dashboard">
+		<% if @trip && !@trip.new_record? %>
+			<figure id="trip-photo" class="content">
+				<% if @trip.picture %>
+					<img src="<%= @trip.picture.large %>" class="rounded shadow" id="trip-image" />
+				<% end %>
+				<% if @trip.photos.length > 0 && current_user.owns?(@trip) %>
+					<figcaption>
+						<a href="#" class="rounded shadow" id="change-trip-photo">Change photo</a>
+					</figcaption>
+				<% end %>
+			</figure>
+			<h1 class="trip-title" id="trip-title">
+				<%= @trip.title %>
+			</h1>
+			<% if current_user.owns?(@trip) %>
+				<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
+			<% else %>
+				<h2><%= @trip.date_string %></h2>
+			<% end %>
+			
+			<% if current_user.owns?(@trip) %>
+				<a id="trip-delete" class="remove"></a>
+			<% end %>
+		<% end %>
+	</article>
 </header>

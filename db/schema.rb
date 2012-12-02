@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121130022124) do
+ActiveRecord::Schema.define(:version => 20121202010708) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -61,15 +61,23 @@ ActiveRecord::Schema.define(:version => 20121130022124) do
     t.integer  "trip_id"
     t.float    "start_lat"
     t.float    "start_lng"
+    t.string   "map_file_name"
+    t.string   "map_content_type"
+    t.integer  "map_file_size"
+    t.datetime "map_updated_at"
   end
 
   create_table "photos", :force => true do |t|
-    t.string  "title"
-    t.string  "description"
-    t.integer "width"
-    t.integer "height"
-    t.string  "slug"
-    t.integer "user_id"
+    t.string   "title"
+    t.string   "description"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "slug"
+    t.integer  "user_id"
+    t.string   "static_file_name"
+    t.string   "static_content_type"
+    t.integer  "static_file_size"
+    t.datetime "static_updated_at"
   end
 
   create_table "realm_accounts", :force => true do |t|

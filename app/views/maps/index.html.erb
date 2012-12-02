@@ -1,12 +1,9 @@
-<header class="pad">
-	<h1 id="page-title">Map</h1>
-</header>
-
 <section>
 	<% if current_user.owns?(@trip) %>
 		<p class="note">
 			Drag map file(kml or gpx) onto map or <input type="file" id="map-input-button" />
 		</p>
+		<a href="#map" id="start-edit">Edit</a>
 	<% end %>
-		<figure	data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-json="<%= @maps.to_json %>" id="map" class="map shadow"></figure>
+		<figure	data-user="<%= @user.to_json %>" data-locations="<%= (@locations || []).to_json %>" data-trip="<%= @trip.to_json %>" data-json="<%= @maps.to_json %>" id="map" class="map shadow"></figure>
 </section>

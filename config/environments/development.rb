@@ -27,4 +27,14 @@ Adventureblog::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  
+
+    Paperclip::Attachment.default_options[:storage] = :s3
+    Paperclip::Attachment.default_options[:s3_credentials] = {
+            :bucket => CONFIG["s3"]["bucket"],
+            :access_key_id => CONFIG["s3"]["access_key_id"],
+            :secret_access_key => CONFIG["s3"]["secret_access_key"]
+          }
+
 end

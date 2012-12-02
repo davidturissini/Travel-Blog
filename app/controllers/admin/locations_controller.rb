@@ -37,6 +37,6 @@ class Admin::LocationsController < Admin::AdminController
 	 	current_user.trips.find_by_slug(params[:trip_id])
 	 end
 	 def current_location
-	 	current_trip.locations.find_by_slug(params[:location_id])
+	 	current_trip.locations.find_by_slug(params[:id])
 	 end
 end

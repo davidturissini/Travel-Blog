@@ -31,7 +31,6 @@ class Admin::MapsController < Admin::AdminController
 			if( params[:map].has_key?(:xml) )
 				xml = params[:map].delete(:xml)
 				doc = Nokogiri.parse(xml.tempfile.read)
-				current_user.stage_map!(doc)
 				coords_elem = doc.css("coordinates")[0]
 				coords = coords_elem.inner_html.split(" ")[0].gsub("\n", "")
 				lat_lng = coords.split(",")

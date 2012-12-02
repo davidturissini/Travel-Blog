@@ -7,7 +7,7 @@ var Map = Backbone.Model.extend({
 	    	window.URL = window.URL || window.webkitURL;
  			return window.URL.createObjectURL(this.file)
 		} else if ( !this.isNew() ) {
-			return this.user().staticPath() + "maps/" + this.get("slug") + ".kml"
+			return "http://s3.amazonaws.com/" + TA.config.s3.bucket + "/maps/" + this.get("id") + "/original/" + this.get("map_file_name");
 		}
 	},
 	readFile:function (callbacks) {

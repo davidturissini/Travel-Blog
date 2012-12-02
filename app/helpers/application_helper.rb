@@ -31,10 +31,13 @@ module ApplicationHelper
  end
 
  def config_json
- 	json_hash = CONFIG.clone
+ 	json_hash = {}
  	json_hash['static'] = CONFIG['static'].clone
  	json_hash['static'].delete("username")
  	json_hash['static'].delete("password")
+ 	json_hash['s3'] = CONFIG['s3'].clone
+ 	json_hash['s3'].delete("access_key_id")
+ 	json_hash['s3'].delete("secret_access_key")
  	json_hash.to_json
  end
 end

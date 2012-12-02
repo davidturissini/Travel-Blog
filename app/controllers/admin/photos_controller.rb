@@ -48,7 +48,8 @@ class Admin::PhotosController < Admin::AdminController
 			photo = trip.photos.create(photo_hash)
 			photo.user_id = current_user.id
 			photo.set_slug!(Digest::SHA1.hexdigest(binary_file.read), current_user.photos)
-			photo.save_with_raw!(binary_file)
+			photo.static = binary_file
+			photo.save!
 		end
 	end
 

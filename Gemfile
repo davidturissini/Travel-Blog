@@ -17,6 +17,8 @@ gem 'rmagick'
 gem 'net-scp'
 gem 'truncate_html'
 gem 'pg'
+gem 'paperclip'
+gem 'aws-sdk'
 
 # Gems used only for assets and not required
 # in production environments by default.

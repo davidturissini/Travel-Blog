@@ -10,30 +10,30 @@ var TripMap = TripMap.extend((function () {
 
 			google.maps.event.addListener(form.googleMap(), "click", function (mapEvent) {
 				decoder.decode(mapEvent.latLng, {
-				success:function (result) {
-					if( result.data ) {
-						_countries.fetch({
-							success:function () {
-								var country = _countries.findByName(result.data.country);
-								if(!country) { return }
-								var location = new Location({
-									city: result.data.city || "",
-									state: result.data.state || "",
-									latitude: mapEvent.latLng.lat(),
-									longitude: mapEvent.latLng.lng()
-								})
-								location.setCountry( country );
-								var marker = new LocationMarker({
-						            model:location,
-						            map:form.googleMap(),
-						            draggable:true
-						        }).render();
+					success:function (result) {
+						if( result.data ) {
+							_countries.fetch({
+								success:function () {
+									var country = _countries.findByName(result.data.country);
+									if(!country) { return }
+									var location = new Location({
+										city: result.data.city || "",
+										state: result.data.state || "",
+										latitude: mapEvent.latLng.lat(),
+										longitude: mapEvent.latLng.lng()
+									})
+									location.setCountry( country );
+									var marker = new LocationMarker({
+							            model:location,
+							            map:form.googleMap(),
+							            draggable:true
+							        }).render();
 
-						        form.model.locations().add(location);
-						        form.makeMarkerInteractive(marker);
-							}
-						})
-					}
+							        form.model.locations().add(location);
+							        form.makeMarkerInteractive(marker);
+								}
+							})
+						}
 					}
 				})
 			});
@@ -42,6 +42,10 @@ var TripMap = TripMap.extend((function () {
 		makeMarkerInteractive:function (marker) {
 			var view = this;
 			marker.makeInteractive();
+
+			marker.on("dragend", function (event) {
+				view.trigger("marker_dragend", event);
+			})
 
 	        marker.on("click", function (e) {
 	        	e.location = marker.model;

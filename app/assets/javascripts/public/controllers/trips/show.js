@@ -20,66 +20,39 @@ window.addEventListener("DOMContentLoaded", function () {
 	maps.mergeMapOptions(mapOptions);
 	maps.render().drawMaps().drawLocations();
 
-	if( !document.getElementById("photos") ) { return }
-	var locationPhotos = document.getElementById("photos").querySelectorAll("figure"),
-	hero = document.getElementById("photos").querySelector(".hero") || locationPhotos[0];
-	hero.className += " hero";
+	var images = document.getElementsByClassName("centered");
+    [].forEach.call(images, function (image, index) {
+        var jsImage = new Image(),
+        imageHTML = image.getElementsByTagName("img").item(0);
 
-	if( locationPhotos.length === 0 ) { return }
-	var heroIndex = (function () {
-		var index = 0;
-		[].forEach.call(locationPhotos, function (photo, i) {
-			if( photo == hero ) {
-				index = i
-			}
-		})
+        function doRotate(){
+            var parent = image.parentNode,
+            left = parent.offsetWidth / 2 - image.offsetWidth / 2,
+            top = parent.offsetHeight / 2 - image.offsetHeight / 2,
+            degrees = (Math.random() - .5) * 45;
 
-		return index;
-	})();
+            left += (Math.random() - .5) * (parent.offsetWidth);
+            top += (Math.random() - .5) * (parent.offsetHeight);
 
+            image.style.left = left + "px";
+            image.style.top = top + "px";
+            image.style.webkitTransform = "rotate(" + degrees + "deg)";
+            image.style.mozTransform = "rotate(" + degrees + "deg)";
+            setTimeout(function () {
+                image.style.opacity = 1;
+            }, 100 * index);
+        }
 
-	var shuffleHash = {
-		el:document.getElementById("photos"),
-		hero:hero,
-		elements:Array.prototype.slice.call(locationPhotos, 0, 30),
-		heroClick: function () {
-			if( !gallery ) {
-				gallery = new Gallery({
-						el:shuffleHash.el,
-						photos:locationPhotos,
-						selectedIndex:heroIndex,
-						onClose:function () {
-							gallery = null
-							
-						}
-					}).render()
-			}
-		},
-		elementClick: function (event, options) {
-			if( !gallery ) {
-				gallery = new Gallery({
-						el:shuffleHash.el,
-						photos:locationPhotos,
-						selectedIndex:options.index,
-						onClose:function () {
-							gallery = null
-							
-						}
-					}).render()
-			}
-		},
-		elementShouldPosition: function (options) {
-			var photo = options.element.querySelector("img")
-			if( photo.width != 0 ) {
-				options.callback()
-			} else {
-				photo.onload = function () {
-					options.callback()
-				}
-			}
-		}
-	}
+        if( !imageHTML ) {
+            doRotate();
+            return;
+        }
 
-	new ShuffledElements(shuffleHash).render()
+        jsImage.onload = function () {
+            doRotate();
+        }
+
+        jsImage.src = image.getElementsByTagName("img").item(0).getAttribute("src");
+    })
 
 })

@@ -3,12 +3,13 @@ require 'RMagick'
 class Photo < ActiveRecord::Base
 	has_and_belongs_to_many :trips, :join_table => "trips_photos"
 	belongs_to :user
+	attr_accessible :static
+	has_attached_file :static, :styles => { :thumb => "50x50>", :large => "800x800>", :square => "500x500#", :small => "200x200>" }
 	include HasSlug
 	include HasTitle
 
-	def url size = 500, folder = nil
-		folder = folder || "#{size}"
-		"http://#{CONFIG['static']['domain']}#{static_photo_path}#{folder}/#{slug}.jpg"
+	def url size = :square
+		static.url(size)
 	end
 
 	def static_photo_path
@@ -27,20 +28,20 @@ class Photo < ActiveRecord::Base
 		height * (1/proportion)
 	end
 
-	def square size = 200
-		url size, "#{size}_#{size}"
+	def square size = nil
+		url(:square)
 	end
 
 	def thumbnail
-		url(50)
+		url(:thumb)
 	end
 
 	def small
-		url(125)
+		url(:small)
 	end
 
 	def large
-		url(800)
+		url(:large)
 	end
 
 	def save_with_raw! raw_file
@@ -77,13 +78,5 @@ class Photo < ActiveRecord::Base
 			thumbnail = raw_image.crop_resized(size, size)
 			user.save_photo! StringIO.open(thumbnail.to_blob), "#{size}_#{size}/#{slug}.jpg"
 		end
-	end
-
-	def thumb_squares
-		[200, 400, 600]
-	end
-
-	def thumb_sizes
-		[50, 125, 500, 800]
 	end
 end

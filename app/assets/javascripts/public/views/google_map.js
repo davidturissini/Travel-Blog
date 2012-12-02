@@ -1,7 +1,5 @@
 var GoogleMap = Backbone.View.extend((function () {
 
-	
-
 	return {
 		initialize:function () {
 			var view = this;

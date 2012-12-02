@@ -1,3 +1,12 @@
+<% if current_user === @user %>
+	<aside class="clear center">
+		<%= render "admin/global/create_new_link",
+			:text => "Create new trip",
+			:url => new_user_trip_path(current_user.slug)
+		%>
+	</aside>
+<% end %>
+
 <section id="trips">
 	<% @user_trips.keys.sort.reverse.each do |year| %>
 		<section class="year content-grid two-col">

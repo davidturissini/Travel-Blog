@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	var mapEl = document.getElementById("map"),
 	trip = Trip.createFromDataAttribute(mapEl, "data-trip"),
-	maps = MapsCollection.createFromDataAttribute(mapEl, "data-maps"),
+	maps = MapsCollection.createFromDataAttribute(mapEl),
 	user = User.createFromDataAttribute(mapEl, "data-user"),
 	locations = LocationsCollection.createFromDataAttribute(mapEl, "data-locations");
 
@@ -35,8 +35,6 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	if( user.isCurrentUser() ) {
 
-		tripMap.startEdit();
-
 		var input = new FileInput({
 			el:mapEl,
 			input:document.getElementById("map-input-button"),
@@ -44,8 +42,18 @@ window.addEventListener("DOMContentLoaded", function () {
 		}).render(),
 		loading = new Loading({
 			el:document.body
-		}).render();
+		}).render(),
+		editButton = document.getElementById("start-edit");
 		input.setAllowedExtensions(["kml"]);
+
+		if( editButton ) {
+			editButton.addEventListener("click", function () {
+				tripMap.startEdit();
+				tripMap.on("marker_dragend", function (evt) {
+					evt.marker.model.save({});
+				})
+			});
+		}
 
 		function loadMapForm(map) {
 			var infoWindow = new google.maps.InfoWindow(),

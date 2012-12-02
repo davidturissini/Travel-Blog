@@ -76,48 +76,5 @@ window.addEventListener("DOMContentLoaded", function () {
             trip.save({});
         }
     })
-
-
-    var images = document.getElementsByClassName("centered");
-    [].forEach.call(images, function (image, index) {
-        var jsImage = new Image(),
-        imageHTML = image.getElementsByTagName("img").item(0);
-
-        function doRotate(){
-            var parent = image.parentNode,
-            left = parent.offsetWidth / 2 - image.offsetWidth / 2,
-            top = parent.offsetHeight / 2 - image.offsetHeight / 2,
-            degrees = (Math.random() - .5) * 45;
-
-            left += (Math.random() - .5) * (parent.offsetWidth);
-            top += (Math.random() - .5) * (parent.offsetHeight);
-
-            image.style.left = left + "px";
-            image.style.top = top + "px";
-            image.style.webkitTransform = "rotate(" + degrees + "deg)";
-            image.style.mozTransform = "rotate(" + degrees + "deg)";
-            setTimeout(function () {
-                image.style.opacity = 1;
-            }, 100 * index);
-        }
-
-        if( !imageHTML ) {
-            doRotate();
-            return;
-        }
-
-        jsImage.onload = function () {
-            doRotate();
-        }
-
-        jsImage.src = image.getElementsByTagName("img").item(0).getAttribute("src");
-    })
-
-    var formEl = document.getElementById("trip-form"),
-    header = document.getElementById("trip-header");
-
-    new DynamicTextarea({
-        el:document.getElementById("trip-title")
-    }).render();
     
 })

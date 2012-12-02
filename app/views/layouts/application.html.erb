@@ -19,18 +19,13 @@
 			<h1 id="site-title"><%= link_to "TravelAddict", root_path %></h1>
 		</header>
 		<%= render_admin_ribbon %>
+		<% if !welcome_screen? %>
+			<%= render "users/header", :user => @user %>
+		<% end %>
 		<div id="container" class="grid-20-75 autoclear">
-			<% if welcome_screen? %>
-				<%= yield %>
-			<% else %>
-				<%= render "users/header", :user => @user %>
-				<%= yield %>
-			<% end %>
+			<%= yield %>
 			<%= yield :below_content %>
 		</div>
-		<footer id="site-footer">
-		Traveladdict.me footer
-		</footer>
 		<script>
 			window.TA = {
 			config: <%= config_json.html_safe %>
