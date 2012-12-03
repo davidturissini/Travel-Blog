@@ -3,7 +3,6 @@
 		<img src="<%= user.photo.large %>" class="shadow rounded user-image" />
 		<h1 id="user" data-json="<%= user.to_json %>"><%= user.name %></h1>
 	<% end %>
-	<%= render "users/nav", :user => @user %>
 	<article id="dashboard">
 		<% if @trip && !@trip.new_record? %>
 			<figure id="trip-photo" class="content">
@@ -30,4 +29,5 @@
 			<% end %>
 		<% end %>
 	</article>
+	<%= render "users/nav", :user => @user %>
 </header>
