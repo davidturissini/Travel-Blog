@@ -516,7 +516,7 @@ nav#user-nav li:first-child { border-top:0; }
 
 
 /* CREATE NEW */
-a.create-new { display:inline-block; position:relative; float:right; margin-top:25px; margin-right:40px; padding:.6143em .6143em .6143em 2.8571em; border-radius:1.5em; border:3px solid #ccc; color:#ccc; font-size:10px; }
+a.create-new { display:inline-block; position:relative; float:right; margin-top:-15px; margin-right:40px; padding:.6143em .6143em .6143em 2.8571em; border-radius:1.5em; border:3px solid #ccc; color:#ccc; font-size:10px; }
 a.create-new:hover { border-color:#333; color:#333; }
 a.create-new span { display:block; margin-left:.7143em; }
 a.create-new .icon { position:absolute; left:-1.2857em; top:-.7429em; width:3.5714em; height:3.5714em; border-width:3px; border-style:inherit; border-radius:2em; background:#fff; }

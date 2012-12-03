@@ -1,17 +1,4 @@
 <aside id="trip-links" class="autoclear">
-	<section id="trip-journal" class="content rounded shadow">
-		<% if trip.journals.count > 0 %>
-			<h1>Journal</h1>
-			<article>
-				<%= truncate_html(trip.newest_journal.body, :length => 50) %>
-				<i class="mask"></i>
-			</article>
-			<%= link_to "", user_trip_journals_path(:user_id => trip.user.slug, :trip_id => trip.slug), :class => "content-link" %>
-		<% else %>
-			<h2>Create journal</h2>
-			<%= link_to "", new_user_trip_journal_path(:user_id => trip.user.slug, :trip_id => trip.slug), :class => "content-link" %>
-		<% end %>
-	</section>
 	<section id="trip-geo" class="content rounded shadow">
 		<figure id="trip-map" class="map clear"></figure>
 		<%= link_to "", user_trip_maps_path(:user_id => trip.user.slug, :trip_id => trip.slug), :class => "content-link" %>
