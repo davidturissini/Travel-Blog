@@ -15,7 +15,7 @@ class Admin::JournalsController < Admin::AdminController
 		@trip = current_trip
 		params[:journal][:body] = clean_html(params[:journal][:body])
 		@journal = @trip.journals.new(params[:journal])
-		@journal.set_slug!(String.slugify(@journal.title), @trip.journals)
+		@journal.set_slug!(String.slugify(@journal.title || Digest::SHA1.hexdigest(Time.now.to_s)), @trip.journals)
 		@journal.save!
 		render :json => @journal
 	end
@@ -23,21 +23,22 @@ class Admin::JournalsController < Admin::AdminController
 	def update
 		@trip = current_trip
 		params[:journal][:body] = clean_html(params[:journal][:body])
-		@journal = @trip.journals.find_by_slug(params[:journal_id])
+		@journal = @trip.journals.find_by_slug(params[:id])
 		@journal.update_attributes!(params[:journal])
 		render :json => @journal
 	end
 
 	def destroy
 		@trip = current_trip
-		@journal = @trip.journals.find_by_slug(params[:journal_id])
+		@journal = @trip.journals.find_by_slug(params[:id])
 		@journal.destroy
 		render :json => @journal
 	end
 
 	def edit
+		@user = current_user
 		@trip = current_trip
-		@journal = @trip.journals.find_by_slug(params[:journal_id])
+		@journal = @trip.journals.find_by_slug(params[:id])
 	end
 
 	protected

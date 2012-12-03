@@ -210,7 +210,7 @@ textarea.autosize { overflow:hidden; }
 .content-grid .content.highlighted h1,
 .content-grid .content :hover h1 { bottom:0; }
 .content-grid .content:hover .remove { display:block; }
-.content-grid .content h1:not(:empty) { display:block; position:absolute; left:0; right:0; bottom:-100%; padding:5px; text-align:left; font-size:12px; line-height:1; color:#fff; background:rgba(0, 0, 0, .8);
+.content-grid .content h1:not(:empty) { display:block; position:absolute; left:0; right:0; bottom:-100%; padding:5px; text-align:left; font-size:1.4em; line-height:1; color:#fff; background:rgba(0, 0, 0, .8);
 	-webkit-transition:bottom 500ms;
 }
 .content-grid .content textarea { margin-top:5px; width:99%; color:#333; }
