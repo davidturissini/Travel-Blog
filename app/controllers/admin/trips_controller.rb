@@ -42,6 +42,7 @@ class Admin::TripsController < Admin::AdminController
 		params[:trip].delete(:user_id)
 		params[:trip].delete(:slug)
 
+		params[:trip][:title] = Sanitize.clean(params[:trip][:title])
 		@trip.update_attributes!(params[:trip])
 		@trip.save!
 

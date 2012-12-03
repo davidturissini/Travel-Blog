@@ -20,6 +20,6 @@ class GoogleMapPhoto
 	end
 	
 	def build_image_string width = 200, height = 200, zoom = 5
- 		"http://maps.google.com/staticmap?key=<%= CONFIG['google_maps']['key'] %>&center=#{@location.latitude},#{@location.longitude}&type=sat&zoom=#{zoom}&size=#{width}x#{height}"
+ 		"http://maps.google.com/staticmap?key=#{CONFIG['google_maps']['key']}&center=#{@location.latitude},#{@location.longitude}&type=sat&zoom=#{zoom}&size=#{width}x#{height}"
 	end
 end

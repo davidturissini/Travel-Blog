@@ -4,12 +4,12 @@
 <section class="pad-down">
 	<% @journals.each do |journal| %>
 		<article class="journal">
-			<%= link_to user_trip_journal_path(:user_id => journal.user.slug, :trip_id => journal.trip.slug, :id => journal.slug || journal.id) do %>
-				<% if journal.title %>
+			<% if journal.title %>
+				<%= link_to user_trip_journal_path(:user_id => journal.user.slug, :trip_id => journal.trip.slug, :id => journal.slug || journal.id) do %>
 					<h1 class="journal-title"><%= journal.title %></h1>
 				<% end %>
-				<div class="journal-body"><%= journal.body.html_safe %></div>
 			<% end %>
+			<div class="journal-body"><%= journal.body.html_safe %></div>
 			<% if current_user.owns?(journal) %>
 				<%= link_to "Edit", edit_user_trip_journal_path(:user_id => journal.user.slug, :trip_id => journal.trip.slug, :id => journal.slug || journal.id) %>
 			<% end %>
