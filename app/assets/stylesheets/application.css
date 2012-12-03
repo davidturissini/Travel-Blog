@@ -32,6 +32,8 @@ a:hover .shadow { box-shadow:0 0 10px #069; }
 
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
+.vert-center-block { display:inline-block; vertical-align:middle; }
+
 #site-header { padding:10px; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
 }
@@ -115,7 +117,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 /* DASHBOARD */
 #dashboard { display:inline-block; margin:0 40px 0 0; min-width:340px; vertical-align:middle; }
-#dashboard #trip-photo { float:left; position:relative; display:inline-block; z-index:10; margin:0 10px 0 0; width:auto; text-align:center; }
+#dashboard #trip-photo { display:inline-block; position:relative; display:inline-block; z-index:10; margin:0 10px 0 0; width:auto; text-align:center; }
 #dashboard #trip-photo img { margin-right:0; max-height:290px; }
 #dashboard #trip-photo figcaption { display:none; }
 #dashboard #trip-photo figcaption a { position:absolute; left:0px; right:0px; bottom:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: .8em; line-height:1; cursor:pointer; }
@@ -396,7 +398,7 @@ textarea.autosize { overflow:hidden; }
 #user-header a:hover { color:#069; }
 #user-header img { display:inline-block; margin-right:20px; width:100px; vertical-align:middle; }
 #user-header .user-link { display:inline-block; width:270px; }
-#user-header nav { float:right; display:inline-block; width:380px; }
+#user-header nav { display:inline-block; width:380px; }
 
 /* USER NAV */
 nav#user-nav .admin { margin-top:50px; }
