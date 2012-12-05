@@ -34,12 +34,14 @@
 			<% if !welcome_screen? %>
 				<%= render "users/header", :user => @user %>
 			<% end %>
-			<%= yield %>
+			<div id="content" class="autoclear">
+				<%= yield %>
+			</div>
 			<%= yield :below_content %>
 		</div>
 		<script>
 			window.TA = {
-			config: <%= config_json.html_safe %>
+				config: <%= config_json.html_safe %>
 			}
 		</script>
 		<%= javascript_include_tag "application" %>

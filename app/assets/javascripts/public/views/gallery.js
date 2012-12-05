@@ -20,6 +20,10 @@ var Gallery = Backbone.View.extend({
 	},
 	setSelected:function (photoIndex) {
 		if( photoIndex == this.options.selectedIndex ) { return }
+		if(!this.isRendered()) {
+			this.options.selectedIndex = photoIndex;
+			return;
+		}
 		if(this.options.selectedIndex != null) {
 			this.selectedNode().className = this.selectedNode().className.replace(" selected", "")
 		}
@@ -67,6 +71,10 @@ var Gallery = Backbone.View.extend({
 		});
 		return this;
 	},
+	_isRendered:false,
+	isRendered:function () {
+		return this._isRendered;
+	},
 	render:function () {
 		var gallery = this;
 		this.loading = new Loading();
@@ -85,7 +93,7 @@ var Gallery = Backbone.View.extend({
 		});
 
 		document.addEventListener("keyup", gallery.__keyup);
-
+		this._isRendered = true;
 		return gallery
 	}
 })

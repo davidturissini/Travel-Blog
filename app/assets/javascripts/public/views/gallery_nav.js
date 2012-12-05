@@ -19,12 +19,13 @@ var GalleryNav = Backbone.View.extend({
 		[].forEach.call(this.options.triggers, func);
 	},
 	render: function () {
-		var nav = this;
+		var nav = this,
+		listenForEvent = this.options.listenForEvent || "click";
 
 		this.bindGalleryChange();
 
 		this.eachTrigger(function (trigger, index) {
-			trigger.addEventListener("click", function (e) {
+			trigger.addEventListener(listenForEvent, function (e) {
 				e.preventDefault();
 				nav.options.gallery.setSelected(index);
 			});

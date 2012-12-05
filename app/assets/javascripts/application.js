@@ -26,11 +26,47 @@ window.addEventListener("DOMContentLoaded", function () {
 			control:document.querySelector("#user-info .control")
 		}).render();
 	}
-	
-	var gallery = new Gallery({
-		el:document.getElementById("hero"),
-		nodes:document.getElementById("hero").getElementsByClassName("slide")
-	})
-	
-	gallery.render();
+
+	(function () {
+		var navElem = document.getElementById("trips-nav"),
+		gallery = new Gallery({
+			el:document.getElementById("hero"),
+			nodes:document.getElementById("hero").getElementsByClassName("slide")
+		}),
+		nav = new GalleryNav({
+			el:navElem,
+			triggers:navElem.getElementsByClassName("trip-link"),
+			gallery:gallery,
+			listenForEvent:"mouseover"
+		}),
+		slider = new Scroller({
+			el:navElem,
+			container:navElem.getElementsByTagName("ul")[0],
+			items:navElem.getElementsByTagName("li")
+		});
+		slider.render();
+
+		if(navElem.getAttribute("data-current")) {
+			var current = navElem.getAttribute("data-current");
+			gallery.setSelected(current);
+			slider.scrollInView(current);
+
+			nav.el.addEventListener("mouseout", (function () {
+
+				var galleryIndex = gallery.selectedIndex();
+
+				return function (e) {
+					if(e.currentTarget === nav.el) {
+						gallery.setSelected(galleryIndex);
+					}
+				}
+
+			})());
+		}
+		
+		gallery.render();
+		nav.render();
+		
+	})();
+
 })

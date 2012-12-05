@@ -1,9 +1,13 @@
 <header id="user-header" class="autoclear">
 	<% if @user_trips %>
-		<nav id="trips-nav">
+		<nav id="trips-nav"<%= ' data-current="'.html_safe + @user.trips.index(@trip).to_s + '"'.html_safe if @trip %> >
 			<ul>
 				<% @user_trips.each do |trip| %>
-					<li><a href="#"><img src="<%= trip.picture.square %>" /></a></li>
+					<li>
+						<%= link_to user_trip_path(:user_id => trip.user.slug, :id => trip.slug), :title => trip.title, :class => "trip-link" do %>
+							<img src="<%= trip.picture.square %>" alt="<%= trip.title %>" />
+						<% end %>
+					</li>
 				<% end %>
 			</ul>
 		</nav>
