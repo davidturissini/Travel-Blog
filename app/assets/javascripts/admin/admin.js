@@ -40,4 +40,12 @@ window.addEventListener("DOMContentLoaded", function () {
 		}).render();
 	}
 
+	if( !document.querySelector("#user-info .dropdown") ) { return }
+	if( TA.currentUser && !TA.currentUser.isAnonymous() ) {
+		new DropDown({
+			el:document.querySelector("#user-info .dropdown"),
+			control:document.querySelector("#user-info .control")
+		}).render();
+	}
+
 })

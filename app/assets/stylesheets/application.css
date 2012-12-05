@@ -410,7 +410,7 @@ textarea.autosize { overflow:hidden; }
 #trips-nav { visibility:hidden; overflow:hidden; float:right; padding-top:20px; width:580px; }
 #trips-nav ul { width:10000px; }
 #trips-nav li { display:block; float:left; }
-#trips-nav li a { opacity:.6; }
+#trips-nav li a { opacity:.4; }
 #trips-nav li a.selected { opacity:1; }
 #trips-nav li img { margin-right:0; padding-right:10px; }
 #trips-nav .paddle { margin-top:20px; width:30px; height:30px; background:red; }

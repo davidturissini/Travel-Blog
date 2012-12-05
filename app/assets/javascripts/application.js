@@ -19,13 +19,6 @@
 window.TA.countries = new CountryCollection();
 
 window.addEventListener("DOMContentLoaded", function () {
-	if( !document.querySelector("#user-info .dropdown") ) { return }
-	if( TA.currentUser && !TA.currentUser.isAnonymous() ) {
-		new DropDown({
-			el:document.querySelector("#user-info .dropdown"),
-			control:document.querySelector("#user-info .control")
-		}).render();
-	}
 
 	(function () {
 		var navElem = document.getElementById("trips-nav"),
@@ -68,5 +61,9 @@ window.addEventListener("DOMContentLoaded", function () {
 		nav.render();
 		
 	})();
+	
+	
+
+	
 
 })
