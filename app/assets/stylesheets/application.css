@@ -91,7 +91,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .map { height:400px; }
 .map-active .map { box-shadow:0px 5px 10px #000; }
 
-#container { position:relative; margin:0 auto; width:960px; background:#fff; }
+#container { position:relative; margin:-50px auto 0; width:960px; background:#fff; }
 
 /* WELCOME PAGE */
 .welcome-index #hero { margin:30px auto 0; text-align:center; vertical-align:middle; }
@@ -399,13 +399,14 @@ textarea.autosize { overflow:hidden; }
 
 
 /* USER HEADER */
-#user-header { position:relative; margin:-90px 0 0; padding:20px; text-align:left; color:#000; }
+#user-header { position:relative; padding:20px; text-align:left; color:#000; }
 #user-header h1 { display:inline-block; margin-top:5px; font-size:1.3em; }
 #user-header a { color:#000; }
 #user-header a:hover { color:#069; }
 #user-header img { display:inline-block; margin-right:20px; width:100px; vertical-align:middle; }
 #user-header .user-link { display:inline-block; width:270px; }
-#user-header nav { display:inline-block; width:380px; }
+
+#trips-nav li { display:inline-block; }
 
 /* USER NAV */
 nav#user-nav .admin { margin-top:50px; }
