@@ -1,7 +1,17 @@
 <article class="trip content" data-json="<%= trip.to_json %>" data-locations="<%= trip.locations.to_json %>" data-maps="<%= trip.maps.to_json %>">
-    <h1><%= trip.title %></h1>
-    <% if trip.picture %>
-        <img src="<%= trip.picture.square(400) %>" title="<%= trip.title %>" alt="<%= trip.title %>" />
-    <% end %>
-    <%= link_to "", trip_path(trip), :class => "content-link trip-link" %>
+	<%= link_to user_trip_path(:user_id => trip.user.slug, :id => trip.slug) do %>
+	    <% if trip.picture %>
+	    	<figure>
+	        	<img class="lazy" 
+	        		data-src="<%= trip.picture.square(800) %>" 
+	        		data-height="<%= trip.picture.height %>"
+	        		title="<%= trip.title %>" 
+	        		alt="<%= trip.title %>" />
+	        </figure>
+	    <% end %>
+	    <div class="text">
+		    <h1><%= trip.title %></h1>
+		    <p><%= trip.date_string %></p>
+		</div>
+	<% end %>
 </article>

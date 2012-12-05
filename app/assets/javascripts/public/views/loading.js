@@ -17,10 +17,11 @@ var Loading = Backbone.View.extend({
 	addLoadingClass:function () {
 		this.el.className += " loading";
 	},
-	loading:function () {
+	loading:function (elem) {
+		var elem = elem || this.el;
 		this.addLoadingClass();
-		if( this.loadingUI.parentNode !== this.el ) {
-			this.el.appendChild(this.loadingUI);
+		if( this.loadingUI.parentNode !== elem ) {
+			elem.appendChild(this.loadingUI);
 		}
 		this.center();
 	},

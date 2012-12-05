@@ -4,7 +4,7 @@ class UsersController < ApplicationController
  def show
   @user = User.find_by_slug(params[:user_id]) 
   raise ActiveRecord::RecordNotFound if !@user
-  @user_trips = @user.trips.by_year
+  @user_trips = @user.trips.order("start_date DESC")
   render_show
  end
 

@@ -26,4 +26,11 @@ window.addEventListener("DOMContentLoaded", function () {
 			control:document.querySelector("#user-info .control")
 		}).render();
 	}
+	
+	var gallery = new Gallery({
+		el:document.getElementById("hero"),
+		nodes:document.getElementById("hero").getElementsByClassName("slide")
+	})
+	
+	gallery.render();
 })

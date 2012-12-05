@@ -2,7 +2,7 @@ require 'flickraw'
 
 class User < ActiveRecord::Base
   has_many :location_types
-  has_many :trips
+  has_many :trips, :order => "start_date DESC"
   has_many :locations, :through => :trips
   has_many :maps, :through => :trips
   has_many :statuses, :through => :locations

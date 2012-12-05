@@ -1,6 +1,6 @@
 var Gallery = Backbone.View.extend({
 	initialize: function () {
-		var gallery = this
+		var gallery = this;
 
 		gallery.__keyup = function (e) {
 			switch(e.which) {
@@ -8,128 +8,83 @@ var Gallery = Backbone.View.extend({
 					gallery.close()
 					break;
 				case 37:
-					gallery.focusPrev()
+					gallery.selectPrev()
 					break;
 				case 39:
-					gallery.focusNext()
+					gallery.selectNext()
 					break;
 			}
 		}
-	},
-	__distanceToLeft: function () {
-		var relative = this.el.offsetParent,
-		offset = this.el.offsetLeft
 
-		while(relative != document.body) {
-			offset += relative.offsetLeft
-			relative = relative.offsetParent
-		}
-
-		return offset
-	},
-	close: function () {
-		var gallery = this
-		this.el.className = this.el.className.replace(" gallery", "")
-		this.el.style.left = "auto";
-		this.el.style.marginLeft = "auto"
-		this.el.style.marginRight = "auto";
-		this.el.querySelector("ul").style.width = "auto";
-		[].forEach.call(gallery.options.photos, function (photo, index) {
-			photo.style.marginTop =  "0px"
-			photo.className = photo.className.replace(" selected", "")
-		})
-		document.removeEventListener("keyup", gallery.__keyup)
-		if( this.options.onClose ) {
-			this.options.onClose()
-		}
+		this.options.selectedIndex = this.options.selectedIndex || 0;
 	},
 	setSelected:function (photoIndex) {
 		if( photoIndex == this.options.selectedIndex ) { return }
 		if(this.options.selectedIndex != null) {
-			this.selectedPhoto().className = this.selectedPhoto().className.replace(" selected", "")
+			this.selectedNode().className = this.selectedNode().className.replace(" selected", "")
 		}
 		this.options.selectedIndex = photoIndex
 		this.focusSelected()
 	},
-	focusNext: function () {
-		var photosLen = this.options.photos.length,
-		next = this.options.selectedIndex + 1
+	selectNext: function () {
+		var nodesLen = this.options.nodes.length,
+		next = (this.options.selectedIndex) + 1;
 
-		if( next < photosLen ) {
-			this.setSelected(this.options.selectedIndex + 1)
+		if( next < nodesLen ) {
+			this.setSelected(next)
 		}
 	},
-	focusPrev: function () {
+	selectPrev: function () {
 		var prev = this.options.selectedIndex - 1
 		if( prev >= 0 ) {
 			this.setSelected(prev)
 		}
 	},
-	selectedPhoto:function () {
-		return this.options.photos.item(this.options.selectedIndex)
+	selectedNode:function () {
+		return this.options.nodes.item(this.options.selectedIndex);
 	},
-	calculateWidth:function () {
-		var gallery = this,
-		width = 0;
-		[].forEach.call(gallery.el.querySelectorAll("li"), function (li) {
-			var style = getComputedStyle(li)
-			width += li.offsetWidth + parseInt( style.marginLeft ) + parseInt( style.marginRight )
-		})
-
-		return width
+	selectedIndex:function () {
+		return this.options.selectedIndex;
 	},
 	focusSelected: function () {
-		var photo = this.selectedPhoto(),
-		photoLen = this.options.photos.length,
-		lastPhoto = this.options.photos.item(photoLen - 1),
-		oldWidth = photo.offsetWidth,
-		ul = this.el.querySelector("ul")
-
-
-		if( !/selected/.test(photo.className) ) {
-			photo.className += " selected"
-		}
-		ul.style.width = this.calculateWidth() + "px"
-
-		ul.style.left = (-1 * (photo.offsetLeft - (this.el.offsetWidth / 2 - photo.offsetWidth / 2))) + "px"
-		this.positionPhotos()
-	},
-	positionPhotos:function () {
 		var gallery = this,
-		ul = gallery.el.querySelector("ul"),
-		selectedPhoto = this.selectedPhoto()
-		selectedPhoto.style.marginTop = "0px"
-		
-		var computedULHeight = parseInt( getComputedStyle(ul).height )
+		node = this.selectedNode();
 
+		if( !/selected/.test(node.className) ) {
+			node.className += " selected"
+		}
+		this.loading.loading();
+		LazyImage.renderAll(node, {
+			onload:function () {
+				gallery.loading.doneLoading();
+			}
+		});
 
-		if( selectedPhoto.offsetHeight > computedULHeight ) {
-			ul.style.height = selectedPhoto.offsetHeight + "px";
-			computedULHeight = parseInt( getComputedStyle(ul).height )
-		};
-
-		[].forEach.call(gallery.options.photos, function (photo, index) {
-			photo.style.marginTop = (computedULHeight / 2) - (photo.offsetHeight / 2) + "px"
-		})
-
+		this.trigger("select_change", {
+			gallery:this, 
+			selectedNode:node, 
+			selectedIndex:this.options.selectedIndex
+		});
+		return this;
 	},
 	render:function () {
-		var gallery = this,
-		margin = this.__distanceToLeft()
-		this.el.className += " gallery"
+		var gallery = this;
+		this.loading = new Loading();
+		this.loading.render();
 
-		this.el.style.marginLeft = -margin + "px"
-		this.el.style.marginRight = -margin + "px"
+		if( !/gallery/.test(this.el.className) ) {
+			this.el.className += " gallery"
+		}
 
 		this.focusSelected();
-		[].forEach.call(this.options.photos, function (photo, index) {
-			photo.addEventListener("click", function () {
-				gallery.setSelected(index)
-			})
-		})
 
+		[].forEach.call(this.options.nodes, function (node, index) {
+			if( !/slide/.test(node.className) ) {
+				node.className += " slide";
+			}
+		});
 
-		document.addEventListener("keyup", gallery.__keyup)
+		document.addEventListener("keyup", gallery.__keyup);
 
 		return gallery
 	}

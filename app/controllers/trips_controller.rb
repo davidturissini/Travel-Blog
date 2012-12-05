@@ -1,7 +1,8 @@
 class TripsController < ApplicationController
 	def show
 		@user = User.find_by_slug(params[:user_id])
-		@trip = @user.trips.find_by_slug(params[:id])
+		@user_trips = @user.trips
+		@trip = @user_trips.find_by_slug(params[:id])
 		@photos = @trip.photos.limit(10)
 		@page_title = "#{@trip.title}"
 		@og_image = @trip.picture.url

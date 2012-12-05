@@ -4,7 +4,7 @@ class GoogleMapPhoto
 	end
 
 	def small
-		build_image_string 100, 100, 10
+		build_image_string 200, 200, 10
 	end
 
 	def url
@@ -17,6 +17,14 @@ class GoogleMapPhoto
 
 	def square size = 200
 		build_image_string size, size
+	end
+
+	def height
+		nil
+	end
+
+	def thumbnail
+		square 50
 	end
 	
 	def build_image_string width = 200, height = 200, zoom = 5
