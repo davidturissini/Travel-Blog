@@ -116,18 +116,19 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 }
 
 /* DASHBOARD */
-#dashboard { display:inline-block; margin:0 40px 0 0; min-width:340px; vertical-align:middle; }
-#dashboard #trip-photo { display:inline-block; position:relative; display:inline-block; z-index:10; margin:0 10px 0 0; width:auto; text-align:center; }
-#dashboard #trip-photo img { margin-right:0; max-height:290px; }
+#dashboard { float:right; vertical-align:middle; text-align:right; }
+#dashboard a { display:block; }
+#dashboard a:hover *[contenteditable] { color:#fff; }
+#dashboard #trip-photo { display:inline-block; position:relative; display:inline-block; z-index:10; margin:0 0 0 10px; width:auto; text-align:center; }
+#dashboard #trip-photo img { margin-right:0; max-height:100px; max-width:100px; width:auto; }
 #dashboard #trip-photo figcaption { display:none; }
-#dashboard #trip-photo figcaption a { position:absolute; left:0px; right:0px; bottom:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: .8em; line-height:1; cursor:pointer; }
+#dashboard #trip-photo figcaption span { position:absolute; left:0px; right:0px; bottom:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: .8em; line-height:1; cursor:pointer; }
 #dashboard #trip-photo:hover figcaption { display:block; }
 #dashboard figcaption { display:none; }
 #dashboard figure { margin:0 0 30px; }
 #dashboard .date-field { padding:0; outline:0; background:transparent; color:#fff; }
 #dashboard .date-field span { color:#fff; background:transparent; }
 #dashboard h1 { margin-bottom:5px; }
-#dashboard h1 textarea { width:360px; padding:5px 0; border:0; background:transparent; color:#fff; font-size:1.3em; }
 
 /* TRIP DETAIL PAGE */
 .trips-show #trip { position:relative; margin:20px auto; padding-bottom:20px; }
@@ -397,8 +398,7 @@ textarea.autosize { overflow:hidden; }
 #user-header a { color:#fff; }
 #user-header a:hover { color:#069; }
 #user-header img { display:inline-block; margin-right:20px; width:100px; vertical-align:middle; }
-#user-header .user-link { display:inline-block; width:270px; }
-#user-header nav { display:inline-block; width:380px; }
+#user-header .user-link { float:left; }
 
 /* USER NAV */
 nav#user-nav .admin { margin-top:50px; }

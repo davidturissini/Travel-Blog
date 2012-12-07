@@ -10,6 +10,11 @@ var AutoSaveTextField = Backbone.View.extend({
             view.el.contentEditable = true;
         }
 
+        view.el.addEventListener("click", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        })
+
         view.el.addEventListener("keyup", function (e) {
             var elem = e.currentTarget,
             propVal = view.elIsInput() ? e.currentTarget.value : elem.innerHTML;

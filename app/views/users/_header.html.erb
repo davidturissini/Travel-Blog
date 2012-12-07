@@ -5,31 +5,31 @@
 	<% end %>
 	<article id="dashboard">
 		<% if @trip && !@trip.new_record? %>
-			<figure id="trip-photo" class="content">
-				<% if @trip.picture %>
-					<img src="<%= @trip.picture.large %>" class="rounded shadow" id="trip-image" />
-				<% end %>
-				<% if @trip.photos.length > 0 && current_user.owns?(@trip) %>
-					<figcaption>
-						<a href="#" class="rounded shadow" id="change-trip-photo">Change photo</a>
-					</figcaption>
-				<% end %>
-			</figure>
-			<div class="vert-center-block">
-				<h1 class="trip-title" id="trip-title">
-					<%= @trip.title %>
-				</h1>
+			<%= link_to user_trip_path(:user_id => @trip.user.slug, :id => @trip.slug) do %>
+				<div class="vert-center-block">
+					<h1 class="trip-title" id="trip-title">
+						<%= @trip.title %>
+					</h1>
+					<% if current_user.owns?(@trip) %>
+						<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
+					<% else %>
+						<h2><%= @trip.date_string %></h2>
+					<% end %>
+				</div>
+				<figure id="trip-photo" class="content">
+					<% if @trip.picture %>
+						<img src="<%= @trip.picture.large %>" class="rounded shadow" id="trip-image" />
+					<% end %>
+					<% if @trip.photos.length > 0 && current_user.owns?(@trip) %>
+						<figcaption>
+							<span class="rounded" id="change-trip-photo">Change photo</span>
+						</figcaption>
+					<% end %>
+				</figure>
 				<% if current_user.owns?(@trip) %>
-					<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
-				<% else %>
-					<h2><%= @trip.date_string %></h2>
+					<span id="trip-delete" class="remove"></span>
 				<% end %>
-			</div>
-			
-			<% if current_user.owns?(@trip) %>
-				<a id="trip-delete" class="remove"></a>
 			<% end %>
 		<% end %>
 	</article>
-	<%= render "users/nav", :user => @user %>
 </header>

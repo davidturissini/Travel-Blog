@@ -92,7 +92,8 @@ var DateField = Backbone.View.extend({
 	},
 	__bindElem:function () {
 		var view = this;
-		this.el.addEventListener("click", function () {
+		this.el.addEventListener("click", function (e) {
+			e.preventDefault();
 			view.kalendae().show();
 			view.trigger("click");
 		})
@@ -101,6 +102,7 @@ var DateField = Backbone.View.extend({
 		var view = this,
 		removeEl = this.el.getElementsByClassName("reset").item(0);
 		removeEl.addEventListener("click", function (e) {
+			e.preventDefault();
 			e.stopPropagation();
 			view._updateModel([]);
 			view.kalendae().setSelected("");

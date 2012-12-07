@@ -48,7 +48,8 @@ window.addEventListener("DOMContentLoaded", function () {
 
     var tripPhotoLink = document.getElementById("change-trip-photo");
     if( tripPhotoLink ) {
-        tripPhotoLink.addEventListener("click", function () {
+        tripPhotoLink.addEventListener("click", function (evt) {
+            evt.preventDefault();
             var dialog = new TripPhotoDialog({
                 model:trip
             });
