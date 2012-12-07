@@ -1,3 +1,7 @@
+<% content_for :dashboard do %>
+	<%= render "trips/dashboard", :trip => @trip %>
+<% end %>
+
 <section>
 	<% if current_user.owns?(@trip) %>
 		<p class="note">

@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
   belongs_to :home_country, :class_name => "Country", :foreign_key => :country_id
   has_many :countries, :through => :locations
   has_many :realm_accounts
+  has_many :journals, :through => :trips
   validates :slug, :presence => true, :on => :update
   has_many :photos
   include HasFiles

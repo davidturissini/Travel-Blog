@@ -1,6 +1,6 @@
 var AutoSaveTextField = Backbone.View.extend({
     elIsInput:function () {
-        return (this.el.tagName === "input" || this.el.tagName === "textarea");
+        return (this.el.tagName.toLowerCase() === "input" || this.el.tagName.toLowerCase() === "textarea");
     },
 	__bindKeyUp:function () {
 		var view = this,
@@ -17,8 +17,8 @@ var AutoSaveTextField = Backbone.View.extend({
 
         view.el.addEventListener("keyup", function (e) {
             var elem = e.currentTarget,
-            propVal = view.elIsInput() ? e.currentTarget.value : elem.innerHTML;
-
+            propVal = view.elIsInput() ? elem.value : elem.innerHTML;
+            
             view.model.set(view.options.property, propVal);
             if( timeout ) { clearTimeout(timeout); };
             timeout = setTimeout(function () {

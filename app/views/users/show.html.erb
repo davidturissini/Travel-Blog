@@ -1,10 +1,11 @@
-<% if current_user === @user %>
-	<aside class="clear center">
-		<%= render "admin/global/create_new_link",
-			:text => "Create new trip",
-			:url => new_user_trip_path(current_user.slug)
-		%>
-	</aside>
+<% content_for :dashboard do %>
+	<ul>
+		<li><%= @user.trips.count %> Trips</li>
+		<li><%= @user.countries_count %> Countries</li>
+		<li><%= @user.photos.count %> Photos</li>
+		<li><%= @user.journals.count %> Journal Entries</li>
+		<li><%= @user.maps.count %> Maps</li>
+	</ul>
 <% end %>
 
 <section id="trips">
@@ -12,6 +13,10 @@
 		<section class="year content-grid two-col">
 			<header class="row">
 				<h1 class="year-title"><%= year %></h1>
+				<%= render "admin/global/create_new_link",
+					:text => "Create new trip",
+					:url => new_user_trip_path(current_user.slug)
+				%>
 				<h2 class="trips-count"><%= pluralize(@user_trips[year].length, 'Trip') %></h2>
 			</header>
 			<div class="autoclear">
