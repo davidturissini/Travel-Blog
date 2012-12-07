@@ -1,7 +1,13 @@
+<% reset_position = defined?(:reset_position) ? reset_position : "right" %>
 <section class="<%= type %>-date field has-date date-field">
 	<label>Enter Dates</label>
-	<span class="reset">(reset)</span>
-	<span><%= obj.date_string %></span>
+	<% if reset_position == "left" %>
+		<span class="reset">(reset)</span>
+	<% end %>
+	<span class="date-str"><%= obj.date_string %></span>
+	<% if reset_position != "left" %>
+		<span class="reset">(reset)</span>
+	<% end %>
 	<input type="text" />
 </section>
 

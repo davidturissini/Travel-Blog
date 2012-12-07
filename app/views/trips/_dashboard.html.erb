@@ -5,7 +5,7 @@
 				<%= trip.title %>
 			</h1>
 			<% if current_user.owns?(trip) %>
-				<%= render "admin/global/date_fields", :obj => trip, :type => "trip" %>
+				<%= render "admin/global/date_fields", :obj => trip, :reset_position => "left", :type => "trip" %>
 			<% else %>
 				<h2><%= trip.date_string %></h2>
 			<% end %>

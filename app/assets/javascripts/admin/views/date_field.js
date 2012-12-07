@@ -69,7 +69,7 @@ var DateField = Backbone.View.extend({
 
 		this.__updateClassName();
 
-		this.el.getElementsByTagName("span")[0].innerHTML = str;
+		this.el.getElementsByClassName("date-str")[0].innerHTML = str;
 	},
 	defaultDate:function () {
 		return this._defaultDate;

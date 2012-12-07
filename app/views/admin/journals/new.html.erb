@@ -3,7 +3,7 @@
 		<%= render "admin/global/breadcrumb", 
 			:trip => @trip,
 			:crumbs => [
-				{ :title => "Journal", :url => admin_journals_path(@trip.slug) }
+				{ :title => "Journal", :url => user_trip_journals_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) }
 				],
 			:page => "New Entry" 
 			%>
