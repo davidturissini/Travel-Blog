@@ -4,8 +4,6 @@ var Scroller = Backbone.View.extend({
 		scroller.leftPaddle = document.createElement("a")
 		scroller.rightPaddle = document.createElement("a")
 		scroller.overflowContainer = document.createElement("div")
-		scroller.containerWidth = 0
-		scroller.viewportWidth = 0
 		scroller.index = 0
 		scroller.numVisibleItems = 0
 		scroller.paddleWidth = 50
@@ -18,45 +16,17 @@ var Scroller = Backbone.View.extend({
 		scroller.rightPaddle.className += "right paddle"
 
 	},
-	prev: function () {
-		var scroller = this,
-		elemLeft = parseInt(scroller.options.container.style.left) || 0,
-		left = elemLeft < 0 ? elemLeft * -1 : elemLeft,
-		numItems = scroller.options.items.length,
-		targetLimit = scroller.index - scroller.visibleItems,
-		limit = targetLimit >= 0 ? targetLimit : 0
-		for(var i = scroller.index; i > limit; i--) {
-			var elem = scroller.options.items.item(i)
-			left -= elem.offsetWidth  
-		}
-		scroller.index = i
-		scroller.options.container.style.left = left * -1 + "px"
-		scroller.determineVisibleItems()
-	},
-	next: function () {
-		var scroller = this,
-		elemLeft = parseInt(scroller.options.container.style.left) || 0,
-		left = elemLeft < 0 ? elemLeft * -1 : elemLeft,
-		numItems = scroller.options.items.length,
-		targetLimit = scroller.index + scroller.numVisibleItems,
-		limit = targetLimit <= numItems - scroller.numVisibleItems ? targetLimit :  numItems - scroller.numVisibleItems
-		for(var i = scroller.index; i < limit; i++) {
-			var elem = scroller.options.items.item(i)
-			left += elem.offsetWidth 
-		}
-		scroller.index = i
-		scroller.options.container.style.left = left * -1 + "px"
-		scroller.determineVisibleItems()
+	viewportWidth:function () {
+		return this.el.offsetWidth - (this.paddleWidth * 2);
 	},
 	determineVisibleItems: function () {
 		var scroller = this,
 		itemsWidth = 0
 
 		scroller.numVisibleItems = 0 
-		scroller.viewportWidth = scroller.el.offsetWidth - (scroller.paddleWidth * 2)
 		for(var i = scroller.index; i < scroller.options.items.length; i++) {
-			var elem = scroller.options.items.item(i)
-			if( elem.offsetWidth + itemsWidth <= scroller.viewportWidth ) {
+			var elem = scroller.options.items.item(i);
+			if( elem.offsetWidth + itemsWidth <= scroller.viewportWidth() ) {
 				itemsWidth += elem.offsetWidth
 				scroller.numVisibleItems++
 			} else {
@@ -64,30 +34,64 @@ var Scroller = Backbone.View.extend({
 			}
 		}
 		scroller.overflowContainer.style.width = itemsWidth + "px"
-		var diff = scroller.el.offsetWidth - (itemsWidth + scroller.paddleWidth * 2)
+		var diff = scroller.width() - (itemsWidth + scroller.paddleWidth * 2)
 		scroller.leftPaddle.style.marginLeft = diff / 2 + "px"
 		scroller.rightPaddle.style.marginRight = diff / 2 + "px"
 	},
-	scrollInView:function (index) {
-		var visibleItems = this.numVisibleItems,
-		page = Math.floor(index / visibleItems);
-		for(var i = 0; i < page; i += 1) {
-			this.next();
+	leftPos:function () {
+		return parseInt(this.options.container.style.left) || 0;
+	},
+	rightPos:function () {
+		return -this.leftPos() + this.viewWidth();
+	},
+	containerWidth:function () {
+		return this.options.container.offsetWidth;
+	},
+	indexVisible:function (index) {
+		var elemLeft = this.options.items.item(index).offsetLeft,
+		adjustedLeft = elemLeft + this.leftPos();
+		return adjustedLeft >= 0 && adjustedLeft < this.viewWidth();
+	},
+	width:function () {
+		return this.el.offsetWidth;
+	},
+	viewWidth:function () {
+		return this.overflowContainer.offsetWidth;
+	},
+	scrollTo:function (pos) {
+		if(pos > this.containerWidth() - this.viewWidth()) {
+			pos = this.containerWidth() - this.viewWidth();
+		} else if(pos < 0) {
+			pos = 0;
 		}
 
+		this.options.container.style.left = -pos + "px";
+	},
+	scrollToIndex:function (index) {
+		var scroller = this,
+		elemLeft = this.leftPos();
+
+		this.scrollTo(this.options.items.item(index).offsetLeft);
+	},
+	nextPage:function () {
+		this.scrollTo(-this.leftPos() + this.viewWidth());
+	},
+	prevPage:function () {
+		this.scrollTo(-this.leftPos() - this.viewWidth());
 	},
 	bindPaddles:function () {
 		var scroller = this;
 		scroller.leftPaddle.addEventListener("click", function () {
-			scroller.prev()
+			scroller.prevPage()
 		})
 
 		scroller.rightPaddle.addEventListener("click", function () {
-			scroller.next()
+			scroller.nextPage()
 		})
 	},
 	render: function () {
-		var scroller = this
+		var scroller = this,
+		w = 0;
 
 		scroller.el.innerHTML = ""
 		scroller.overflowContainer.appendChild(scroller.options.container)
@@ -102,10 +106,10 @@ var Scroller = Backbone.View.extend({
 		});
 
 		[].forEach.call(scroller.options.items, function (elem) {
-			scroller.containerWidth += elem.offsetWidth
+			w += elem.offsetWidth
 		})
 
-		scroller.options.container.style.width = scroller.containerWidth + "px"
+		scroller.options.container.style.width = w + "px"
 		scroller.determineVisibleItems()  
 
 		scroller.bindPaddles();

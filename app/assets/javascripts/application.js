@@ -42,7 +42,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		if(navElem.getAttribute("data-current")) {
 			var current = navElem.getAttribute("data-current");
 			gallery.setSelected(current);
-			slider.scrollInView(current);
+			slider.scrollToIndex(current);
 
 			nav.el.addEventListener("mouseout", (function () {
 
@@ -59,6 +59,13 @@ window.addEventListener("DOMContentLoaded", function () {
 		
 		gallery.render();
 		nav.render();
+
+		gallery.on("select_change", function () {
+			var index = gallery.selectedIndex();
+			if(!slider.indexVisible(index)) {
+				slider.scrollToIndex(index);
+			}
+		})
 		
 	})();
 	
