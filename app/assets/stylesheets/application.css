@@ -432,6 +432,8 @@ nav#user-nav li:first-child { border-top:0; }
 /* USERS SHOW PAGE */
 .users-show #trips { margin:0; }
 .users-show #trips .year .year-title { font-size:1.4em; }
+.users-show .no-trips { text-align:center; }
+.users-show .no-trips .create-new { float:none; margin-top:80px; font-size:4.5em; }
 
 #user-form .user-geo label { display:block; }
 #user-form .user-geo input { display:inline-block; width:300px; }

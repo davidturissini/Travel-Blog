@@ -55,6 +55,18 @@ var User = Backbone.Model.extend((function () {
 		}
 })())
 
+User.validateSlug = function(slug, callbacks) {
+	$.ajax({
+		url:"/users/validate_slug",
+		data:{slug:slug},
+		success:function (e) {
+			if( callbacks.success ) {
+				callbacks.success(e);
+				}
+			}
+		})
+}
+
 User.createFromDataAttribute = function (node, attributeName) {
 	attributeName = attributeName || "data-json";
 	var userJson = JSON.parse( node.getAttribute(attributeName) );

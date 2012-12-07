@@ -20,12 +20,12 @@
 		
 		new UserSlugField({
 			model:user,
-			el:document.querySelector("#user .user-slug")
+			el:document.getElementById("user").getElementsByClassName("user-slug").item(0)
 		}).render()
 
 		user.on("change", function (model, options) {
 			if(options.changes.slug) {
-				var mirror = document.querySelector("#slug-mirror")
+				var mirror = document.getElementById("slug-mirror");
 				mirror.innerHTML = model.get("slug")
 			}
 		})

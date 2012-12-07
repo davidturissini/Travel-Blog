@@ -19,7 +19,7 @@
 			<h1 id="site-title"><%= link_to "TravelAddict", root_path %></h1>
 		</header>
 		<%= render_admin_ribbon %>
-		<% if !welcome_screen? %>
+		<% if !welcome_screen? && @user %>
 			<%= render "users/header", :user => @user %>
 		<% end %>
 		<div id="container" class="grid-20-75 autoclear">

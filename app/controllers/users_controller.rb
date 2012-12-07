@@ -1,6 +1,13 @@
 require 'digest/md5'
 
 class UsersController < ApplicationController
+
+  def validate_slug
+    slug = String.slugify(params[:slug])
+    unique = HasSlug.get_unique_slug(slug, User.where("id > 0"))
+    render :json => { :slug => unique }
+  end
+
  def show
   @user = User.find_by_slug(params[:user_id]) 
   raise ActiveRecord::RecordNotFound if !@user
