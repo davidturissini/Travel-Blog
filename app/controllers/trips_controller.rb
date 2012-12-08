@@ -9,7 +9,7 @@ class TripsController < ApplicationController
 		@og_image = @trip.picture.url
 		@og_title = @trip.title
 
-		@canonical_url = user_location_url({
+		@canonical_url = user_trip_url({
 		    :user_id => @user.slug,
 		    :id => @trip.slug 
 		    })

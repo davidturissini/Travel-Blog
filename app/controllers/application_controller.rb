@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   rescue_from ActiveRecord::RecordNotFound, :with => :not_found
 
   def not_found
-    render :template => "global/four_oh_four"
+    render :template => "global/four_oh_four", :status => 404
   end
 
   def current_user

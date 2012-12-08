@@ -12,10 +12,6 @@ class Photo < ActiveRecord::Base
 		static.url(size)
 	end
 
-	def static_photo_path
-		"/#{CONFIG['static']['user_path']}#{user.slug}/photos/"
-	end
-
 	def user
 		@user || trips.first.user
 	end
