@@ -1,0 +1,45 @@
+user_one:
+  id: 1
+  name: Dave
+  created_at: 2012-01-01
+  updated_at: 2012-01-01
+  salt: 24gh3ug35
+  token: null
+  slug: dave
+  been_welcomed: false
+  city: Campbell
+  country_id: 1
+  photo_url: http://photo_url
+  latitude: 100
+  longitude: 100
+  description: user description
+anonymous:
+  id: 2
+  name: anonymous
+  created_at: 2012-01-01
+  updated_at: 2012-01-01
+  salt: anonymous
+  token: null
+  slug: anonymous
+  been_welcomed: false
+  city: Campbell
+  country_id: 1
+  photo_url: http://photo_url
+  latitude: 100
+  longitude: 100
+  description: user description
+user_two:
+  id: 3
+  name: Dave
+  created_at: 2012-01-01
+  updated_at: 2012-01-01
+  salt: kjejjerj
+  token: null
+  slug: dave
+  been_welcomed: false
+  city: Campbell
+  country_id: 1
+  photo_url: http://photo_url
+  latitude: 100
+  longitude: 100
+  description: user description

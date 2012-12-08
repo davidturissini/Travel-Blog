@@ -1,0 +1,15 @@
+location_one:
+  id: 1
+  title: Location
+  slug: location
+  created_at: 2012-01-01
+  updated_at: 2012-01-01
+  latitude: 100
+  longitude: 100
+  city: New York
+  country_id: 1
+  state: New York
+  photo_id: null
+  trip_id: 1
+  start_date: 2012-01-01
+  end_date: 2012-01-01
