@@ -1,5 +1,0 @@
-sample_realm:
- provider: facebook
- user_id: 1
- provider_id: 123
- access_token: 10923u923
