@@ -10,6 +10,13 @@ class Trip < ActiveRecord::Base
  	include HasDates
  	include HasTitle
 
+ 	def distribute realm_providers = [:facebook]
+	    realm_providers.each do |realm_provider|
+	      realm = user.realm_accounts.find_by_provider(realm_provider)
+	      realm.distribute_trip(self)
+	    end
+ 	end
+
  	def self.random limit = 3
 		limit(limit).order("RANDOM()")
 	end

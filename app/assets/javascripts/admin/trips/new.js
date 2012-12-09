@@ -52,7 +52,8 @@ window.addEventListener("DOMContentLoaded", function () {
 		if( error.title ) {
 			feedback.showError("Please title your trip");
 		}
-	})
+	});
+
 
 	document.getElementById("trip-save").addEventListener("click", function (e) {
 		e.preventDefault();
@@ -63,9 +64,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
 		trip.saveWithLocations({
 			success:function () {
-				window.location.href = trip.editUrl();
+				trip.distribute()
 			}
 		})
+
 	})
 
 })

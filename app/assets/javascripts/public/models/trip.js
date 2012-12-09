@@ -7,18 +7,6 @@ var Trip = Backbone.Model.extend({
 			return {title:true};
 		}
 	},
-	saveWithLocations:function (callbacks) {
-		callbacks = callbacks || {};
-		this.set({locations:this._locations.models});
-		if( !this.isValid() ) { return }
-		this.save({}, {
-			success:function(e){
-				if(callbacks.success) {
-					callbacks.success(e);
-				}
-			}
-		})
-	},
 	setPhoto:function (photo) {
 		this._photo = photo;
         this.set({photo_id:photo.id});

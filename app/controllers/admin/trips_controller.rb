@@ -1,4 +1,19 @@
 class Admin::TripsController < Admin::AdminController
+	def distribute
+		@user = current_user
+		@trip = current_user.trips.find_by_slug(params[:trip_id])
+		raise ActiveRecord::RecordNotFound if !@trip
+		realm = @user.realm_accounts.find_by_provider("facebook")
+		trip_url = "#{user_trip_path(:user_id => @user.slug, :id => @trip.slug)}"
+		if !realm.permission? :publish_actions
+			distribute_url = "#{trip_url}/distribute"
+			redirect_to "/auth/facebook?scope=publish_actions&state=#{distribute_url}"
+		else
+			@trip.distribute
+			redirect_to trip_url
+		end
+	end
+
 	def new
 		@user = current_user
 		@trip = current_user.trips.new

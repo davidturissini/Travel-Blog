@@ -26,14 +26,24 @@ class UsersController < ApplicationController
 	end
 
 	def login
-		send("login_#{params[:provider]}")
-
-		if current_user.incomplete?
-			redirect_to_user_welcome
-		elsif !params[:redirect].nil?
-			redirect_to(params[:redirect])
+		if params.has_key?(:state)
+			redirect_to params[:state]
 		else
-			redirect_to("/")
+			ActiveRecord::Base.transaction do
+				provider_id = request.env['omniauth.auth'].uid
+
+				realm = RealmAccount.find_or_create_by_provider_and_provider_id(params[:provider], provider_id)
+				realm.login_user!(request.env['omniauth.auth'])
+				set_user_cookie(realm.user)
+				
+				if current_user.incomplete?
+					redirect_to_user_welcome
+				elsif !params[:redirect].nil?
+					redirect_to(params[:redirect])
+				else
+					redirect_to("/")
+				end
+			end
 		end
 	end
 
@@ -46,42 +56,16 @@ class UsersController < ApplicationController
 		secret = request.env['omniauth.auth'].credentials["secret"]
 		if !current_user.anonymous? && !realm
 			RealmAccount.create({
-			:provider => "flickr",
-			:provider_id => provider_id,
-			:access_token => token,
-			:user => current_user,
-			:shared_secret => secret
+				:provider => "flickr",
+				:provider_id => provider_id,
+				:access_token => token,
+				:user => current_user,
+				:shared_secret => secret
 			})
 		elsif realm
 			realm.shared_secret = secret
 			realm.access_token = token
 			realm.save!
-		end
-	end
-
-	def login_facebook
-		provider_id = request.env['omniauth.auth'].uid
-		realm = RealmAccount.where({:provider => "facebook", :provider_id => provider_id}).first
-		token = request.env['omniauth.auth'].credentials["token"]
-		if( realm )
-			realm.access_token = token
-			realm.save!
-			realm.user.login!
-			set_user_cookie(realm.user)
-		else
-			name = request.env['omniauth.auth'].info.first_name
-			username = request.env['omniauth.auth'].info.nickname
-			user = User.new_traveller({
-				:name => name, 
-				:photo_url => "https://graph.facebook.com/#{username}/picture"
-				})
-			RealmAccount.create({
-				:provider => "facebook",
-				:provider_id => provider_id,
-				:user => user
-				})
-			user.login!
-			set_user_cookie(user)
 		end
 	end
 end

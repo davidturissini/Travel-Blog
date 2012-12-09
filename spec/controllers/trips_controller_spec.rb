@@ -64,6 +64,18 @@ describe TripsController do
 					get :show, :user_id => user.slug, :id => trip.slug
 					assigns(:og_image).should == photo.url
 				end
+
+				it "should assign @og_type to 'trip'" do
+					user = users(:user_one)
+					trip = trips(:trip_one)
+					photo_url = "http://url"
+					photo = Photo.new
+					photo.stub(:url).and_return(photo_url)
+					trip.stub!(:picture).and_return(photo)
+					Trip.stub!(:find_by_slug).and_return(trip)
+					get :show, :user_id => user.slug, :id => trip.slug
+					assigns(:og_type).should == "trip"
+				end
 			end
 
 			describe "Requesting a trip that doesn't exist" do
