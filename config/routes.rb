@@ -34,7 +34,9 @@ Adventureblog::Application.routes.draw do
       resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos"
       resources :photos, :only => [:show, :index]
     end
-    resources :trips, :path => "", :only => [:edit, :update, :destroy], :controller => "admin/trips"
+    resources :trips, :path => "", :only => [:edit, :update, :destroy], :controller => "admin/trips" do
+      match "/distribute", :action => "distribute", :as => "user_trip_distribute"
+    end
     resources :trips, :path => "/trips", :only => [:new, :create], :controller => "admin/trips"
   end
 end
