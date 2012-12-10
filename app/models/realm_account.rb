@@ -1,5 +1,6 @@
 class RealmAccount < ActiveRecord::Base
 	belongs_to :user
+	has_many :realm_permissions, :dependent => :destroy
 	after_initialize :load_type_module
 
 	def load_type_module

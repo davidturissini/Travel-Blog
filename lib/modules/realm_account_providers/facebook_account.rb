@@ -5,9 +5,22 @@ module FacebookAccount
 	end
 
 	def permission? action
+		!realm_permissions.find_by_permission(action.to_s).nil?
+	end
+
+	def capture_permissions!
+		permissions = fetch_permissions
+		self.realm_permissions.clear
+		permissions.each_pair do |permission, value|
+			self.realm_permissions.create({
+				:permission => permission
+				})
+		end
+	end
+
+	def fetch_permissions
 		graph = Koala::Facebook::API.new(access_token)
 		permissions = graph.get_connections(provider_id, "permissions")[0]
-		permissions[action.to_s]
 	end
 
 	def login_user! omniauth_request
@@ -22,6 +35,8 @@ module FacebookAccount
 				:photo_url => "https://graph.facebook.com/#{username}/picture"
 			})
 		end
+
+		self.capture_permissions!
 
 		self.save!
 		self.user.login!

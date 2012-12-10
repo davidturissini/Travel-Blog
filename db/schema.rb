@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202010708) do
+ActiveRecord::Schema.define(:version => 20121210065704) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
@@ -86,6 +86,11 @@ ActiveRecord::Schema.define(:version => 20121202010708) do
     t.string  "provider"
     t.string  "access_token"
     t.string  "shared_secret"
+  end
+
+  create_table "realm_permissions", :force => true do |t|
+    t.string  "permission"
+    t.integer "realm_account_id"
   end
 
   create_table "statuses", :force => true do |t|

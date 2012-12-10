@@ -26,23 +26,26 @@ class UsersController < ApplicationController
 	end
 
 	def login
-		if params.has_key?(:state)
-			redirect_to params[:state]
-		else
-			ActiveRecord::Base.transaction do
-				provider_id = request.env['omniauth.auth'].uid
+		redirect_url = nil
+		if params.has_key?(:redirect)
+			redirect_url = params[:redirect]
+		elsif params.has_key?(:state) && String.is_url?(params[:state])
+			redirect_url = params[:state]
+		end
 
-				realm = RealmAccount.find_or_create_by_provider_and_provider_id(params[:provider], provider_id)
-				realm.login_user!(request.env['omniauth.auth'])
-				set_user_cookie(realm.user)
-				
-				if current_user.incomplete?
-					redirect_to_user_welcome
-				elsif !params[:redirect].nil?
-					redirect_to(params[:redirect])
-				else
-					redirect_to("/")
-				end
+		ActiveRecord::Base.transaction do
+			provider_id = request.env['omniauth.auth'].uid
+
+			realm = RealmAccount.find_or_create_by_provider_and_provider_id(params[:provider], provider_id)
+			realm.login_user!(request.env['omniauth.auth'])
+			set_user_cookie(realm.user)
+			
+			if current_user.incomplete?
+				redirect_to_user_welcome
+			elsif !redirect_url.nil?
+				redirect_to(redirect_url)
+			else
+				redirect_to("/")
 			end
 		end
 	end
