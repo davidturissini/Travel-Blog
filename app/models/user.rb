@@ -15,8 +15,12 @@ class User < ActiveRecord::Base
   include HasFiles
   include HasSlug
 
+  def ordered_trips
+    trips.order("start_date DESC")
+  end
+
   def stories
-    posts.order("created_at DESC")
+    posts.order("start_date DESC")
   end
 
   def static_directory
@@ -107,6 +111,10 @@ class User < ActiveRecord::Base
 
   def self.anonymous
    User.find_by_slug("anonymous")
+  end
+
+  def self.dave
+    User.find_by_slug("dave-and-melissa")
   end
 
   def incomplete?

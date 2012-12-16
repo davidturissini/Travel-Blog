@@ -1,4 +1,10 @@
 <article class="post story">
-	<h1><%= story.title %></h1>
-	<div><%= truncate_html(story.body, :length => 200) %></div>
+	<h1 class="post-title story-title"><%= story.title %></h1>
+	<h2 class="post-date story-date"><%= story.date_string %></h2>
+	<div class="post-body story-body"><%= truncate_html(story.body, :length => 1200) %></div>
+	<footer class="post-footer story-footer">
+		<% if story.body.length > 1200 %>
+			<%= link_to "Continue Reading", user_post_path(:user_id => story.user.slug, :id => story.slug) %>
+		<% end %>
+	</footer>
 </article>

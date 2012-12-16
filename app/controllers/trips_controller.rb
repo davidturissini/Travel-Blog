@@ -4,7 +4,8 @@ class TripsController < ApplicationController
 		raise ActiveRecord::RecordNotFound if !@user
 		@trip = @user.trips.find_by_slug(params[:id])
 		raise ActiveRecord::RecordNotFound if !@trip
-		@photos = @trip.photos.limit(10)
+		@trip_photos = @trip.photos.limit(20)
+		@trip_posts = @trip.posts.order("start_date ASC")
 		@page_title = "#{@trip.title}"
 		@og_image = @trip.picture.url
 		@og_title = @trip.title

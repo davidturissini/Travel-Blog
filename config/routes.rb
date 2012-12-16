@@ -24,13 +24,14 @@ Adventureblog::Application.routes.draw do
     resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos"
     resources :photos, :only => [:show, :index]
     resources :maps
+    resources :posts, :only => [:show, :index]
     resources :trips, :only => [:show, :index], :path => "" do
       resources :maps, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/maps"
       resources :maps, :only => [:show, :index]
       resources :locations, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/locations"
       resources :locations, :only => [:show, :index]
-      resources :journals, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/journals"
-      resources :journals, :only => [:show, :index]
+      resources :posts, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/posts"
+      resources :posts, :only => [:show, :index]
       resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos"
       resources :photos, :only => [:show, :index]
     end

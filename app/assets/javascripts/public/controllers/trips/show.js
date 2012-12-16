@@ -1,13 +1,14 @@
 window.addEventListener("DOMContentLoaded", function () {
 	if( !/\strips\-show\s/.test(document.body.className) ) { return }
 
-	var trip = Trip.createFromDataAttribute( document.getElementById("trip") ),
-	user = User.createFromDataAttribute(document.getElementById("trip"), "data-user"),
-	locations = LocationsCollection.createFromDataAttribute(document.getElementById("trip"), "data-locations"),
-	maps = MapsCollection.createFromDataAttribute(document.getElementById("trip"), "data-maps"),
+	var tripEl = document.getElementById("trip"),
+    trip = Trip.createFromDataAttribute( tripEl ),
+	user = User.createFromDataAttribute(tripEl, "data-user"),
+	locations = LocationsCollection.createFromDataAttribute(tripEl, "data-locations"),
+	maps = MapsCollection.createFromDataAttribute(tripEl, "data-maps"),
 	gallery = null,
 	mapOptions = {zoom:10,draggable:false,disableDefaultUI:true},
-	tripMapsEl = document.getElementById("trip-map");
+	tripMapsEl = tripEl.getElementsByClassName("trip-map").item(0);
 
 	trip.setUser(user);
 	trip.setLocations(locations);
@@ -20,7 +21,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	maps.mergeMapOptions(mapOptions);
 	maps.render().drawMaps().drawLocations();
 
-	var images = document.getElementsByClassName("centered");
+	var images = document.getElementsByClassName("photo");
     [].forEach.call(images, function (image, index) {
         var jsImage = new Image(),
         imageHTML = image.getElementsByTagName("img").item(0);

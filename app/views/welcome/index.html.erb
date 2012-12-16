@@ -1,4 +1,4 @@
-<section id="hero" class="autoclear">
+<section id="stories" class="autoclear">
 	<% @stories.each do |story| %>
 		<%= render "#{story.class.name.downcase.pluralize}/story", :story => story %>
 	<% end %>	

@@ -1,8 +1,11 @@
 
 /* ...
-*= require "yui-reset.css"
+*= require "lib/yui-reset.css"
 *= require_#self
-*= require "kalendae.css"
+*= require "lib/kalendae.css"
+*= require_tree "./welcome"
+*= require_tree "./posts"
+*= require_tree "./trips"
 */
 html { height:100%; }
 body { color:#333; font-size:14px; font-family:Helvetica; }
@@ -33,6 +36,10 @@ a:hover .shadow { box-shadow:0 0 10px #069; }
 img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 .vert-center-block { display:inline-block; vertical-align:middle; }
+
+#container .left-col { margin-right:320px; padding:20px; }
+#container .right-col { float:right; padding:20px; width:300px; }
+#container .right-col .trips .trip { display:block; padding:5px; }
 
 #site-header { padding:10px; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
@@ -95,53 +102,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #dashboard .date-field label { float:right; }
 #dashboard h1 { margin-bottom:5px; }
 
-/* TRIP DETAIL PAGE */
-.trips-show #trip { position:relative; margin:20px auto; padding-bottom:20px; }
-.trips-show #trip .map { height:250px; }
-.trips-show #trip figure h1 { margin-bottom:20px; font-size:1.324em; text-align:center; }
-.trips-show #trip figure.locations { font-size:1.2em; }
-.trips-show #trip figure.maps .map { height:100px; }
-.trips-show #trip > figure,
-.trips-show #trip > section { margin-top:30px; padding-top:30px; border-top:1px solid #b1b1b1; }
-.trips-show #trip textarea { width:100%; text-align:center; }
-.trips-show #trip #photos { position:relative; z-index:1; margin:0; border-top:0; opacity:0; }
-.trips-show #trip #photos figure { position:absolute; z-index:100; left:0; top:0; margin:0; padding:10px; background:#fff; }
-.trips-show #trip #photos figure.hero { z-index:1000; }
-.trips-show #trip #photos figure figcaption { display:none; }
-.trips-show #trip #photos figure img { display:block; max-width:100px; }
-.trips-show #trip #photos figure:hover { z-index:100\1; background:#069; cursor:pointer; }
-.trips-show #trip #photos figure { display:none; }
-.trips-show #trip #photos figure.shuffled { display:block; }
-.trips-show #trip #photos figure.hero img, 
-.trips-show #trip #photos.gallery figure.selected img,
-.trips-show #trip #photos.gallery figure.hero.selected img { max-width:none; width:auto; max-height:300px; }
-.trips-show #trip #photos.gallery figure img { max-width:300px; }
-.trips-show #trip #photos.gallery { height:auto !important; }
-.trips-show #trip #photos.gallery figure { display:block; }
-.trips-show #trip #photos.gallery { overflow:hidden; height:auto; border-bottom:1px solid #ccc; }
-.trips-show #trip #photos.gallery ul { position:relative; padding:20px 0; width:9000px; 
-	-webkit-transition:left 500ms;
-}
-.trips-show #trip #photos.gallery li { float:left; margin-left:20px; }
-.trips-show #trip #photos.gallery li:first-child { margin-left:0px; }
-
-.trips-show #trip #photos.gallery figure { position:static; 
-	-webkit-transform:rotate(0deg) !important;
-	-moz-transform:rotate(0deg) !important;
-}
-.trips-show #trip #photos.gallery figure.selected:hover { background:#fff; cursor:default; }
-.trips-show #trip #photos.gallery figure.selected figcaption { display:block; padding:10px 0 0; font-size:.9em; }
-
-.trips-show #trip #posts .user-image { margin:0 20px 20px 0; }
-.trips-show #trip #posts h1 { margin-bottom:30px; font-size:2em; text-align:left; }
-.trips-show #trip #posts p { margin-bottom:20px; line-height:1.5em; }
-.trips-show #trip #posts iframe { display:block; margin:20px auto; }
-.trips-show #trip #posts .post { margin-bottom:20px; }
-
-.trips-show #trip .toolbox { display:none; }
-.trips-show #trip:hover .toolbox { display:block; }
-.trips-show #trip > .toolbox { clear:both; }
-
 /* GLOBAL EDIT/NEW STYLES */
 footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-size:3em; }
 .map-active footer.buttons { display:none; }
@@ -154,11 +114,6 @@ textarea.autosize { overflow:hidden; }
 .inline-form .field { width:100%; background:#fff; outline:1px dashed #ccc; }
 .inline-form .field:focus { outline:1px dashed #b1b1b1; }
 
-/* GENERIC GRIDS */
-.grid-20-75 .column.first { float:left; margin-left:40px; width:184px; }
-.grid-20-75 .column.last { overflow:hidden; margin:0 0 0 224px; min-height:500px; border-left:1px solid #ccc; }
-.grid-20-75 .pad { padding:40px; }
-.grid-20-75 .pad-down { padding:0 40px 40px; }
 /* CONTENT GRIDS */
 .content-grid { background:#000; }
 .content-grid .content { display:inline-block; position:relative; width:33%; color:#333; opacity:.7; overflow:hidden; text-align:center;
@@ -213,21 +168,6 @@ textarea.autosize { overflow:hidden; }
 .date-field.has-date:hover .reset { line-height:1; opacity:1; }
 .date-field.has-date label { display:none; }
 
-/* JOURNAL */
-.journal a { color:inherit; }
-.journal a:hover { color:#069; }
-.journal .journal-title { margin-bottom:10px; font-size:1.4em; }
-.journal .journal-body p { margin-bottom:20px; line-height:1.5; }
-
-/* ADMIN JOURLANS INDEX */
-.admin-journals-index #journals { margin:20px 0; }
-.admin-journals-index #journals .journal:hover .remove { display:block; }
-
-/* ADMIN MAPS INDEX */
-.admin-maps-index #maps .map { height:auto; }
-.admin-maps-index #maps article .google-map { height:200px; }
-.admin-maps-index #maps article .edit-link { float:right; }
-
 textarea.autosize { overflow:hidden; }
 
 /* MAPS NEW */
@@ -237,28 +177,6 @@ textarea.autosize { overflow:hidden; }
 /* MAPS EDIT */
 .admin-maps-edit #map-title { width:100%; font-size:1.425em; }
 .admin-maps-edit #google-map { margin:20px 0; height:400px; }
-
-/* ADMIN TRIP LINKS */
-#trip-links { margin:0; padding-bottom:30px; text-align:center; }
-#trip-links .map { height:100% !important; }
-#trip-links section { display:inline-block; position:relative; margin-left:1%; margin-right:2%; margin-bottom:0; height:300px; width:30%; padding:0; text-align:center; vertical-align:middle; }
-#trip-links section a { display:block; position:absolute; top:0; right:0; bottom:0; left:0; color:#b8b8b8; }
-#trip-links section h1 { position:absolute; left:0; right:0; bottom:-40px; font-size:1.2em; text-align:center; color:#fff; }
-#trip-links section#trip-journal .mask { position:absolute; left:0; right:0; bottom:0; top:0;
-	background:-webkit-linear-gradient(bottom, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0) 50%);
-}
-#trip-links section#trip-journal article { position:relative; font-size:.8574em; text-align:left; }
-#trip-links section#trip-journal article h2 { font-size:1.4em; }
-#trip-links section:hover a { color:#333; }
-#trip-links section#trip-photos .overflow { position:relative; height:100%; overflow:hidden; }
-#trip-links section .map { height:200px; }
-#trip-links section .centered { position:absolute; padding:5px; border:1px solid #ccc; background:#fff; opacity:0;
-	-webkit-transition:opacity 500ms;
-}
-
-@media all and (max-width: 980px) {
-	#trip-links section { margin-bottom:50px; width:100%; }
-}
 
 /* PHOTOS INDEX */
 .photos-index .column.last { background:#000; }

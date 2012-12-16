@@ -1,0 +1,9 @@
+<article class="post">
+	<% if post.title %>
+		<h1 class="post-title"><%= post.title %></h1>
+	<% end %>
+	<h2 class="post-date"><%= post.date_string %></h2>
+	<div class="post-body">
+		<%= post.body.html_safe %>
+	</div>
+</article>

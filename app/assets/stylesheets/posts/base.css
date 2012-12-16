@@ -1,0 +1,5 @@
+.post { margin-bottom:20px; padding:0 0 20px; border-bottom:1px solid #b1b1b1; }
+.post .post-title { margin-bottom:10px; font-size:1.6em; }
+.post .post-date { font-size:.8em; }
+.post .post-body { margin:10px 0 0; line-height:1.5; }
+.post .post-footer { text-align:right; }

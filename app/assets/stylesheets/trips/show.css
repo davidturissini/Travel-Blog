@@ -1,0 +1,11 @@
+/* ADMIN TRIP LINKS */
+.trips-show .trip .trip-title { font-size:1.6em; }
+.trips-show .trip .trip-date { margin:10px 0 40px; font-size:.8em; }
+.trips-show .trip .trip-map { height:300px; }
+.trips-show .trip .trip-photos { position:relative; margin:40px 0; height:200px; }
+.trips-show .trip .trip-photos .overflow { position:relative; height:100%; overflow:hidden; }
+.trips-show .trip .trip-photos .photo { position:absolute; padding:5px; border:1px solid #ccc; background:#fff; opacity:0;
+	-webkit-transition:opacity 500ms;
+}
+.trips-show .trip .trip-photos .trip-photos-link { display:block; position:absolute; top:0; right:0; bottom:0; left:0; color:#b8b8b8; }
+.trips-show .trip .trip-posts { padding-top:20px; border-top:1px solid #b1b1b1; }

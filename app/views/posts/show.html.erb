@@ -1,9 +1,1 @@
-<%= render "admin/global/breadcrumb", :trip => @trip, :page => "Journal" %>
-<article id="journal" class="journal pad">
-	<% if @journal.title %>
-		<h1 class="journal-title"><%= @journal.title %></h1>
-	<% end %>
-	<div class="journal-body">
-		<%= @journal.body.html_safe %>
-	</div>
-</article>
+<%= render "show", :post => @post %>
