@@ -1,10 +1,15 @@
 <article class="post story">
-	<h1 class="post-title story-title"><%= story.title %></h1>
+	<h1 class="post-title story-title"><%= link_to story.title, user_post_path(:user_id => story.user.slug, :id => story.slug) %></h1>
 	<h2 class="post-date story-date"><%= story.date_string %></h2>
 	<div class="post-body story-body"><%= truncate_html(story.body, :length => 1200) %></div>
 	<footer class="post-footer story-footer">
-		<% if story.body.length > 1200 %>
-			<%= link_to "Continue Reading", user_post_path(:user_id => story.user.slug, :id => story.slug) %>
-		<% end %>
+		<ul>
+			<% if story.trip %>
+				<li>Posted in <%= link_to story.trip.title, user_trip_path(:user_id => story.trip.user.slug, :id => story.trip.slug) %></li>
+			<% end %>
+			<% if story.body.length > 1200 %>
+				<li><%= link_to "Continue Reading", user_post_path(:user_id => story.user.slug, :id => story.slug) %></li>
+			<% end %>
+		</ul>
 	</footer>
 </article>

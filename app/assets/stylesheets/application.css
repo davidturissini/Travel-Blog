@@ -37,10 +37,12 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 .vert-center-block { display:inline-block; vertical-align:middle; }
 
-#container .left-col { margin-right:320px; padding:20px; }
-#container .right-col { float:right; padding:20px 60px 20px 20px; width:260px; }
+#container .left-col { margin-right:240px; padding:20px; }
+#container .right-col { float:right; padding:20px; width:200px; background:#e1e1e1; }
 #container .right-col .user .user-photo { display:inline-block; }
+#container .right-col .user .user-photo .user-photo-caption { margin-top:5px; font-size:.9em; }
 #container .right-col .user .user-trips { margin:20px 0; }
+#container .right-col .user .user-trips-title { margin-bottom:5px; padding-bottom:5px; border-bottom:1px solid #b1b1b1; font-size:1.2em; }
 #container .right-col .user .user-trips .trip { display:block; padding:5px 5px 5px 0; }
 
 #site-header { padding:10px; background:#333;

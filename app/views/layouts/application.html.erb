@@ -23,12 +23,12 @@
 				<section class="user">
 					<figure class="user-photo rounded">
 						<img src="<%= User.dave.photo.large %>" width="200" height="200" />
-						<figcaption>
+						<figcaption class="user-photo-caption">
 							<h1>Welcome to TravelAddict. Melissa and I love to travel and love to share our travels.</h1>
 						</figcaption>
 					</figure>
 					<section class="user-trips">
-						<h1>Our trips:</h1>
+						<h1 class="user-trips-title">Places we've visited</h1>
 						<ul>
 							<% User.dave.ordered_trips.each do |trip| %>
 								<li><%= link_to trip.title, user_trip_path(:user_id => trip.user.slug, :id => trip.slug), :class => "trip" %></li>

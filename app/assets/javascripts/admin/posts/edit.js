@@ -1,32 +1,30 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( !/admin\-journals\-edit\s/.test(document.body.className) ) { return }
+	if( !/\sposts\-show\s/.test(document.body.className) ) { return }
 
-	var journalElem = document.getElementById('journal'),
-	journal = Journal.createFromDataAttribute(journalElem),
-	trip = Trip.createFromDataAttribute(document.getElementById('journal'), "data-trip");
-	trip.setUser(TA.currentUser);
-	journal.setTrip(trip);
+	var postElem = document.getElementById('post'),
+	post = Post.createFromDataAttribute(postElem);
+	post.setUser(TA.currentUser);
 
-	journal.set({
-		body:document.getElementById("journal-body").innerHTML
+	post.set({
+		body:document.getElementById("post-body").innerHTML
 	}, {silent:true});
 	
 	new AutoSaveTextField({
-		model:journal,
-		el:document.getElementById("journal-title"),
+		model:post,
+		el:document.getElementById("post-title"),
 		property:"title"
 	}).render();
 
 	var dateField = new DateField({
-		el:document.getElementsByClassName("journal-date").item(0),
-		model:journal
+		el:document.getElementsByClassName("post-date").item(0),
+		model:post
 	});
 
 	dateField.render();
 
-	journal.on("change", function (e, changed) {
+	post.on("change", function (e, changed) {
 		if( changed.changes.start_date || changed.changes.end_date ) {
-			journal.save({})
+			post.save({})
 		}
 	})
 	
@@ -41,7 +39,7 @@ window.addEventListener("DOMContentLoaded", function () {
         		return function(ed, l) {
         			if( timeout ) { clearTimeout(timeout); }
         			setTimeout(function () {
-		        		journal.save({
+		        		post.save({
 		        			body:ed.getContent()
 		        		})
 		        	}, 500);

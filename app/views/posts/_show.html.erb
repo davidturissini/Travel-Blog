@@ -1,9 +1,13 @@
-<article class="post">
+<article id="post" class="post" data-json="<%= post.to_json %>">
 	<% if post.title %>
-		<h1 class="post-title"><%= post.title %></h1>
+		<h1 id="post-title" class="post-title"><%= post.title %></h1>
 	<% end %>
-	<h2 class="post-date"><%= post.date_string %></h2>
-	<div class="post-body">
+	<% if params[:controller] === "posts" && params[:action] === "show" %>
+		<%= render "admin/global/date_fields", :type => "post", :obj => post %>
+	<% elsif !post.date_string.nil? %>
+		<h2 class="post-date"><%= post.date_string %></h2>
+	<% end %>
+	<div id="post-body" class="post-body">
 		<%= post.body.html_safe %>
 	</div>
 </article>

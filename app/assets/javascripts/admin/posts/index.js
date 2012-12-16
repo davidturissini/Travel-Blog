@@ -1,5 +1,5 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( !/admin\-journals\-index\s/.test(document.body.className) ) { return }
+	if( !/admin\-posts\-index\s/.test(document.body.className) ) { return }
 
 	var trip = Trip.createFromDataAttribute(document.getElementById("journals"), "data-trip");
 	trip.setUser(TA.currentUser);

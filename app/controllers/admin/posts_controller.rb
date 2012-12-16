@@ -8,23 +8,22 @@ class Admin::PostsController < Admin::AdminController
 	def new
 		@user = current_user
 		@trip = current_trip
-		@journal = @trip.journals.new
+		@post = @trip.posts.new
 	end
 
 	def create
-		@trip = current_trip
-		params[:journal][:body] = clean_html(params[:journal][:body])
-		@journal = @trip.journals.new(params[:journal])
-		@journal.set_slug!(String.slugify(@journal.title || Digest::SHA1.hexdigest(Time.now.to_s)), @trip.journals)
-		@journal.save!
-		render :json => @journal
+		params[:post][:body] = clean_html(params[:post][:body])
+		@post = current_user.posts.new(params[:post])
+		@post.set_slug!(String.slugify(@post.title || Digest::SHA1.hexdigest(Time.now.to_s)), current_user.posts)
+		@post.save!
+		render :json => @post
 	end
 
 	def update
-		@trip = current_trip
-		params[:journal][:body] = clean_html(params[:journal][:body])
-		@journal = @trip.journals.find_by_slug(params[:id])
-		@journal.update_attributes!(params[:journal])
+		@user = current_user
+		params[:post][:body] = clean_html(params[:post][:body])
+		@post = @user.posts.find_by_slug(params[:id])
+		@post.update_attributes!(params[:post])
 		render :json => @journal
 	end
 

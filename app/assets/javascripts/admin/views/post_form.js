@@ -1,4 +1,4 @@
-var JournalForm = Backbone.View.extend({
+var PostForm = Backbone.View.extend({
 	__renderTitleField:function () {
 		var view = this;
 		this.options.titleField.addEventListener("keyup", function (e) {
@@ -11,7 +11,7 @@ var JournalForm = Backbone.View.extend({
 			e.preventDefault();
 			var body = tinyMCE.getInstanceById(view.options.bodyField.id).getContent();
 			view.model.set({body:body});
-			view.trigger("journal_save");
+			view.trigger("post_save");
 		})
 	},
 	__tinyMCE:function () {

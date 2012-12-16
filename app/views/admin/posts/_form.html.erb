@@ -1,0 +1,4 @@
+<input type="text" class="edit-title" id="post-title" value="<%= post.title %>" placeholder="Enter title" />
+
+<%= render "admin/global/date_fields", :obj => post, :type => "post" %>
+<textarea id="post-body"><%= post.body ? post.body.html_safe : "" %></textarea>
