@@ -1,12 +1,7 @@
 class WelcomeController < ApplicationController 
  def index
- 	if !current_user.anonymous? && !current_user.incomplete?
- 		user_home
- 	elsif current_user.incomplete?
- 		redirect_to welcome_user_path
- 	else
- 		anonymous_welcome_screen
- 	end
+ 	user = User.find_by_slug("dave-and-melissa")
+ 	@stories = user.stories
  end
 
  def user

@@ -78,42 +78,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 #page-title { position:relative; text-align:left; font-size:2em; }
 
-/* WELCOME PAGE */
-.welcome-index #hero { margin:30px auto 0; text-align:center; vertical-align:middle; }
-.welcome-index #hero article { display:inline-block; position:relative; max-width:180px; font-size:.8571em; }
-.welcome-index #hero article a:hover { text-decoration:underline; }
-.welcome-index #hero article figure { display:inline; margin:0; }
-.welcome-index #hero article figure figcaption { padding:10px 10px 0; }
-.welcome-index #hero article figure img { padding:5px; border:1px solid #ccc; background:#fff; max-height:200px; max-width:100%; vertical-align:middle; }
-
-.welcome-index #promo { margin:0px auto; width:340px; text-align:center; }
-.welcome-index #promo a { display:block; }
-.welcome-index #promo h1 { margin:40px 0; font-size:2.3em; }
-
-.welcome-index #hero article#trip-0 {
-	-moz-transform:		rotate(-4deg);
-	-webkit-transform:	rotate(-4deg);
-}
-
-.welcome-index #hero article#trip-1 { z-index:10; 
-	-moz-transform:		rotate(1deg);
-	-webkit-transform:	rotate(1deg);
-}
-
-.welcome-index #hero article#trip-2 {
-	-moz-transform:		rotate(-2deg);
-	-webkit-transform:	rotate(-2deg);
-}
-
-.welcome-index #hero article#trip-3 {
-	-moz-transform:		rotate(2deg);
-	-webkit-transform:	rotate(2deg);
-}
-
-.welcome-index #hero article#trip-4 {
-	-moz-transform:		rotate(-5deg);
-	-webkit-transform:	rotate(-5deg);
-}
 
 /* DASHBOARD */
 #dashboard { float:right; vertical-align:middle; text-align:right; }

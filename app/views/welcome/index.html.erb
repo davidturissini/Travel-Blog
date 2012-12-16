@@ -1,24 +1,5 @@
 <section id="hero" class="autoclear">
-	<% @welcome_trips.each_with_index do |trip, index| %>
-		<article id="trip-<%= index %>">
-			<%= link_to trip_path(trip), :class => "figure-link" do %>
-				<figure>
-					<% if trip.picture %>
-						<img src="<%= trip.picture.large %>" />
-					<% end %>
-					<figcaption>
-						<h1><%= trip.title %></h1>
-					</figcaption>
-				</figure>
-			<% end %>
-			<span>by</span> 
-			<h2><%= link_to trip.user.name, user_path(trip.user.slug) %></h2>
-		</article>
+	<% @stories.each do |story| %>
+		<%= render "#{story.class.name.downcase.pluralize}/story", :story => story %>
 	<% end %>	
-</section>
-<section id="promo">
-	<%= link_to login_path("facebook") do %>
-		<h1>Join TravelAddict and share your adventures</h1>
-		<%= image_tag "facebook-connect.png" %>
-	<% end %>
 </section>

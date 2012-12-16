@@ -11,22 +11,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121202010708) do
+ActiveRecord::Schema.define(:version => 20121216055656) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
     t.string "code"
-  end
-
-  create_table "journals", :force => true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.date     "start_date"
-    t.date     "end_date"
-    t.integer  "trip_id"
-    t.string   "slug"
   end
 
   create_table "locations", :force => true do |t|
@@ -78,6 +67,18 @@ ActiveRecord::Schema.define(:version => 20121202010708) do
     t.string   "static_content_type"
     t.integer  "static_file_size"
     t.datetime "static_updated_at"
+  end
+
+  create_table "posts", :force => true do |t|
+    t.string   "title"
+    t.text     "body"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.date     "start_date"
+    t.date     "end_date"
+    t.integer  "trip_id"
+    t.string   "slug"
+    t.integer  "user_id"
   end
 
   create_table "realm_accounts", :force => true do |t|

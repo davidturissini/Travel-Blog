@@ -5,7 +5,7 @@ class Trip < ActiveRecord::Base
 	belongs_to :user
 	belongs_to :photo
 	validates :slug, :presence => true
-	has_many :journals
+	has_many :posts
 	include HasSlug
  	include HasDates
  	include HasTitle
@@ -46,8 +46,8 @@ class Trip < ActiveRecord::Base
 		return first_location.picture if first_location
 	end
 
-	def newest_journal
-	    journals.order("created_at DESC").limit(1).first
+	def newest_post
+	    posts.order("created_at DESC").limit(1).first
 	end
 
 	def year

@@ -9,11 +9,15 @@ class User < ActiveRecord::Base
   belongs_to :home_country, :class_name => "Country", :foreign_key => :country_id
   has_many :countries, :through => :locations
   has_many :realm_accounts
-  has_many :journals, :through => :trips
+  has_many :posts
   validates :slug, :presence => true, :on => :update
   has_many :photos
   include HasFiles
   include HasSlug
+
+  def stories
+    posts.order("created_at DESC")
+  end
 
   def static_directory
     "#{CONFIG['static']['user_path']}#{slug}/"

@@ -7,7 +7,7 @@
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
 		<script src="http://yui.yahooapis.com/2.9.0/build/yahoo/yahoo-min.js"></script>
 		<script src="http://yui.yahooapis.com/2.9.0/build/cookie/cookie-min.js"></script>
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<%= CONFIG['google_maps']['key'] %>&sensor=false"></script>
+		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=<%= CONFIG['google_maps']['key'] %>&amp;sensor=false"></script>
 		<%= render "global/og_tags" %>
 		<%= stylesheet_link_tag "application" %>
 		<%= csrf_meta_tags %>
@@ -15,16 +15,11 @@
 	<body class=" <%= params[:controller].gsub("/", "-") %>-<%= params[:action] %> ">
 		<%= render "global/facebook" %>
 		<header id="site-header" class="autoclear">
-			<%= render "users/ribbon" %>
 			<h1 id="site-title"><%= link_to "TravelAddict", root_path %></h1>
 		</header>
 		<%= render_admin_ribbon %>
-		<% if !welcome_screen? && @user %>
-			<%= render "users/header", :user => @user %>
-		<% end %>
-		<div id="container" class="grid-20-75 autoclear">
+		<div id="container">
 			<%= yield %>
-			<%= yield :below_content %>
 		</div>
 		<script>
 			window.TA = {
