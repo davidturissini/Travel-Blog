@@ -1,5 +1,6 @@
 /* ADMIN TRIP LINKS */
 .trips-show .trip .trip-title { font-size:1.6em; }
+.trips-show .trip #trip-delete { font-size:.8em; }
 .trips-show .trip .trip-date { margin:10px 0 40px; font-size:.8em; }
 .trips-show .trip .trip-map { height:300px; }
 .trips-show .trip .trip-photos { position:relative; margin:40px 0; height:200px; }

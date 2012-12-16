@@ -20,19 +20,21 @@
 		<%= render_admin_ribbon %>
 		<div id="container" class="autoclear">
 			<div class="right-col">
-				<figure class="rounded">
-					<img src="<%= User.dave.photo.large %>" width="200" height="200" />
-					<figcaption>
-						<h1>Welcome to TravelAddict. Melissa and I love to travel and love to share our travels.</h1>
-					</figcaption>
-				</figure>
-				<section>
-					<h1>Our trips:</h1>
-					<ul>
-						<% User.dave.ordered_trips.each do |trip| %>
-							<li><%= link_to trip.title, user_trip_path(:user_id => trip.user.slug, :id => trip.slug) %></li>
-						<% end %>
-					</ul>
+				<section class="user">
+					<figure class="user-photo rounded">
+						<img src="<%= User.dave.photo.large %>" width="200" height="200" />
+						<figcaption>
+							<h1>Welcome to TravelAddict. Melissa and I love to travel and love to share our travels.</h1>
+						</figcaption>
+					</figure>
+					<section class="user-trips">
+						<h1>Our trips:</h1>
+						<ul>
+							<% User.dave.ordered_trips.each do |trip| %>
+								<li><%= link_to trip.title, user_trip_path(:user_id => trip.user.slug, :id => trip.slug), :class => "trip" %></li>
+							<% end %>
+						</ul>
+					</section>
 				</section>
 			</div>
 			<div class="left-col">

@@ -7,11 +7,12 @@ window.addEventListener("DOMContentLoaded", function () {
 	trip.setLocations( locationsCollection );
     trip.setMaps(maps);
 
-    document.getElementById("trip-delete").addEventListener("click", function () {
+    document.getElementById("trip-delete").addEventListener("click", function (e) {
+        e.preventDefault();
         if( confirm("Delete " + trip.get("title") + "? This cannot be undone.") ) {
             trip.destroy({
                 success:function () {
-                    window.location.href = TA.currentUser.url({includeFormat:false});
+                    window.location.href = "/";
                 }
             })
         }

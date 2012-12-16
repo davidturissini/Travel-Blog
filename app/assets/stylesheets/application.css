@@ -38,8 +38,10 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 .vert-center-block { display:inline-block; vertical-align:middle; }
 
 #container .left-col { margin-right:320px; padding:20px; }
-#container .right-col { float:right; padding:20px; width:300px; }
-#container .right-col .trips .trip { display:block; padding:5px; }
+#container .right-col { float:right; padding:20px 60px 20px 20px; width:260px; }
+#container .right-col .user .user-photo { display:inline-block; }
+#container .right-col .user .user-trips { margin:20px 0; }
+#container .right-col .user .user-trips .trip { display:block; padding:5px 5px 5px 0; }
 
 #site-header { padding:10px; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
@@ -85,23 +87,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 #page-title { position:relative; text-align:left; font-size:2em; }
 
-
-/* DASHBOARD */
-#dashboard { float:right; vertical-align:middle; text-align:right; }
-#dashboard a { display:block; }
-#dashboard a:hover *[contenteditable] { color:#fff; }
-#dashboard #trip-photo { display:inline-block; position:relative; display:inline-block; z-index:10; margin:0 0 0 10px; width:auto; text-align:center; }
-#dashboard #trip-photo img { margin-right:0; max-height:100px; max-width:100px; width:auto; }
-#dashboard #trip-photo figcaption { display:none; }
-#dashboard #trip-photo figcaption span { position:absolute; left:0px; right:0px; bottom:0px; padding: 5px; color:#fff; background: rgba(0, 0, 0, .8); font-size: .8em; line-height:1; cursor:pointer; }
-#dashboard #trip-photo:hover figcaption { display:block; }
-#dashboard figcaption { display:none; }
-#dashboard figure { margin:0 0 30px; }
-#dashboard .date-field { padding:0; outline:0; background:transparent; color:#fff; }
-#dashboard .date-field span { color:#fff; background:transparent; }
-#dashboard .date-field label { float:right; }
-#dashboard h1 { margin-bottom:5px; }
-
 /* GLOBAL EDIT/NEW STYLES */
 footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-size:3em; }
 .map-active footer.buttons { display:none; }
@@ -116,7 +101,7 @@ textarea.autosize { overflow:hidden; }
 
 /* CONTENT GRIDS */
 .content-grid { background:#000; }
-.content-grid .content { display:inline-block; position:relative; width:33%; color:#333; opacity:.7; overflow:hidden; text-align:center;
+.content-grid .content { display:inline-block; position:relative; width:32%; color:#333; opacity:.7; overflow:hidden; text-align:center;
 	-webkit-transition:opacity 500ms;
 }
 
