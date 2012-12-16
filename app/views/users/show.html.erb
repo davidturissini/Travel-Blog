@@ -1,13 +1,3 @@
-<% content_for :dashboard do %>
-	<ul>
-		<li><%= @user.trips.count %> Trips</li>
-		<li><%= @user.countries_count %> Countries</li>
-		<li><%= @user.photos.count %> Photos</li>
-		<li><%= @user.journals.count %> Journal Entries</li>
-		<li><%= @user.maps.count %> Maps</li>
-	</ul>
-<% end %>
-
 <section id="trips">
 	<% if @user_trips.length === 0 %>
 		<div class="no-trips">

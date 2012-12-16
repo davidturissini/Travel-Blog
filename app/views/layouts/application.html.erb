@@ -28,6 +28,12 @@
 						</figcaption>
 					</figure>
 					<section class="user-trips">
+						<ul class="user-trips-summary">
+							<li><%= User.dave.trips.count %> Trips</li>
+							<li><%= User.dave.countries_count %> Countries</li>
+							<li><%= User.dave.photos.count %> Photos</li>
+							<li><%= User.dave.maps.count %> Maps</li>
+						</ul>
 						<h1 class="user-trips-title">Places we've visited</h1>
 						<ul>
 							<% User.dave.ordered_trips.each do |trip| %>
