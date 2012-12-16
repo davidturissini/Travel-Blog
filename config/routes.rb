@@ -28,7 +28,7 @@ Adventureblog::Application.routes.draw do
     resources :posts, :only => [:show, :index]
     resources :trips, :only => [:show, :index], :path => "" do
       resources :maps, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/maps"
-      resources :maps, :only => [:show, :index]
+      resources :maps, :only => [:show, :index], :controller => "trips/maps"
       resources :locations, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/locations"
       resources :locations, :only => [:show, :index]
       resources :posts, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/posts"

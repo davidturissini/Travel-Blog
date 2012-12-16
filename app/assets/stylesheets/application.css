@@ -79,6 +79,8 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #site-header #user-info .dropdown a { display:block; margin:0 -20px; padding:5px 10px; color:#069; }
 #site-header #user-info .dropdown a:hover { text-decoration:none; background:#069; color:#fff; }
 
+#site-nav li { display:inline-block; padding:10px; padding-left:0; }
+
 #site-footer { padding:10px; color:#fff; background:#333; 
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#333), to(#000));
 }
@@ -297,7 +299,7 @@ nav#user-nav li:first-child { border-top:0; }
 /* LOCATION INFOWINDOWS */
 .location-infowindow h1 { margin-bottom:10px; font-size:1.3em; }
 .location-infowindow a { display:block; color:#333; }
-.location-infowindow img { display:inline-block; margin-right:10px; }
+.location-infowindow img { display:inline-block; margin-right:10px; width:75px; }
 .location-infowindow div { display:inline-block; vertical-align:top; }
 
 /* USERS SHOW PAGE */
