@@ -21,7 +21,7 @@
 					<li><%= link_to "Blog", root_path %></li>
 					<li><%= link_to "Trips", user_path(:id => User.dave.slug) %></li>
 					<li><%= link_to "Map", user_maps_path(:user_id => User.dave.slug) %></li>
-					<li><%= link_to "Photos", user_photos_path(:id => User.dave.slug) %></li>
+					<li><%= link_to "Photos", user_photos_path(:user_id => User.dave.slug) %></li>
 				</ul>
 			</nav>
 		</header>

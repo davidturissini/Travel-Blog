@@ -1,20 +1,24 @@
-<% reset_position = defined?(:reset_position) ? reset_position : "right" %>
-<section class="<%= type %>-date field has-date date-field">
-	<label>Enter Dates</label>
-	<% if reset_position == "left" %>
-		<span class="reset">(reset)</span>
-	<% end %>
-	<span class="date-str"><%= obj.date_string %></span>
-	<% if reset_position != "left" %>
-		<span class="reset">(reset)</span>
-	<% end %>
-	<input type="text" />
-</section>
+<% if current_user.owns?(obj) %>
+	<% reset_position = defined?(:reset_position) ? reset_position : "right" %>
+	<section class="<%= type %>-date field has-date date-field">
+		<label>Enter Dates</label>
+		<% if reset_position == "left" %>
+			<span class="reset">(reset)</span>
+		<% end %>
+		<span class="date-str"><%= obj.date_string %></span>
+		<% if reset_position != "left" %>
+			<span class="reset">(reset)</span>
+		<% end %>
+		<input type="text" />
+	</section>
 
-<% content_for :scripts_footer do %>
-	<script src="/tiny_mce/tiny_mce.js"></script>
-	<script src="/kalendae/kalendae.min.js"></script>
-	<script>
-		window.moment = Kalendae.moment;
-	</script>
+	<% content_for :scripts_footer do %>
+		<script src="/tiny_mce/tiny_mce.js"></script>
+		<script src="/kalendae/kalendae.min.js"></script>
+		<script>
+			window.moment = Kalendae.moment;
+		</script>
+	<% end %>
+<% else %>
+	<h2 class="<%= type %>-date"><%= obj.date_string %></h2>
 <% end %>

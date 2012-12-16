@@ -2,7 +2,7 @@
 	<% if post.title %>
 		<h1 id="post-title" class="post-title"><%= post.title %></h1>
 	<% end %>
-	<% if params[:controller] === "posts" && params[:action] === "show" %>
+	<% if params[:controller] === "posts" && params[:action] === "show" && current_user.owns?(post) %>
 		<%= render "admin/global/date_fields", :type => "post", :obj => post %>
 	<% elsif !post.date_string.nil? %>
 		<h2 class="post-date"><%= post.date_string %></h2>
@@ -11,3 +11,8 @@
 		<%= post.body.html_safe %>
 	</div>
 </article>
+<% if post.trip %>
+	<aside>
+		Posted in <%= link_to post.trip.title, user_trip_path(:user_id => post.trip.user.slug, :id => post.trip.slug) %>
+	</aside>
+<% end %>

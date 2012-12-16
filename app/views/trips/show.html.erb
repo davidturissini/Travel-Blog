@@ -5,7 +5,7 @@
 	<% end %>
 	<%= render "admin/global/date_fields", :type => "trip", :obj => @trip %>
 	<figure class="trip-map"></figure>
-	<%= link_to "", user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "content-link" %>
+	<%= link_to "Map", user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "content-link" %>
 	<section class="trip-photos">
 		<div class="overflow">
 			<% @trip_photos.each do |photo| %>
@@ -18,7 +18,15 @@
 	</section>
 	<section class="trip-posts">
 		<% @trip_posts.each do |post| %>
-			<%= render "posts/show", :post => post %>
+			<article id="post" class="post" data-json="<%= post.to_json %>">
+				<% if post.title %>
+					<h1 id="post-title" class="post-title"><%= post.title %></h1>
+				<% end %>
+					<h2 class="post-date"><%= post.date_string %></h2>
+				<div id="post-body" class="post-body">
+					<%= post.body.html_safe %>
+				</div>
+			</article>
 		<% end %>
 	</section>
 </article>
