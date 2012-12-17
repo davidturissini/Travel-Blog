@@ -1,13 +1,4 @@
 <div class="pad">
-	<header id="content-header">
-		<%= render "admin/global/breadcrumb", 
-			:trip => @trip,
-			:crumbs => [
-				{ :title => "Posts", :url => user_trip_posts_path(:user_id => @trip.user.slug, :trip_id => @trip.slug) }
-				],
-			:page => "New Entry" 
-			%>
-	</header>
 	<article id="post" data-trip="<%= @trip.to_json %>">
 		<form class="post-form">
 			<%= render "form", :post => @post %>

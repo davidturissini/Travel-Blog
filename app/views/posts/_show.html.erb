@@ -1,5 +1,5 @@
 <article id="post" class="post" data-json="<%= post.to_json %>">
-	<% if post.title %>
+	<% if post.title || (!post.title && current_user.owns?(post)) %>
 		<h1 id="post-title" class="post-title"><%= post.title %></h1>
 	<% end %>
 	<% if params[:controller] === "posts" && params[:action] === "show" && current_user.owns?(post) %>
@@ -10,6 +10,12 @@
 	<div id="post-body" class="post-body">
 		<%= post.body.html_safe %>
 	</div>
+	<% if current_user.owns?(post) %>
+		<section class="admin">
+			<%= link_to "Edit Body", user_post_path(:user_id => post.user.slug, :id => post.slug), :class => "admin-link post-body-edit", :id => "post-body-edit" %>
+			<%= link_to "Delete", user_post_path(:user_id => post.user.slug, :id => post.slug), :class => "admin-link post-delete", :id => "post-delete" %>
+		</section>
+	<% end %>
 </article>
 <% if post.trip %>
 	<aside>

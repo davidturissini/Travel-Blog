@@ -4,6 +4,7 @@
 *= require_#self
 *= require "lib/kalendae.css"
 *= require_tree "./welcome"
+*= require_tree "./stories"
 *= require_tree "./posts"
 *= require_tree "./trips"
 */

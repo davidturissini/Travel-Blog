@@ -6,9 +6,12 @@ class Admin::PostsController < Admin::AdminController
 	end
 
 	def new
-		@user = current_user
-		@trip = current_trip
-		@post = @trip.posts.new
+		@user = post_context = current_user
+		if(current_trip)
+			post_context = current_trip
+		end
+		@post = post_context.posts.new
+		@post.user = @user
 	end
 
 	def create
@@ -28,16 +31,9 @@ class Admin::PostsController < Admin::AdminController
 	end
 
 	def destroy
-		@trip = current_trip
-		@journal = @trip.journals.find_by_slug(params[:id])
-		@journal.destroy
-		render :json => @journal
-	end
-
-	def edit
-		@user = current_user
-		@trip = current_trip
-		@journal = @trip.journals.find_by_slug(params[:id])
+		@post = current_user.posts.find_by_slug(params[:id])
+		@post.destroy
+		render :json => @post
 	end
 
 	protected
