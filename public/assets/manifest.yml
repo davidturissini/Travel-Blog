@@ -9,6 +9,6 @@ pencil_icon.png: pencil_icon-8d396e11f4fdbf27df23559c1baf0e38.png
 rails.png: rails-7ad812856c7dc20006d43424bbe57d40.png
 x-icon1.gif: x-icon1-593667ef824aab765ef7ae98572bf9d8.gif
 public/kalendae.min.js: public/kalendae.min-47be921cb52d78f1feb2d8588b6205e6.js
-application.js: application-4ed92f435cf573a99bcb7289ce37af0a.js
-application.css: application-d7cce193f6d1d4d8ee7cd84203efed22.css
-admin/admin.js: admin/admin-c16c0bfe30d072133e09b1bd7d5b3d84.js
+application.js: application-0ae21eaff7ad028b9bd480eb800fbc96.js
+application.css: application-b935ad74e5b1d5b32ee31a84f1b85abe.css
+admin/admin.js: admin/admin-e72da1b5724bf0c01332ffd03c60cce1.js
