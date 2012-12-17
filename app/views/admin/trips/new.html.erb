@@ -4,6 +4,7 @@
 		<section id="form-message"></section>
 		<input type="text" id="trip-title" placeholder="Title" />
 		<%= render "admin/global/date_fields", :obj => @trip, :type => "trip" %>
+		<textarea id="trip-summary" class="trip-summary" placeholder="Summary"></textarea>
 		<p class="note">Click on the map to add a new location. Click and drag a marker to change a location. Click a marker to edit or delete a location.</p>
 		<figure id="google-map"></figure>
 		<footer class="buttons">

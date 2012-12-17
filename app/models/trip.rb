@@ -18,6 +18,10 @@ class Trip < ActiveRecord::Base
 		maps.length > 0
 	end
 
+	def description
+		summary || "#{user.name}'s visit to #{title} on #{date_string}"
+	end
+
 	def self.by_country
  		countries = {}
  		scoped.includes(:locations => [:country]).each do |trip|

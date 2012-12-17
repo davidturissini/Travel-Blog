@@ -1,0 +1,4 @@
+/* ADMIN TRIP NEW */
+.admin-trips-new #trip-title { margin-bottom:20px; width:100%; font-size:1.342em; }
+.admin-trips-new .trip-summary { display:block; margin:20px 0 0; width:100%; height:200px; }
+.admin-trips-new #google-map { height:400px; }

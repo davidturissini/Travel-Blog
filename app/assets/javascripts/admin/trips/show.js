@@ -47,6 +47,12 @@ window.addEventListener("DOMContentLoaded", function () {
         property:"title"
     }).render();
 
+    new AutoSaveTextField({
+        model:trip,
+        el:document.getElementById("trip-summary"),
+        property:"summary"
+    }).render();
+
     var tripPhotoLink = document.getElementById("change-trip-photo");
     if( tripPhotoLink ) {
         tripPhotoLink.addEventListener("click", function (evt) {

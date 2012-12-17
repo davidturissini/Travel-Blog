@@ -7,6 +7,7 @@
 *= require_tree "./stories"
 *= require_tree "./posts"
 *= require_tree "./trips"
+*= require_tree "./admin"
 */
 html { height:100%; }
 body { color:#333; font-size:14px; font-family:Helvetica; }
@@ -100,11 +101,6 @@ footer.buttons { padding:10px 20px; background:#fff; text-align:center; font-siz
 
 textarea.autosize { overflow:hidden; }
 
-/* INLINE FORM */
-.inline-form textarea { padding:3px; resize:none; border:0; background:#fff; height:auto; }
-.inline-form .field { width:100%; background:#fff; outline:1px dashed #ccc; }
-.inline-form .field:focus { outline:1px dashed #b1b1b1; }
-
 /* CONTENT GRIDS */
 .content-grid { background:#000; }
 .content-grid .content { display:inline-block; position:relative; width:32%; color:#333; opacity:.7; overflow:hidden; text-align:center;
@@ -148,8 +144,7 @@ textarea.autosize { overflow:hidden; }
 
 
 /* DATE FIELD */
-.date-field { position:relative; margin:0 0 10px 0; padding:5px; outline:2px dashed #b1b1b1; cursor:pointer; font-size:.8463em; line-height:1.253em; }
-.date-field.no-outline { outline:0; }
+.date-field { position:relative; cursor:pointer; font-size:.8463em; line-height:1.253em; }
 .date-field input { visibility:hidden; position:absolute; left:0; bottom:0; z-index:1; height:0; width:0; border:0; }
 .date-field span { display:inline-block; min-width:100px; background:#fff; }
 .date-field .reset { margin-left:10px; font-size:.8463em; color:#b1b1b1; opacity:0; 
@@ -172,10 +167,6 @@ textarea.autosize { overflow:hidden; }
 /* PHOTOS INDEX */
 .photos-index .column.last { background:#000; }
 .photos-index .column.last .photo { cursor:pointer; }
-
-/* ADMIN TRIP NEW */
-.admin-trips-new #trip-title { margin-bottom:20px; width:100%; font-size:1.342em; }
-.admin-trips-new #google-map { height:400px; }
 
 /* ADMIN TRIP EDIT */
 .admin-trips-edit #trip { margin-bottom:40px; color:#333; }

@@ -4,6 +4,11 @@
 		<%= link_to "Delete trip", user_trip_path(:user_id => @trip.user.slug, :id => @trip.slug), :id => "trip-delete" %>
 	<% end %>
 	<%= render "admin/global/date_fields", :type => "trip", :obj => @trip %>
+	<% if @trip.summary || (!@trip.summary && current_user.owns?(@trip)) %>
+		<div id="trip-summary" class="trip-summary">
+			<%= @trip.summary %>
+		</div>
+	<% end %>
 	<figure class="trip-map"></figure>
 	<%= link_to "Map", user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "content-link" %>
 	<section class="trip-photos">

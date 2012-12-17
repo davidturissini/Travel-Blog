@@ -4,7 +4,8 @@ window.addEventListener("DOMContentLoaded", function () {
 	var trip = new Trip(),
 	feedback = new UserFeedback({
 		el:document.getElementById("form-message")
-	}).render();
+	}).render(),
+	summaryEl = document.getElementById("trip-summary");
 	trip.setUser(TA.currentUser);
 
 	var dateField = new DateField({
@@ -47,6 +48,10 @@ window.addEventListener("DOMContentLoaded", function () {
 	document.getElementById("trip-title").addEventListener("keyup", function (e) {
 		trip.set({title:e.currentTarget.value});
 	})
+
+    summaryEl.addEventListener("keyup", function (e) {
+    	trip.set({summary:e.currentTarget.value});
+    })
 
 	trip.on("error", function (e, error) {
 		if( error.title ) {

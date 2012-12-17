@@ -9,6 +9,7 @@ class TripsController < ApplicationController
 		@page_title = "#{@trip.title}"
 		@og_image = @trip.picture.url
 		@og_title = @trip.title
+		@og_description = @trip.description
 
 		@canonical_url = user_trip_url({
 		    :user_id => @user.slug,
