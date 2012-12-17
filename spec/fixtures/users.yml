@@ -43,3 +43,18 @@ user_two:
   latitude: 100
   longitude: 100
   description: user description
+dave_and_melissa:
+  id: 4
+  name: Dave
+  created_at: 2012-01-01
+  updated_at: 2012-01-01
+  salt: kjejjerj
+  token: null
+  slug: dave-and-melissa
+  been_welcomed: false
+  city: Campbell
+  country_id: 1
+  photo_url: http://photo_url
+  latitude: 100
+  longitude: 100
+  description: user description
