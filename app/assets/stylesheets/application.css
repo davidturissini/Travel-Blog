@@ -142,7 +142,7 @@ textarea.autosize { overflow:hidden; }
 }
 .content-grid .content:hover h1 { bottom:0; }
 
-.content-grid .row { padding:20px; background:#fff; }
+.content-grid .row { padding:20px 0; background:#fff; }
 .content-grid .row:first-child { border-top:0; }
 .content-grid .row .create-new { margin-top:-28px; }
 

@@ -22,13 +22,16 @@
 					<li><%= link_to "Trips", user_path(:id => User.dave.slug) %></li>
 					<li><%= link_to "Map", user_maps_path(:user_id => User.dave.slug) %></li>
 					<li><%= link_to "Photos", user_photos_path(:user_id => User.dave.slug) %></li>
+					<% if !current_user.anonymous? %>
+						<li><%= link_to "Logout", logout_path %></li>
+					<% end %>
 				</ul>
 			</nav>
 		</header>
 		<%= render_admin_ribbon %>
 		<div id="container" class="autoclear">
 			<div class="right-col">
-				<section class="user">
+				<section id="user" class="user" data-json="<%= @user.to_json %>">
 					<figure class="user-photo rounded">
 						<img src="<%= User.dave.photo.large %>" width="200" height="200" />
 						<figcaption class="user-photo-caption">
