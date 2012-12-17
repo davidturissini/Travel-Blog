@@ -4,9 +4,10 @@ db/*.sqlite3
 log/*.log
 tmp/
 .sass-cache/
-config/database.yml
+./config/database.yml
 config/environment.rb
 ./Gemfile.lock
-config/omniauth_config.yml
-config/traveladdict.yml
-config/database.yml
+./config/omniauth_config.yml
+./config/traveladdict.yml
+./config/database.yml
+./db/backups
