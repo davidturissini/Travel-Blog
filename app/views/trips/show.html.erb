@@ -1,9 +1,19 @@
 <article id="trip" class="trip<%= " inline-form " if current_user.owns?(@trip) %>" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
-	<h1 id="trip-title" class="trip-title"><%= @trip.title %></h1>
-	<% if current_user.owns?(@trip) %>
-		<%= link_to "Delete trip", user_trip_path(:user_id => @trip.user.slug, :id => @trip.slug), :id => "trip-delete" %>
-	<% end %>
-	<%= render "admin/global/date_fields", :type => "trip", :obj => @trip %>
+	<header class="trip-header autoclear">
+		<figure class="trip-photo left">
+			<img src="<%= @trip.picture.square %>" id="trip-image" width="100" alt="" />
+			<% if current_user.owns?(@trip) %>
+				<figcaption id="change-trip-photo">
+					Change photo
+				</figcaption>
+			<% end %>
+		</figure>
+		<h1 id="trip-title" class="trip-title"><%= @trip.title %></h1>
+		<% if current_user.owns?(@trip) %>
+			<%= link_to "Delete trip", user_trip_path(:user_id => @trip.user.slug, :id => @trip.slug), :id => "trip-delete" %>
+		<% end %>
+		<%= render "admin/global/date_fields", :type => "trip", :obj => @trip %>
+	</header>
 	<% if @trip.summary || (!@trip.summary && current_user.owns?(@trip)) %>
 		<div id="trip-summary" class="trip-summary">
 			<%= @trip.summary %>
