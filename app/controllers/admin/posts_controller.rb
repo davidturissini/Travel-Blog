@@ -38,7 +38,7 @@ class Admin::PostsController < Admin::AdminController
 
 	protected
 	def clean_html html
-		 Sanitize.clean(html, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
+		 Sanitize.clean(html, :attributes => {'a' => ['href', 'title', 'target']}, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
 	end
 	def current_trip
 		current_user.trips.find_by_slug(params[:trip_id])
