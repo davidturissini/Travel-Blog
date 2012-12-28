@@ -48,7 +48,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	        theme: "advanced",
 	        theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,blockquote,undo",
 	        setup:function (ed) {
-	        	ed.onKeyUp.add((function () {
+	        	ed.onChange.add((function () {
 	        		var timeout;
 	        		return function(ed, l) {
 	        			if( timeout ) { clearTimeout(timeout); }
