@@ -1,18 +1,18 @@
 sample_vacation_entry:
  title: Sample
- body: This is a journal  entry
- location_id: 1
- day: 2012-01-01
+ body: This is a post
+ user_id: 1
+ slug: post-one
  id: 1
 journal_entry_for_nil_summary_location:
  title: No body
+ slug: post-two
+ user_id: 1
  body: "TNWENEWLRGN"
- location_id: 3 
- day: 2012-01-01
  id: 3
 journal_entry_for_blank_summary_location:
  title: No body
+ slug: post-three
+ user_id: 1
  body: "ASDASDADADSAD"
- location_id: 4
- day: 2012-01-01
  id: 4 

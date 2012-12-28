@@ -24,10 +24,12 @@ class Admin::PostsController < Admin::AdminController
 
 	def update
 		@user = current_user
-		params[:post][:body] = clean_html(params[:post][:body])
+		if params[:post].has_key?(:body)
+			params[:post][:body] = clean_html(params[:post][:body]).strip 
+		end
 		@post = @user.posts.find_by_slug(params[:id])
 		@post.update_attributes!(params[:post])
-		render :json => @journal
+		render :json => @post
 	end
 
 	def destroy
@@ -38,7 +40,7 @@ class Admin::PostsController < Admin::AdminController
 
 	protected
 	def clean_html html
-		 Sanitize.clean(html, :attributes => {'a' => ['href', 'title', 'target']}, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
+		 Sanitize.clean(html, :remove_contents => ["script"], :attributes => {'a' => ['href', 'title', 'target']}, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
 	end
 	def current_trip
 		current_user.trips.find_by_slug(params[:trip_id])
