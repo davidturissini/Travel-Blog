@@ -38,8 +38,9 @@ var Photo = Backbone.Model.extend({
 			 }
 		}
 	},
-	source:function () {
-		return this.user().staticPath() + "photos/500/" + this.get("slug") + ".jpg";
+	source:function (size) {
+		size = size || "square";
+		return "http://s3.amazonaws.com/" + TA.config.s3.bucket + "/statics/" + this.get("id") + "/" + size + "/"  + this.get("static_file_name");
 	},
 	getRaw:function (raw) {
 		return this._raw;
