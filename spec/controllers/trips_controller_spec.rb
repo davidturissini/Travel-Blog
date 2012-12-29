@@ -5,13 +5,36 @@ describe TripsController do
 
 	describe "routing" do
 		it "routes to #show" do
-	      expect(:get => "/user-slug/trip-slug").to route_to({
-		      :controller => "trips",
-		      :action => "show",
-		      :user_id => "user-slug",
-		      :id => "trip-slug"
+	      	expect(:get => "/user-slug/trip-slug").to route_to({
+				:controller => "trips",
+				:action => "show",
+				:user_id => "user-slug",
+				:id => "trip-slug"
 		    })
 	    end
+
+	    it "routes to #index" do
+	      	expect(:get => "/user-slug/trips").to route_to({
+				:controller => "trips",
+				:action => "index",
+				:user_id => "user-slug"
+			})
+	    end
+	end
+
+	describe "GET index" do
+		describe "FORMAT json" do
+			before(:each) do
+				@user = users(:user_one)
+				@user.stub(:trips).and_return(Trip.where("id > 0"))
+				controller.stub!(:current_user).and_return(@user)
+			end
+
+			it "should return a json list of user trips" do
+				get :index, :user_id => @user.slug, :format => "json"
+				response.body.should === @user.trips.to_json
+			end
+		end
 	end
 
 	describe "GET show" do

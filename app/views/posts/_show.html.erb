@@ -12,7 +12,7 @@
 	</div>
 	<% if current_user.owns?(post) %>
 		<section class="admin">
-			<%= link_to "Edit Body", user_post_path(:user_id => post.user.slug, :id => post.slug), :class => "admin-link post-body-edit", :id => "post-body-edit" %>
+			<%= link_to "Edit Body", user_post_path(:user_id => post.user.slug, :id => post.slug), :class => "admin-link post-body-edit", :id => "post-edit" %>
 			<%= link_to "Delete", user_post_path(:user_id => post.user.slug, :id => post.slug), :class => "admin-link post-delete", :id => "post-delete" %>
 		</section>
 	<% end %>

@@ -1,5 +1,5 @@
 var TripsCollection = Backbone.Collection.extend({
-	
+	model:Trip
 })
 
 TripsCollection.createFromDataAttribute = function (node, attributeName) {

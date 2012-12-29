@@ -11,7 +11,6 @@ window.addEventListener("DOMContentLoaded", function () {
 		post.setTrip(trip);
 	}
 
-
 	var form = new PostForm({
 		model:post,
 		saveButton:document.getElementById("post-save"),

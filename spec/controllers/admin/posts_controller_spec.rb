@@ -14,6 +14,39 @@ describe Admin::PostsController do
 	    end
 	end
 
+	describe "GET new" do
+		describe "When not trip_id id present" do
+			before(:each) do
+				@user = users(:user_one)
+				controller.stub!(:current_user).and_return(@user)
+			end
+
+			it "should create new post for user" do
+				get :new, :user_id => @user.slug
+				assigns(:post).user.should === @user
+			end
+
+			it "should not create new post for trip" do
+				get :new, :user_id => @user.slug
+				assigns(:post).trip_id.should be_nil
+			end
+		end
+
+		describe "When a trip_id is present" do
+			before(:each) do
+				@user = users(:user_one)
+				@trip = trips(:trip_one)
+				@user.trips.stub!(:find_by_slug).and_return(@trip)
+				controller.stub!(:current_user).and_return(@user)
+			end
+
+			it "should create new post for trip" do
+				get :new, :user_id => @user.slug, :trip_id => @trip.slug
+				assigns(:post).trip_id.should === @trip.id
+			end
+		end
+	end
+
 	describe "PUT update" do
 		before(:each) do
 			@user = users(:user_one)

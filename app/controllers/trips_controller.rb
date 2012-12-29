@@ -16,4 +16,11 @@ class TripsController < ApplicationController
 		    :id => @trip.slug 
 		    })
 	end
+
+	def index
+		trips = current_user.trips
+		respond_to do |format|
+			format.json { render :json => trips.to_json }
+		end
+	end
 end

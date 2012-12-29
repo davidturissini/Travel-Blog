@@ -7,8 +7,9 @@ class Admin::PostsController < Admin::AdminController
 
 	def new
 		@user = post_context = current_user
-		if(current_trip)
-			post_context = current_trip
+		@trip = current_trip
+		if @trip
+			post_context = @trip
 		end
 		@post = post_context.posts.new
 		@post.user = @user
