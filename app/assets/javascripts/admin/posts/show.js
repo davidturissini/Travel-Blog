@@ -61,12 +61,20 @@ window.addEventListener("DOMContentLoaded", function () {
 		dateField.render();
 
 		var select = new TripsSelect({
-			user:post.user()
+			includeBlank:true,
+			user:post.user(),
+			selected:post.get("trip_id")
+		});
+
+		select.render();
+		document.getElementById("post").appendChild(select.el);
+		select.el.addEventListener("change", function (e) {
+			post.set("trip_id", e.currentTarget.value);
 		})
 
 
 		post.on("change", function (e, changed) {
-			if( changed.changes.start_date || changed.changes.end_date ) {
+			if( changed.changes.trip_id || changed.changes.start_date || changed.changes.end_date ) {
 				post.save({})
 			}
 		})
