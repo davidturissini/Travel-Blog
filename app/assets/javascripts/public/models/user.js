@@ -14,6 +14,17 @@ var User = Backbone.Model.extend((function () {
 			return this.attributes
 			}
 		},
+		fetchTrips:function (callbacks) {
+			callbacks = callbacks || {};
+			$.ajax({
+				url:this.url() + "/trips",
+				success:function (e) {
+					if( callbacks.success ) {
+						callbacks.success(e);
+					}
+				}
+			})
+		},
 		trips:function () {
 			return _trips;
 		},
