@@ -39,7 +39,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 .vert-center-block { display:inline-block; vertical-align:middle; }
 
-#container .left-col { margin-right:240px; padding:20px; }
+#container .left-col { overflow:hidden; margin-right:240px; padding:20px; }
 #container .right-col { float:right; padding:20px; width:200px; background:#e1e1e1; }
 #container .right-col .user .user-photo { display:inline-block; }
 #container .right-col .user .user-photo .user-photo-caption { margin-top:5px; font-size:.9em; }

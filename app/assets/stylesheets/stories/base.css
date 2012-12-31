@@ -1,3 +1,12 @@
+.story { padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid #b1b1b1; }
+.story .story-link { display:block; color:inherit; }
+.story .story-link:hover { color:#069; }
+.story .story-title { margin-bottom:10px; font-size:1.6em; }
+.story .story-date { margin-bottom:10px; font-size:.8em; }
+.story .story-image { float:left; margin-right:20px; }
+.story .story-body { line-height:1.5; }
+.story .story-body p { margin-top:20px; }
+.story .story-body p:first-child { margin-top:0; }
 .story .story-footer { margin-top:20px; padding:10px; border-radius:5px; background:#e1e1e1; }
 .story .story-footer ul li { display:inline-block; margin-left:1em; padding-left:1em; border-left:1px solid #ccc; }
 .story .story-footer ul li:first-child { border:0; }

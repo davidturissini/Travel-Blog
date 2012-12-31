@@ -20,7 +20,9 @@ class User < ActiveRecord::Base
   end
 
   def stories
-    posts.order("start_date DESC")
+    _posts = posts.where("trip_id IS NULL")
+    _trips = trips
+    stories = (_posts + _trips).sort {|a,b| b.start_date <=> a.start_date }
   end
 
   def static_directory

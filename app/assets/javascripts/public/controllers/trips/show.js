@@ -8,7 +8,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	maps = MapsCollection.createFromDataAttribute(tripEl, "data-maps"),
 	gallery = null,
 	mapOptions = {zoom:10,draggable:false,disableDefaultUI:true},
-	tripMapsEl = tripEl.getElementsByClassName("trip-map").item(0);
+	tripMapsEl = document.getElementById("trip-google-map");
 
 	trip.setUser(user);
 	trip.setLocations(locations);
