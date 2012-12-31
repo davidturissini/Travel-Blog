@@ -1,4 +1,24 @@
 <article id="trip" class="trip<%= " inline-form " if current_user.owns?(@trip) %>" data-user="<%= @trip.user.to_json %>" data-json="<%= @trip.to_json %>" data-maps="<%= @trip.maps.to_json %>" data-locations="<%= @trip.locations.to_json %>">
+	<div class="right">
+		<figure class="trip-map">
+			<%= link_to user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "content-link" do %>
+				<div id="trip-google-map" class="google-map"></div>
+				<figcaption>Map</figcaption>
+			<% end %>
+		</figure>
+		<figure class="trip-photos">
+			<%= link_to user_trip_photos_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "trip-photos-link" do %>
+				<div class="overflow">
+					<% @trip_photos.each do |photo| %>
+						<div class="photo">
+							<img src="<%= photo.small %>" />
+						</div>
+					<% end %>
+				</div>
+				<figcaption><%= @trip.photos.count %> photos</figcaption>
+			<% end %>
+		</figure>
+	</div>
 	<header class="trip-header autoclear">
 		<figure class="trip-photo left">
 			<img src="<%= @trip.picture.square %>" id="trip-image" width="100" alt="" />
@@ -19,18 +39,6 @@
 			<%= @trip.summary %>
 		</div>
 	<% end %>
-	<figure class="trip-map"></figure>
-	<%= link_to "Map", user_trip_maps_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "content-link" %>
-	<section class="trip-photos">
-		<div class="overflow">
-			<% @trip_photos.each do |photo| %>
-				<div class="photo">
-					<img src="<%= photo.small %>" />
-				</div>
-			<% end %>
-		</div>
-		<%= link_to "", user_trip_photos_path(:user_id => @trip.user.slug, :trip_id => @trip.slug), :class => "trip-photos-link" %>
-	</section>
 	<section class="trip-posts">
 		<% @trip_posts.each do |post| %>
 			<article id="post" class="post" data-json="<%= post.to_json %>">
