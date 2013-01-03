@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController 
  def index
  	user = User.find_by_slug("dave-and-melissa")
- 	@stories = user.stories
+ 	@hero = user.trips.find_by_slug("new-york")
  end
 
  def user

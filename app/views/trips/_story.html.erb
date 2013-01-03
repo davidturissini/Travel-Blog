@@ -2,7 +2,7 @@
 	<%= link_to user_trip_path(:user_id => story.user.slug, :id => story.slug), :class => "autoclear story-link" do %>
 		<h1 class="story-title"><%= story.title %></h1>
 		<h2 class="story-date"><%= story.date_string %></h2>
-		<img class="story-image" src="<%= story.photo.url(:square) %>" width="100" alt="" />
+		<img class="story-image" src="<%= story.picture.url(:square) %>" width="100" alt="" />
 		<div class="story-body">
 			<p><%= story.summary %></p>
 		</div>

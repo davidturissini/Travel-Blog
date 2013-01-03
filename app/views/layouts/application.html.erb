@@ -31,28 +31,31 @@
 		<%= render_admin_ribbon %>
 		<div id="container" class="autoclear">
 			<div class="right-col">
-				<section id="user" class="user" data-json="<%= @user.to_json %>">
-					<figure class="user-photo rounded">
-						<img src="<%= User.dave.photo.large %>" width="200" height="200" />
-						<figcaption class="user-photo-caption">
-							<h1>Welcome to TravelAddict. Melissa and I love to travel and love to share our travels.</h1>
-						</figcaption>
-					</figure>
-					<section class="user-trips">
-						<ul class="user-trips-summary">
-							<li><%= User.dave.trips.count %> Trips</li>
-							<li><%= User.dave.countries_count %> Countries</li>
-							<li><%= User.dave.photos.count %> Photos</li>
-							<li><%= User.dave.maps.count %> Maps</li>
-						</ul>
-						<h1 class="user-trips-title">Places we've visited</h1>
-						<ul>
-							<% User.dave.ordered_trips.each do |trip| %>
-								<li><%= link_to trip.title, user_trip_path(:user_id => trip.user.slug, :id => trip.slug), :class => "trip" %></li>
-							<% end %>
-						</ul>
+				<% if @user %>
+					<section id="user" class="user" data-json="<%= @user.to_json %>">
+						<figure class="user-photo rounded">
+							<img src="<%= User.dave.photo.large %>" width="200" height="200" />
+							<figcaption class="user-photo-caption">
+								<h1>Welcome to TravelAddict. Melissa and I love to travel and love to share our travels.</h1>
+							</figcaption>
+						</figure>
+						<section class="user-trips">
+							<ul class="user-trips-summary">
+								<li><%= @user.trips.count %> Trips</li>
+								<li><%= @user.countries_count %> Countries</li>
+								<li><%= @user.photos.count %> Photos</li>
+								<li><%= @user.maps.count %> Maps</li>
+							</ul>
+							<h1 class="user-trips-title">Places we've visited</h1>
+							<ul>
+								<% @user.ordered_trips.each do |trip| %>
+									<li><%= link_to trip.title, user_trip_path(:user_id => trip.user.slug, :id => trip.slug), :class => "trip" %></li>
+								<% end %>
+							</ul>
+						</section>
 					</section>
-				</section>
+				<% end %>
+				<%= yield :right_col %>
 			</div>
 			<div class="left-col">
 				<%= yield %>

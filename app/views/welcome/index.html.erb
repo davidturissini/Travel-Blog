@@ -1,5 +1,10 @@
-<section id="stories" class="autoclear">
-	<% @stories.each do |story| %>
-		<%= render "#{story.class.name.downcase.pluralize}/story", :story => story %>
-	<% end %>	
+<section id="hero" class="hero">
+	<img src="<%= @hero.picture.large %>" height="400" />
 </section>
+
+
+<% content_for :right_col do %>
+	<section id="kayak" class="kayak">
+		<iframe id="kayak-iframe" class="kayak-iframe" src="http://www.kayak.com/widget/300x250?ai=kayaksample&amp;p=&amp;doubleEncoded=on&amp;size=300x250"></iframe>
+	</section>
+<% end %>
