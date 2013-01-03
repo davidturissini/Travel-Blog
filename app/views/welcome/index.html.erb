@@ -1,5 +1,9 @@
 <section id="hero" class="hero">
-	<img src="<%= @hero.picture.large %>" height="400" />
+	<header class="hero-header">
+		<h1 class="hero-title"><%= @hero.title %></h1>
+		<p><%= @hero.summary %></p>
+	</header>
+	<img src="<%= @hero.picture.widescreen %>" width="1200" class="hero-image" />
 </section>
 
 

@@ -18,6 +18,14 @@ class GoogleMapPhoto
 	def square size = 200
 		build_image_string size, size
 	end
+
+	def original
+		build_image_string 1200, 1200
+	end
+
+	def widescreen
+		build_image_string 1200, 675
+	end
 	
 	def build_image_string width = 800, height = 450, zoom = 5
  		"http://maps.google.com/staticmap?key=#{CONFIG['google_maps']['key']}&center=#{@location.latitude},#{@location.longitude}&type=sat&zoom=#{zoom}&size=#{width}x#{height}"

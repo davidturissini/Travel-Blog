@@ -4,5 +4,7 @@ window.addEventListener("DOMContentLoaded", function () {
 	var k = new Kayak({
 		iframe:document.getElementById("kayak-iframe")
 	});
+	
+	k.populateFlightSearch();
 
 })
