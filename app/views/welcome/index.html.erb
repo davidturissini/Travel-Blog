@@ -1,14 +1,20 @@
-<section id="hero" class="hero">
-	<header class="hero-header">
-		<h1 class="hero-title"><%= @hero.title %></h1>
-		<p><%= @hero.summary %></p>
-	</header>
-	<img src="<%= @hero.picture.widescreen %>" width="1200" class="hero-image" />
+<section id="hero" class="hero" data-date="<%= Time.now.to_s %>">
+	<% @hero_tiles.each do |hero| %>
+		<%= link_to user_trip_path(:user_id => hero.user.slug, :id => hero.slug), :class => "hero-link" do %>
+			<header class="hero-header">
+				<img src="<%= hero.user.picture.large %>" class="hero-user-image" />
+				<div class="text">
+					<h1 class="hero-title"><%= hero.title %></h1>
+					<p><%= hero.summary %></p>
+				</div>
+			</header>
+			<img src="<%= hero.picture.widescreen %>" width="1200" class="hero-image" />
+		<% end %>
+	<% end %>
 </section>
-
 
 <% content_for :right_col do %>
 	<section id="kayak" class="kayak">
-		<iframe id="kayak-iframe" class="kayak-iframe" src="http://www.kayak.com/widget/300x250?ai=kayaksample&amp;p=&amp;doubleEncoded=on&amp;size=300x250"></iframe>
+		<iframe scrolling="no" id="kayak-iframe" class="kayak-iframe" src=""></iframe>
 	</section>
 <% end %>

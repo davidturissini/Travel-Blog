@@ -1,34 +1,23 @@
-window.TA.Class = (function () {
-
-	var proto = {
-		extend:function (prototype) {
-
-			var instance = function (options) {
-				this.options = options;
-			}
-
-			instance.prototype = prototype;
-
-			return function (options) {
-				var obj = new instance(options);
-
-				return obj;
-			}
-			
-		}
-	};
-
-	return proto;
-
-})();
-
 var Kayak = window.TA.Class.extend((function () {
 
-	var baseUrl = "http://www.kayak.com/s/search/air";
+	var baseOptions = {
+		ai:"kayaksample",
+		doubleEncoded:"on",
+		size:"300x250"
+	},
+	baseUrl = "http://www.kayak.com/widget/300x250";
+
+	function setiFrameSource(iframe, options) {
+		options = TA.Object.extend(baseOptions, options);
+		iframe.setAttribute("src", baseUrl + "?" + TA.Object.serialize(options));
+	}
 
 	return {
-		populateFlightSearch:function () {
-
+		initialize:function (options) {
+			this.options.defaults = options.defaults || {};
+		},
+		populate:function (options) {
+			setiFrameSource(this.options.iframe, TA.Object.extend(this.options.defaults, options));
 		}
 	}
 })());

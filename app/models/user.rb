@@ -79,7 +79,7 @@ class User < ActiveRecord::Base
     !(latitude.nil? && longitude.nil?)
   end
 
-  def photo
+  def picture
     @photo ||= UserPhoto.create(self)
   end
 
