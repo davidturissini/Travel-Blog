@@ -9,10 +9,21 @@ window.addEventListener("DOMContentLoaded", function () {
 			tab:"vacations"
 		}
 	});
+
+	var view = new Hero({
+		el:heroEl,
+		elements:heroEl.getElementsByClassName("hero-link")
+	});
+
+	view.render();
+
+	var i = 0;
+	setInterval(function () { 
+		view.showNext();
+	}, 5000);
 	
 	kayak.populate({
-		l2:"New York",
-		d2:"1/30/2013"
+		l2:"New York"
 	});
 
 })

@@ -1,6 +1,6 @@
 <section id="hero" class="hero" data-date="<%= Time.now.to_s %>">
-	<% @hero_tiles.each do |hero| %>
-		<%= link_to user_trip_path(:user_id => hero.user.slug, :id => hero.slug), :class => "hero-link" do %>
+	<% @hero_tiles.each_with_index do |hero, index| %>
+		<%= link_to user_trip_path(:user_id => hero.user.slug, :id => hero.slug), :class => "hero-link" + (index == 0 ? " focused" : "") do %>
 			<header class="hero-header">
 				<img src="<%= hero.user.picture.large %>" class="hero-user-image" />
 				<div class="text">

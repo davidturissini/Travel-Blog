@@ -14,22 +14,22 @@
 	</head>
 	<body class=" <%= params[:controller].gsub("/", "-") %>-<%= params[:action] %> ">
 		<%= render "global/facebook" %>
-		<header id="site-header">
-			<h1 id="site-title"><%= link_to "TravelAddict", root_path %></h1>
-			<nav id="site-nav">
-				<ul>
-					<li><%= link_to "Blog", root_path %></li>
-					<li><%= link_to "Trips", user_path(:id => User.dave.slug) %></li>
-					<li><%= link_to "Map", user_maps_path(:user_id => User.dave.slug) %></li>
-					<li><%= link_to "Photos", user_photos_path(:user_id => User.dave.slug) %></li>
-					<% if !current_user.anonymous? %>
-						<li><%= link_to "Logout", logout_path %></li>
-					<% end %>
-				</ul>
-			</nav>
-		</header>
-		<%= render_admin_ribbon %>
 		<div id="container" class="autoclear">
+			<header id="site-header">
+				<h1 id="site-title"><%= link_to "TravelAddict", root_path %></h1>
+				<nav id="site-nav">
+					<ul>
+						<li><%= link_to "Blog", root_path %></li>
+						<li><%= link_to "Trips", user_path(:id => User.dave.slug) %></li>
+						<li><%= link_to "Map", user_maps_path(:user_id => User.dave.slug) %></li>
+						<li><%= link_to "Photos", user_photos_path(:user_id => User.dave.slug) %></li>
+						<% if !current_user.anonymous? %>
+							<li><%= link_to "Logout", logout_path %></li>
+						<% end %>
+					</ul>
+				</nav>
+			</header>
+			<%= render_admin_ribbon %>
 			<div class="right-col">
 				<% if @user %>
 					<section id="user" class="user" data-json="<%= @user.to_json %>">

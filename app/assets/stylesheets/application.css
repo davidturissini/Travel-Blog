@@ -6,11 +6,14 @@
 *= require_tree "./welcome"
 *= require_tree "./stories"
 *= require_tree "./posts"
+*= require_tree "./maps"
 *= require_tree "./trips"
 *= require_tree "./admin"
 */
 html { height:100%; }
-body { color:#333; font-size:14px; font-family:Helvetica; }
+body { color:#333; font-size:14px; font-family:Helvetica; background:#333;
+	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333)); 
+}
 figure { margin:0; }
 
 a, a:visited, a:active { text-decoration:none; color:#069; }
@@ -39,8 +42,15 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 
 .vert-center-block { display:inline-block; vertical-align:middle; }
 
-#container .left-col { overflow:hidden; margin-right:240px; padding:20px; }
-#container .right-col { float:right; padding:20px; width:200px; background:#e1e1e1; }
+#container { margin:0 auto; padding-bottom:20px; min-width:960px; }
+
+@media screen and (min-width:1100px) {
+	#container { width:1100px; }
+}
+
+#container .left-col { overflow:hidden; margin-right:240px; padding:20px; border:5px solid transparent; border-radius:20px; background:#fff; }
+#container .right-col { float:right; padding:20px; width:200px; color:#e1e1e1; }
+#container .right-col a { color:#aaa; }
 #container .right-col .user .user-photo { display:inline-block; }
 #container .right-col .user .user-photo .user-photo-caption { margin-top:5px; font-size:.9em; }
 #container .right-col .user .user-trips { margin:20px 0; }
@@ -48,14 +58,11 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 #container .right-col .user .user-trips-title { margin-bottom:5px; padding-bottom:5px; border-bottom:1px solid #b1b1b1; font-size:1.2em; }
 #container .right-col .user .user-trips .trip { display:block; padding:5px 5px 5px 0; }
 
-#site-header { padding:10px; background:#333;
-	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333));
-}
+#site-header { padding:10px 25px; }
 
 #site-header a { color:#fff; }
-#site-header a:hover { text-decoration:underline; }
-#site-header h1 { margin-right:40px; font-size:1.25em; }
-#site-header nav { font-size:.8373em; }
+#site-header h1 { margin-right:40px; font-size:2.25em; }
+#site-header nav { display:inline-block; margin-top:10px; border-top:1px solid #aaa; font-size:1.2em; }
 #site-header nav li { display:inline-block; line-height:1.32353em; }
 #site-header #user-info { float:right; position:relative; margin-bottom:-10px; padding-bottom:6px; }
 #site-header #user-info header { float:left; }
@@ -88,9 +95,6 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 }
 #site-footer a { color:#fff; }
 
-/* MAPS */
-.map { height:400px; }
-.map-active .map { box-shadow:0px 5px 10px #000; }
 
 #page-title { position:relative; text-align:left; font-size:2em; }
 
@@ -305,6 +309,7 @@ nav#user-nav li:first-child { border-top:0; }
 
 /* MAPS INDEX PAGE */
 .maps-index .map { height:600px; }
+
 
 /* COUNTRIES INDEX PAGE */
 .countries-index .last .countries .country header h1 { font-size:1.4em; }
