@@ -4,11 +4,14 @@ window.addEventListener("DOMContentLoaded", function () {
 	var heroEl = document.getElementById("hero"),
 	time = new Date(heroEl.getAttribute("data-date")),
 	kayak = new Kayak({
+		el:document.getElementById("kayak"),
 		iframe:document.getElementById("kayak-iframe"),
 		defaults:{
-			tab:"vacations"
+			tab:"flights"
 		}
 	});
+
+	kayak.render();
 
 	var view = new Hero({
 		el:heroEl,
@@ -16,11 +19,6 @@ window.addEventListener("DOMContentLoaded", function () {
 	});
 
 	view.render();
-
-	var i = 0;
-	setInterval(function () { 
-		view.showNext();
-	}, 5000);
 	
 	kayak.populate({
 		l2:"New York"

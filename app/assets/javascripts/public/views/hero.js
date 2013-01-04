@@ -10,6 +10,51 @@ var Hero = Backbone.View.extend((function () {
 		elem.className = elem.className.replace(" focused", "");
 	}
 
+	var drawNav = function (hero) {
+		
+		var nav = document.createElement("nav"),
+		navs = [];
+		nav.className = "hero-nav";
+
+		[].forEach.call(hero.options.elements, function (elem, index) {
+			var link = document.createElement("a");
+			link.addEventListener("click", function (e) {
+				e.preventDefault();
+				hero.showAtIndex(index);
+				triggerInteracted(hero);
+			})
+			navs.push(link);
+			nav.appendChild(link);
+
+			hero.on("show", function (evt) {
+				if(evt.in === elem) {
+					link.className += " active";
+				} else if (/\sactive/.test(link.className)) {
+					link.className = link.className.replace(" active", "");
+				}
+			})
+		})
+
+		hero.el.appendChild(nav);
+		return nav;
+	}
+
+	var triggerInteracted = function (hero) {
+		hero.trigger("userinteracted", {hero:hero});
+	}
+
+	var rotate = function (hero, time) {
+
+		var interval = setInterval(function () {
+			hero.showNext();
+		}, time);
+
+		hero.on("userinteracted", function () {
+			clearTimeout(interval);
+		});
+
+	}
+
 	return {
 		initialize:function () {
 			this.current = null;
@@ -61,6 +106,13 @@ var Hero = Backbone.View.extend((function () {
 
 				this.current = elem;
 				processClassName(elem);
+
+				this.trigger("show", {
+					hero:this, 
+					out:oldCurrent, 
+					in:elem
+				});
+
 				return {
 					out:oldCurrent,
 					in:elem
@@ -69,8 +121,16 @@ var Hero = Backbone.View.extend((function () {
 		},
 
 		render: function () {
-			this.showAtIndex(0);
-			return this;
+			var hero = this;
+			drawNav(hero);
+			hero.showAtIndex(0);
+			rotate(hero, 5000);
+
+			hero.el.addEventListener("mouseover", function () {
+				triggerInteracted(hero);
+			})
+
+			return hero;
 		}
 	}
 })());

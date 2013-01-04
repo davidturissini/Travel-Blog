@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController 
 	def index
 		user = User.find_by_slug("dave-and-melissa")
-		@hero_tiles = user.trips.order("start_date DESC").limit(2)
+		@hero_tiles = user.trips.order("start_date DESC").limit(3)
 	end
 
 	def user
