@@ -11,7 +11,7 @@
 				<div class="overflow">
 					<% @trip_photos.each do |photo| %>
 						<div class="photo">
-							<img src="<%= photo.small %>" />
+							<img src="<%= photo.square %>" width="250" />
 						</div>
 					<% end %>
 				</div>
@@ -45,7 +45,7 @@
 				<% if post.title %>
 					<h1 id="post-title" class="post-title"><%= post.title %></h1>
 				<% end %>
-					<h2 class="post-date"><%= post.date_string %></h2>
+				<h2 class="post-date"><%= post.date_string %></h2>
 				<div id="post-body" class="post-body">
 					<%= post.body.html_safe %>
 				</div>
