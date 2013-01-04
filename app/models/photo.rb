@@ -11,7 +11,6 @@ class Photo < ActiveRecord::Base
 			:thumbnail => "50x50>",
 			:widescreen => "1200x675#"
 			}
-			
 	include HasSlug
 	include HasTitle
 
