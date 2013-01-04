@@ -11,7 +11,7 @@ class UsersController < ApplicationController
 	def show
 		@user = User.find_by_slug(params[:user_id]) 
 		raise ActiveRecord::RecordNotFound if !@user
-		@user_trips = @user.trips.by_year
+ 		@stories = @user.stories
 		respond_to do |format|
 			format.html { render "users/show" }
 		end

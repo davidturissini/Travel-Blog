@@ -11,6 +11,7 @@ class Photo < ActiveRecord::Base
 			:thumbnail => "50x50>",
 			:widescreen => "1200x675#"
 			}
+			
 	include HasSlug
 	include HasTitle
 
@@ -44,6 +45,14 @@ class Photo < ActiveRecord::Base
 
 	def large
 		url(:large)
+	end
+
+	def widescreen
+		url(:widescreen)
+	end
+
+	def original
+		url(:original)
 	end
 
 	def save_with_raw! raw_file

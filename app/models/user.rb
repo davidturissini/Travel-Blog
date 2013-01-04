@@ -22,7 +22,15 @@ class User < ActiveRecord::Base
   def stories
     _posts = posts.where("trip_id IS NULL")
     _trips = trips
-    stories = (_posts + _trips).sort {|a,b| b.start_date <=> a.start_date }
+    stories = (_posts + _trips).sort {|a,b| 
+      if b.start_date.nil?
+        -1
+      elsif a.start_date.nil?
+        1
+      else
+        b.start_date <=> a.start_date
+      end
+    }
   end
 
   def static_directory
@@ -79,7 +87,7 @@ class User < ActiveRecord::Base
     !(latitude.nil? && longitude.nil?)
   end
 
-  def photo
+  def picture
     @photo ||= UserPhoto.create(self)
   end
 

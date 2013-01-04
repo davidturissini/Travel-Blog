@@ -1,5 +1,20 @@
-<section id="stories" class="autoclear">
-	<% @stories.each do |story| %>
-		<%= render "#{story.class.name.downcase.pluralize}/story", :story => story %>
-	<% end %>	
+<section id="hero" class="hero" data-date="<%= Time.now.to_s %>">
+	<% @hero_tiles.each_with_index do |hero, index| %>
+		<%= link_to hero.url, :class => "hero-link" + (index == 0 ? " focused" : "") do %>
+			<header class="hero-header">
+				<img src="<%= hero.small_photo_url %>" class="hero-user-image" />
+				<div class="text">
+					<h1 class="hero-title"><%= hero.title %></h1>
+					<p><%= hero.text %></p>
+				</div>
+			</header>
+			<img src="<%= hero.picture.widescreen %>" width="1200" class="hero-image" />
+		<% end %>
+	<% end %>
 </section>
+
+<% content_for :right_col do %>
+	<section id="kayak" class="kayak">
+		<iframe scrolling="no" id="kayak-iframe" class="kayak-iframe" src=""></iframe>
+	</section>
+<% end %>
