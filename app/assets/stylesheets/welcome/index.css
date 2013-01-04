@@ -13,7 +13,7 @@
 .hero .hero-link.focused { opacity:1; z-index:15; }
 .hero .hero-header { position:absolute; left:0; right:0; bottom:0; padding:10px 10px 20px 10px; height:75px; background:rgba(0, 0, 0, .7); color:#fff; line-height:1.4; }
 .hero .hero-header .text { position:relative; left:-9999px; padding-bottom:20px; height:80px; overflow:hidden;
-	-webkit-transition:left 1s;
+	-webkit-transition:left 1s ease-out;
 } 
 .hero .hero-link.focused .hero-header .text { left:0; margin-left:170px; }
 .hero .hero-user-image { float:left; margin-left:10px; margin-top:-60px; width:140px; border:3px solid #000; }
