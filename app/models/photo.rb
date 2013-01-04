@@ -4,7 +4,13 @@ class Photo < ActiveRecord::Base
 	has_and_belongs_to_many :trips, :join_table => "trips_photos"
 	belongs_to :user
 	attr_accessible :static
-	has_attached_file :static, :styles => { :thumb => "50x50>", :large => "800x800>", :square => "500x500#", :small => "200x200>" }
+	has_attached_file :static, :styles => { 
+			:original => "1200x1200>",
+			:large => "800x800>", #http://localhost:3000/dave-and-melissa/new-york/photos.dialog
+			:square => "500x500#", #http://localhost:3000/dave-and-melissa/new-york/photos
+			:thumbnail => "50x50>",
+			:widescreen => "1200x675#"
+			}
 	include HasSlug
 	include HasTitle
 
