@@ -11,11 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121216055656) do
+ActiveRecord::Schema.define(:version => 20130104055125) do
 
   create_table "countries", :force => true do |t|
     t.string "name"
     t.string "code"
+  end
+
+  create_table "home_page_stories", :force => true do |t|
+    t.text    "title"
+    t.text    "text"
+    t.integer "photo_id"
+    t.string  "url"
+    t.string  "small_photo_url"
   end
 
   create_table "locations", :force => true do |t|
@@ -67,6 +75,7 @@ ActiveRecord::Schema.define(:version => 20121216055656) do
     t.string   "static_content_type"
     t.integer  "static_file_size"
     t.datetime "static_updated_at"
+    t.integer  "rotation",            :default => 0
   end
 
   create_table "posts", :force => true do |t|

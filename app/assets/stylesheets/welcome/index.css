@@ -25,7 +25,7 @@
 	.hero .hero-link.focused .hero-header .text { width:510px; }
 }
 
-.hero .hero-nav { position:absolute; left:0; right:0; bottom:0; text-align:center; }
+.hero .hero-nav { position:absolute; left:0; right:0; bottom:0; z-index:15; text-align:center; }
 .hero .hero-nav a { display:inline-block; height:20px; width:20px; margin-left:10px; border-radius:10px; cursor:pointer; background:#333;
 	background:-webkit-gradient(linear, 0% 0%, 0% 100%, from(#000), to(#333)); 
 }
