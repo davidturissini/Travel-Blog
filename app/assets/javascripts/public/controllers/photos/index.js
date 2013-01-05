@@ -14,10 +14,10 @@ window.addEventListener("DOMContentLoaded", function () {
 
 	jQuery(document.getElementById("trip-photos")).on("click", ".photo", function (evt) {
 		var photoEl = evt.currentTarget,
-		photo = photos[photoEl];
+		photo = photos[photoEl.id];
 
 		if(!photo) {
-			photo = photos[photoEl] = Photo.createFromDataAttribute(photoEl);
+			photo = photos[photoEl.id] = Photo.createFromDataAttribute(photoEl);
 			photo.setUser(user);
 			photo.setTrip(trip);
 		}
@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", function () {
 						form.on("removed", function () {
 							photoEl.parentNode.removeChild(photoEl);
 							dialog.close();
-							photo.destroy()
+							photo.destroy();
 
 						});
 
