@@ -31,6 +31,7 @@ var InfiniteScroll = Backbone.View.extend({
 			options = options || {};
 
 			$.ajax({
+				
 				url:this.url,
 				data:{
 					page:this._page,

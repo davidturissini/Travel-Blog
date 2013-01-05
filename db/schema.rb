@@ -75,7 +75,6 @@ ActiveRecord::Schema.define(:version => 20130104055125) do
     t.string   "static_content_type"
     t.integer  "static_file_size"
     t.datetime "static_updated_at"
-    t.integer  "rotation",            :default => 0
   end
 
   create_table "posts", :force => true do |t|

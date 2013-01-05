@@ -1,4 +1,3 @@
-
 var ScrollHandler = function (options) {
 	var scroll = this;
 	scroll.target = options.target;
