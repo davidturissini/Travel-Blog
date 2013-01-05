@@ -19,7 +19,6 @@
 				<h1 id="site-title"><%= link_to "TravelAddict", root_path %></h1>
 				<nav id="site-nav">
 					<ul>
-						<li><%= link_to "Blog", root_path %></li>
 						<li><%= link_to "Trips", user_path(:id => User.dave.slug) %></li>
 						<li><%= link_to "Map", user_maps_path(:user_id => User.dave.slug) %></li>
 						<li><%= link_to "Photos", user_photos_path(:user_id => User.dave.slug) %></li>

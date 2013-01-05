@@ -1,18 +1,18 @@
 
 var ScrollHandler = function (options) {
-	var scroll = this
-	scroll.target = options.target
+	var scroll = this;
+	scroll.target = options.target;
 
 	function distanceToTop() {
 		var relative = scroll.target.offsetParent,
 		offset = scroll.target.offsetTop
 
 		while(relative != document.body) {
-			offset += relative.offsetTop
-			relative = relative.offsetParent
+			offset += relative.offsetTop;
+			relative = relative.offsetParent;
 		}
 
-		return offset
+		return offset;
 	}
 
 	function pixelsVisible() {
@@ -20,7 +20,7 @@ var ScrollHandler = function (options) {
 	}
 
 	function pixelsBelowFold() {
-		return distanceToTop() + options.target.offsetHeight - windowVisibleY()[1]
+		return distanceToTop() - windowVisibleY()[1];
 	}
 
 	function windowVisibleY() {
@@ -32,16 +32,31 @@ var ScrollHandler = function (options) {
 		return pixelsVisible() / options.target.offsetHeight
 	}
 
+	function elOffsetHeight() {
+		return scroll.target.offsetHeight;
+	}
+
 	function calculateScroll() {
 		var elemTop = distanceToTop(),
 		visibleYRange = windowVisibleY()
 
-		if( elemTop > visibleYRange[0] && elemTop < visibleYRange[1] && options.onScroll ) { 
+		if( elemTop > visibleYRange[0] && elemTop < visibleYRange[1] && options.onScroll ) {
+			
 			options.onScroll({
 				percentVisible:percentVisible(),
 				pixelsVisible:pixelsVisible()
 			});
+
 		}
+
+		if( elemTop + elOffsetHeight() < visibleYRange[1] + window.scrollY && options.scrollEnd) { 
+			options.scrollEnd({
+				percentVisible:percentVisible(),
+				pixelsVisible:pixelsVisible()
+			});
+		}
+
+
 	}
 
 	window.addEventListener("scroll", function (e) {

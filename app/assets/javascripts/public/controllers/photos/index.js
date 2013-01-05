@@ -2,7 +2,12 @@ window.addEventListener("DOMContentLoaded", function () {
 	if( !/\sphotos\-index\s/.test(document.body.className) ) { return }
 	var dialog = new ModalDialog({}),
 	user = User.createFromDataAttribute(document.getElementById("user")),
-	trip = Trip.createFromDataAttribute(document.getElementById("trip-photos"));
+	trip = Trip.createFromDataAttribute(document.getElementById("trip-photos")),
+	infiniteScroll = new InfiniteScroll({
+		el:document.getElementById("trip-photos")
+	});
+
+	infiniteScroll.render();
 
 	trip.setUser(user);
 
