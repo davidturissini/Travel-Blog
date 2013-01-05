@@ -56,7 +56,7 @@ window.addEventListener("DOMContentLoaded", function () {
 						});
 
 						form.on("removed", function () {
-							elem.parentNode.removeChild(elem);
+							photoEl.parentNode.removeChild(photoEl);
 							dialog.close();
 							photo.destroy()
 

@@ -23,8 +23,7 @@ class Admin::PhotosController < Admin::AdminController
 	end
 
 	def destroy
-		trip = current_user.trips.find_by_slug(params[:trip_id])
-		photo = trip.photos.find_by_slug(params[:id])
+		photo = current_user.photos.find_by_slug(params[:id])
 		photo.destroy
 		render :json => photo
 	end
