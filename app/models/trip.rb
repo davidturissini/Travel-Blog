@@ -14,6 +14,10 @@ class Trip < ActiveRecord::Base
 		limit(limit).order("RANDOM()")
 	end
 
+	def ordered_photos
+		photos.order("photos.id ASC")
+	end
+
 	def maps?
 		maps.length > 0
 	end
