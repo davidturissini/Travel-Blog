@@ -7,8 +7,8 @@ class PhotosController < ApplicationController
 			raise ActiveRecord::RecordNotFound if !@trip
 		end
 
-		photos = @trip.nil? ? @user.photos : @trip.photos
+		photo_context = @trip.nil? ? @user : @trip
 
-		@photos = photos.order("photos.id ASC").limit(18)
+		@photos = photo_context.photos.order("photos.id ASC").limit(18)
 	end
 end

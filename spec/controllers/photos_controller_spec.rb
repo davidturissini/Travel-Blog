@@ -39,13 +39,11 @@ describe PhotosController do
 					response.should be_success
 				end
 
-				it "should assign @photos" do
+				it "should get user.photos" do
 					user = users(:user_one)
-					photos_stub = [Photo.new, Photo.new]
 					User.stub!(:find_by_slug).and_return(user)
-					user.stub!(:photos).and_return(photos_stub)
+					user.should_receive(:photos).and_return(Photo.where("id > 0"))
 					get :index, :user_id => user.slug
-					assigns(:photos).should == photos_stub
 				end
 			end
 
@@ -68,23 +66,15 @@ describe PhotosController do
 						response.should be_success
 					end
 
-					it "should assign @photos" do
+					it "should call trip.photos" do
 						user = users(:user_one)
 						trip = trips(:trip_one)
 						photos_stub = [Photo.new, Photo.new]
 						Trip.stub!(:find_by_slug).and_return(trip)
-						trip.stub!(:ordered_photos).and_return(photos_stub)
+						trip.should_receive(:photos).and_return(Photo.where("id > 0"))
 						get :index, :user_id => user.slug, :trip_id => trip.slug
-						assigns(:photos).should == photos_stub
 					end
 
-					it "should call ordered_photos on trip" do
-						user = users(:user_one)
-						trip = trips(:trip_one)
-						Trip.stub!(:find_by_slug).and_return(trip)
-						trip.should_receive(:ordered_photos)
-						get :index, :user_id => user.slug, :trip_id => trip.slug
-					end
 				end
 			end
 		end
