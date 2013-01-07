@@ -10,23 +10,19 @@ describe Trip do
 
 	describe "#maps" do
 
-		describe "When a trip has maps" do
-
+		describe "When a trip has maps" do\
 			it "should return true" do
 				@trip.maps?.should === true
 			end
-
 		end
 
 		describe "When a trip has no maps" do
-
 			it "should return false" do
 
 				@trip.stub!(:maps).and_return(Map.where("id > 100000"))
 				@trip.maps?.should === false
 
 			end
-
 		end
 
 	end
@@ -38,10 +34,11 @@ describe Trip do
 
 		it "should move posts from incoming trip to self" do
 			
-			posts = @merge_trip.posts
+			posts = @merge_trip.posts.all
 			@trip.merge!(@merge_trip)
 
 			posts.each do |post|
+				post.reload
 				post.trip.should === @trip
 			end
 
@@ -49,11 +46,11 @@ describe Trip do
 
 		it "should keep its own posts" do
 
-			posts = @trip.posts
+			posts = @trip.posts.all
 			@trip.merge!(@merge_trip)
-			@trip.reload
 
 			posts.each do |post|
+				post.reload
 				post.trip.should === @trip
 			end
 
@@ -62,14 +59,15 @@ describe Trip do
 		it "should remove posts from incoming trip" do
 
 			@trip.merge!(@merge_trip)
-			@merge_trip.reload
+
 			@merge_trip.posts.length.should === 0
 
 		end
 
 		it "should move photos from incoming trip to self" do
 
-			photos = @merge_trip.photos
+			photos = @merge_trip.photos.all
+
 			@trip.merge!(@merge_trip)
 			
 			photos.each do |photo|
@@ -80,9 +78,8 @@ describe Trip do
 
 		it "should keep its own photos" do
 
-			photos = @trip.photos
+			photos = @trip.photos.all
 			@trip.merge!(@merge_trip)
-			@trip.reload
 			
 			photos.each do |photo|
 				@trip.photos.should include(photo)
@@ -93,18 +90,19 @@ describe Trip do
 		it "should remove photos from incoming trip" do
 
 			@trip.merge!(@merge_trip)
-			@merge_trip.reload
 			@merge_trip.photos.length.should === 0
 
 		end
 
 		it "should move locations from incoming trip to self" do
 
-			locations = @merge_trip.locations
+			locations = @merge_trip.locations.all
+
 			@trip.merge!(@merge_trip)
 			
-			locations.each do |locations|
-				@trip.locations.should include(locations)
+			locations.each do |location|
+				location.reload
+				location.trip.should == @trip
 			end
 
 		end
@@ -112,9 +110,38 @@ describe Trip do
 		it "should remove locations from incoming trip" do
 
 			@trip.merge!(@merge_trip)
-			@merge_trip.reload
 			@merge_trip.locations.length.should === 0
 
+		end
+
+		it "should reload the current trip" do
+
+			@trip.should_receive(:reload)
+			@trip.merge!(@merge_trip)
+
+		end
+
+		it "should reload the incoming trip" do
+
+			@merge_trip.should_receive(:reload)
+			@trip.merge!(@merge_trip)
+
+		end
+
+		describe "When the incoming trip is deleted" do
+			it "should still keep all locations" do
+
+				locations = @merge_trip.locations.all
+				@trip.merge!(@merge_trip)
+				
+				@merge_trip.destroy
+
+				locations.each do |location|
+					location.reload
+					location.trip.should === @trip
+				end
+
+			end
 		end
 
 		describe "When the incoming trip has an earlier start_date" do
@@ -123,7 +150,7 @@ describe Trip do
 
 				start_date = @merge_trip.start_date
 				@trip.merge!(@merge_trip)
-				@merge_trip.reload
+
 				@trip.start_date.should === start_date
 
 			end
@@ -136,7 +163,7 @@ describe Trip do
 				end_date = @merge_trip.end_date
 
 				@trip.merge!(@merge_trip)
-				@merge_trip.reload
+
 				@trip.end_date.should === end_date
 			end
 

@@ -25,6 +25,7 @@ class Trip < ActiveRecord::Base
  		self.locations << trip.locations
 
  		trip.photos.delete_all
+ 		trip.reload
 
  		if !trip.start_date.nil? && trip.start_date < self.start_date
  			self.start_date = trip.start_date
@@ -35,6 +36,7 @@ class Trip < ActiveRecord::Base
  		end
 
  		self.save!
+ 		self.reload
  	end
 
  	def self.random limit = 3

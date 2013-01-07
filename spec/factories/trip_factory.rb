@@ -8,7 +8,7 @@ FactoryGirl.define do
 
 		locations {
 			Array(5..10).sample.times.map do
-				 FactoryGirl.create(:location)
+				 FactoryGirl.create(:location, trip:@instance)
 			end
 		}
 

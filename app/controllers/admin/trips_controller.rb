@@ -8,7 +8,6 @@ class Admin::TripsController < Admin::AdminController
 		ActiveRecord::Base.transaction do
 			@trip.merge!(merge_trip)
 			merge_trip.destroy
-			@trip.reload
 		end
 
 		respond_to do |format|
@@ -60,12 +59,16 @@ class Admin::TripsController < Admin::AdminController
 		params[:trip].delete(:slug)
 
 		params[:trip][:title] = Sanitize.clean(params[:trip][:title])
-		params[:trip][:summary] = Sanitize.clean(params[:trip][:summary].strip) if params[:trip].has_key?(:summary)
+
+		if params[:trip].has_key?(:summary) && !params[:trip][:summary].nil?
+			params[:trip][:summary] = Sanitize.clean(params[:trip][:summary].strip)
+		end 
+
 		@trip.update_attributes!(params[:trip])
 		@trip.save!
 
 		respond_to do |format|
-			format.html { redirect_to request.referrer }
+			format.html { redirect_to user_trip_path(:user_id => current_user.slug, :trip_id => @trip.slug) }
 			format.json { render :json => @trip }
 		end
 	end
