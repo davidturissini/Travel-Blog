@@ -1,4 +1,21 @@
 class Admin::TripsController < Admin::AdminController
+
+	def merge
+		@user = current_user
+		@trip = current_user.trips.find_by_slug(params[:trip_id])
+		merge_trip = current_user.trips.find_by_slug(params[:merge_trip_id])
+
+		ActiveRecord::Base.transaction do
+			@trip.merge!(merge_trip)
+			merge_trip.destroy
+			@trip.reload
+		end
+
+		respond_to do |format|
+			format.json { render :json => @trip }
+		end
+	end
+
 	def new
 		@user = current_user
 		@trip = current_user.trips.new

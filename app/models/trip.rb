@@ -10,6 +10,33 @@ class Trip < ActiveRecord::Base
  	include HasDates
  	include HasTitle
 
+ 	def merge! trip
+
+ 		if !trip.is_a?(Trip)
+ 			raise "Argument must be a trip"
+ 		end
+
+ 		if trip.user != self.user
+ 			raise "Both trips must be owned by the same user"
+ 		end
+
+ 		self.photos << trip.photos
+ 		self.posts << trip.posts
+ 		self.locations << trip.locations
+
+ 		trip.photos.delete_all
+
+ 		if !trip.start_date.nil? && trip.start_date < self.start_date
+ 			self.start_date = trip.start_date
+ 		end
+
+ 		if !trip.end_date.nil? && trip.end_date > self.end_date
+ 			self.end_date = trip.end_date
+ 		end
+
+ 		self.save!
+ 	end
+
  	def self.random limit = 3
 		limit(limit).order("RANDOM()")
 	end
