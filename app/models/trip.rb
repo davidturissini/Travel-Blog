@@ -27,11 +27,11 @@ class Trip < ActiveRecord::Base
  		trip.photos.delete_all
  		trip.reload
 
- 		if !trip.start_date.nil? && trip.start_date < self.start_date
+ 		if (!trip.start_date.nil? && !self.start_date.nil?) && trip.start_date < self.start_date
  			self.start_date = trip.start_date
  		end
 
- 		if !trip.end_date.nil? && trip.end_date > self.end_date
+ 		if (!trip.end_date.nil? && !self.end_date.nil?) && trip.end_date > self.end_date
  			self.end_date = trip.end_date
  		end
 

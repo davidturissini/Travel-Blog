@@ -155,7 +155,7 @@ describe Trip do
 
 		end
 
-		describe "When the incomint trip has a later end_date" do
+		describe "When the incoming trip has a later end_date" do
 
 			it "should update end_date with incoming trip end_date" do
 				end_date = @merge_trip.end_date
@@ -177,6 +177,28 @@ describe Trip do
 				lambda { @trip.merge!(@merge_trip) }.should raise_error
 			end
 
+		end
+
+		describe "When the trip doesn't have a start_date" do
+
+			it "should not throw an exception" do
+				@trip.start_date = nil
+				@trip.save!
+
+				lambda { @trip.merge!(@merge_trip) }.should_not raise_error
+
+			end
+		end
+
+		describe "When the trip doesn't have a end_date" do
+
+			it "should not throw an exception" do
+				@trip.end_date = nil
+				@trip.save!
+
+				lambda { @trip.merge!(@merge_trip) }.should_not raise_error
+
+			end
 		end
 
 		describe "When the first argument is not a trip" do
