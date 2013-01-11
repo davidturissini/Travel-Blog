@@ -39,4 +39,9 @@ Adventureblog::Application.configure do
 
   # Allow pass debug_assets=true as a query parameter to load pages with unpackaged assets
   config.assets.allow_debugging = true
+  Paperclip::Attachment.default_options[:s3_credentials] = {
+    :bucket => CONFIG["s3"]["bucket"],
+    :access_key_id => CONFIG["s3"]["access_key_id"],
+    :secret_access_key => CONFIG["s3"]["secret_access_key"]
+  }
 end
