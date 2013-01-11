@@ -31,6 +31,7 @@
 		<h1 id="trip-title" class="trip-title"><%= @trip.title %></h1>
 		<% if current_user.owns?(@trip) %>
 			<form method="post" action="/dave-and-melissa/<%= @trip.slug %>/merge">
+				<input type="hidden" name="format" value="html" />
 				<select name="merge_trip_id">
 					<% current_user.trips.each do |trip| %>
 						<option value="<%= trip.slug %>"><%= trip.title %></option>

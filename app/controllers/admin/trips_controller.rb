@@ -11,6 +11,7 @@ class Admin::TripsController < Admin::AdminController
 		end
 
 		respond_to do |format|
+			format.html { redirect_to("/#{@user.slug}/#{@trip.slug}") }
 			format.json { render :json => @trip }
 		end
 	end

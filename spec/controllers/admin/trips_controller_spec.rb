@@ -21,8 +21,7 @@ describe Admin::TripsController do
 		      :controller => "admin/trips",
 		      :action => "merge",
 		      :user_id => "user-slug",
-		      :trip_id => "trip-slug",
-		      :format => "json"
+		      :trip_id => "trip-slug"
 		    })
 
 	    end
@@ -154,6 +153,12 @@ describe Admin::TripsController do
 			post :merge, :user_id => @user.slug, :trip_id => @trip.slug, :merge_trip_id => @merge_trip.slug, :format => "json"
 
 			lambda { Trip.find(trip_id) }.should raise_error ActiveRecord::RecordNotFound
+		end
+
+		it "should redirect to the trip show page" do
+			post :merge, :user_id => @user.slug, :trip_id => @trip.slug, :merge_trip_id => @merge_trip.slug
+			response.code.should == "302"
+			response.should redirect_to("/#{@user.slug}/#{@trip.slug}")
 		end
 
 	end

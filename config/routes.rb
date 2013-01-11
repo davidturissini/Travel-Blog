@@ -38,7 +38,7 @@ Adventureblog::Application.routes.draw do
       resources :photos, :only => [:show, :index]
     end
     resources :trips, :path => "", :only => [:edit, :update, :destroy], :controller => "admin/trips" do
-      match '/merge', :via => "post", :action => :merge, :format => "json"
+      match '/merge', :via => "post", :action => :merge
     end
     resources :trips, :path => "/trips", :only => [:new, :create], :controller => "admin/trips"
   end
