@@ -32,13 +32,10 @@ describe Admin::TripsController do
 
 		before(:each) do
 			@user = create(:user)
-
 			@trip = create(:trip)
 
 			controller.stub!(:current_user).and_return(@user)
-
 			@user.trips.stub!(:find_by_slug).with(@trip.slug).and_return(@trip)
-			
 		end
 
 		it "should call #update_attributes" do
@@ -134,8 +131,8 @@ describe Admin::TripsController do
 		before(:each) do
 			@user = create(:user)
 
-			@trip = create(:trip)
-			@merge_trip = create(:trip)
+			@trip = create(:trip, :user => @user)
+			@merge_trip = create(:trip, :user => @user)
 
 			controller.stub!(:current_user).and_return(@user)
 

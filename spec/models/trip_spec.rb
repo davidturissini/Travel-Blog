@@ -130,7 +130,6 @@ describe Trip do
 
 		describe "When the incoming trip is deleted" do
 			it "should still keep all locations" do
-
 				locations = @merge_trip.locations.all
 				@trip.merge!(@merge_trip)
 				
@@ -147,10 +146,9 @@ describe Trip do
 		describe "When the incoming trip has an earlier start_date" do
 
 			it "should update start_date with incoming trip start_date" do
-
 				start_date = @merge_trip.start_date
-				@trip.merge!(@merge_trip)
 
+				@trip.merge!(@merge_trip)
 				@trip.start_date.should === start_date
 
 			end
@@ -163,7 +161,6 @@ describe Trip do
 				end_date = @merge_trip.end_date
 
 				@trip.merge!(@merge_trip)
-
 				@trip.end_date.should === end_date
 			end
 

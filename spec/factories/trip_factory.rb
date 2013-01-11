@@ -1,10 +1,13 @@
 FactoryGirl.define do
 	factory :trip do
-		association :user_id, :factory => :user
 
 		sequence :slug do |n|
 		    "trip-#{n}"
 		end
+
+		user {
+			FactoryGirl.create(:user)
+		}
 
 		locations {
 			Array(5..10).sample.times.map do

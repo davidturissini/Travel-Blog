@@ -1,7 +1,6 @@
 require 'spec_helper'
 
-describe User do
-	fixtures :users, :trips, :maps, :locations, :posts
+describe Photo do
 
 	before do
 		Photo.any_instance.stub(:save_attached_files).and_return(true)
