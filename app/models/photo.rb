@@ -5,8 +5,7 @@ class Photo < ActiveRecord::Base
 	belongs_to :user
 	attr_accessible :static
 	has_attached_file :static,
-		:styles => { 
-			:original => "1200x1200>",
+		:styles => {
 			:large => "800x800>", #http://localhost:3000/dave-and-melissa/new-york/photos.dialog
 			:square => "500x500#", #http://localhost:3000/dave-and-melissa/new-york/photos
 			:thumbnail => "50x50>",

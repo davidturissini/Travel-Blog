@@ -11,7 +11,7 @@
 *= require_tree "./admin"
 */
 html { height:100%; }
-body { color:#333; font-size:14px; font-family:Helvetica; }
+body { color:#333; font-size:14px; font-family:verdana; }
 figure { margin:0; }
 
 a, a:visited, a:active { text-decoration:none; color:#069; }
@@ -47,8 +47,7 @@ img.framed { padding:5px; border:1px solid #ccc; border-radius:5px; }
 }
 
 #container .left-col { overflow:hidden; margin-right:240px; padding:25px 24px 25px 25px; border-right:1px solid #ccc; background:#fff; }
-#container .right-col { float:right; padding:20px; width:200px; color:#e1e1e1; }
-#container .right-col a { color:#aaa; }
+#container .right-col { float:right; padding:20px; width:200px }
 #container .right-col .user .user-photo { display:inline-block; }
 #container .right-col .user .user-photo .user-photo-caption { margin-top:5px; font-size:.9em; }
 #container .right-col .user .user-trips { margin:20px 0; }
