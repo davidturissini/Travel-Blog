@@ -4,7 +4,7 @@
 .trips-show .trip .trip-photo figcaption { display:none; position:absolute; bottom:0; left:0; right:0; padding:5px; background:rgba(0, 0, 0, .7); color:#fff; cursor:pointer; }
 .trips-show .trip .trip-photo:hover figcaption { display:block; }
 
-.trips-show .trip .trip-title { margin:10px 0 40px; font-size:2.2em; font-family:Georgia; color:#f33; }
+.trips-show .trip .trip-title { margin:20px 0 40px; font-size:2.2em; font-family:Georgia; color:#f33; }
 .trips-show .trip .trip-date { font-size:1.1em; color:#666; }
 .trips-show .trip .trip-summary { padding:0 0 20px; font-size:1.3em; }
 
