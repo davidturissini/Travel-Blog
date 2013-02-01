@@ -1,9 +1,8 @@
-.story { padding-bottom:20px; margin-bottom:20px; border-bottom:1px solid #b1b1b1; }
+.story { padding-bottom:50px; margin-bottom:70px; border-bottom:1px solid #ccc; font-family:Verdana; }
 .story .story-link { display:block; color:inherit; }
-.story .story-link:hover { color:#069; }
-.story .story-title { margin-bottom:10px; font-size:1.6em; }
-.story .story-date { margin-bottom:10px; font-size:.8em; }
-.story .story-image { float:left; margin-right:20px; }
+.story .story-image { display:block; margin-bottom:40px; width:100%; box-shadow:0 0 30px #000; }
+.story .story-title { margin: 20px 0; font-size:1.8em; font-family:Georgia, Verdana, sans-serif; color:#f33; }
+.story .story-date { color:#ccc; font-size:1.1em; }
 .story .story-body { line-height:1.5; }
 .story .story-body p { margin-top:20px; }
 .story .story-body p:first-child { margin-top:0; }

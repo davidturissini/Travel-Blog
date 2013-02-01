@@ -1,7 +1,7 @@
 class WelcomeController < ApplicationController 
 	def index
-		user = User.find_by_slug("dave-and-melissa")
-		@hero_tiles = HomePageStory.all
+		@user = User.find_by_slug("dave-and-melissa")
+		@stories = @user.stories
 	end
 
 	def user
