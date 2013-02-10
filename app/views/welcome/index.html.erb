@@ -1,4 +1,4 @@
-<section>
+<section data-infinite="<%= user_stories_path %>">
 	<% @stories.each do |story| %>
 		<%= render "#{story.class.name.downcase.pluralize}/story", :story => story %>
 	<% end %>

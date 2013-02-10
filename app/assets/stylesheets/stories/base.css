@@ -4,7 +4,7 @@
 .story .story-title { margin: 20px 0; font-size:1.8em; font-family:Georgia, Verdana, sans-serif; color:#f33; }
 .story .story-date { color:#ccc; font-size:1.1em; }
 .story .story-body { line-height:1.5; }
-.story .story-body p { margin-top:20px; }
+.story .story-body p { margin-top:20px; font-size:1.3em; }
 .story .story-body p:first-child { margin-top:0; }
 .story .story-footer { margin-top:20px; padding:10px; border-radius:5px; background:#e1e1e1; }
 .story .story-footer ul li { display:inline-block; margin-left:1em; padding-left:1em; border-left:1px solid #ccc; }
