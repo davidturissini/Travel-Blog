@@ -4,7 +4,7 @@ var AdminTemplate = Template.extend({
 		data = this.get("params") || {}
 		callbacks = callbacks || {};
 
-		$.ajax({
+		jQuery.ajax({
 			url:template.get("user").url({includeFormat:false}) + "/template/" + template.id,
 			data:data,
 			success:function (e) {
