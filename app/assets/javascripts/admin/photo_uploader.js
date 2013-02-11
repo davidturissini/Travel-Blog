@@ -227,13 +227,22 @@ var PhotoUploader = Backbone.View.extend({
           uploader.el.addEventListener("dragleave", function (event) {
             uploader.el.className = uploader.el.className.replace("dragenter", "");
           });
-          uploader.options.dropTarget.addEventListener("drop", function (event) {
-            event.stopPropagation();
-            event.preventDefault();
+
+          uploader.options.dropTarget.addEventListener("dragenter", function (evt) {
+            evt.preventDefault();
+          });
+
+          uploader.options.dropTarget.addEventListener("dragover", function (evt) {
+            evt.preventDefault();
+          });
+
+          uploader.options.dropTarget.addEventListener("drop", function (evt) {
+            evt.preventDefault();
+            evt.stopPropagation();
             uploader.el.className = uploader.el.className.replace("dragenter", "");
             uploader.addPhotos(event.dataTransfer.files);
 
-          }, false);
+          });
         })(this);
       },
       __bindUploadButton:function () {
