@@ -15,7 +15,6 @@ var PostForm = Backbone.View.extend({
 			youTubeVideos.each(function (index, imgTag) {
 				var iframe = document.createElement('iframe');
 				iframe.setAttribute('src', 'http://www.youtube.com/embed/' + imgTag.getAttribute('alt'));
-				iframe.setAttribute('class', 'youtube');
 				iframe.setAttribute('width', '560');
 				iframe.setAttribute('height', '315');
 				jQuery(imgTag).replaceWith(iframe);

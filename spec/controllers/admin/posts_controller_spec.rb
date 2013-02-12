@@ -92,6 +92,14 @@ describe Admin::PostsController do
 			end
 		end
 
+		describe "when the post body has a youtube iframe" do
+			it "should include the youtube iframe" do
+				new_body = "new body <iframe src=\"http://www.youtube.com/embed/G33e6YSilyM\" width=\"560\" height=\"315\"></iframe>"
+				put :update, :user_id => @user.slug, :id => @post.slug, :post => { :body => new_body }
+				@post.body.should == new_body
+			end
+		end
+
 		describe "when the post body has black listed html tags" do
 			it "should remove those tags" do
 				new_body = "new body <a target=\"_blank\" title=\"link title\" href=\"http://www.google.com\">Link to Google</a>"

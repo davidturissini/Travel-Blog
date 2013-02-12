@@ -48,7 +48,7 @@ class Admin::PostsController < Admin::AdminController
 	protected
 	def clean_html html
 		transformer = lambda{|env| 
-			if env[:node].element? && env[:node].name == "iframe" && env[:node].attribute("class").value == "youtube"
+			if env[:node].element? && env[:node].name == "iframe" && /^http:\/\/www\.youtube\.com\/embed\// =~ env[:node].attribute("src").value
 				return {
 					:node_whitelist => [env[:node]]
 				}
