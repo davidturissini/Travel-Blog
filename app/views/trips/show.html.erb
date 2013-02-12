@@ -58,6 +58,9 @@
 				<div id="post-body" class="post-body">
 					<%= post.body.html_safe %>
 				</div>
+				<% if current_user.owns?(post) %>
+					<%= link_to 'Edit', edit_user_post_path(:user_id => post.user.slug, :id => post.slug) %>
+				<% end %>
 			</article>
 		<% end %>
 	</section>

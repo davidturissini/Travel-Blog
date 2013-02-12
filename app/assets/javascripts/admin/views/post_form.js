@@ -9,8 +9,21 @@ var PostForm = Backbone.View.extend({
 		var view = this;
 		this.options.saveButton.addEventListener("click", function (e) {
 			e.preventDefault();
-			var body = tinyMCE.getInstanceById(view.options.bodyField.id).getContent();
-			view.model.set({body:body});
+			var body = jQuery( tinyMCE.getInstanceById(view.options.bodyField.id).getContent() ),
+			youTubeVideos = jQuery('.mceItem', body), container = document.createElement('div');
+
+			youTubeVideos.each(function (index, imgTag) {
+				var iframe = document.createElement('iframe');
+				iframe.setAttribute('src', 'http://www.youtube.com/embed/' + imgTag.getAttribute('alt'));
+				iframe.setAttribute('class', 'youtube');
+				iframe.setAttribute('width', '560');
+				iframe.setAttribute('height', '315');
+				jQuery(imgTag).replaceWith(iframe);
+			})
+			
+			body.appendTo(container);
+
+			view.model.set({body:jQuery(container).html()});
 			view.trigger("post_save");
 		})
 	},
@@ -18,7 +31,8 @@ var PostForm = Backbone.View.extend({
 		tinyMCE.init({
 	        mode:"textareas",
 	        theme: "advanced",
-	        theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,blockquote,undo"
+	        plugins: "youtube",
+	        theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,blockquote,undo,|,youtube"
 		});
 	},	
 	render:function () {

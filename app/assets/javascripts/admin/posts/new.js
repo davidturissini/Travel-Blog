@@ -1,5 +1,7 @@
 window.addEventListener("DOMContentLoaded", function () {
-	if( !/admin\-posts\-new\s/.test(document.body.className) ) { return }
+	if( !/admin\-posts\-new\s/.test(document.body.className) &&
+		!/admin\-posts\-edit\s/.test(document.body.className)
+		) { return }
 
 	var post = new Post(),
 	trip = Trip.createFromDataAttribute(document.getElementById('post'), "data-trip");

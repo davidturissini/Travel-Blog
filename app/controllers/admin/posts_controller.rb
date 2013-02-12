@@ -15,6 +15,12 @@ class Admin::PostsController < Admin::AdminController
 		@post.user = @user
 	end
 
+	def edit
+		@user = current_user
+		@post = @user.posts.find_by_slug(params[:id])
+		render :action => "new"
+	end
+
 	def create
 		params[:post][:body] = clean_html(params[:post][:body])
 		@post = current_user.posts.new(params[:post])
@@ -41,7 +47,14 @@ class Admin::PostsController < Admin::AdminController
 
 	protected
 	def clean_html html
-		 Sanitize.clean(html, :remove_contents => ["script"], :attributes => {'a' => ['href', 'title', 'target']}, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
+		transformer = lambda{|env| 
+			if env[:node].element? && env[:node].name == "iframe" && env[:node].attribute("class").value == "youtube"
+				return {
+					:node_whitelist => [env[:node]]
+				}
+			end
+		}
+		Sanitize.clean(html, :transformers => [transformer], :remove_contents => ["script"], :attributes => {'a' => ['href', 'title', 'target']}, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
 	end
 	def current_trip
 		current_user.trips.find_by_slug(params[:trip_id])
