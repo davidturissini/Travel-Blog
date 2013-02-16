@@ -9,3 +9,5 @@
 .story .story-footer { margin-top:20px; padding:10px; border-radius:5px; background:#e1e1e1; }
 .story .story-footer ul li { display:inline-block; margin-left:1em; padding-left:1em; border-left:1px solid #ccc; }
 .story .story-footer ul li:first-child { border:0; }
+
+.story:hover .story-title { text-decoration:underline; }

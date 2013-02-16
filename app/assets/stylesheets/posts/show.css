@@ -1,2 +1,5 @@
 .posts-show .admin { margin-top:20px; }
 .posts-show .admin .admin-link { font-size:.8em; }
+
+.posts-show .post-title { font-family:Georgia; color:#f33; }
+.posts-show .post-date { font-size:1.1em; color:#666; }

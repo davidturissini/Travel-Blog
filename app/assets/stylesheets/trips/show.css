@@ -21,3 +21,5 @@
 .trips-show .trip .trip-posts { padding-top:20px; border-top:1px solid #b1b1b1; }
 
 .trips-show .trip #trip-delete { font-size:.8em; }
+
+.trips-show .post { margin-bottom:20px; padding:0 0 20px; }

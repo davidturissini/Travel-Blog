@@ -1,7 +1,8 @@
-.post { margin-bottom:20px; padding:0 0 20px; border-bottom:1px solid #b1b1b1; }
+.post { border-bottom:1px solid #b1b1b1; }
 .post .post-title { margin-bottom:10px; font-size:1.6em; }
 .post .post-date { font-size:.8em; }
 .post .post-footer { text-align:right; }
 .post .post-body { margin:10px 0 0; line-height:1.5; }
 .post .post-body p { margin-top:20px; }
 .post .post-body p:first-child { margin-top:0; }
+.post .post-body iframe { display:block; margin:20px auto; }

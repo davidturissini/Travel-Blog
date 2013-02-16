@@ -1,8 +1,8 @@
-<article class="story">
+<article class="story post">
 	<%= link_to user_post_path(:user_id => story.user.slug, :id => story.slug), :class => "story-link" do %>
-		<h1 class="story-title"><%= story.title %></h1>
 		<h2 class="story-date"><%= story.date_string %></h2>
-		<div class="story-body"><%= truncate_html(story.body, :length => 1200) %></div>
+		<h1 class="story-title"><%= story.title %></h1>
+		<div class="story-body post-body"><%= truncate_html(story.body, :length => 1200) %></div>
 	<% end %>
 	<% if story.body.length > 1200 %>
 		<footer class="story-footer">
