@@ -11,6 +11,14 @@ class Admin::PhotosController < Admin::AdminController
 		render :json => photo
 	end
 
+	def reprocess
+		@user = current_user
+		@photo = @user.photos.find_by_slug(params[:photo_id])
+		@photo.static.reprocess!
+
+		render :json => @photo
+	end
+
 	def new
 		@user = current_user
 		@trip = current_user.trips.find_by_slug(params[:trip_id])

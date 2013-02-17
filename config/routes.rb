@@ -21,7 +21,9 @@ Adventureblog::Application.routes.draw do
     match '/flickr_photoset_photos/:photoset_id' => "admin/users#photoset_photos"
     resources :countries
     resources :locations
-    resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos"
+    resources :photos, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/photos" do
+      match "reprocess" => "admin/photos#reprocess", :via => "get"
+    end
     resources :photos, :only => [:show, :index]
     resources :maps
     resources :posts, :only => [:edit, :update, :destroy, :new, :create], :controller => "admin/posts"

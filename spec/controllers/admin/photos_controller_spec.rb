@@ -12,6 +12,35 @@ describe Admin::PhotosController do
 		      :id => "photo-slug"
 		    })
 	    end
+
+	    it "reprocess routes to #reprocess" do
+	    	expect(:get => "/user-slug/photos/photo-slug/reprocess").to route_to({
+		      :controller => "admin/photos",
+		      :action => "reprocess",
+		      :user_id => "user-slug",
+		      :photo_id => "photo-slug"
+		    })
+
+	    end
+
+	end
+
+	describe "GET reprocess" do
+		before(:each) do
+			@user = create(:user)
+			@photo = Photo.new 
+			@photo.slug = "photo-slug"
+
+			controller.stub!(:current_user).and_return(@user)
+			@user.stub_chain(:photos, :find_by_slug).and_return(@photo)
+			@photo.stub_chain(:reprocess!).and_return(true)
+		end
+
+		it "should call reprocess on the photo's static file" do
+			@photo.static.should_receive(:reprocess!)
+			get :reprocess, :user_id => @user.slug, :photo_id => @photo.slug
+		end
+
 	end
 
 	describe "DELETE destroy" do
