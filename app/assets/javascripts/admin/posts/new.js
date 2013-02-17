@@ -3,7 +3,7 @@ window.addEventListener("DOMContentLoaded", function () {
 		!/admin\-posts\-edit\s/.test(document.body.className)
 		) { return }
 
-	var post = new Post(),
+	var post = Post.createFromDataAttribute(document.getElementById('post')),
 	trip = Trip.createFromDataAttribute(document.getElementById('post'), "data-trip");
 
 	post.setUser(TA.currentUser);

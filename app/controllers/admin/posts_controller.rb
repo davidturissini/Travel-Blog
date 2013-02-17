@@ -18,7 +18,7 @@ class Admin::PostsController < Admin::AdminController
 	def edit
 		@user = current_user
 		@post = @user.posts.find_by_slug(params[:id])
-		render :action => "new"
+		render :template => "admin/posts/new"
 	end
 
 	def create
