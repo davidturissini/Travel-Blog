@@ -1,12 +1,13 @@
 var ScrollHandler = function (options) {
 	var scroll = this;
 	scroll.target = options.target;
+	scroll.scrollEl = options.scrollEl || window;
 
 	function distanceToTop() {
 		var relative = scroll.target.offsetParent,
 		offset = scroll.target.offsetTop
 
-		while(relative != document.body) {
+		while(relative != document.body && relative !== null) {
 			offset += relative.offsetTop;
 			relative = relative.offsetParent;
 		}
@@ -58,7 +59,7 @@ var ScrollHandler = function (options) {
 
 	}
 
-	window.addEventListener("scroll", function (e) {
+	scroll.scrollEl.addEventListener("scroll", function (e) {
 		calculateScroll()
 
 	})

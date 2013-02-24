@@ -71,6 +71,10 @@ var InfiniteScroll = Backbone.View.extend({
 				}.bind(this)
 			};
 
+			if (this.options.scrollEl) {
+				scrollOptions.scrollEl = this.options.scrollEl;
+			}
+
 			new ScrollHandler(scrollOptions);
 
 		},

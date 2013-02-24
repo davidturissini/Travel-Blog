@@ -1,2 +1,6 @@
 .admin-posts-new .post .post-body, 
 .admin-posts-edit .post .post-body { width:100%; min-height:500px; }
+
+.modal-dialog .photos-list { height:400px; width:500px; overflow-y:scroll; }
+.modal-dialog .photos-list .photo { display:inline-block; }
+.modal-dialog .photos-list .photo img { width:250px; }

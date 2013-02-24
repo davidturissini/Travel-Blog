@@ -10,5 +10,10 @@ class PhotosController < ApplicationController
 		photo_context = @trip.nil? ? @user : @trip
 
 		@photos = photo_context.photos.order("photos.id ASC").limit(18)
+
+		respond_to do |format|
+			format.html #
+			format.json { render :json => @photos }
+		end
 	end
 end

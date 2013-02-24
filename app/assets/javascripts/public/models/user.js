@@ -63,11 +63,28 @@ var User = Backbone.Model.extend((function () {
 				success:function (e) {
 					if( callbacks.success ) {
 						callbacks.success(e);
-						}
 					}
-				})
+				}
+			})
+		},
+
+		_photos: null,
+		photos: function () {
+			var url;
+
+			if (!this._photos) {
+				url = '/' + this.get('slug') + '/photos.json';
+
+				this._photos = new PhotosCollection();
+				this._photos.setUrl(url);
 			}
+
+			return this._photos;
 		}
+	}
+
+
+
 })())
 
 User.validateSlug = function(slug, callbacks) {

@@ -100,6 +100,20 @@ describe Admin::PostsController do
 			end
 		end
 
+		describe "when the post body has an img tag" do
+			it "should include the img tag" do
+				new_body = "new body <img src=\"foo.jpg\" />"
+				put :update, :user_id => @user.slug, :id => @post.slug, :post => { :body => new_body }
+				@post.body.should == new_body
+			end
+
+			it "should include the img tag with the correct attributes" do
+				new_body = "new body <img src=\"foo.jpg\" height=\"100\" width=\"100\" valign=\"top\" align=\"left\" title=\"foo\" alt=\"foo\" />"
+				put :update, :user_id => @user.slug, :id => @post.slug, :post => { :body => new_body }
+				@post.body.should == new_body
+			end
+		end
+
 		describe "when the post body has black listed html tags" do
 			it "should remove those tags" do
 				new_body = "new body <a target=\"_blank\" title=\"link title\" href=\"http://www.google.com\">Link to Google</a>"

@@ -1,7 +1,7 @@
 var TripPhotosCollection = Backbone.Collection.extend({
 	model:Photo,
 	initialize:function (options) {
-		if( options.location ) {
+		if (options.trip) {
 			this.trip = options.trip;
 		}
 	},

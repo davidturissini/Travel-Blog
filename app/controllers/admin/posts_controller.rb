@@ -54,7 +54,7 @@ class Admin::PostsController < Admin::AdminController
 				}
 			end
 		}
-		Sanitize.clean(html, :transformers => [transformer], :remove_contents => ["script"], :attributes => {'a' => ['href', 'title', 'target']}, :elements => ['a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
+		Sanitize.clean(html, :transformers => [transformer], :remove_contents => ["script"], :attributes => {'a' => ['href', 'title', 'target'], 'img' => ['src', 'title', 'alt', 'height', 'width', 'align', 'valign']}, :elements => ['figure', 'figcaption', 'img', 'a', 'p', 'ul', 'strong', 'em', 'span', 'blockquote'])
 	end
 	def current_trip
 		current_user.trips.find_by_slug(params[:trip_id])

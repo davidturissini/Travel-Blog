@@ -30,8 +30,8 @@ var PostForm = Backbone.View.extend({
 		tinyMCE.init({
 	        mode:"textareas",
 	        theme: "advanced",
-	        plugins: "youtube",
-	        theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,blockquote,undo,|,youtube"
+	        plugins: "youtube,photos",
+	        theme_advanced_buttons1 : "bold,italic,underline,|,link,unlink,|,bullist,blockquote,undo,|,youtube,photos"
 		});
 	},	
 	render:function () {

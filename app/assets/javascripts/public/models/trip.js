@@ -26,20 +26,27 @@ var Trip = Backbone.Model.extend({
 	photo:function () {
 		return this._photo;
 	},
+
+	_photos: null,
 	photos:function (options) {
         var trip = this;
         options = options || {};
-        this._photos = this._photos || new TripPhotosCollection({trip:this});
-        this._photos.fetch({
-            success:function (photos) {
-                photos.each(function (photo) {
-                    photo.setUser(trip.user);
-                })
-                if( options.success ) {
-                    options.success(photos);
-                }
-            }
-        })
+
+        if (this._photos === null) {
+	        this._photos = new TripPhotosCollection({trip:this});
+	        this._photos.fetch({
+	            success:function (photos) {
+	                photos.each(function (photo) {
+	                    photo.setUser(trip.user);
+	                })
+	                if( options.success ) {
+	                    options.success(photos);
+	                }
+	            }
+	        })
+	    }
+
+        return this._photos;
     },
 	setLocations:function(locations) {
 		var trip = this;
