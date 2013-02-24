@@ -9,9 +9,7 @@
 //= require 'public/underscore'
 //= require 'public/backbone'
 //= require_tree './public/ta'
-//= require './public/lib/kayak.js'
-//= require './public/lib/mustache.js/mustache.js'
-//= require './public/kalendae.min.js'
+//= require_tree './public/lib'
 //= require 'public/template'
 //= require_tree ./public/models/
 //= require_tree './public/collections'
