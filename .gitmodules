@@ -1,0 +1,6 @@
+[submodule "mustache.js"]
+	path = mustache.js
+	url = https://github.com/janl/mustache.js.git
+[submodule "app/assets/javascripts/public/lib/mustache.js"]
+	path = app/assets/javascripts/public/lib/mustache.js
+	url = https://github.com/janl/mustache.js.git
